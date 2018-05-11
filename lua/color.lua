@@ -1,3 +1,4 @@
+--<<
 local color_info = {
 	red = { text="df3030", rgb="178,38,38" ,},
 	blue = { text = "6e81db", rgb="88,103,175" },
@@ -31,3 +32,4 @@ function wesnoth.wml_actions.wc2_convert_color(cfg)
 	wml.variables[var .. ".text"] = res.text
 	wml.variables[var .. ".rgb"] = res.rgb
 end
+-->>
