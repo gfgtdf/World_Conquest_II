@@ -29,6 +29,9 @@ email=#####
 
 
 # Changelog:
+0.6.9
+- Adapt to wesnoth 1.14
+- Correct recruits show in faction select dialog
 0.6.8
 - Redefined Trust pairs (intended as little nerf)
 - Added Chocobone to enemy recalls
