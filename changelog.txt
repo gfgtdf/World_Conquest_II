@@ -29,6 +29,8 @@ email=#####
 
 
 # Changelog:
+0.6.10
+- bugfix
 0.6.9
 - Adapt to wesnoth 1.14
 - Correct recruits show in faction select dialog
