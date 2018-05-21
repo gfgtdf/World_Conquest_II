@@ -1,12 +1,41 @@
 --<<
 
 local _ = wesnoth.textdomain 'wesnoth'
+helper = wesnoth.require("lua/helper.lua")
+T = wml.tag
 
 local terrain_map = { fungus = "Uft", cave = "Ut", sand = "Dt", 
 	reef = "Wrt", hills = "Ht", swamp_water = "St", shallow_water = "Wst", castle = "Ct",
 	mountains = "Mt", deep_water = "Wdt", flat = "Gt", forest = "Ft", frozen = "At",
 	village = "Vt", impassable = "Xt", unwalkable = "Qt", rails = "Rt"
 }
+
+-- for all attacks that match [filter_attack], it 
+function wesnoth.effects.wc2_optional_attack(u, cfg)
+	local name_suffix = cfg.name_suffix or helper.wml_error("apply_to=wc2_optional_attack missing required name_suffix= attribute.")
+	local attack_mod = helper.get_child(cfg, "attack") or helper.wml_error("apply_to=wc2_optional_attack missing required [attack] subtag")
+	local attacks_to_add = {}
+	local names = {}
+	for i = 1, #u.attacks do
+		local attack = u.attacks[i]
+		if attack:matches(helper.get_child(cfg, "filter_attack")) then
+			local new_name = attack.name .. name_suffix
+			local new_attack = attack.__cfg
+			new_attack.name = new_name
+			new_attack.apply_to = "new_attack"
+			table.insert(names, new_name)
+			table.insert(attacks_to_add, new_attack)
+		end
+	end
+	for k,v in ipairs(attacks_to_add) do
+		wesnoth.add_modification(u, "object", { T.effect ( v)}, false)
+	end
+
+	attack_mod.apply_to = "attack"
+	attack_mod.name = table.concat(names, ",")
+
+	wesnoth.add_modification(u, "object", { T.effect (attack_mod) }, false)
+end
 
 function wesnoth.effects.wc2_moves_defense(u, cfg)
 	wesnoth.add_modification(u, "object", { T.effect {
