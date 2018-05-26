@@ -147,4 +147,10 @@ function wesnoth.effects.wc2_overlay(u, cfg)
 	wesnoth.add_modification(u, "overlay", cfg, false)
 end
 
+-- similar to the usualy overlay but does not add overlays the the unit already has.
+function wesnoth.effects.wc2_recall_cost(u, cfg)
+	local t = wesnoth.unit_types[u.type]
+	u.recall_cost = math.min(20, t.cost + 3)
+end
+
 -->>
