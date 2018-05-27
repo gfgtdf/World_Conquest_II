@@ -29,15 +29,24 @@ email=#####
 
 
 # Changelog:
+
+- Simpler implementation custom recall cost
+- Simpler implementation of additional advancement
+- Fixed upkeep of units with items
+- Fixed 'Adamot aromor' effect
+
 0.6.11
 - synced=no for menu items
 - unitmarker and pya are now optional
 - misc refactors
+
 0.6.10
 - bugfix
+
 0.6.9
 - Adapt to wesnoth 1.14
 - Correct recruits show in faction select dialog
+
 0.6.8
 - Redefined Trust pairs (intended as little nerf)
 - Added Chocobone to enemy recalls
