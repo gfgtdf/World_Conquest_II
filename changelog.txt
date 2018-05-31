@@ -30,6 +30,10 @@ email=#####
 
 # Changelog:
 
+0.6.12
+- added lua implementation of the default mapgens
+- fixed skeleton archer image not showing
+- Alien eras can now be enaled without changing core files.
 - Simpler implementation custom recall cost
 - Simpler implementation of additional advancement
 - Fixed upkeep of units with items
