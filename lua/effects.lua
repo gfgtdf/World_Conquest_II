@@ -64,9 +64,15 @@ end
 function wesnoth.effects.wc2_min_resistance(u, cfg)
 	local resistance_new = {}
 	local resistance_old = helper.parsed(helper.get_child(cfg, "resistance"))
+	local unit_resistance_cfg = nil
 	for k,v in pairs(resistance_old) do
-		if type(k) == "string" and type(v) == "number" and wesnoth.unit_resistance(u, k) >= v then
-			resistance_new[k] = v
+		if type(k) == "string" and type(v) == "number" then
+			if not unit_resistance_cfg then
+				unit_resistance_cfg = helper.parsed(helper.get_child(u.__cfg, "resistance"))
+			end
+			if unit_resistance_cfg[k] >= v then
+				resistance_new[k] = v
+			end
 		end
 	end
 	wesnoth.add_modification(u, "object", {
