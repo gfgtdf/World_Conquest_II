@@ -30,6 +30,9 @@ email=#####
 
 # Changelog:
 
+0.6.13
+- Fixed crash when loading games caused by 'adamant armour '
+- Fixed Winter's bloom not giving cold resistance
 0.6.12
 - added lua implementation of the default mapgens
 - fixed skeleton archer image not showing
