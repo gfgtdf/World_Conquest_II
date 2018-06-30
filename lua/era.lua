@@ -2,34 +2,56 @@
 local on_event = wesnoth.require("on_event")
 local wc2_era = {}
 wc2_era.factions_wml = {}
+wc2_era.hero_types = {}
 
-local function split_to_array(s)
-	local res = {}
+local function split_to_array(s, res)
+	res = res or {}
 	for part in tostring(s or ""):gmatch("[^%s,][^,]*") do
 		table.insert(res, part)
 	end
 	return res
 end
 
+local function split_to_set(s, res)
+	res = res or {}
+	for part in tostring(s or ""):gmatch("[^%s,][^,]*") do
+		res[part] = true
+	end
+	return res
+end
+
+local function remove_dublicates(t)
+	local found = {}
+	for i = #t, 1, -1 do
+		local v = t[i]
+		if found[v] then
+			table.remove(t, i)
+		else
+			found[v] = true
+		end
+	end
+end
+
 on_event("recruit", function(ctx)
 	local unit = wesnoth.get_unit(ctx.x1, ctx.y1)
 	
-	local side = unit.side
+	local side_num = unit.side
+	local side = wesnoth.sides[side_num]
 	local unittype = unit.type
 	
-	for i,v in ipairs(wml.array_access.get("player[" .. side.. "].faction.pair")) do
+	for i,v in ipairs(wml.array_access.get("wc2.pair", side)) do
 		local p = split_to_array(v.types)
 		if p[1] == unittype and p[2] ~= nil then
 			wesnoth.wml_actions.disallow_recruit {
-				side = side,
+				side = side_num,
 				type = p[1],
 			}
 			wesnoth.wml_actions.allow_recruit {
-				side = side,
+				side = side_num,
 				type = p[2],
 			}
 			p[1],p[2] = p[2],p[1]
-			wml.variables["player[" .. side.. "].faction.pair[ " .. (i - 1).. "].types"] = table.concat(p, ",")
+			wesnoth.set_side_variable(side_num, "wc2.pair[" .. (i - 1) .. "].types", table.concat(p, ","))
 			return
 		end
 	end
@@ -48,29 +70,43 @@ end
 
 local function init_side(side_num)
 	local side = wesnoth.sides[side_num]
-	for i, faction in ipairs(wc2_era.factions_wml) do
-		
+	local faction = nil
+	for i, fac in ipairs(wc2_era.factions_wml) do
 		--TODO: compability and dont do this again in later scenarios.
-		if faction.id == side.faction then
-			wml.variables["player[" .. side_num .. "].faction"] = faction
-			wesnoth.wml_actions.disallow_recruit {
-				side = side_num,
-				recruit="",
-			}
+		if fac.id == side.faction then
+			faction = fac
 			break
 		end
 	end
-	for i,v in ipairs(wml.array_access.get("player[" .. side_num.. "].faction.pair")) do
-		local p = split_to_array(v.types)
-		if wesnoth.random(1,2) == 2 then
-			p[1],p[2] = p[2],p[1]
+
+	if faction and wesnoth.get_side_variable(side_num, "#wc2.pair") == 0 and wml.get_child(faction, "pair") then
+		wesnoth.wml_actions.disallow_recruit { side = side_num, recruit="" }
+		local i = 0
+		for v in wml.child_range(faction, "pair") do
+			i = i + 1
+			local p = split_to_array(v.types)
+			if wesnoth.random(1,2) == 2 then
+				p[1],p[2] = p[2],p[1]
+			end
+			wesnoth.wml_actions.allow_recruit {
+				side = side_num,
+				type = p[1],
+			}
+			wesnoth.set_side_variable(side_num, "wc2.pair[" .. (i - 1) .. "].types", table.concat(p, ","))
 		end
-		wesnoth.wml_actions.allow_recruit {
-			side = side_num,
-			type = p[1],
-		}
-		wml.variables["player[" .. side_num.. "].faction.pair[ " .. (i - 1) .. "].types"] = table.concat(p, ",")
 	end
+	
+	if not faction then
+		faction = wc2_era.factions_wml[wesnoth.random(#wc2_era.factions_wml)]
+	end
+
+	local heroes = wc2_era.expand_hero_types(faction.heroes)
+	local deserters = wc2_era.expand_hero_types(faction.deserters)
+	local commanders = wc2_era.expand_hero_types(faction.commanders)
+	
+	wesnoth.set_side_variable(side_num, "wc2.heroes", table.concat(heroes, ","))
+	wesnoth.set_side_variable(side_num, "wc2.deserters", table.concat(deserters, ","))
+	wesnoth.set_side_variable(side_num, "wc2.commanders", table.concat(commanders, ","))
 end
 
 
@@ -87,22 +123,82 @@ local function init_side_alienera(side_num)
 end
 
 function wesnoth.wml_actions.wc2_init_era(cfg)
+	cfg = wml.literal(cfg)
+	
+	if cfg.clear then
+		wc2_era.factions_wml = {}
+		wc2_era.hero_types = {}
+	end
+	
 	wc2_era.wc2_era_id = cfg.wc2_era_id -- TODO removed for testing or error("missing wc2_era_id")
-	for value in wml.child_range(wml.literal(cfg), "value") do
-		fix_faction_wml(value)
-		table.insert(wc2_era.factions_wml, value)
+	for faction in wml.child_range(cfg, "faction") do
+		fix_faction_wml(faction)
+		table.insert(wc2_era.factions_wml, faction)
+	end
+	for i,v in ipairs(wml.get_child(cfg, "hero_types")) do
+		wc2_era.hero_types[v[1]] = v[2]
 	end
 end
 
-on_event("prestart", function()
-	if wesnoth.game_config.mp_settings and wesnoth.game_config.mp_settings.mp_era == wc2_era.wc2_era_id then
-		for i, s in ipairs(wesnoth.sides) do
-			init_side(i)
+function wc2_era.pick_deserter(side_num)
+	local deserters = split_to_array(wesnoth.get_side_variable(side_num, "wc2.deserters"))
+	local index = #deserters
+	local res = deserters[index]
+	table.remove(deserters, index)
+	wesnoth.set_side_variable(side_num, "wc2.deserters", table.concat(deserters, ","))
+	return res
+end
+
+function wc2_era.expand_hero_types(types_str)
+	local types = split_to_array(types_str)
+	local types_new = {}
+	local types_res = {}
+	while #types > 0 do
+		for i,v in ipairs(types) do
+			if wesnoth.unit_types[v] then
+				table.insert(types_res, v)
+			else
+				local group = wc2_era.hero_types[v] or helper.wml_error("invalid group id '" .. v .. "'")
+				split_to_array(group.types, types_new)
+			end
 		end
-	else
-		for i, s in ipairs(wesnoth.get_sides { side = "1,2,3"} ) do
-			init_side_alienera(i)
-		end		
+		types = types_new
+		types_new = {}
+	end
+	remove_dublicates(types_res)
+	return types_res
+end
+
+function wc2_era.expand_hero_names(types_str)
+	local types = split_to_array(types_str)
+	local types_new = {}
+	local names_res = {}
+	while #types > 0 do
+		for i,v in ipairs(types) do
+			local ut = wesnoth.unit_types[v]
+			if ut then
+				table.insert(names_res, ut.name)
+			else
+				local group = wc2_era.hero_types[v]
+				if group.name then
+					table.insert(names_res, group.name)
+				else
+					split_to_array(group.types, types_new)
+				end
+			end
+		end
+		types = types_new
+		types_new = {}
+	end
+	return names_res
+end
+
+on_event("prestart", function()
+	for i, s in ipairs(wesnoth.sides) do
+		init_side(i)
+	end
+	if wml.variables["wc2.bonus_heroes"] == nil then
+		wml.variables["wc2.bonus_heroes"] = table.concat(wc2_era.expand_hero_types("Bonus_All"), ",")
 	end
 end)
 
@@ -110,7 +206,6 @@ function wesnoth.wml_actions.wc2_recruit_info(cfg)
 	local side_num = wesnoth.get_viewing_side()
 	local message = {
 		scroll = false,
-		--side_for = wesnoth.get_viewing_side()
 		canrecruit = true,
 		side = side_num,
 		caption = wml.variables["player[" .. side_num .. "].faction.name"],
