@@ -68,16 +68,21 @@ function fix_faction_wml(cfg)
 	end
 end
 
-local function init_side(side_num)
-	local side = wesnoth.sides[side_num]
-	local faction = nil
-	for i, fac in ipairs(wc2_era.factions_wml) do
+function wc2_era.get_faction(id)
+	if type(id) == "number" then
+		id = wesnoth.sides[id].faction
+	end
+	for i, faction in ipairs(wc2_era.factions_wml) do
 		--TODO: compability and dont do this again in later scenarios.
-		if fac.id == side.faction then
-			faction = fac
-			break
+		if faction.id == id then
+			return faction
 		end
 	end
+end
+
+local function init_side(side_num)
+	local side = wesnoth.sides[side_num]
+	local faction = wc2_era.get_faction(side_num)
 
 	if faction and wesnoth.get_side_variable(side_num, "#wc2.pair") == 0 and wml.get_child(faction, "pair") then
 		wesnoth.wml_actions.disallow_recruit { side = side_num, recruit="" }
@@ -203,16 +208,17 @@ on_event("prestart", function()
 end)
 
 function wesnoth.wml_actions.wc2_recruit_info(cfg)
+		
 	local side_num = wesnoth.get_viewing_side()
 	local message = {
 		scroll = false,
 		canrecruit = true,
 		side = side_num,
-		caption = wml.variables["player[" .. side_num .. "].faction.name"],
+		caption = wc2_era.get_faction(side_num).name,
 		message = cfg.message,
 	}
 	
-	for i,v in ipairs(wml.array_access.get("player[" .. side_num.. "].faction.pair")) do
+	for i,v in ipairs(wml.array_access.get("wc2.pair", side_num)) do
 		local p = split_to_array(v.types)
 		local ut1 = wesnoth.unit_types[p[1]]
 		local ut2 = wesnoth.unit_types[p[2]]
