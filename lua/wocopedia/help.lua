@@ -163,7 +163,8 @@ function wesnoth.wml_actions.wc2_show_wocopedia(cfg)
 					wesnoth.set_dialog_text(ut2.name, "training_details", desc_index, "recruit_pairs", j, "label2")
 					wesnoth.set_dialog_value(type_icon(ut2), "training_details", desc_index, "recruit_pairs", j, "image2")
 				end
-				wesnoth.set_dialog_text(faction_info.deserters_names, "training_details", desc_index, "deserters")
+				local deserters_names = faction_info.deserters_names or wesnoth.format_conjunct_list("", wc2_era.expand_hero_names(faction_info.deserters))
+				wesnoth.set_dialog_text(deserters_names, "training_details", desc_index, "deserters")
 				
 				add_index()
 			end
