@@ -3,6 +3,7 @@ local on_event = wesnoth.require("on_event")
 local wc2_era = {}
 wc2_era.factions_wml = {}
 wc2_era.hero_types = {}
+wc2_era.hero_traits = {}
 
 local function split_to_array(s, res)
 	res = res or {}
@@ -133,6 +134,7 @@ function wesnoth.wml_actions.wc2_init_era(cfg)
 	if cfg.clear then
 		wc2_era.factions_wml = {}
 		wc2_era.hero_types = {}
+		wc2_era.hero_traits = {}
 	end
 	
 	wc2_era.wc2_era_id = cfg.wc2_era_id -- TODO removed for testing or error("missing wc2_era_id")
@@ -142,6 +144,12 @@ function wesnoth.wml_actions.wc2_init_era(cfg)
 	end
 	for i,v in ipairs(wml.get_child(cfg, "hero_types")) do
 		wc2_era.hero_types[v[1]] = v[2]
+	end
+	for trait_extra in wml.child_range(cfg, "trait_extra") do
+		
+		local types = split_to_set(trait_extra.types)
+		local trait = wml.get_child(trait_extra, "trait") or helper.wml_error("missing [trait] in [trait_extra]")
+		table.insert(wc2_era.hero_traits, { types = types, trait = trait} )
 	end
 end
 
@@ -175,6 +183,7 @@ function wc2_era.expand_hero_types(types_str)
 end
 
 function wc2_era.expand_hero_names(types_str)
+	-- todo: add names to groups and remove names from factions.
 	local types = split_to_array(types_str)
 	local types_new = {}
 	local names_res = {}
