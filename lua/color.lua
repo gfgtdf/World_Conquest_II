@@ -1,4 +1,5 @@
 --<<
+local color = {}
 local color_info = {
 	red = { text="df3030", rgb="178,38,38" ,},
 	blue = { text = "6e81db", rgb="88,103,175" },
@@ -20,16 +21,43 @@ local color_info = {
 	["9"] = { text = "30cbc0", rgb = "38,162,154"},
 }
 
-function wesnoth.wml_actions.wc2_convert_color(cfg)
-	local color_id = tostring(cfg.color)
-	local res = color_info[color_id]
+function color.get_color_info(id)
+	local res = color_info[id]
 	if not res then
 		print ("unknonw color id:" .. color)
 		res = { text = "cccc33", rgb = "205,205,205" }
 	end
-	
+	return res
+end
+
+function wesnoth.wml_actions.wc2_convert_color(cfg)
+	local color_id = tostring(cfg.color)
+	local res = color.get_color_info(color_id)
 	local var = cfg.variable
 	wml.variables[var .. ".text"] = res.text
 	wml.variables[var .. ".rgb"] = res.rgb
 end
+
+function color.color_text(color_str, text)
+	return "<span color='#" .. color_str .. "'>" .. text .. "</span>"
+end
+
+function color.tc_text(team_num, text)
+	if text == nil then
+		text = team_num
+		team_num = wesnoth.current.side
+	end
+	local color_info = color.get_color_info(wesnoth.sides[team_num].color)
+	return color.color_text(color_info.text, text)
+end
+
+function color.tc_image(team_num, img)
+	if img == nil then
+		img = team_num
+		team_num = wesnoth.current.side
+	end
+	return img .. "~TC(" .. team_num .. ",magenta)"
+end
+
+return color
 -->>
