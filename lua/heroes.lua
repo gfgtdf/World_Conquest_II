@@ -68,6 +68,9 @@ function wc2_heroes.place(t, side, x, y, is_commander)
 		overlays = is_commander and wc2_heroes.commander_overlay or wc2_heroes.hero_overlay,
 		T.modifications (modifications),
 	}
+	if is_commander then
+		u.variables["wc2.is_commander"] = true
+	end
 	local x2,y2 = wesnoth.find_vacant_tile(x, y, u)
 	u:to_map(x2,y2)
 	return u
