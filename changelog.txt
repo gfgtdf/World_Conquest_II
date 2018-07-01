@@ -30,6 +30,10 @@ email=#####
 
 # Changelog:
 
+0.7
+- Most code moved to lua
+- New WoCopedia ui
+- Observer can no no longer see the enemies side
 0.6.13
 - Fixed crash when loading games caused by 'adamant armour '
 - Fixed Winter's bloom not giving cold resistance
