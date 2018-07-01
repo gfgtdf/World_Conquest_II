@@ -84,7 +84,7 @@ local function init_side(side_num)
 	local side = wesnoth.sides[side_num]
 	local faction = wc2_era.get_faction(side_num)
 
-	if faction and wesnoth.get_side_variable(side_num, "#wc2.pair") == 0 and wml.get_child(faction, "pair") then
+	if faction and wesnoth.get_side_variable(side_num, "wc2.pair.length") == 0 and wml.get_child(faction, "pair") then
 		wesnoth.wml_actions.disallow_recruit { side = side_num, recruit="" }
 		local i = 0
 		for v in wml.child_range(faction, "pair") do
