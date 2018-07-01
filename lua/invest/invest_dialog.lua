@@ -186,6 +186,7 @@ local dialog_wml = {
 																			T.label {
 																				horizontal_alignment = "left",
 																				id = "name",
+																				use_markup = true,
 																			},
 																		},
 																	},

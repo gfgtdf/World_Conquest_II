@@ -1,4 +1,5 @@
 local wc2_invest = {}
+local on_event = wesnoth.require("on_event")
 
 
 local function split_to_array(s, res)
@@ -43,13 +44,17 @@ function wc2_invest.initialize()
 		end
 	end
 
-	for side_num, side in wesnoth.sides do
+	for side_num, side in ipairs(wesnoth.sides) do
 		if wc2_scenario.is_human_side(side_num) and not wc2_invest.has_items(side_num) then
 			wesnoth.set_side_variable(side_num, "wc2.items_left", table.concat(all_items, ","))
-			add_items(side_num, 9)
+			wc2_invest.add_items(side_num, 9)
 		end
 	end
 end
+
+on_event("prestart", function()
+	wc2_invest.initialize()
+end)
 
 function wc2_invest.new_scenario()
 	for side_num, side in wesnoth.sides do
@@ -112,21 +117,23 @@ function wc2_invest.do_item(t)
 	local leaders = wesnoth.get_units { side = side_num, canrecruit = true }
 	local x,y = leaders[1].x, leaders[1].y
 	
-	local items_available = split_to_array(wesnoth.get_side_variable(side_num, "wc2.items"))
-	local i = find_index(items_available, t)
+	local items_available = split_to_array(wesnoth.get_side_variable(side_num, "wc2.items"), {}, tonumber)
+	local i = find_index(items_available, tostring(t))
 	if i == nil then
-		error("wc2 invest: invalid pick")
+		error("wc2 invest: invalid item pick '" .. t .. "' (" .. type(t) ..")")
 	end
 	table.remove(items_available, i)
 	wesnoth.set_side_variable(side_num, "wc2.items",table.concat(items_available, ","))
 
-	artifacts.place_item(x, y + 1, t)
+	wc2_artifacts.place_item(x, y + 1, t)
 end
 
 function wc2_invest.invest()
 	local side_num = wesnoth.current.side
 	local items_available = split_to_array(wesnoth.get_side_variable(side_num, "wc2.items"))
 	local heroes_available = split_to_array(wesnoth.get_side_variable(side_num, "wc2.heroes"))
+	local commanders_available = split_to_array(wesnoth.get_side_variable(side_num, "wc2.commanders"))
+	local deserters_available = split_to_array(wesnoth.get_side_variable(side_num, "wc2.deserters"))
 	local trainings_available = {}
 	local gold_available = true
 	for i =1,2 do
@@ -136,7 +143,9 @@ function wc2_invest.invest()
 				items_available = items_available,
 				heroes_available = heroes_available,
 				trainings_available = trainings_available,
-				gold_available = gold_available
+				gold_available = gold_available,
+				deserters_available = deserters_available,
+				commanders_available = commanders_available,
 			}
 		end)
 		if res.pick == "gold" then

@@ -7,6 +7,8 @@ function wc2_show_invest_dialog(args)
 	local side_num = wesnoth.current.side
 	local available_artifacts = args.items_available
 	local available_heroes = args.heroes_available
+	local available_deserters = args.deserters_available
+	local available_commanders = args.commanders_available
 	local available_training = {}
 	
 	local show_artifacts = args.items_available ~= nil
@@ -36,8 +38,10 @@ function wc2_show_invest_dialog(args)
 			wesnoth.set_dialog_value(true, "left_tree", cati_current)
 			wesnoth.set_dialog_value("Artifacts", "left_tree", cati_current, "category_name")
 			for i,v in ipairs(available_artifacts) do
-				artifact_info = wc2_artifacts.list[v]
-				
+				local artifact_info = wc2_artifacts.list[tonumber(v)]
+				if not artifact_info then
+					error("invalid item id'" .. v .. "'")
+				end
 				wesnoth.add_dialog_tree_node("item_desc", i, "left_tree", cati_current)
 				wesnoth.set_dialog_value(artifact_info.icon, "left_tree", cati_current, i, "image")
 				wesnoth.set_dialog_value(artifact_info.name, "left_tree", cati_current, i, "name")
@@ -54,7 +58,23 @@ function wc2_show_invest_dialog(args)
 			wesnoth.add_dialog_tree_node("category", cati_current, "left_tree")
 			wesnoth.set_dialog_value(true, "left_tree", cati_current)
 			wesnoth.set_dialog_value("Heroes", "left_tree", cati_current, "category_name")
-			for i,v in ipairs(available_heroes) do
+			local i = 1
+			if available_commanders then
+				local desc = "Commanders will take your leaders place when the leader dies, possible commanders:"
+				for j,v in ipairs(available_commanders) do
+					desc = desc .. "\n" .. wesnoth.unit_types[v].name
+				end
+				
+				wesnoth.add_dialog_tree_node("item", i, "left_tree", cati_current)
+				wesnoth.set_dialog_value(wc2_color.tc_image("units/unknown-unit.png"), "left_tree", cati_current, i, "image")
+				wesnoth.set_dialog_value("Commander\n" .. wc2_color.tc_text("promote to leader"), "left_tree", cati_current, i, "name")
+
+				wesnoth.add_dialog_tree_node("", -1, "details")
+				wesnoth.set_dialog_value(desc, "details", details_index_counter, "label")
+				add_index(cati_current .. "_" .. i, { pick = "hero", type="wc2_commander" })
+				i = i + 1
+			end
+			for j,v in ipairs(available_heroes) do
 				unit_type = wesnoth.unit_types[v]
 				
 				wesnoth.add_dialog_tree_node("item", i, "left_tree", cati_current)
@@ -64,8 +84,21 @@ function wc2_show_invest_dialog(args)
 				wesnoth.add_dialog_tree_node("hero", -1, "details")
 				wesnoth.set_dialog_value(unit_type, "details", details_index_counter, "unit")
 				add_index(cati_current .. "_" .. i, { pick = "hero", type=v })
+				i = i + 1
 			end
-			--TODO: add desrter and leader
+			if available_deserters then
+				local desc = "<b>possible units:</b>"
+				for j,v in ipairs(available_deserters) do
+					desc = desc .. "\n" .. wesnoth.unit_types[v].name
+				end
+				wesnoth.add_dialog_tree_node("item", i, "left_tree", cati_current)
+				wesnoth.set_dialog_value(wc2_color.tc_image("units/unknown-unit.png"), "left_tree", cati_current, i, "image")
+				wesnoth.set_dialog_value("Deserter\n" .. wc2_color.tc_text("+15 gold"), "left_tree", cati_current, i, "name")
+
+				wesnoth.add_dialog_tree_node("", -1, "details")
+				wesnoth.set_dialog_value(desc, "details", details_index_counter, "label")
+				add_index(cati_current .. "_" .. i, { pick = "hero", type="wc2_deserter" })
+			end
 		end
 
 		if show_training then
