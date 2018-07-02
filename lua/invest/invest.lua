@@ -2,25 +2,9 @@
 local wc2_invest = {}
 local on_event = wesnoth.require("on_event")
 
-local function split_to_array(s, res)
-	res = res or {}
-	for part in tostring(s or ""):gmatch("[^%s,][^,]*") do
-		table.insert(res, part)
-	end
-	return res
-end
-
-local function split_to_set(s, res)
-	res = res or {}
-	for part in tostring(s or ""):gmatch("[^%s,][^,]*") do
-		res[part] = true
-	end
-	return res
-end
-
 function wc2_invest.add_items(side_num, num_items)
-	local items_left = split_to_array(wesnoth.get_side_variable(side_num, "wc2.items_left"))
-	local items_available = split_to_array(wesnoth.get_side_variable(side_num, "wc2.items"))
+	local items_left = wc2_utils.split_to_array(wesnoth.get_side_variable(side_num, "wc2.items_left"))
+	local items_available = wc2_utils.split_to_array(wesnoth.get_side_variable(side_num, "wc2.items"))
 	for j = 1, num_items do
 		local i = wesnoth.random(#items_left)
 		table.insert(items_available, items_left[i])
@@ -38,7 +22,7 @@ end
 function wc2_invest.initialize()
 	local all_items = {}
 	for i,v in ipairs(wc2_artifacts.list) do
-		local not_available = split_to_set(v.not_available or "")
+		local not_available = wc2_utils.split_to_set(v.not_available or "")
 		if not not_available["player"] then
 			table.insert(all_items, i)
 		end
@@ -79,7 +63,7 @@ function wc2_invest.do_hero(t)
 	local leaders = wesnoth.get_units { side = side_num, canrecruit = true }
 	local x,y = leaders[1].x, leaders[1].y
 	if t == "wc2_commander" then
-		local commanders = split_to_array(wesnoth.get_side_variable(side_num, "wc2.commanders"))
+		local commanders = wc2_utils.split_to_array(wesnoth.get_side_variable(side_num, "wc2.commanders"))
 		local i = wesnoth.random(#commanders)
 		t = commanders[i]
 		table.remove(commanders, i)
@@ -89,14 +73,14 @@ function wc2_invest.do_hero(t)
 
 		wesnoth.sides[side_num].gold = wesnoth.sides[side_num].gold + 15
 
-		local deserters = split_to_array(wesnoth.get_side_variable(side_num, "wc2.deserters"))
+		local deserters = wc2_utils.split_to_array(wesnoth.get_side_variable(side_num, "wc2.deserters"))
 		local i = wesnoth.random(#deserters)
 		t = deserters[i]
 		table.remove(deserters, i)
 		wesnoth.set_side_variable(side_num, "wc2.deserters", table.concat(deserters, ","))
 		wc2_heroes.place(t, side_num, x, y, false)
 	else
-		local heroes_available = split_to_array(wesnoth.get_side_variable(side_num, "wc2.heroes"))
+		local heroes_available = wc2_utils.split_to_array(wesnoth.get_side_variable(side_num, "wc2.heroes"))
 		local i = find_index(heroes_available, t)
 		if i == nil then
 			error("wc2 invest: invalid pick")
@@ -117,7 +101,7 @@ function wc2_invest.do_item(t)
 	local leaders = wesnoth.get_units { side = side_num, canrecruit = true }
 	local x,y = leaders[1].x, leaders[1].y
 	
-	local items_available = split_to_array(wesnoth.get_side_variable(side_num, "wc2.items"), {}, tonumber)
+	local items_available = wc2_utils.split_to_array(wesnoth.get_side_variable(side_num, "wc2.items"), {}, tonumber)
 	local i = find_index(items_available, tostring(t))
 	if i == nil then
 		error("wc2 invest: invalid item pick '" .. t .. "' (" .. type(t) ..")")
@@ -130,10 +114,10 @@ end
 
 function wc2_invest.invest()
 	local side_num = wesnoth.current.side
-	local items_available = split_to_array(wesnoth.get_side_variable(side_num, "wc2.items"))
-	local heroes_available = split_to_array(wesnoth.get_side_variable(side_num, "wc2.heroes"))
-	local commanders_available = split_to_array(wesnoth.get_side_variable(side_num, "wc2.commanders"))
-	local deserters_available = split_to_array(wesnoth.get_side_variable(side_num, "wc2.deserters"))
+	local items_available = wc2_utils.split_to_array(wesnoth.get_side_variable(side_num, "wc2.items"))
+	local heroes_available = wc2_utils.split_to_array(wesnoth.get_side_variable(side_num, "wc2.heroes"))
+	local commanders_available = wc2_utils.split_to_array(wesnoth.get_side_variable(side_num, "wc2.commanders"))
+	local deserters_available = wc2_utils.split_to_array(wesnoth.get_side_variable(side_num, "wc2.deserters"))
 	local trainings_available = {}
 	local gold_available = true
 	for i =1,2 do
