@@ -57,6 +57,7 @@ function artifacts.give_item(unit, index, visualize)
 		end
 	end
 
+	--todo: and not unit.variables.wc2.is_commander or hero
 	if not unit.canrecruit and unit.upkeep ~= 0 and unit.upkeep ~= "loyal" then
 		unit:add_modification("object", { apply_to = "wc2_overlay", add = "misc/loyal-icon.png" }, false )
 	end
@@ -75,6 +76,7 @@ function artifacts.give_item(unit, index, visualize)
 	for effect in helper.child_range(artifacts.list[index], "effect") do
 		table.insert(object, T.effect (effect) )
 	end
+	-- todo: make loyal.
 	unit:add_modification("object", object)
 	
 	for trait in helper.child_range(artifacts.list[index], "trait") do
@@ -118,12 +120,11 @@ on_event("prestart", function()
 		if not not_available.enemy then
 			table.insert(enemy_items, i)
 			-- the current code expects a wml array.
-			wml.variables["enemy_army.artifact[" .. wml.variables["enemy_army.artifact.length"] .. "].type"] = i
 		end
-				
 	end
-	if wml.variables["wc2.bonus_heroes"] == nil then
-		wml.variables["wc2.bonus_heroes"] = table.concat(wc2_era.expand_hero_types("Bonus_All"), ",")
+
+	if wml.variables["enemy_army.artifacts"] == nil then
+		wml.variables["enemy_army.artifacts"] = table.concat(enemy_items, ",")
 	end
 end)
 
@@ -196,6 +197,25 @@ end
 function wesnoth.wml_actions.wc2_give_item(cfg)
 	local units = wesnoth.get_units (wml.get_child(cfg, "filter"))
 	artifacts.give_item(units[1], cfg.item_index, cfg.visualize)
+end
+
+function wesnoth.wml_actions.wc2_give_enemy_item(cfg)
+	local units = wesnoth.get_units (wml.get_child(cfg, "filter"))
+	local unit = units[1]
+	local enemy_items = wc2_utils.split_to_array(wml.variables["enemy_army.artifacts"])
+	-- list of indexes to enemy_items
+	local possible_artifacts = {}
+	for i, v in ipairs(enemy_items) do
+		local filter = wml.get_child(artifacts.list[tonumber(v)])
+		if not filter or unit:matches(filter) then
+			table.insert(possible_artifacts, i)
+		end
+	end
+	local i = possible_artifacts[wesnoth.random(#possible_artifacts)]
+	local artifact_id = enemy_items[i]
+	table.remove(enemy_items, i)
+	artifacts.give_item(unit, artifact_id, false)
+	wml.variables["enemy_army.artifacts"] = table.concat(enemy_items, ",")
 end
 
 function wesnoth.wml_actions.wc2_place_item(cfg)
