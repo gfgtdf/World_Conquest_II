@@ -105,7 +105,50 @@ on_event("wc2_drop_pickup", function(event_context)
 	wesnoth.allow_undo(false)
 end)
 
+on_event("prestart", function()
+	local bonus_items = {}
+	local enemy_items = {}
+	for i,v in ipairs(artifacts.list) do
+		local not_available = wc2_utils.split_to_set(v.not_available or "")
 
+		-- the current code expects a wml array.
+		wml.variables["bonus.artifact[" .. wml.variables["bonus.artifact.length"] .. "].type"] = i
+		table.insert(bonus_items, i)
+		if not not_available.enemy then
+			table.insert(enemy_items, i)
+			-- the current code expects a wml array.
+			wml.variables["enemy_army.artifact[" .. wml.variables["enemy_army.artifact.length"] .. "].type"] = i
+		end
+				
+	end
+	if wml.variables["wc2.bonus_heroes"] == nil then
+		wml.variables["wc2.bonus_heroes"] = table.concat(wc2_era.expand_hero_types("Bonus_All"), ",")
+	end
+end)
+
+
+--[[
+	todo: the original code showed the item message in a last breathe event.
+	
+	## drop item on death
+	[event]
+		name=last breath
+		first_time_only=no
+		[filter]
+			id=$enemy[$unit.side].item.unit_id
+		[/filter]
+		{WCT_ARTIFACT_DROP_MESSAGE $enemy[$unit.side].item.type}
+	[/event]
+	[event]
+		name=die
+		first_time_only=no
+		[filter]
+			id=$enemy[$unit.side].item.unit_id
+		[/filter]
+		{WCT_ARTIFACT_ITEM $x1 $y1 $enemy[$unit.side].item.type}
+		{CLEAR_VARIABLE enemy[$unit.side].item}
+	[/event]
+]]
 on_event("die", function(event_context)
 	local unit = wesnoth.get_unit(event_context.x1, event_context.y1)
 
@@ -146,6 +189,19 @@ function wesnoth.wml_actions.wc2_show_item_info(cfg)
 				message= artifact_info.info .. "\n" .. artifacts.color_help(artifact_info.description),
 			}
 		end
+	end
+end
+
+function wesnoth.wml_actions.wc2_give_item(cfg)
+	local units = wesnoth.get_units (wml.get_child(cfg, "filter"))
+	artifacts.give_item(units[1], cfg.item_index, cfg.visualize)
+end
+
+function wesnoth.wml_actions.wc2_place_item(cfg)
+	artifacts.place_item(cfg.x, cfg.y, cfg.item_index)
+	if cfg.message then
+		-- todo: was this before the actual dropping in the riginal code?
+		artifacts.drop_message(cfg.item_index)
 	end
 end
 
