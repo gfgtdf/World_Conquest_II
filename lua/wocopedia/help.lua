@@ -6,23 +6,6 @@ function wesnoth.set_dialog_text(text, ...)
 	wesnoth.set_dialog_value(text, ...)		
 end
 
-
-local function split_to_array(s)
-	local res = {}
-	for part in tostring(s or ""):gmatch("[^%s,][^,]*") do
-		table.insert(res, part)
-	end
-	return res
-end
-
-local function split_to_set(s)
-	local res = {}
-	for part in tostring(s or ""):gmatch("[^%s,][^,]*") do
-		res[part] = true
-	end
-	return res
-end
-
 function wesnoth.wml_actions.wc2_show_wocopedia(cfg)
 		
 	local show_help_general = true
@@ -152,7 +135,7 @@ function wesnoth.wml_actions.wc2_show_wocopedia(cfg)
 				j = 0
 				for p_wml in wml.child_range(faction_info, "pair") do
 					j = j + 1
-					local p = split_to_array(p_wml.types)
+					local p = wc2_utils.split_to_array(p_wml.types)
 					local ut1 = wesnoth.unit_types[p[1]] or error("invald unit type" .. tostring(p[1]))
 					local ut2 = wesnoth.unit_types[p[2]] or error("invald unit type" .. tostring(p[2]))
 				
@@ -191,7 +174,7 @@ function wesnoth.wml_actions.wc2_show_wocopedia(cfg)
 				local artifact_icon = wml.variables["wct.artifact[" .. i .. "].icon"] or ""
 				local artifact_name = wml.variables["wct.artifact[" .. i .. "].name"] or ""
 				local artifact_desc = wml.variables["wct.artifact[" .. i .. "].description"] or ""
-				local not_available = split_to_set(wml.variables["wct.artifact[" .. i .. "].not_available"] or "")
+				local not_available = wc2_utils.split_to_set(wml.variables["wct.artifact[" .. i .. "].not_available"] or "")
 
 				if not_available.player then
 					artifact_name = artifact_name .. str_now_for_players
