@@ -5,22 +5,6 @@ wc2_era.factions_wml = {}
 wc2_era.hero_types = {}
 wc2_era.hero_traits = {}
 
-local function split_to_array(s, res)
-	res = res or {}
-	for part in tostring(s or ""):gmatch("[^%s,][^,]*") do
-		table.insert(res, part)
-	end
-	return res
-end
-
-local function split_to_set(s, res)
-	res = res or {}
-	for part in tostring(s or ""):gmatch("[^%s,][^,]*") do
-		res[part] = true
-	end
-	return res
-end
-
 local function remove_dublicates(t)
 	local found = {}
 	for i = #t, 1, -1 do
@@ -41,7 +25,7 @@ on_event("recruit", function(ctx)
 	local unittype = unit.type
 	
 	for i,v in ipairs(wml.array_access.get("wc2.pair", side)) do
-		local p = split_to_array(v.types)
+		local p = wc2_utils.split_to_array(v.types)
 		if p[1] == unittype and p[2] ~= nil then
 			wesnoth.wml_actions.disallow_recruit {
 				side = side_num,
@@ -90,7 +74,7 @@ local function init_side(side_num)
 		local i = 0
 		for v in wml.child_range(faction, "pair") do
 			i = i + 1
-			local p = split_to_array(v.types)
+			local p = wc2_utils.split_to_array(v.types)
 			if wesnoth.random(1,2) == 2 then
 				p[1],p[2] = p[2],p[1]
 			end
@@ -147,14 +131,14 @@ function wesnoth.wml_actions.wc2_init_era(cfg)
 	end
 	for trait_extra in wml.child_range(cfg, "trait_extra") do
 		
-		local types = split_to_set(trait_extra.types)
+		local types = wc2_utils.split_to_set(trait_extra.types)
 		local trait = wml.get_child(trait_extra, "trait") or helper.wml_error("missing [trait] in [trait_extra]")
 		table.insert(wc2_era.hero_traits, { types = types, trait = trait} )
 	end
 end
 
 function wc2_era.pick_deserter(side_num)
-	local deserters = split_to_array(wesnoth.get_side_variable(side_num, "wc2.deserters"))
+	local deserters = wc2_utils.split_to_array(wesnoth.get_side_variable(side_num, "wc2.deserters"))
 	local index = #deserters
 	local res = deserters[index]
 	table.remove(deserters, index)
@@ -163,7 +147,7 @@ function wc2_era.pick_deserter(side_num)
 end
 
 function wc2_era.expand_hero_types(types_str)
-	local types = split_to_array(types_str)
+	local types = wc2_utils.split_to_array(types_str)
 	local types_new = {}
 	local types_res = {}
 	while #types > 0 do
@@ -172,7 +156,7 @@ function wc2_era.expand_hero_types(types_str)
 				table.insert(types_res, v)
 			else
 				local group = wc2_era.hero_types[v] or helper.wml_error("invalid group id '" .. v .. "'")
-				split_to_array(group.types, types_new)
+				wc2_utils.split_to_array(group.types, types_new)
 			end
 		end
 		types = types_new
@@ -184,7 +168,7 @@ end
 
 function wc2_era.expand_hero_names(types_str)
 	-- todo: add names to groups and remove names from factions.
-	local types = split_to_array(types_str)
+	local types = wc2_utils.split_to_array(types_str)
 	local types_new = {}
 	local names_res = {}
 	while #types > 0 do
@@ -197,7 +181,7 @@ function wc2_era.expand_hero_names(types_str)
 				if group.name then
 					table.insert(names_res, group.name)
 				else
-					split_to_array(group.types, types_new)
+					wc2_utils.split_to_array(group.types, types_new)
 				end
 			end
 		end
@@ -228,7 +212,7 @@ function wesnoth.wml_actions.wc2_recruit_info(cfg)
 	}
 	
 	for i,v in ipairs(wml.array_access.get("wc2.pair", side_num)) do
-		local p = split_to_array(v.types)
+		local p = wc2_utils.split_to_array(v.types)
 		local ut1 = wesnoth.unit_types[p[1]]
 		local ut2 = wesnoth.unit_types[p[2]]
 		local img = "misc/blank.png~SCALE(144,72)" .. 
