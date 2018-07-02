@@ -34,6 +34,7 @@ email=#####
 - Most code moved to lua
 - New WoCopedia ui
 - Observer can no no longer see the enemies side
+- unit can no longer pickup items that won't give them anything
 0.6.13
 - Fixed crash when loading games caused by 'adamant armour '
 - Fixed Winter's bloom not giving cold resistance
