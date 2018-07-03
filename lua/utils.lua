@@ -55,5 +55,11 @@ function wc2_utils.pick_random(str)
 	end
 end
 
+function wc2_utils.facing_each_other(u1,u2)
+	u1.facing = wesnoth.map.get_relative_dir(u1.x, u1.y, u2.x, u2.y)
+	u2.facing = wesnoth.map.get_relative_dir(u2.x, u2.y, u1.x, u1.y)
+	wesnoth.wml_actions.redraw {}
+end
+
 return wc2_utils
 -->>
