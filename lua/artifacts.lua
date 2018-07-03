@@ -123,21 +123,10 @@ end)
 
 on_event("prestart", function()
 	local bonus_items = {}
-	local enemy_items = {}
 	for i,v in ipairs(artifacts.list) do
-		local not_available = wc2_utils.split_to_set(v.not_available or "")
-
 		-- the current code expects a wml array.
 		wml.variables["bonus.artifact[" .. wml.variables["bonus.artifact.length"] .. "].type"] = i
 		table.insert(bonus_items, i)
-		if not not_available.enemy then
-			table.insert(enemy_items, i)
-			-- the current code expects a wml array.
-		end
-	end
-
-	if wml.variables["enemy_army.artifacts"] == nil then
-		wml.variables["enemy_army.artifacts"] = table.concat(enemy_items, ",")
 	end
 end)
 
