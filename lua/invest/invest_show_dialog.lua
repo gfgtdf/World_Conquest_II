@@ -9,11 +9,11 @@ function wc2_show_invest_dialog(args)
 	local available_heroes = args.heroes_available
 	local available_deserters = args.deserters_available
 	local available_commanders = args.commanders_available
-	local available_training = {}
+	local available_training = args.trainings_available
 	
 	local show_artifacts = args.items_available ~= nil
 	local show_heroes = args.heroes_available ~= nil
-	local show_training = false
+	local show_training = args.trainings_available ~= nil
 	local show_other = args.gold_available
 
 	local cati_items, cati_heroes, cati_training, cati_other
@@ -108,12 +108,12 @@ function wc2_show_invest_dialog(args)
 			wesnoth.set_dialog_value("Training", "left_tree", cati_current, "category_name")
 			for i,v in ipairs(available_training) do
 				local current_grade = 1
-				local training_info = cdm_training.trainers[v]
-				local train_message = cdm_training.generate_message(v, 2)
-				local train_message_before = cdm_training.generate_message(v, 1)
+				local training_info = wc2_training.trainers[v]
+				local train_message = wc2_training.generate_message(v, 2)
+				local train_message_before = wc2_training.generate_message(v, 1)
 
 				local title = wesnoth.format(_ "$name Training", { name = training_info.name })
-				local desc = cdm_training.describe_training_level2(current_grade, #training_info.grades) .. wc2_color.tc_text(" → ") .. cdm_training.describe_training_level2(current_grade + 1, #training_info.grades)
+				local desc = wc2_training.describe_training_level2(current_grade, #training_info.grades) .. wc2_color.tc_text(" → ") .. wc2_training.describe_training_level2(current_grade + 1, #training_info.grades)
 	
 				wesnoth.add_dialog_tree_node("item_desc", i, "left_tree", cati_current)
 				wesnoth.set_dialog_value(train_message.image, "left_tree", cati_current, i, "image")
