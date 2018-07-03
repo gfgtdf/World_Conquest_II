@@ -55,6 +55,19 @@ function wc2_utils.pick_random(str)
 	end
 end
 
+--like table concat but for tstrings.
+function wc2_utils.concat(t, sep)
+	local res = t[1]
+	if not res then
+		return ""
+	end
+	for i = 2, #t do
+		-- uses .. so we dont hae to call tostring. so this function can still return a tstring.
+		res = res .. sep .. t[i]
+	end
+	return res
+end
+
 function wc2_utils.facing_each_other(u1,u2)
 	u1.facing = wesnoth.map.get_relative_dir(u1.x, u1.y, u2.x, u2.y)
 	u2.facing = wesnoth.map.get_relative_dir(u2.x, u2.y, u1.x, u1.y)
