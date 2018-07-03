@@ -10,14 +10,15 @@ wc2_heroes.dialogues = {
 	}
 }
 wc2_heroes.trait_heroic = nil
-
+if wesnoth.have_file("./unittypedata.lua") then
+	local data = wesnoth.dofile("./unittypedata.lua")
+	for v,k in pairs(data) do
+		wc2_heroes.dialogues[v] = k
+	end
+end
 
 function wc2_heroes.find_dialogue(t)
-	for i,v in ipairs(wc2_heroes.dialogues) do
-		if v.type == t then
-			return v
-		end
-	end
+	return wc2_heroes.dialogues[t] or wc2_heroes.dialogues.default
 end
 -- todo: call this one and also initialize the dialogues.
 function wc2_heroes.init_data(cfg)
@@ -76,13 +77,14 @@ function wc2_heroes.place(t, side, x, y, is_commander)
 end
 
 function wesnoth.wml_actions.wc2_place_hero(cfg)
-	wc2_heroes.place(
+	local u = wc2_heroes.place(
 		cfg.type or helper.wml_error("missing type= attribute in [wc2_place_hero]"),
 		cfg.side or helper.wml_error("missing side= attribute in [wc2_place_hero]"),
 		cfg.x or helper.wml_error("missing x= attribute in [wc2_place_hero]"),
 		cfg.y or helper.wml_error("missing y= attribute in [wc2_place_hero]"),
 		cfg.is_commander
 	)
+	wml.variables[cfg.variable or "hero"] = u.id
 	-- fixes BfW 1.12 fog bug
 	wesnoth.wml_actions.redraw {}
 end
@@ -97,27 +99,32 @@ function wesnoth.wml_actions.wc2_random_hero(cfg)
 end
 
 function wc2_heroes.founddialouge(finder, found)
-	local type_dialogue = wc2_heroes.find(found.type)
+	local type_dialogue = wc2_heroes.find_dialogue(found.type)
 	-- todo: use wc2_message
-	wesnoth.wml_actions.message {
+	wesnoth.wml_actions.wc2_message {
 		id = found.id,
-		message = type_dialogue.founddialogue or wc2_heroes.dialogues.default.founddialogue,
+		message = type_dialogue.founddialogue,
 	}
 	local reply = type_dialogue.reply or wc2_heroes.dialogues.default.reply
 
-	local function matches(attr)
-		return string.match(alt_replay[attr] or "", finder[attr])
-	end
-
-	for alt_replay in helper.child_range(type_dialogue, "alt_reply") do 
+	for i, alt_replay in ipairs(type_dialogue.alt_reply or {}) do 
+		local function matches(attr)
+			return string.match(alt_replay[attr] or "", finder[attr])
+		end
 		if matches("race") or matches("gender") or matches("type") then
 			reply = alt_replay.reply
 		end
 	end
-	wesnoth.wml_actions.message {
+	wesnoth.wml_actions.wc2_message {
 		id = finder.id,
 		message = reply,
 	}
+end
+
+function wesnoth.wml_actions.wc2_founddialogue(cfg)
+	local u_finder = wesnoth.get_unit(cfg.finder)
+	local u_found = wesnoth.get_unit(cfg.found)
+	wc2_heroes.founddialouge(u_finder, u_found)
 end
 
 return wc2_heroes
