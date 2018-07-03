@@ -68,6 +68,18 @@ function wc2_utils.concat(t, sep)
 	return res
 end
 
+function wc2_utils.range(a1,a2)
+	if a2 == nil then
+		a2 = a1
+		a1 = 1
+	end
+	local res = {}
+	for i = a1, a2 do
+		res[i] = i
+	end
+	return res
+end
+
 function wc2_utils.facing_each_other(u1,u2)
 	u1.facing = wesnoth.map.get_relative_dir(u1.x, u1.y, u2.x, u2.y)
 	u2.facing = wesnoth.map.get_relative_dir(u2.x, u2.y, u1.x, u1.y)
