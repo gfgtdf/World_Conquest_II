@@ -200,6 +200,10 @@ on_event("prestart", function()
 	end
 end)
 
+function wesnoth.wml_actions.wc2_pick_bonus_hero(cfg)
+	wml.variables[cfg.variable] = wc2_utils.pick_random("wc2.bonus_heroes")
+end
+
 function wesnoth.wml_actions.wc2_recruit_info(cfg)
 		
 	local side_num = wesnoth.get_viewing_side()
