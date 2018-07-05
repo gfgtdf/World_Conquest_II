@@ -103,7 +103,6 @@ end
 
 function wc2_heroes.founddialouge(finder, found)
 	local type_dialogue = wc2_heroes.find_dialogue(found.type)
-	-- todo: use wc2_message
 	wesnoth.wml_actions.wc2_message {
 		id = found.id,
 		message = type_dialogue.founddialogue,
