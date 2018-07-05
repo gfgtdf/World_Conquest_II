@@ -215,9 +215,11 @@ function training.apply(u)
 		for unused, chance in ipairs(training.get_chanches(i, level)) do
 			--some effects use expressions like $(5+{GRADE}) so we want variable_substitution there
 			-- while others contain effects that add abilities, that will break if we do variable sustitution now.
-			-- todo: fix this.
+			-- todo: fix this., todo: this might no longer be true as no mainline abilities need variable substutuion nowdays.
 			local vchance = chance.variable_substitution ~= false  and wesnoth.tovconfig(chance) or chance
-			if wesnoth.random(100) <= vchance.value then
+			local filter = wml.get_child(vchance, "filter")
+			local matches_filter = (not filter) or u:matches(filter)
+			if wesnoth.random(100) <= vchance.value and matches_filter then
 				--wesnoth.wml_actions.message { message = "Got it" }
 				table.insert(descriptions, vchance.info)
 				for effect in helper.child_range(vchance, "effect") do
