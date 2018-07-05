@@ -59,6 +59,7 @@ function artifacts.give_item(unit, index, visualize)
 
 	--todo: and not unit.variables.wc2.is_commander or hero
 	if not unit.canrecruit and unit.upkeep ~= 0 and unit.upkeep ~= "loyal" then
+		-- todow16: use an actual [effect].
 		unit:add_modification("object", { apply_to = "wc2_overlay", add = "misc/loyal-icon.png" }, false )
 	end
 
@@ -66,7 +67,7 @@ function artifacts.give_item(unit, index, visualize)
 		wc2_atrifact_id = index,
 		-- cannot filter on wc2_atrifact_id beeing empty so we also need wc2_is_artifact
 		wc2_is_artifact = true,
-		T.effect { apply_to = "status", add = "carrying_artifact" },
+		T.effect { apply_to= "loyal" },
 	}
 	-- TODO: i _could_ replace the follwing with a 'apply_to=wc2_artifact' effect that
 	--       basicially applies all effects in the [artifact]s definition. The obvious
@@ -76,7 +77,6 @@ function artifacts.give_item(unit, index, visualize)
 	for effect in helper.child_range(artifacts.list[index], "effect") do
 		table.insert(object, T.effect (effect) )
 	end
-	-- todo: make loyal.
 	unit:add_modification("object", object)
 	
 	for trait in helper.child_range(artifacts.list[index], "trait") do
