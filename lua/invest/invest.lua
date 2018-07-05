@@ -68,6 +68,7 @@ function wc2_invest.do_hero(t)
 		t = commanders[i]
 		table.remove(commanders, i)
 		wesnoth.set_side_variable(side_num, "wc2.commanders", table.concat(commanders, ","))
+		wc2_invest_tellunit.execute(t)
 		wc2_heroes.place(t, side_num, x, y, true)
 	elseif t == "wc2_deserter" then
 
@@ -78,6 +79,7 @@ function wc2_invest.do_hero(t)
 		t = deserters[i]
 		table.remove(deserters, i)
 		wesnoth.set_side_variable(side_num, "wc2.deserters", table.concat(deserters, ","))
+		wc2_invest_tellunit.execute(t)
 		wc2_heroes.place(t, side_num, x, y, false)
 	else
 		local heroes_available = wc2_utils.split_to_array(wesnoth.get_side_variable(side_num, "wc2.heroes"))
