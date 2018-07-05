@@ -58,14 +58,13 @@ function wc2_heroes.place(t, side, x, y, is_commander)
 	local hero_overlay = "misc/hero-icon.png"
 
 	local modifications = wc2_heroes.generate_traits(t)
-	table.insert(modifications, 1, T.advancement (wc2_heroes.experience_penalty()))
+	table.insert(modifications, 1, T.advancement { wc2_scenario.experience_penalty() })
 
 	local u = wesnoth.create_unit { 
 		type = t, 
 		side = side,
 		random_traits = false,
 		overlays = is_commander and commander_overlay or hero_overlay,
-		-- todo: WCT_RECRUIT_EXPERIENCE_PENALTY
 		T.modifications (modifications),
 	}
 	if is_commander then
