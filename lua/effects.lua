@@ -153,6 +153,12 @@ function wesnoth.effects.wc2_overlay(u, cfg)
 	wesnoth.add_modification(u, "overlay", cfg, false)
 end
 
+-- can move in same turn as when recruited/recalled
+function wesnoth.effects.wc2_move_on_recruit(u, cfg)
+	-- maybe better use a status than a variable ?
+	u.variables["mods.wc2_move_on_recruit"] = true
+end
+
 -- similar to the usualy overlay but does not add overlays the the unit already has.
 function wesnoth.effects.wc2_recall_cost(u, cfg)
 	local t = wesnoth.unit_types[u.type]
