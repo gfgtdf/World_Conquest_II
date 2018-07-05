@@ -61,7 +61,7 @@ function wc2_heroes.place(t, side, x, y, is_commander)
 	--print("wc2_heroes.place type=" .. t .. " side=" .. side)
 
 	local modifications = wc2_heroes.generate_traits(t)
-	table.insert(modifications, 1, T.advancement (wc2_heroes.experience_penalty()))
+	table.insert(modifications, 1, T.advancement { wc2_scenario.experience_penalty() })
 
 	local u = wesnoth.create_unit { 
 		type = t, 
