@@ -64,6 +64,7 @@ function wc2_heroes.place(t, side, x, y, is_commander)
 		type = t, 
 		side = side,
 		random_traits = false,
+		role = is_commander and "commander" or nil,
 		overlays = is_commander and commander_overlay or hero_overlay,
 		T.modifications (modifications),
 	}
