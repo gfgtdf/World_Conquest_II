@@ -108,20 +108,19 @@ function wc2_show_invest_dialog_impl(args)
 			wesnoth.set_dialog_value(true, "left_tree", cati_current)
 			wesnoth.set_dialog_value("Training", "left_tree", cati_current, "category_name")
 			for i,v in ipairs(available_training) do
-				local current_grade = 1
+				local current_grade = wc2_training.get_level(side_num, v)
 				local training_info = wc2_training.trainers[v]
-				local train_message = wc2_training.generate_message(v, 2)
-				local train_message_before = wc2_training.generate_message(v, 1)
+				local train_message = wc2_training.generate_message(v, current_grade + 1)
+				local train_message_before = wc2_training.generate_message(v, current_grade)
 
 				local title = wesnoth.format(_ "$name Training", { name = training_info.name })
 				local desc = wc2_training.describe_training_level2(current_grade, #training_info.grades) .. wc2_color.tc_text(" → ") .. wc2_training.describe_training_level2(current_grade + 1, #training_info.grades)
 	
 				wesnoth.add_dialog_tree_node("item_desc", i, "left_tree", cati_current)
-				wesnoth.set_dialog_value(train_message.image, "left_tree", cati_current, i, "image")
+				wesnoth.set_dialog_value(training_info.image, "left_tree", cati_current, i, "image")
 				wesnoth.set_dialog_value(title, "left_tree", cati_current, i, "name")
 				wesnoth.set_dialog_value(desc, "left_tree", cati_current, i, "desc")
 				
-				--wc2_color.color_text("baac7d", "<big>Before:</big>\n")
 				wesnoth.add_dialog_tree_node("", -1, "details")
 				local label  = wc2_color.tc_text("<big>Before:</big>\n") .. train_message_before.message .. wc2_color.tc_text("\n<big>After:</big>\n") .. train_message.message
 				wesnoth.set_dialog_value(label , "details", details_index_counter, "label")
