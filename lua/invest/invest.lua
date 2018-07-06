@@ -94,7 +94,8 @@ function wc2_invest.do_hero(t)
 end
 
 function wc2_invest.do_training(t)
-	
+	local side_num = wesnoth.current.side
+	wc2_training.inc_level(side_num, t)
 end
 
 function wc2_invest.do_item(t)
@@ -119,7 +120,7 @@ function wc2_invest.invest()
 	local heroes_available = wc2_utils.split_to_array(wesnoth.get_side_variable(side_num, "wc2.heroes"))
 	local commanders_available = wc2_utils.split_to_array(wesnoth.get_side_variable(side_num, "wc2.commanders"))
 	local deserters_available = wc2_utils.split_to_array(wesnoth.get_side_variable(side_num, "wc2.deserters"))
-	local trainings_available = wc2_training.list_available(side_num)
+	local trainings_available = wc2_training.list_available(side_num, {2,3,4,5,6})
 	local gold_available = true
 	for i =1,2 do
 		-- todo translate
