@@ -87,9 +87,9 @@ function artifacts.give_item(unit, index, visualize)
 	end
 end
 
-on_event("wc2_drop_pickup", function(event_context)
+on_event("wc2_drop_pickup", function(ec)
 	local item = wc2_dropping.current_item
-	local unit = wesnoth.get_unit(event_context.x1, event_context.y1)
+	local unit = wesnoth.get_unit(ec.x1, ec.y1)
 	if not item.wc2_atrifact_id then 
 		return
 	end
@@ -97,12 +97,26 @@ on_event("wc2_drop_pickup", function(event_context)
 	if not unit then 
 		return
 	end
+
+	local side_num = unit.side
+	local is_human = wc2_scenario.is_human_side(side_num)
+	if not wml.variables["wc2_config_experimental_pickup"] and not is_human  then
+		return
+	end
 	
-	if not wml.variables["wc2_config_experimental_pickup"] and not wc2_scenario.is_human_side(wesnoth.current.side) then
+
+	local index = item.wc2_atrifact_id
+	local filter = wml.get_child(artifacts.list[index], "filter")
+	if filter and not unit:matches(filter) then
+		if is_human then
+			wesnoth.wml_actions.wc2_message {
+				id = unit.id,
+				message = _"I cannot pick up that item.",
+			}
+		end
 		return
 	end
 
-	local index = item.wc2_atrifact_id
 	wc2_dropping.item_taken = true
 	artifacts.give_item(unit, index, true)
 	wesnoth.allow_undo(false)
@@ -206,7 +220,7 @@ function wesnoth.wml_actions.wc2_give_enemy_item(cfg)
 	-- list of indexes to enemy_items
 	local possible_artifacts = {}
 	for i, v in ipairs(enemy_items) do
-		local filter = wml.get_child(artifacts.list[tonumber(v)])
+		local filter = wml.get_child(artifacts.list[tonumber(v)], "filter")
 		if not filter or unit:matches(filter) then
 			table.insert(possible_artifacts, i)
 		end
