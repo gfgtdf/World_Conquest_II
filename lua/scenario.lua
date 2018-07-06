@@ -6,6 +6,10 @@ function wc2_scenario.is_human_side(side_num)
 	return side_num == 1 or side_num == 2 or side_num == 3
 end
 
+function wc2_scenario.scenario_num()
+	return wml.variables["scenario"] or 1
+end
+
 function wc2_scenario.experience_penalty()
 	return  T.effect {
 		apply_to = "max_experience",
