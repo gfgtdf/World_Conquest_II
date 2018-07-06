@@ -3,7 +3,8 @@ local _ = wesnoth.textdomain 'wesnoth'
 
 local dialog_wml = wc2_invest_dialog
 
-function wc2_show_invest_dialog(args)
+
+function wc2_show_invest_dialog_impl(args)
 	local side_num = wesnoth.current.side
 	local available_artifacts = args.items_available
 	local available_heroes = args.heroes_available
@@ -162,10 +163,18 @@ function wc2_show_invest_dialog(args)
 			res = selected_data.res
 		end, "left_tree")
 	end
-	wesnoth.show_dialog(dialog_wml, preshow)
-
-	return res
+	local d_res = wesnoth.show_dialog(dialog_wml, preshow)
+	return d_res, res
 end
 
+function wc2_show_invest_dialog(args)
+	--do it in a loop to disable esc.
+	while true do
+		local d_res, res = wc2_show_invest_dialog_impl(args)
+		if d_res ~= -2 then
+			return res
+		end
+	end
+end
 return wc2_show_invest_dialog
 -->>
