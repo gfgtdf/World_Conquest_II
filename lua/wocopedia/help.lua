@@ -9,7 +9,7 @@ end
 function wesnoth.wml_actions.wc2_show_wocopedia(cfg)
 		
 	local show_help_general = true
-	local show_help_training = false
+	local show_help_training = true
 	local show_help_factions = true
 	local show_help_artifacts = true
 	-- maps the treeview rows to pagenumber in the help page.
@@ -87,10 +87,10 @@ function wesnoth.wml_actions.wc2_show_wocopedia(cfg)
 			add_index()
 			tree_enter_mode()
 			-- add specific training pages
-			for i = 1, #cdm_training.trainers do
-				local current_level = cdm_training.get_level(current_side, i)
+			for i = 1, #wc2_training.trainers do
+				local current_level = wc2_training.get_level(current_side, i)
 				local function set_description(train_num, j)
-					local desc = cdm_training.generate_message(i, train_num)
+					local desc = wc2_training.generate_message(i, train_num)
 					if train_num == current_level then
 						desc.caption = "<span color='#00FF00'>" .. desc.caption .. "</span>"
 						desc.message = "<span color='#00FF00'>" .. desc.message .. "</span>"
@@ -99,7 +99,7 @@ function wesnoth.wml_actions.wc2_show_wocopedia(cfg)
 					wesnoth.set_dialog_text(desc.caption, "training_details", desc_index, "tree_details", j, "training_caption")
 					wesnoth.set_dialog_text(desc.message, "training_details", desc_index, "tree_details", j, "training_description")
 				end
-				local trainer = cdm_training.trainers[i]
+				local trainer = wc2_training.trainers[i]
 				wesnoth.add_dialog_tree_node("training_category", i, "left_tree", ti[1])
 				wesnoth.set_dialog_value(trainer.name, "left_tree", ti[1], ti[2], "training_name")
 				set_description(1, 1)
