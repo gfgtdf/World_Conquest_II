@@ -86,5 +86,9 @@ function wc2_utils.facing_each_other(u1,u2)
 	wesnoth.wml_actions.redraw {}
 end
 
+function wc2_utils.has_no_advances(u)
+	return #u.advances_to == 0
+end
+
 return wc2_utils
 -->>
