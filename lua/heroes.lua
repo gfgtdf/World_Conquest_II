@@ -2,6 +2,8 @@ local _ = wesnoth.textdomain 'wesnoth'
 
 local wc2_heroes = {}
 -- an array of wml tables, usually containing type, 
+wc2_heroes.commander_overlay = "misc/leader-expendable.png~MASK(misc/wct-blank2.png)~BLIT(misc/wct-commander.png)"
+wc2_heroes.hero_overlay = "misc/hero-icon.png"
 wc2_heroes.hero_types = {}
 wc2_heroes.dialogues = {
 	default = {
@@ -54,8 +56,6 @@ end
 -- @a t the unit type
 function wc2_heroes.place(t, side, x, y, is_commander)
 	--print("wc2_heroes.place type=" .. t .. " side=" .. side)
-	local commander_overlay = "misc/leader-expendable.png~MASK(misc/wct-blank2.png)~BLIT(misc/wct-commander.png)"
-	local hero_overlay = "misc/hero-icon.png"
 
 	local modifications = wc2_heroes.generate_traits(t)
 	table.insert(modifications, 1, T.advancement { wc2_scenario.experience_penalty() })
@@ -65,7 +65,7 @@ function wc2_heroes.place(t, side, x, y, is_commander)
 		side = side,
 		random_traits = false,
 		role = is_commander and "commander" or nil,
-		overlays = is_commander and commander_overlay or hero_overlay,
+		overlays = is_commander and wc2_heroes.commander_overlay or wc2_heroes.hero_overlay,
 		T.modifications (modifications),
 	}
 	if is_commander then
