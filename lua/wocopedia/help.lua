@@ -170,11 +170,11 @@ function wesnoth.wml_actions.wc2_show_wocopedia(cfg)
 			wesnoth.add_dialog_tree_node("artifact_list", -1, "training_details")
 			wesnoth.set_dialog_text(str_des_items, "training_details", desc_index, "desc")
 		
-			for i = 0, (wml.variables["wct.artifact.length"] - 1) do
-				local artifact_icon = wml.variables["wct.artifact[" .. i .. "].icon"] or ""
-				local artifact_name = wml.variables["wct.artifact[" .. i .. "].name"] or ""
-				local artifact_desc = wml.variables["wct.artifact[" .. i .. "].description"] or ""
-				local not_available = wc2_utils.split_to_set(wml.variables["wct.artifact[" .. i .. "].not_available"] or "")
+			for i, artifact in ipairs(wc2_artifacts.list) do
+				local artifact_icon = artifact.icon or ""
+				local artifact_name = artifact.name or ""
+				local artifact_desc = artifact.description or ""
+				local not_available = wc2_utils.split_to_set(artifact.not_available or "")
 
 				if not_available.player then
 					artifact_name = artifact_name .. str_not_for_players
@@ -182,9 +182,9 @@ function wesnoth.wml_actions.wc2_show_wocopedia(cfg)
 				if not_available.enemy then
 					artifact_name = artifact_name .. str_not_for_enemies
 				end
-				wesnoth.add_dialog_tree_node("artifact", i + 1, "training_details", desc_index, "artifact_list_tv")
-				wesnoth.set_dialog_value(artifact_icon, "training_details", desc_index, "artifact_list_tv", i + 1, "image")
-				wesnoth.set_dialog_value(artifact_name .. "\n" .. artifact_desc, "training_details", desc_index, "artifact_list_tv", i + 1, "label")
+				wesnoth.add_dialog_tree_node("artifact", i, "training_details", desc_index, "artifact_list_tv")
+				wesnoth.set_dialog_value(artifact_icon, "training_details", desc_index, "artifact_list_tv", i, "image")
+				wesnoth.set_dialog_value(artifact_name .. "\n" .. artifact_desc, "training_details", desc_index, "artifact_list_tv", i, "label")
 			end
 			add_index()
 		end
