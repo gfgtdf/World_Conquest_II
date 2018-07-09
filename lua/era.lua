@@ -93,7 +93,11 @@ local function init_side(side_num)
 	local heroes = wc2_era.expand_hero_types(faction.heroes)
 	local deserters = wc2_era.expand_hero_types(faction.deserters)
 	local commanders = wc2_era.expand_hero_types(faction.commanders)
-	
+
+	helper.shuffle(heroes)
+	helper.shuffle(deserters)
+	helper.shuffle(commanders)
+
 	wesnoth.set_side_variable(side_num, "wc2.heroes", table.concat(heroes, ","))
 	wesnoth.set_side_variable(side_num, "wc2.deserters", table.concat(deserters, ","))
 	wesnoth.set_side_variable(side_num, "wc2.commanders", table.concat(commanders, ","))
