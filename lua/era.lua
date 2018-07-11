@@ -65,6 +65,7 @@ function wc2_era.get_faction(id)
 	end
 end
 
+-- todo: don't do this later.
 local function init_side(side_num)
 	local side = wesnoth.sides[side_num]
 	local faction = wc2_era.get_faction(side_num)
