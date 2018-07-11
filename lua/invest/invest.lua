@@ -155,6 +155,8 @@ function wc2_invest.invest()
 end
 
 function wesnoth.wml_actions.wc2_invest(cfg)
+	--disallow undoing.
+	wesnoth.random(100)
 	wc2_invest.invest()
 end
 
