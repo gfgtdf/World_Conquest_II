@@ -157,8 +157,10 @@ end)
 ]]
 on_event("die", function(event_context)
 	local unit = wesnoth.get_unit(event_context.x1, event_context.y1)
-
-	if not wml.variables["wc2_config_experimental_pickup"] and wc2_scenario.is_human_side(wesnoth.current.side) then
+	if not unit then
+		return
+	end
+	if not wml.variables["wc2_config_experimental_pickup"] and wc2_scenario.is_human_side(unit.side) then
 		return
 	end
 
