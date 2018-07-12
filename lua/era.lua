@@ -54,8 +54,9 @@ function fix_faction_wml(cfg)
 end
 
 function wc2_era.get_faction(id)
+-- todo: fixme: this only works in the first scenario.
 	if type(id) == "number" then
-		id = wesnoth.sides[id].faction
+		id = wesnoth.get_side_variable(id, "wc2.faction_id") or wesnoth.sides[id].faction
 	end
 	for i, faction in ipairs(wc2_era.factions_wml) do
 		--TODO: compability and dont do this again in later scenarios.
@@ -71,6 +72,7 @@ local function init_side(side_num)
 	local faction = wc2_era.get_faction(side_num)
 
 	if faction and wesnoth.get_side_variable(side_num, "wc2.pair.length") == 0 and wml.get_child(faction, "pair") then
+		wesnoth.set_side_variable(side_num, "wc2.faction_id", faction.id)
 		wesnoth.wml_actions.disallow_recruit { side = side_num, recruit="" }
 		local i = 0
 		for v in wml.child_range(faction, "pair") do
