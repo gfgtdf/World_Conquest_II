@@ -19,20 +19,10 @@ local function get_advanced_units(level, list, res)
 	return res
 end
 
-function enemy.fresh_artifacts_list()
-	local res = {} 
-	for i,v in ipairs(wc2_artifacts.list) do
-		if not wc2_utils.split_to_set(v.not_available or "").enemy then
-			table.insert(res, i)
-		end
-	end
-	return res
-end
-
 function enemy.pick_suitable_enemy_item(unit)
 	local enemy_items = wc2_utils.split_to_array(wml.variables["enemy_army.artifacts"])
 	if #enemy_items == 0 then
-		enemy_items = enemy.fresh_artifacts_list()
+		enemy_items = wc2_artifacts.fresh_artifacts_list("enemy")
 	end
 	-- list of indexes to enemy_items
 	local possible_artifacts = {}
@@ -81,7 +71,7 @@ function enemy.do_commander(cfg, group_id, loc)
 		return
 	end
 	local scenario = wml.variables["scenario"]
-	local ally_i = wc2_utils.pick_random(("enemy_army.group[%d].ally"):format(group_id))["type"]
+	local ally_i = wc2_utils.pick_random_t(("enemy_army.group[%d].ally"):format(group_id))["type"]
 	local leader_index = wesnoth.random(wml.variables[("enemy_army.group[%d].leader.length"):format(ally_i)])
 	local new_recruits = wml.variables[("enemy_army.group[%d].leader[%d].recruit"):format(ally_i, leader_index)]
 	wesnoth.wml_actions.allow_recruit {
@@ -269,8 +259,8 @@ function wesnoth.wml_actions.wc2_enemy(cfg)
 	local dummy_unit = wesnoth.get_units({side = side_num, canrecruit = true})[1]
 	local loc = {dummy_unit.x,dummy_unit.y}
 	dummy_unit:erase()
-	local enemy_type_id = wc2_utils.pick_random("enemy_army.faction")["type"]
-	local leader_cfg = wc2_utils.pick_random(("enemy_army.group[%d].leader"):format(enemy_type_id))
+	local enemy_type_id = wc2_utils.pick_random_t("enemy_army.faction")["type"]
+	local leader_cfg = wc2_utils.pick_random_t(("enemy_army.group[%d].leader"):format(enemy_type_id))
 	local unit = wesnoth.create_unit {	
 		x = loc[1],
 		y = loc[2],

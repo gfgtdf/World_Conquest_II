@@ -132,6 +132,16 @@ on_event("prestart", function()
 	end
 end)
 
+function artifacts.fresh_artifacts_list(for_type)
+	local res = {} 
+	for i,v in ipairs(wc2_artifacts.list) do
+		if not for_type or not wc2_utils.split_to_set(v.not_available or "")[for_type] then
+			table.insert(res, i)
+		end
+	end
+	return res
+end
+
 
 --[[
 	todo: the original code showed the item message in a last breathe event.
