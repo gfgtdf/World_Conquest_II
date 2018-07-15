@@ -84,6 +84,13 @@ dropping.remove_all_items = function(filter)
 	end
 end
 
+dropping.remove_current_item = function()
+	local v = dropping.current_item
+	local ec = wesnoth.current.event_context
+	wesnoth.remove_tile_overlay(ec.x1, ec.y1, dropping.decorate_imagename(v.image, v.id))
+	dropping.item_taken = true
+end
+
 
 wesnoth.persistent_tags.wc2_dropping.write = function(add)
 	local res = {

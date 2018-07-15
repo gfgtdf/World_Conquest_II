@@ -54,7 +54,7 @@ function fix_faction_wml(cfg)
 end
 
 function wc2_era.get_faction(id)
--- todo: fixme: this only works in the first scenario.
+	-- todo: fixme: this only works in the first scenario.
 	if type(id) == "number" then
 		id = wesnoth.get_side_variable(id, "wc2.faction_id") or wesnoth.sides[id].faction
 	end
@@ -202,13 +202,10 @@ on_event("prestart", function()
 	for i, s in ipairs(wesnoth.sides) do
 		init_side(i)
 	end
-	if wml.variables["wc2.bonus_heroes"] == nil then
-		wml.variables["wc2.bonus_heroes"] = table.concat(wc2_era.expand_hero_types("Bonus_All"), ",")
-	end
 end)
 
-function wesnoth.wml_actions.wc2_pick_bonus_hero(cfg)
-	wml.variables[cfg.variable] = wc2_utils.pick_random("wc2.bonus_heroes")
+function wc2_era.generate_bonus_heroes()
+	return wc2_era.expand_hero_types("Bonus_All")
 end
 
 function wesnoth.wml_actions.wc2_recruit_info(cfg)

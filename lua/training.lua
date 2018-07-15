@@ -129,23 +129,7 @@ function training.generate_message(n_trainer, n_grade)
 	}	
 end
 
-function training.give_bonus(side_num)
-	local cx = wesnoth.current.event_context
-	local advanced_chance = training.get_level_sum(side_num)
-	local amount = 1
-	if wc2_scenario.scenario_num() > 3 or wesnoth.random(100) <= advanced_chance then
-		amount = 2
-	end
-	-- dark training reduced chances
-	local traintype_index = training.find_available(side_num, {1,2,3,4,5,6,2,3,4,5,6,2,3,4,5,6}, amount)
-	if traintype_index == nil then
-		return "not_possible"
-	end
-
-	if traintype_index == 1 then
-		amount = math.min(training.trainings_left(side_num, traintype_index), math.max(amount, wc2_scenario.scenario_num() - 1))
-	end
-
+function training.give_bonus(side_num, cx, amount, traintype_index)
 	local traintype = training.trainers[traintype_index]
 	local cur_level = training.get_level(side_num, traintype_index)
 	local new_level = cur_level + amount
@@ -166,6 +150,24 @@ function training.give_bonus(side_num)
 
 	training.inc_level(side_num, traintype_index, amount)
 	return true
+end
+
+function training.pick_bonus(side_num)
+	local amount = 1
+	local advanced_chance = 4 * training.get_level_sum(side_num)
+	if wc2_scenario.scenario_num() > 3 or wesnoth.random(100) <= advanced_chance then
+		amount = 2
+	end
+	-- dark training reduced chances
+	local traintype_index = training.find_available(side_num, {1,2,3,4,5,6,2,3,4,5,6,2,3,4,5,6}, amount)
+	if traintype_index == nil then
+		return nil
+	end
+
+	if traintype_index == 1 then
+		amount = math.min(training.trainings_left(side_num, traintype_index), math.max(amount, wc2_scenario.scenario_num() - 1))
+	end
+	return traintype_index, amount
 end
 
 function wesnoth.wml_actions.wc2_bonus_training(cfg)
