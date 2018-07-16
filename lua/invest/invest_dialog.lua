@@ -93,7 +93,6 @@ local dialog_wml = {
 														T.column {
 															horizontal_alignment = "left",
 															T.label {
-																horizontal_alignment = "left",
 																id = "category_name",
 															},
 														},
@@ -131,7 +130,6 @@ local dialog_wml = {
 																			grow_factor = 1,
 																			horizontal_alignment = "left",
 																			T.label {
-																				horizontal_alignment = "left",
 																				id = "name",
 																			},
 																		},
@@ -167,10 +165,8 @@ local dialog_wml = {
 													T.grid {
 														T.row {
 															T.column {
-																--horizontal_alignment = "left",
 																grow_factor = 0,
 																T.image {
-																	--horizontal_alignment = "left",
 																	id = "image",
 																	linked_group = "list_image",
 																},
@@ -183,7 +179,6 @@ local dialog_wml = {
 																		T.column {
 																			horizontal_alignment = "left",
 																			T.label {
-																				horizontal_alignment = "left",
 																				id = "name",
 																				use_markup = true,
 																			},
@@ -211,8 +206,6 @@ local dialog_wml = {
 								T.page_definition {
 									T.row {
 										T.column {
-											vertical_alignment = "top",
-											horizontal_alignment = "left",
 											horizontal_grow = true,
 											vertical_grow = true,
 											T.scroll_label {
@@ -227,9 +220,6 @@ local dialog_wml = {
 									id = "hero",
 									T.row {
 										T.column {
-											--vertical_alignment = "top",
-											--horizontal_alignment = "left",
-											--horizontal_grow = true,
 											vertical_grow = true,
 											T.unit_preview_pane {
 												definition = "default",
@@ -245,8 +235,6 @@ local dialog_wml = {
 									--[[
 									T.row {
 										T.column {
-											vertical_alignment = "top",
-											horizontal_alignment = "left",
 											horizontal_grow = true,
 											vertical_grow = true,
 											T.label {
@@ -256,8 +244,6 @@ local dialog_wml = {
 									},
 									T.row {
 										T.column {
-											vertical_alignment = "top",
-											horizontal_alignment = "left",
 											horizontal_grow = true,
 											vertical_grow = true,
 											T.scroll_label {
@@ -268,8 +254,6 @@ local dialog_wml = {
 									},
 									T.row {
 										T.column {
-											vertical_alignment = "top",
-											horizontal_alignment = "left",
 											horizontal_grow = true,
 											vertical_grow = true,
 											T.label {
@@ -279,8 +263,6 @@ local dialog_wml = {
 									},
 									T.row {
 										T.column {
-											vertical_alignment = "top",
-											horizontal_alignment = "left",
 											horizontal_grow = true,
 											vertical_grow = true,
 											T.scroll_label {
@@ -292,8 +274,6 @@ local dialog_wml = {
 									--]]
 									T.row {
 										T.column {
-											vertical_alignment = "top",
-											horizontal_alignment = "left",
 											horizontal_grow = true,
 											vertical_grow = true,
 											T.scroll_label {

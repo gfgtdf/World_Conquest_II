@@ -88,7 +88,6 @@ return {
 															T.column {
 																horizontal_alignment = "left",
 																T.label {
-																	horizontal_alignment = "left",
 																	id = "training_name",
 																},
 															},
@@ -121,7 +120,6 @@ return {
 															T.column {
 																horizontal_alignment = "left",
 																T.label {
-																	horizontal_alignment = "left",
 																	id = "training_name",
 																},
 															},
@@ -142,16 +140,12 @@ return {
 								T.page_definition {
 									T.row {
 										T.column {
-											vertical_alignment = "top",
-											horizontal_alignment = "left",
 											horizontal_grow = true,
 											vertical_grow = true,
 											T.scrollbar_panel { 
 												T.definition { 
 													T.row { 
 														T.column {
-															vertical_alignment = "top",
-															horizontal_alignment = "left",
 															horizontal_grow = true,
 															vertical_grow = true,
 															T.tree_view {
@@ -169,7 +163,6 @@ return {
 																				horizontal_alignment = "left",
 																				T.label {
 																					definition = "default_large",
-																					horizontal_alignment = "left",
 																					id = "training_caption",
 																					label = "default description",
 																				},
@@ -180,7 +173,6 @@ return {
 																				grow_factor = 1,
 																				horizontal_alignment = "left",
 																				T.label {
-																					horizontal_alignment = "left",
 																					id = "training_description",
 																					label = "default description",
 																				},
@@ -197,7 +189,6 @@ return {
 																				horizontal_alignment = "left",
 																				T.label {
 																					definition = "default_large",
-																					horizontal_alignment = "left",
 																					id = "training_caption",
 																					label = "default description",
 																				},
@@ -208,7 +199,6 @@ return {
 																				grow_factor = 1,
 																				horizontal_alignment = "left",
 																				T.scroll_label {
-																					horizontal_alignment = "left",
 																					id = "training_description",
 																					label = "default description",
 																				},
