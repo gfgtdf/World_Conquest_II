@@ -271,5 +271,14 @@ function training.describe_bonus(side, traintype)
 	return message, image
 end
 
+function training.do_compatability()
+	for side_num =1,3 do
+		local old_training = wml.array_access.get("player[" .. side_num .. "].training")
+		for i,v in ipairs(old_training) do
+			training.set_level(side_num, i, v.level)
+		end
+		wml.array_access.set("player[" .. side_num .. "].training", {})
+	end
+end
 return training
 -->>

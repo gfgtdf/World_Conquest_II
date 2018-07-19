@@ -22,6 +22,11 @@ on_event("preload", function()
 	wml.variables["wc2.version"] = "0.7.0"
 end)
 
+on_event("prestart", function()	
+	wc2_training.do_compatability()
+end)
+
+
 -- happens before training events.
 on_event("recruit", 1, function(ec)
 	local u = wesnoth.get_unit(ec.x1, ec.x2)

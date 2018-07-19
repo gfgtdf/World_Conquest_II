@@ -73,9 +73,16 @@ local function init_side(side_num)
 		-- don't do this twice.
 		return
 	end
-		
+	local old_faction = wml.variables["player[" .. side_num .. "].faction.id"]
+	if old_faction then
+		--compatabiltiy code: remove all in player[side_num] except training.
+		-- don't keep heroes, commanders, pairs, etc. They will be regenerated.
+		local training = wml.array_access.get("player[" .. side_num .. "].training")
+		wml.variables["player[" .. side_num .. "]"] = {}
+		wml.array_access.set("player[" .. side_num .. "].training", training)
+	end
 	local side = wesnoth.sides[side_num]
-	local faction = wc2_era.get_faction(side_num)
+	local faction = wc2_era.get_faction(old_faction or side_num)
 
 	if faction and wesnoth.get_side_variable(side_num, "wc2.pair.length") == 0 and wml.get_child(faction, "pair") then
 		wesnoth.set_side_variable(side_num, "wc2.faction_id", faction.id)
