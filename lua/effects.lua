@@ -133,7 +133,7 @@ end
 -- similar to the usualy overlay but does not add overlays the the unit already has.
 function wesnoth.effects.wc2_overlay(u, cfg)
 	if cfg.add then
-		local to_add_old = cdm_helper.comma_to_list(cfg.add)
+		local to_add_old = wc2_utils.split_to_array(cfg.add)
 		local to_add_new = {}
 		local current = u.overlays
 		for i1,v1 in ipairs(to_add_old) do
@@ -148,9 +148,10 @@ function wesnoth.effects.wc2_overlay(u, cfg)
 				table.insert(to_add_new, v1)
 			end
 		end
-		cfg.add = cdm_helper.list_to_comma(to_add_new)
+		cfg.add = table.concat(to_add_new,",")
 	end
-	wesnoth.add_modification(u, "overlay", cfg, false)
+	cfg.apply_to = "overlay"
+	wesnoth.add_modification(u, "object", { T.effect(cfg)} , false)
 end
 
 -- can move in same turn as when recruited/recalled
