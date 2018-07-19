@@ -60,8 +60,7 @@ function artifacts.give_item(unit, index, visualize)
 	--todo: and not unit.variables.wc2.is_commander or hero
 	if not unit.canrecruit and unit.upkeep ~= 0 and unit.upkeep ~= "loyal" then
 		-- todow16: use an actual [effect].
-		-- todo: this seem o to work.
-		unit:add_modification("object", { apply_to = "wc2_overlay", add = "misc/loyal-icon.png" }, false )
+		unit:add_modification("object", { T.effect { apply_to = "wc2_overlay", add = "misc/loyal-icon.png" }}, false )
 	end
 
 	local object = {
