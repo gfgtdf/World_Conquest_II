@@ -112,19 +112,6 @@ local function init_side(side_num)
 	wesnoth.set_side_variable(side_num, "wc2.commanders", table.concat(commanders, ","))
 end
 
-
-local function init_side_alienera(side_num)
-	local side = wesnoth.sides[side_num]
-	local faction_num = wesnoth.random(#wc2_era.factions_wml)
-	local faction = wc2_era.factions_wml[faction_num]
-
-	if wml.variables["player[" .. side_num .. "].faction.length"] == 0 then
-		wml.variables["player[" .. side_num .. "].faction.commanders"] = wml.get_child(faction, "commanders")
-		wml.variables["player[" .. side_num .. "].faction.heroes"] = wml.get_child(faction, "heroes")
-		wml.variables["player[" .. side_num .. "].faction.deserters"] = wml.get_child(faction, "deserters")
-	end
-end
-
 function wesnoth.wml_actions.wc2_init_era(cfg)
 	cfg = wml.literal(cfg)
 	
