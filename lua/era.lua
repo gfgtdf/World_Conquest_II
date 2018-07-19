@@ -37,6 +37,7 @@ on_event("recruit", function(ctx)
 			}
 			p[1],p[2] = p[2],p[1]
 			wesnoth.set_side_variable(side_num, "wc2.pair[" .. (i - 1) .. "].types", table.concat(p, ","))
+			wesnoth.allow_undo(false)
 			return
 		end
 	end
