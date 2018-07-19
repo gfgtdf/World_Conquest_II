@@ -67,8 +67,13 @@ function wc2_era.get_faction(id)
 	end
 end
 
--- todo: don't do this later.
 local function init_side(side_num)
+		
+	if wesnoth.get_side_variable(side_num, "wc2.faction_id") ~= nil then
+		-- don't do this twice.
+		return
+	end
+		
 	local side = wesnoth.sides[side_num]
 	local faction = wc2_era.get_faction(side_num)
 
