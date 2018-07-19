@@ -433,6 +433,25 @@ return {
 													}
 												},
 												T.row {
+													T.column {
+														T.label {
+															vertical_scrollbar_mode = "never",
+															label = "<b>Random Leaders:</b>",
+															id = "tit_random_leaders",
+															use_markup = true,
+														}
+													}
+												},
+												T.row {
+													T.column {
+														T.scroll_label {
+															vertical_scrollbar_mode = "never",
+															id = "random_leaders",
+															use_markup = true,
+														}
+													}
+												},
+												T.row {
 													grow_factor = 1,
 													T.column {
 														grow_factor = 0,

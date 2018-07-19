@@ -122,6 +122,7 @@ function wesnoth.wml_actions.wc2_show_wocopedia(cfg)
 				end
 			end
 			---- add general factions topic ----
+			local era_wml = wesnoth.game_config.era
 			wesnoth.add_dialog_tree_node("category", ti[1], "left_tree")
 			wesnoth.set_dialog_value(str_cat_era, "left_tree", ti[1], "training_name")
 			wesnoth.set_dialog_value(true, "left_tree", ti[1])
@@ -130,6 +131,7 @@ function wesnoth.wml_actions.wc2_show_wocopedia(cfg)
 			add_index()
 			tree_enter_mode()
 			for i, faction_info in ipairs(wc2_era.factions_wml) do
+				local faction_wml = wml.get_child(era_wml, "multiplayer_side", faction_info.id)
 				wesnoth.add_dialog_tree_node("training_category", ti[2], "left_tree", ti[1])
 				wesnoth.set_dialog_value(faction_info.name, "left_tree", ti[1], ti[2], "training_name")
 				wesnoth.add_dialog_tree_node("faction_info", -1, "training_details")
@@ -149,6 +151,16 @@ function wesnoth.wml_actions.wc2_show_wocopedia(cfg)
 				end
 				local deserters_names = faction_info.deserters_names or wesnoth.format_conjunct_list("", wc2_era.expand_hero_names(faction_info.deserters))
 				wesnoth.set_dialog_text(deserters_names, "training_details", desc_index, "deserters")
+				if faction_wml then
+					local random_leaders = {}
+					for i,v in ipairs(wc2_utils.split_to_array(faction_wml.random_leader)) do
+						table.insert(random_leaders, wesnoth.unit_types[v].name)
+					end
+					random_leaders = wesnoth.format_conjunct_list("", random_leaders)
+					wesnoth.set_dialog_text(random_leaders, "training_details", desc_index, "random_leaders")
+				else
+					wesnoth.set_dialog_visible(false, "training_details", desc_index, "tit_random_leaders")
+				end
 				
 				add_index()
 			end
