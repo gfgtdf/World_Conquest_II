@@ -34,33 +34,25 @@ function wesnoth.wml_actions.wc2_show_wocopedia(cfg)
 	local preshow = function()
 		local str_cat_mechnics = _ "Game Mechanics"
 		local str_des_mechnics = 
-			_ "<b>Autorecall</b>:\n" ..
-			_ "Units with trait HEROIC are recalled at start of each scenario with no cost (up to castle size).\n\n" ..
 			_ "<b>Gold</b>:\n" ..
 			_ "Carryover is 15%, comunitary and avoid negative amounts. Early finish bonus is superior to village control, but it is not directly related to their amount.\n\n" ..
+			_ "<b>Autorecall</b>:\n" ..
+			_ "Units with trait HEROIC are recalled at start of each scenario with no cost (up to castle size).\n\n" ..
+			_ "<b>Recall Cost</b>:\n" ..
+			_ "Units costing less than 17 gold are cheaper to recall.\n\n" ..
 			_ "<b>Trainings</b>:\n" ..
 			_ "Every time you recruit a new unit, your trainings levels will be applied. Every chance will do different dice rolls, if a unit gains training beneficts, you can see them in a trait \"trained\".\n\n" ..
 			_ "<b>Upkeep</b>:\n" ..
 			_ "Units with trait HEROIC or holding any magic ITEM have FREE upkeep.\n\n" ..
-			_ "<b>Army discipline</b>:\n" ..
-			_ "At scenarios 1 to 3, for each training level player already own, trainers found have 2% to 4% chance to become advanced trainers (provide 2 levels). Becomes irrelevant from scenario 4 because all trainers always will be advanced.\n\n" ..
 			_ "<b>Bonus Points</b>:\n" ..
 			_ "In every scenario the game generates as much bonus points oin the map as there are players in the game, the bonus points cn be picked up by players and either contain artifacts, loyal units or training.\n\n" ..
+			_ "<b>Army discipline</b>:\n" ..
+			_ "At scenarios 1 to 3, for each training level player already own, trainers found have 2% to 4% chance to become advanced trainers (provide 2 levels). Becomes irrelevant from scenario 4 because all trainers always will be advanced.\n\n" ..
 			""
 		local str_cat_abilities = _ "Abilities"
 		local str_des_abilities = 
 			_ "Ability <b>Autorecall</b>:\n" ..
 			_ "Units with trait HEROIC are recalled at start of each scenario with no cost (up to castle size).\n\n" ..
-			_ "<b>Gold</b>:\n" ..
-			_ "Carryover is 15%, comunitary and avoid negative amounts. Early finish bonus is superior to village control, but it is not directly related to their amount.\n\n" ..
-			_ "<b>Trainings</b>:\n" ..
-			_ "Every time you recruit a new unit, your trainings levels will be applied. Every chance will do different dice rolls, if a unit gains training beneficts, you can see them in a trait \"trained\".\n\n" ..
-			_ "<b>Upkeep</b>:\n" ..
-			_ "Units with trait HEROIC or holding any magic ITEM have FREE upkeep.\n\n" ..
-			_ "<b>Army discipline</b>:\n" ..
-			_ "At scenarios 1 to 3, for each training level player already own, trainers found have 2% to 4% chance to become advanced trainers (provide 2 levels). Becomes irrelevant from scenario 4 because all trainers always will be advanced.\n\n" ..
-			_ "<b>Bonus Points</b>:\n" ..
-			_ "In every scenario the game generates as much bonus points oin the map as there are players in the game, the bonus points cn be picked up by players and either contain artifacts, loyal units or training.\n\n" ..
 			""
 		local str_cat_training = _ "Training"
 		local str_des_training = _ "<b>Training</b>\nTraining impovemes newly recruited units, it has no effect on already recruited units. The follwing list shows all available trainings, the training you currently have is marked in green"
