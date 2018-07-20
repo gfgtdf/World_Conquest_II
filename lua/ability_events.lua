@@ -3,11 +3,16 @@ local on_event = wesnoth.require("on_event")
 
 ----- the 'full movement on turn recuited' ability implementation -----
 -- priority -1 because this event must be happen after the training event.
-on_event("recruit,recall", -1, function(event_context)
-	local unit = wesnoth.get_unit(event_context.x1, event_context.y1)
-	local matches = unit.variables["mods.wc2_move_on_recruit"] or
-		unit.variables["move_on_recruit"] or
-		unit:matches { status = "move_on_recruit" }
+on_event("recruit,recall", -1, function(ec)
+	local unit = wesnoth.get_unit(ec.x1, ec.y1)
+	if not unit then
+		return
+	end
+	local matches = unit.variables["mods.wc2_move_on_recruit"]
+
+	if wml.variables["wc2.version_0_6_compat"] then
+		matches = matches or unit.variables["move_on_recruit"]
+	end
 
 	if matches then
 		unit.attacks_left = 1
@@ -33,6 +38,28 @@ on_event("turn_refresh", function(event_context)
 		kill = false,
 		animate = true,
 	}
+	if wml.variables["wc2.version_0_6_compat"] then
+		wesnoth.wml_actions.harm_unit {
+			T.filter {
+				T.filter_side {
+					T.enemy_of {
+						side = wesnoth.current.side,
+					},
+				},
+				T.filter_adjacent {
+					side = wesnoth.current.side,
+					T.filter_wml {
+						T.variables {
+							corruption=true
+						},
+					},
+				},
+			},
+			amount = 6,
+			kill = false,
+			animate = true,
+		}
+	end
 end)
 
 ----- the 'disengage' ability implementation -----
