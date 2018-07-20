@@ -31,10 +31,18 @@ email=#####
 # Changelog:
 
 0.7
+- Alienera modification is no longer needed to play with other eras than wc2.
 - Most code moved to lua
 - New WoCopedia ui
+- New Invest ui
 - Observer can no no longer see the enemies side
 - unit can no longer pickup items that won't give them anything
+- fixed wesnoth 1.14 depercation wanrings
+- fixed wrong xp for units with epic trait
+- Improved advancement pick code so that it no longer needs to intercept recruit etc events.
+- reduced savefile size
+- use new scaling algorithm for missing portaits
+- compatabiltiy issue: when loading  saves from older wc2 versions the invest artifact list will be regenerated.
 0.6.13
 - Fixed crash when loading games caused by 'adamant armour '
 - Fixed Winter's bloom not giving cold resistance
