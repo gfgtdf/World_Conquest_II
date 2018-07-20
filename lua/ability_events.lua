@@ -35,16 +35,14 @@ on_event("turn_refresh", function(event_context)
 	}
 end)
 
---todo: compatability for the old id 'disengage'
 ----- the 'disengage' ability implementation -----
 on_event("attack_end", function(cx)
 	local u = wesnoth.get_unit(cx.x1, cx.y1)
---	local wep = wml.get_child(cx, "weapon")
---	if not u or not wep or not wesnoth.create_weapon(wep):matches ({special = "wc2_disengage"}) then
---		-- todo: maybe use special_active once it's fixed?
---		return
---	end
-	if not u or not u:matches { T.has_attack { special_active = "wc2_disengage"} } then
+	if not u then
+		return
+	end
+	local has_old_id = wml.variables["wc2.version_0_6_compat"] and u:matches { T.has_attack { special = "disengage"} }
+	if not has_old_id and not u:matches { T.has_attack { special_active = "wc2_disengage"} } then
 		--IMPORTANT: using 'special_active' like this is only guaranteed to work if
 		--           the attack has a [filter_self] or a simlar filter tag, otherwise it might
 		--           also fire when another attack that is not the currently used attack has

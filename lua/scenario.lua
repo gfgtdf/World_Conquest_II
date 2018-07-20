@@ -17,12 +17,17 @@ function wc2_scenario.experience_penalty()
 	}
 end
 
-on_event("preload", function()	
-	wml.variables["wc2.original_version"] = "0.7.0"
+on_event("preload", function()
+	if not wml.variables["wc2.original_version"] then
+		wml.variables["wc2.original_version"] = "0.7.0"
+	end
 	wml.variables["wc2.version"] = "0.7.0"
 end)
 
 on_event("prestart", function()	
+	if wml.variables["player[1].training.length"] > 0 then
+		wml.variables["wc2.version_0_6_compat"] = true
+	end
 	wc2_training.do_compatability()
 end)
 
