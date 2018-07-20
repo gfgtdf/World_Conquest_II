@@ -56,12 +56,10 @@ function fix_faction_wml(cfg)
 end
 
 function wc2_era.get_faction(id)
-	-- todo: fixme: this only works in the first scenario.
 	if type(id) == "number" then
 		id = wesnoth.get_side_variable(id, "wc2.faction_id") or wesnoth.sides[id].faction
 	end
 	for i, faction in ipairs(wc2_era.factions_wml) do
-		--TODO: compability and dont do this again in later scenarios.
 		if faction.id == id then
 			return faction
 		end
