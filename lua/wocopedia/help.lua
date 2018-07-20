@@ -49,6 +49,11 @@ function wesnoth.wml_actions.wc2_show_wocopedia(cfg)
 			_ "<b>Army discipline</b>:\n" ..
 			_ "At scenarios 1 to 3, for each training level player already own, trainers found have 2% to 4% chance to become advanced trainers (provide 2 levels). Becomes irrelevant from scenario 4 because all trainers always will be advanced.\n\n" ..
 			""
+		local str_cat_feedback = _ "Feedback"
+		local str_des_feedback = 
+			_ "<b>Feedback</b>:\n" ..
+			_ "For feedback plase either post in the Word conquest II thread in the official wesnoth forum https://r.wesnoth.org/t39651 or file an issue at github https://github.com/gfgtdf/World_Conquest_II/issues .\n\n" ..
+			""
 		local str_cat_abilities = _ "Abilities"
 		local str_des_abilities = 
 			_ "Ability <b>Autorecall</b>:\n" ..
@@ -190,6 +195,15 @@ function wesnoth.wml_actions.wc2_show_wocopedia(cfg)
 				wesnoth.set_dialog_value(artifact_icon, "training_details", desc_index, "artifact_list_tv", i, "image")
 				wesnoth.set_dialog_value(artifact_name .. "\n" .. artifact_desc, "training_details", desc_index, "artifact_list_tv", i, "label")
 			end
+			add_index()
+		end
+		
+		if true then
+			wesnoth.add_dialog_tree_node("category", ti[1], "left_tree")
+			wesnoth.set_dialog_value(str_cat_feedback, "left_tree", ti[1], "training_name")
+			wesnoth.set_dialog_value(true, "left_tree", ti[1])
+			wesnoth.add_dialog_tree_node("simpletext", -1, "training_details")
+			wesnoth.set_dialog_text(str_des_feedback, "training_details", desc_index, "label")
 			add_index()
 		end
 		wesnoth.set_dialog_focus("left_tree")
