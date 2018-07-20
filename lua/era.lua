@@ -1,4 +1,5 @@
 --<<
+helper = wesnoth.require("lua/helper.lua")
 local on_event = wesnoth.require("on_event")
 local wc2_era = {}
 wc2_era.factions_wml = {}
