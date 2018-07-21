@@ -173,7 +173,6 @@ function wc2_era.expand_hero_types(types_str)
 end
 
 function wc2_era.expand_hero_names(types_str)
-	-- todo: add names to groups and remove names from factions.
 	local types = wc2_utils.split_to_array(types_str)
 	local types_new = {}
 	local names_res = {}
