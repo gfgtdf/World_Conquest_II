@@ -58,7 +58,7 @@ function wc2_invest.do_gold()
 	wesnoth.fire_event("wct_map_supply_village", leaders[1] )
 end
 
-function wc2_invest.do_hero(t)
+function wc2_invest.do_hero(t, is_local)
 	local side_num = wesnoth.current.side
 	local leaders = wesnoth.get_units { side = side_num, canrecruit = true }
 	local x,y = leaders[1].x, leaders[1].y
@@ -68,7 +68,9 @@ function wc2_invest.do_hero(t)
 		t = commanders[i]
 		table.remove(commanders, i)
 		wesnoth.set_side_variable(side_num, "wc2.commanders", table.concat(commanders, ","))
-		wc2_invest_tellunit.execute(t)
+		if is_local then
+			wc2_invest_tellunit.execute(t)
+		end
 		wc2_heroes.place(t, side_num, x, y, true)
 	elseif t == "wc2_deserter" then
 
@@ -79,7 +81,9 @@ function wc2_invest.do_hero(t)
 		t = deserters[i]
 		table.remove(deserters, i)
 		wesnoth.set_side_variable(side_num, "wc2.deserters", table.concat(deserters, ","))
-		wc2_invest_tellunit.execute(t)
+		if is_local then
+			wc2_invest_tellunit.execute(t)
+		end
 		wc2_heroes.place(t, side_num, x, y, false)
 	else
 		local heroes_available = wc2_utils.split_to_array(wesnoth.get_side_variable(side_num, "wc2.heroes"))
@@ -125,7 +129,9 @@ function wc2_invest.invest()
 	local gold_available = true
 	for i =1,2 do
 		-- todo translate
+		local is_local = false
 		local res = wesnoth.synchronize_choice("WC2 Invest", function()
+			is_local = true
 			return wc2_show_invest_dialog {
 				items_available = items_available,
 				heroes_available = heroes_available,
@@ -139,7 +145,7 @@ function wc2_invest.invest()
 			wc2_invest.do_gold()
 			gold_available = nil
 		elseif res.pick == "hero" then
-			wc2_invest.do_hero(res.type)
+			wc2_invest.do_hero(res.type, is_local)
 			heroes_available = nil
 		elseif res.pick == "training" then
 			wc2_invest.do_training(res.type)
