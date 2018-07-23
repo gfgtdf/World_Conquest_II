@@ -209,11 +209,21 @@ end
 function wesnoth.wml_actions.wc2_recruit_info(cfg)
 		
 	local side_num = wesnoth.get_viewing_side()
+	local faction = wc2_era.get_faction(side_num)
+	if not faction then
+		wesnoth.wml_actions.message {
+			scroll = false,
+			canrecruit = true,
+			side = side_num,
+			message = _ "You are not using a WC2 faction.",
+		}
+		return
+	end
 	local message = {
 		scroll = false,
 		canrecruit = true,
 		side = side_num,
-		caption = wc2_era.get_faction(side_num).name,
+		caption = faction.name,
 		message = cfg.message,
 	}
 	
