@@ -43,6 +43,7 @@ end)
 
 function wesnoth.wml_actions.wc2_start_units(cfg)
 	local u = wesnoth.get_units({ side = cfg.side, canrecruit = true })[1]
+	if not u then error("[wc2_start_units] no leader found") end
 	u:add_modification("advancement", { wc2_scenario.experience_penalty() })
 	u:add_modification("trait", wc2_heroes.trait_heroic )
 	u.hitpoints = u.max_hitpoints
