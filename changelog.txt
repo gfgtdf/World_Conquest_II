@@ -30,6 +30,8 @@ email=#####
 
 # Changelog:
 
+0.7.1
+- Fixed shuffle starting locations 
 0.7
 - Alienera modification is no longer needed to play with other eras than wc2.
 - Most code moved to lua
