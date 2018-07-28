@@ -30,6 +30,9 @@ email=#####
 
 # Changelog:
 
+0.7.2
+- Fixed show item info.
+- Added 'settings' section to wocopedia
 0.7.1
 - Fixed shuffle starting locations 
 0.7
