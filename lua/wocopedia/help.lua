@@ -65,6 +65,7 @@ function wesnoth.wml_actions.wc2_show_wocopedia(cfg)
 		local str_des_items = _ "<b>Items</b>\nItems can be given to units to make them stronger. You can get artifcats in three ways: 1) By choosing an item as your starting bonus, 2) By finding it on a map ina  bonus point, 3) By dropping from enemies in later scenarios. Note however that not all units can pickup all items."
 		local str_cat_era = _ "Factions"
 		local str_des_era = _ "<b>Factions</b>\n The Word Conquest 2 era consists of faction that are build of pairs of mainline faction of which at one has a healer abailable (Drakes, Rebels and Loyalists), and one does not (Orcs, Dwarves and Undead) the recruilist is also organizes in pairs so that you sometimes have to recruit a different units before you can recruit the units that you want. The available heroes, desertes and random leaders also depend on your factions, the item you can get do not depend on the faction you choose."
+		local str_cat_settings = _ "Settings"
 		
 		---- add general topic ----
 		if show_help_general then
@@ -198,6 +199,26 @@ function wesnoth.wml_actions.wc2_show_wocopedia(cfg)
 			add_index()
 		end
 		
+		if true then
+			wesnoth.add_dialog_tree_node("category", ti[1], "left_tree")
+			wesnoth.set_dialog_value(str_cat_settings, "left_tree", ti[1], "training_name")
+			wesnoth.set_dialog_value(true, "left_tree", ti[1])
+			wesnoth.add_dialog_tree_node("settings", -1, "training_details")
+			wesnoth.set_dialog_value(not not wml.variables["wc2_config_enable_pya"], "training_details", desc_index, "checkbox_use_pya")
+			wesnoth.set_dialog_active(false, "training_details", desc_index, "checkbox_use_pya")
+			wesnoth.set_dialog_value(not not wml.variables["wc2_config_enable_unitmarker"], "training_details", desc_index, "checkbox_use_markers")
+			wesnoth.set_dialog_active(false, "training_details", desc_index, "checkbox_use_markers")
+			wesnoth.set_dialog_value(not not wml.variables["wc2_config_experimental_pickup"], "training_details", desc_index, "checkbox_use_pickup")
+			wesnoth.set_dialog_active(false, "training_details", desc_index, "checkbox_use_pickup")
+			wesnoth.set_dialog_text(wml.variables["wc2.version"], "training_details", desc_index, "label_version")
+			wesnoth.set_dialog_text(wml.variables["difficulty.name"], "training_details", desc_index, "label_difficulty")
+			
+			local mp_settings = wesnoth.game_config.mp_settings
+			if mp_settings then
+				wesnoth.set_dialog_text(mp_settings.active_mods, "training_details", desc_index, "label_activemods")
+			end
+			add_index()
+		end
 		if true then
 			wesnoth.add_dialog_tree_node("category", ti[1], "left_tree")
 			wesnoth.set_dialog_value(str_cat_feedback, "left_tree", ti[1], "training_name")

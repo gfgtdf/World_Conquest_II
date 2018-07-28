@@ -31,6 +31,30 @@ local function GUI_FORCE_WIDGET_MINIMUM_SIZE(w,h, content)
 	}
 end
 
+local GUI_HORIZONTAL_SPACER_LINE = T.row {
+	grow_factor = 0,
+	T.column {
+		grow_factor = 1,
+		border = "all",
+		border_size = 10,
+		horizontal_grow = true,
+		T.drawing {
+			definition = "default",
+			width = "(width)",
+			height = 1,
+			T.draw {
+				T.line {
+					x1 = 0,
+					y1 = 0,
+					x2 = "(width - 1)",
+					y2 = 0,
+					color = "114, 79, 46, 255",
+					thickness = 1,
+				}
+			}
+		}
+	}
+}
 
 return {
 	maximum_width = 900,
@@ -464,7 +488,143 @@ return {
 											}
 										}
 									}
-								}
+								},
+								T.page_definition {
+									id="settings",
+									vertical_grow = true,
+									horizontal_grow = true,
+									T.row {
+										T.column {
+											vertical_grow = true,
+											horizontal_grow = true,
+											T.grid {
+												T.row {
+													grow_factor = 0,
+													T.column {
+														grow_factor = 0,
+														vertical_grow = false,
+														horizontal_alignment = "left",
+														T.label {
+															id = "title",
+															label = "<b>Settings</b>\n ",
+															use_markup=true,
+														},
+													},
+												},
+												T.row {
+													grow_factor = 0,
+													T.column {
+														horizontal_grow=true,
+														vertical_alignment="top",
+														grow_factor = 1,
+														T.grid {
+															T.row {
+																T.column {
+																	horizontal_alignment="left",
+																	T.label {
+																		label = "Use WC2 PYA mod",
+																	}
+																},
+																T.column {
+																	horizontal_alignment="right",
+																	T.toggle_button {
+																		label = "",
+																		id="checkbox_use_pya",
+																	},
+																},
+															},
+															T.row {
+																T.column {
+																	horizontal_alignment="left",
+																	T.label {
+																		label = "Use WC2 Unitmarkers",
+																	}
+																},
+																T.column {
+																	horizontal_alignment="right",
+																	T.toggle_button {
+																		label = "",
+																		id="checkbox_use_markers",
+																	},
+																},
+															},
+															T.row {
+																T.column {
+																	horizontal_alignment="left",
+																	T.label {
+																		label = "Use WC2 experimental pickup",
+																	}
+																},
+																T.column {
+																	horizontal_alignment="right",
+																	T.toggle_button {
+																		label = "",
+																		id="checkbox_use_pickup",
+																	},
+																},
+															},
+															T.row {
+																T.column {
+																	horizontal_alignment="left",
+																	T.label {
+																		label = "difficulty",
+																	}
+																},
+																T.column {
+																	horizontal_alignment="right",
+																	T.label {
+																		label = "",
+																		id="label_difficulty",
+																	},
+																},
+															},
+															T.row {
+																T.column {
+																	horizontal_alignment="left",
+																	T.label {
+																		label = "WC2 version",
+																	}
+																},
+																T.column {
+																	horizontal_alignment="right",
+																	T.label {
+																		label = "",
+																		id="label_version",
+																	},
+																},
+															},
+														}
+													}
+												},
+												GUI_HORIZONTAL_SPACER_LINE,
+												T.row {
+													grow_factor = 0,
+													T.column {
+														grow_factor = 0,
+														vertical_grow = false,
+														horizontal_alignment = "left",
+														T.label {
+															id = "title_2",
+															label = "<b>Active mods</b>\n ",
+															use_markup=true,
+														},
+													},
+												},
+												T.row {
+													grow_factor = 1,
+													T.column {
+														grow_factor = 0,
+														horizontal_grow=true,
+														vertical_alignment="top",
+														T.scroll_label {
+															id = "label_activemods",
+														},
+													},
+												},
+											}
+										}
+									}
+								},
 							},
 						}
 					}
