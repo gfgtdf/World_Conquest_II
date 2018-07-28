@@ -45,7 +45,7 @@ function wesnoth.wml_actions.wc2_show_wocopedia(cfg)
 			_ "<b>Upkeep</b>:\n" ..
 			_ "Units with trait HEROIC or holding any magic ITEM have FREE upkeep.\n\n" ..
 			_ "<b>Bonus Points</b>:\n" ..
-			_ "In every scenario the game generates as much bonus points oin the map as there are players in the game, the bonus points cn be picked up by players and either contain artifacts, loyal units or training.\n\n" ..
+			_ "In every scenario the game generates as much bonus points on the map as there are players in the game, the bonus points can be picked up by player units and either contain artifacts, loyal units or training.\n\n" ..
 			_ "<b>Army discipline</b>:\n" ..
 			_ "At scenarios 1 to 3, for each training level player already own, trainers found have 2% to 4% chance to become advanced trainers (provide 2 levels). Becomes irrelevant from scenario 4 because all trainers always will be advanced.\n\n" ..
 			""
