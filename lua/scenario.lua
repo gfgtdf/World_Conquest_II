@@ -34,8 +34,8 @@ end)
 
 -- happens before training events.
 on_event("recruit", 1, function(ec)
-	local u = wesnoth.get_unit(ec.x1, ec.x2)
-	if not u or wc2_scenario.is_human_side(u.side) then
+	local u = wesnoth.get_unit(ec.x1, ec.y1)
+	if (not u) or (not wc2_scenario.is_human_side(u.side)) then
 		return
 	end
 	u:add_modification("advancement", { wc2_scenario.experience_penalty() })

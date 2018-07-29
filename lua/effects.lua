@@ -102,6 +102,23 @@ function wesnoth.effects.wc2_min_defense(u, cfg)
 	}, false)
 end
 
+-- filter_lua function cannot be used in [effect][filter]
+-- because it tries to pass the unit by its location while
+-- the unit is usually not on the map when a effect is applied.
+function wesnoth.effects.wc2_fixed_lua_filter(u, cfg)
+	local path = wc2_utils.split_to_array(cfg.lua_filter)
+	local current = _G
+	for v in tostring(cfg.lua_filter or ""):gmatch("[^%s.][^.]*") do
+		current = current[v]
+	end
+	if current(u) then
+		cfg.apply_to = cfg.apply_to2
+		wesnoth.add_modification(u, "object", {
+			T.effect (cfg),
+		}, false)
+	end
+end
+
 function wesnoth.effects.wc2_update_aura(u, cfg)
 	local illuminates = wesnoth.match_unit(u, { ability = "illumination" } )
 	local darkens = wesnoth.match_unit(u, { ability = "darkness" } )
