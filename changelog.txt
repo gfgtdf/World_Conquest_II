@@ -30,6 +30,8 @@ email=#####
 
 # Changelog:
 
+0.7.3
+- Fixed wrong experience of recruited units and of units with epic trait.
 0.7.2
 - Fixed show item info.
 - Added 'settings' section to wocopedia
