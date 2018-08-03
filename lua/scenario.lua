@@ -19,9 +19,9 @@ end
 
 on_event("preload", function()
 	if not wml.variables["wc2.original_version"] then
-		wml.variables["wc2.original_version"] = "0.7.3"
+		wml.variables["wc2.original_version"] = "0.7.4"
 	end
-	wml.variables["wc2.version"] = "0.7.3"
+	wml.variables["wc2.version"] = "0.7.4"
 end)
 
 on_event("prestart", function()	

@@ -30,6 +30,8 @@ email=#####
 
 # Changelog:
 
+0.7.4
+- Fixed 'Terror disguise' and 'Herald armor' not settings alignment.
 0.7.3
 - Fixed wrong experience of recruited units and of units with epic trait.
 0.7.2
