@@ -58,7 +58,7 @@ function wesnoth.wml_actions.wc2_start_units(cfg)
 end
 
 on_event("scenario_end", function()
-	wml.variables["wc2.version"] = nil
+	--wml.variables["wc2.version"] = nil
 end)
 
 return wc2_scenario
