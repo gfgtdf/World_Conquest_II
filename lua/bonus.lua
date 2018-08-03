@@ -64,6 +64,13 @@ function bonus.remove_current_item(ec)
     }
 end
 
+function bonus.can_pickup_bonus(side_num, x, y)
+	return wc2_scenario.is_human_side(side_num)
+end
+
+function bonus.post_pickup(side_num, x, y)
+end
+
 on_event("wc2_drop_pickup", function(ec)
 	local item = wc2_dropping.current_item
 	local side_num = wesnoth.current.side
@@ -72,14 +79,14 @@ on_event("wc2_drop_pickup", function(ec)
 		return
 	end
 
-	if not wc2_scenario.is_human_side(side_num) then
+	if not bonus.can_pickup_bonus(side_num, ec.x1, ec.y1) then
 		return
 	end
 
 	local bonus_type = item.wc2_type or wesnoth.random(3)
 	local bonus_subtype = item.wc2_subtype
 	if bonus_type == 1 then
-		if not bonus.found_training(wesnoth.current.side, ec) then
+		if not bonus.found_training(wesnoth.current.side, bonus_subtype, ec) then
 			bonus_type = wesnoth.random(1,2)
 			bonus_subtype = nil
 		end
@@ -91,6 +98,7 @@ on_event("wc2_drop_pickup", function(ec)
 		bonus_subtype = bonus_subtype or bonus.get_random_hero()
 		bonus.found_hero(ec, bonus_subtype)
 	end
+	bonus.post_pickup(side_num, ec.x1, ec.y1)
 	assert(wc2_dropping.item_taken, "item still there")
 end)
 
@@ -134,8 +142,14 @@ function bonus.found_hero(ec, herotype)
 	return true
 end
 
-function bonus.found_training(side_num, ec)
-	local traintype, amount = wc2_training.pick_bonus(side_num)
+function bonus.found_training(side_num, suggested_subtype, ec)
+	local traintype, amount
+	if suggested_subtype then
+		amount = 1
+		traintype = wc2_training.trainings_left(side_num, suggested_subtype) >= amount and suggested_subtype or nil
+	else
+		traintype, amount = wc2_training.pick_bonus(side_num)
+	end
 
 	if traintype == nil then
 		return false
