@@ -18,6 +18,7 @@ local function remove_dublicates(t)
 	end
 end
 
+-- the wc2 recruit pair logic.
 on_event("recruit", function(ctx)
 	local unit = wesnoth.get_unit(ctx.x1, ctx.y1)
 	
@@ -101,8 +102,12 @@ local function init_side(side_num)
 		end
 	end
 	
-	if not faction then
+	if not faction and #wc2_era.factions_wml > 0 then
 		faction = wc2_era.factions_wml[wesnoth.random(#wc2_era.factions_wml)]
+	end
+
+	if not faction then
+		return
 	end
 
 	local heroes = wc2_era.expand_hero_types(faction.heroes)
