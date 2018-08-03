@@ -56,9 +56,10 @@ function artifacts.give_item(unit, index, visualize)
 			wesnoth.wml_actions.animate_unit(animate_unit)
 		end
 	end
-
+	local make_holder_loyal = wml.variables["wc2_config_items_make_loyal"] ~= false
 	--todo: and not unit.variables.wc2.is_commander or hero
-	if not unit.canrecruit and unit.upkeep ~= 0 and unit.upkeep ~= "loyal" then
+	--todo: does the 'unit.upkeep ~= 0' part break thise code fo level 0 units?
+	if make_holder_loyal and (not unit.canrecruit) and (unit.upkeep ~= 0) and (unit.upkeep ~= "loyal") then
 		-- todow16: use an actual [effect].
 		unit:add_modification("object", { T.effect { apply_to = "wc2_overlay", add = "misc/loyal-icon.png" }}, false )
 	end
@@ -67,8 +68,12 @@ function artifacts.give_item(unit, index, visualize)
 		wc2_atrifact_id = index,
 		-- cannot filter on wc2_atrifact_id beeing empty so we also need wc2_is_artifact
 		wc2_is_artifact = true,
-		T.effect { apply_to= "loyal" },
 	}
+	if make_holder_loyal then
+		table.insert(object, T.effect { apply_to= "loyal" })
+	end
+		
+		
 	-- TODO: i _could_ replace the follwing with a 'apply_to=wc2_artifact' effect that
 	--       basicially applies all effects in the [artifact]s definition. The obvious
 	--       advantage would be a smaller savefile size. Also this woudl change how savefiles
@@ -182,7 +187,7 @@ on_event("die", function(event_context)
 
 	-- remove the item from the unit, just in case the unit is somehow brought back to life by another addons code. (for example 'besieged druid' can do such a thing)
 	unit:remove_modifications { wc2_is_artifact = true }
-	end)
+end)
 
 function artifacts.is_item_at(x,y)
 	for i,item in ipairs(wc2_dropping.get_entries_at_readonly(x,y)) do
