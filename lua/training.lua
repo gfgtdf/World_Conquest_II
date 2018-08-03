@@ -152,18 +152,30 @@ function training.give_bonus(side_num, cx, amount, traintype_index)
 	return true
 end
 
-function training.pick_bonus(side_num)
+function training.bonus_calculate_amount(side_num)
 	local amount = 1
 	local advanced_chance = 4 * training.get_level_sum(side_num)
 	if wc2_scenario.scenario_num() > 3 or wesnoth.random(100) <= advanced_chance then
 		amount = 2
 	end
+	return amount
+end
+
+function training.pick_random()
+	--wesnoth.random(#training.trainers)
+	local options = {1,2,3,4,5,6,2,3,4,5,6,2,3,4,5,6}
+	return options[wesnoth.random(#options)]
+end
+
+function training.pick_bonus(side_num)
+	local amount = training.bonus_calculate_amount(side_num)
 	-- dark training reduced chances
 	local traintype_index = training.find_available(side_num, {1,2,3,4,5,6,2,3,4,5,6,2,3,4,5,6}, amount)
 	if traintype_index == nil then
 		return nil
 	end
 
+	--dark training increased level.
 	if traintype_index == 1 then
 		amount = math.min(training.trainings_left(side_num, traintype_index), math.max(amount, wc2_scenario.scenario_num() - 1))
 	end
