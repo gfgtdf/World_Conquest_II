@@ -9,10 +9,12 @@ end
 
 function wesnoth.wml_actions.wc2_show_wocopedia(cfg)
 		
-	local show_help_general = true
-	local show_help_training = true
-	local show_help_factions = true
-	local show_help_artifacts = true
+	local show_help_mechanics = cfg.show_mechanics ~= false
+	local show_help_training = cfg.show_training ~= false
+	local show_help_factions = cfg.show_factions ~= false
+	local show_help_artifacts = cfg.show_artifacts ~= false
+	local show_help_settings = cfg.show_settings ~= false
+	local show_help_feedback = cfg.show_feedback ~= false
 	-- maps the treeview rows to pagenumber in the help page.
 	local index_map = {}
 	local desc_index = 1
@@ -33,7 +35,7 @@ function wesnoth.wml_actions.wc2_show_wocopedia(cfg)
 	local current_side = wesnoth.get_viewing_side()
 	local preshow = function()
 		local str_cat_mechnics = _ "Game Mechanics"
-		local str_des_mechnics = 
+		local str_des_mechnics = cfg.mechanics_text or 
 			_ "<b>Gold</b>:\n" ..
 			_ "Carryover is 15%, comunitary and avoid negative amounts. Early finish bonus is superior to village control, but it is not directly related to their amount.\n\n" ..
 			_ "<b>Autorecall</b>:\n" ..
@@ -68,7 +70,7 @@ function wesnoth.wml_actions.wc2_show_wocopedia(cfg)
 		local str_cat_settings = _ "Settings"
 		
 		---- add general topic ----
-		if show_help_general then
+		if show_help_mechanics then
 			wesnoth.add_dialog_tree_node("category", ti[1], "left_tree")
 			wesnoth.set_dialog_value(str_cat_mechnics, "left_tree", ti[1], "training_name")
 			wesnoth.set_dialog_value(true, "left_tree", ti[1])
@@ -199,7 +201,7 @@ function wesnoth.wml_actions.wc2_show_wocopedia(cfg)
 			add_index()
 		end
 		
-		if true then
+		if show_help_settings then
 			wesnoth.add_dialog_tree_node("category", ti[1], "left_tree")
 			wesnoth.set_dialog_value(str_cat_settings, "left_tree", ti[1], "training_name")
 			wesnoth.set_dialog_value(true, "left_tree", ti[1])
@@ -210,8 +212,8 @@ function wesnoth.wml_actions.wc2_show_wocopedia(cfg)
 			wesnoth.set_dialog_active(false, "training_details", desc_index, "checkbox_use_markers")
 			wesnoth.set_dialog_value(not not wml.variables["wc2_config_experimental_pickup"], "training_details", desc_index, "checkbox_use_pickup")
 			wesnoth.set_dialog_active(false, "training_details", desc_index, "checkbox_use_pickup")
-			wesnoth.set_dialog_text(wml.variables["wc2.version"], "training_details", desc_index, "label_version")
-			wesnoth.set_dialog_text(wml.variables["difficulty.name"], "training_details", desc_index, "label_difficulty")
+			wesnoth.set_dialog_text(wml.variables["wc2.version"] or "unknown", "training_details", desc_index, "label_version")
+			wesnoth.set_dialog_text(wml.variables["difficulty.name"] or "unknown", "training_details", desc_index, "label_difficulty")
 			
 			local mp_settings = wesnoth.game_config.mp_settings
 			if mp_settings then
@@ -219,7 +221,7 @@ function wesnoth.wml_actions.wc2_show_wocopedia(cfg)
 			end
 			add_index()
 		end
-		if true then
+		if show_help_feedback then
 			wesnoth.add_dialog_tree_node("category", ti[1], "left_tree")
 			wesnoth.set_dialog_value(str_cat_feedback, "left_tree", ti[1], "training_name")
 			wesnoth.set_dialog_value(true, "left_tree", ti[1])
