@@ -200,7 +200,7 @@ function training.init_data(cfg)
 		trainer.grades = {}
 		for grade in helper.child_range(trainer, "grade") do
 			if next(grade) ~= nil then
-				-- grade is non empty
+				-- grade is non empty, skip the first [grade] which is usually empty for compatability.
 				table.insert(trainer.grades, grade)
 				grade.chances = {}
 				for chance in helper.child_range(grade, "chance") do
