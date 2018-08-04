@@ -9,12 +9,100 @@ Minor code contributors: ezysquire (forcefield), tsr (preset advancement)
 
 # Images: All custom images based in other authors files, but it is hard find out their names, sorry :(
 Several images created by doofus-01
-All editing work to adapt them: tekelili
-Add on icon= "misc/blank-hex.png~BG(140,85,75)~O(1%)~BLIT(units/elves-wood/sorceress.png~RC(magenta>green)~CROP(14,1,58,71))~BLIT(units/undead-necromancers/dark-sorcerer+female.png~RC(magenta>blue)~CROP(0,0,60,67),12,5)"
+All editing work to adapt custom images and create new from mainline (poorly executed): tekelili
 
-# Website= http://forums.wesnoth.org/viewtopic.php?t=39651
+# PBL file
+title="World Conquest II"
+type="campaign_mp"
+icon= "misc/blank-hex.png~BG(140,85,75)~O(1%)~BLIT(units/elves-wood/sorceress.png~RC(magenta>green)~CROP(14,1,58,71))~BLIT(units/undead-necromancers/dark-sorcerer+female.png~RC(magenta>blue)~CROP(0,0,60,67),12,5)"
+author="tekelili, TL"
+description="Highly randomized and replayable, combat focused campaign for 1-3 players. Players and enemies can improve their armies with magic items, heroes and trainings. Includes an era with 10 factions.
+Campaign complete (Beta version).
+Scenarios can be found in Multiplayer >> Random Maps. More detailed info at website.
+(Expert level, 5 scenarios.)"
+[feedback]
+    topic_id=39651
+[/feedback]
+passphrase=#####
+version=#####
+email=#####
+
 
 # Changelog:
+0.6.8
+- Redefined Trust pairs (intended as little nerf)
+- Added Chocobone to enemy recalls
+- Removed Young Ogre from pickable from lists without orcs
+- Removed as pickables leaders mages not available as random for Militia and Gang
+- Tweaked Dark, Melee, Ranger and Experience trainings
+- Now enemy undead units get benefict from item Melange (they consumed it while alive)
+- Tweaked how scale enemy recalls at scenarios 4,5 with enemy_power (now is more difficult for players at easier levels)
+- Scaled enemy commander xp bonus with unit level
+- Redefined roads and rivers near castles in Maritime generator
+- Fixed calling Alien Eras modification with wrong id
+- Fixed not fog update for hero found
+- Added explanation of carryover to WoCopedia. Improved bonus points names generation
+- Fixed custom feeding description not matching mainline one. Fixed drains special could be displayed twice on a unit.
+- "Terrific disguise" becomes "Terror disguise", "Winged Staff" becomes "Winged scepter"
+- Fixed version warnings not aimed to host.
+
+0.6.7
+- Removed Mages as random leaders for Militia
+- Small buffs to enemy at scenario4: 1 commander upgraded to level2 and +1 supply village
+- Small buffs to enemy at last scenario: 2 commander upgraded to level3 and +2 supply villages
+- Supply village for enemy gives leader trait "expert" (it doesnt give +70 gold, just normal income and upkeep)
+- Small nerf to enemy recalls at 1p-2p modes to absorb buffs on comanders aimed for 3p
+- Added xp scenario based bonus to hero found
+- Scaled early finish gold bonus (before percentage) with number of players
+- Removed resistence bonus from item Ring of Power and added disengage weapon special
+- Removed secondary effect for flying units from item Winged Staff
+- Tweaked all trainings
+- Scaled army discipline bonus chance with scenario
+- Thug hero gets "resilent" as extra trait instead "fearless" and Young Ogre "epic" instead "expert"
+- Scaled enemy items at last map with difficulty
+- Simplified/tweaked several junky map generation rutines
+- Tweaked faction images
+- Fixed bug: heals +8 training not working over heals +4 units
+- Fixed some translation notes shown and lacking commander overlay for observers
+- Disabled ruiened wood birdge destrucción for lacking good image and transition
+- Shorted scenario name to ease savefiles management
+
+0.6.6
+- Redefined the Guild: Now can spam Dark Adept and Ghoul becomes paired with Elvish Shaman
+- Added as leaders: Troll Hero and Lieutenant for The Hand, Troll Hero for The Gang and The Horde
+- Tweaked Ranger, Movement and Experience Trainings
+- Added Troll Hero and Great Troll to enemy orc recalls. Added Troll Hero to comanders
+- Changed The Horde faction image
+- Fixed bug: full movement on recruit was giving 1 MP less when assigned on recruit before +22% moves
+
+0.6.5.1
+- Added as leaders: Orcish Ruler for The Gang and The Horde, Elvish Lord for The Guild
+- Rescaled bonus gold and enemies trained with difficulty level
+- Fixed bug: possible OOS in carryover using non-integer values inside [gold]
+- Fixed bug: possible castle expanding recruit in map3 Savannah
+- Fixed bug: 2 filters chosing some wrong bonus-point-images on a few maps
+- Fixed bug: yard generated at 0,0 sometimes at map2 Paradise
+
+0.6.5
+(Not compatible with previous versions)
+- Developed new alternative map4 (Wild)
+- Swaped Arif and khaiyal as desesters for Guild and Hand. Swaped Hakim and Jundi as desesters for Gang and Militia. Added Dwarvish Scout to Knalgans pickables heroes
+- Tewaked trainings beneficts. Changes training order to extend +10% health profit to all redudancy consolation +1HP bonus
+- Enemy pets get trait "expert". Some tweaks/fixes to enemy recall lists
+- Legendary Goblin Pillager gets leadership (to be consistent with Rouser path)
+- Harcoded suffle players starting position, to fix [generator] pattern
+- Fixed bug: impassible terrain could become invest item impossible to pick
+- Fixed bug: enemy castle expansion on map1 called after map repaint could expand recruit. Several minor changes to some generations
+- Fixed glitch: optional charge duplicating attacks after unit AMLA
+- Fixed typo: gold amount not displayed in expensive recall warning message
+- Changed item "Winter Bloom" resistance bonus to "up to 20" (it was "+50"), removed movement and defense bonus.
+- The Key now gives teleport animation
+- Improved decorative destruction (fences, rotten bridges)
+- Several code fixes to alievate save files size (still a lot to do in BfW 1.14)
+- Used image for invest training from mainline and removed custom one, as is the same from BfW 1.12.4
+- Disabled [allow_undo] in 2p/3p modes due to OOS in bfW 1.12
+- fixed [insert_tag] creating empty [if] to avoid bug in BfW 1.13
+
 0.6.4.4
 - Fixed bug in generating starting positions for alien eras in 2p-1p modes due to key terrain_liked=
 
@@ -288,253 +376,4 @@ Add on icon= "misc/blank-hex.png~BG(140,85,75)~O(1%)~BLIT(units/elves-wood/sorce
 - Increased trun limit in 2p and 1p versions. +25 gold each map for 1p.
 - Reduced enemy lvl2 recalls in map4 for lower difficulties.
 
-0.5.2.5
-- Improved decorative destruction (snow, ice)
-- Added new custom bonus images
-- Small improves and fixes to map decoration
-
-0.5.2.4
-- Redefined recall code for better perfomance and to do unneccessary Force-Recall option (removed)
-- Fixed missing image in a cave-hill bonus case
-- Fixed consolation bonus for fearless on nagas (now filters correctly by alignment)
-- Fixed optional charge removing specials on new attack.
-- better adjust of mushrooms amount for new map surface sizes
-- Reduced Dark trainer chances to be found
-
-0.5.2.3
-- Redefined 2p/1p map border reduction. Now is in function of all map players instead human players (later maps become less reduced).
-- Reduced villages per hexes ratio to balance carry-over gold bonus in function of new map surfaces
-
-0.5.2.2
-- Fixed typo in fork to map4, giving wrong id to map4 Volcanic
-- Fixed optional charge not working after unit levels
-- Fixed consulte topic string bad displayed
-
-0.5.2.1
-- Developed a new alternative Map4 (Volcanic)
-- Added heroic pets for themed enemy castles
-- Changed some strings and isolated them from code (WIP)
-
-0.5.2
-- Developed a new alternative Map2 (Lakes)
-- Small improves to most trainings
-- Changed one custom supply image for a mainline new one
-- Small nerf to army discipline chance and added explanation to WoCopedia
-
-0.5.1.4
-- Fixed classic WC "bug": map noise not covering all surface at last map
-- Fixed giving +10 on 1st map to 2p
-- Fixed number of iterations in 2p and 1p giving low temperatures at first maps
-- Increased players difficulty extra gold for 2p and 1p
-- Doubled difficulty last map enemy lvl2 recalls reduction
-- All modes: Slight enemy nerf with -1 lvl2 recall each side at las map
-- Fixed 3p map4 id not changed
-
-0.5.1.3
-- 2 players gold bonus per map increased to +25 for each player
-- 1 player: Slighty map increase. Gold bonus increased to +50. Player starts with 1 extra hero.
-
-0.5.1.2
-- Slighty bigger map for 1p mode
-- Bonus gold for 2p and 1p modes
-
-0.5.1.1
-- Reduced enemy castle size for less players
-
-0.5.1
-- Developed separated campaigns for 3,2,1 players with different map size.
-
-0.5.0.2
-- Fixed bug where in some cases, bonus point item positon had no variable and couldnt be picked
-
-0.5.0.1
-- Fixed one enmy orc helper giving direwolf riders as recruit
-- Removed une custom image for suplly and added 2 new ones variations
-
-0.5
-- Redefined The Militia recruit pairs to give a small buff
-- Several improvements to bonus appearence and diversity
-- Fixed units in recall list slowed status not removed
-- Fixed a very hard to detect bug due to little effect: bonus points was using last map coordenates as radius separation
-
-0.4.9.5.4
-- Fixed Ranger Training fearless benefict not working
-- Fixed Movement Training level2 boost (was not intended to buff 6mp units so much).
-
-0.4.9.5.3
-- More images
-
-0.4.9.5.2
-- Added factions to WoCopedia
-- Improved exit submenu behavior
-- Added custom image as extra variation to bonus points
-
-0.4.9.5.1
-- Improved quality of "hidden images" for users without add on installed
-- Added trainings to WoCopedia
-
-0.4.9.5
-- Disabled Village destruction to avoid error in join a loaded game without add on installed
-- Created a config file to allow enable Village destruction again
-
-0.4.9.4.3
-- Fixed missing image for one case in bonus point on swamp
-
-0.4.9.4.2
-- Added pick up sounds to items without any pick up "tag"
-- Changed bonus names end when "s"
-- Improved combat experience and movement trainings
-- Fixed bug deleting wrong item bought for a player
-- Small addition to WoCopedia
-
-0.4.9.4.1
-- Fixed deleting wrong forbidden items
-- Fixed typo in health training
-
-0.4.9.4
-- Fixed using bonus radious separation from 1,1 coordenaes
-- Menus apparence improvements
-- Fixed scroll to leader when using help
-- Improved code configurarion/maintaining power
-
-0.4.9.3
-- Fixed bug introduced in 0.4.9.2: removing leaders from list was also reducing recalls diversity
-- Redefined enemy recalls to allow new types and different chances
-- Created WoCopedia (as help option)
-- Added faction image and team color to recruit pairs info
-- Removed pick up item message, added enemy drop item message
-
-0.4.9.2
-- Created redundancy consolation bonus for trainings beneficts
-- Improved Melee and Ranger training
-- Redefined movement training
-- Hero found and unit in bonus point face each other
-- Decoration improve: Chances of themed enemy castle
-- Several small fixes to decoration, improving randomess
-- Redefined random enemy leaders to no repeat unit-type/recuit-list
-- Small fixes to bosses types and ally selection code. Fixed saurian as orc leader
-
-0.4.9.1
-- Added new item: Melange
-- Changed Winged staff bonus for flying units. Fixed improved bats village defense and guilder effect
-- Small change to lower difficulty levels
-- Small improvement to code performance and readbility
-
-0.4.9
-- Enemy nerf: -1 lvl3 recall for each AI side in last map
-- Redefined found a trainer to give extra levels in some cases.
-Trainers have a new unit type when they are not "advanced"
-- Hero and trainer found now face unit picking bonus
-
-0.4.8.3
-- Fixed bug introduced in 0.4.8.2 not giving extra hero if not Nightmare
-
-0.4.8.2
-- Small change in map4 dialogue and removed sound
-- Reduced savefiles size, better clear variables
-- Renamed variables for easier inspect and debug
-- Added last version supported to era id. Alternative era id for translated version.
-- Fixed bug in swamp defense for ranger training
-- Changed extra trait to some fearless that become resilent or strong.
-- Helpers, commanders, and bonus heroes/items are removed from respective list after "picked"
-- Reduced chances of random enemy repited
-- Small improves to melee, ranger and dark trainings
-- Improved Hammer of the Wose
-
-0.4.8.1
-- Added new faction: The Cult
-- Added heroes to bonus points: Woodsman, Peasant, Dwarvish Scout
-- Added to pickable heroes: fishes and lvl 0
-- Fixed tenacity description
-- Fixed missing found hero and trainers dialogues
-- Improved found hero replies
-- Fixed improved grade for dark training after map2
-- Fixed missing sand special in ranger training
-- Small improve to ranger and dark trainings
-- Changed training sound
-- Improved decorative destruction
-- Small change to peasant and seargeant difficulties
-
-0.4.8
-- Redefined difficulty levels
-- Added new faction: The Militia
-
-0.4.7.2
-- Added new faction: The Scourge
-- Dark training halved chances
-- Nerfed Banner bonus to 20%
-- Redefined Melee, Ranger and Movement trainings
-- Fixed minor bug in village and forest defenses boost
-- Small tweak to map rebuild (impassible to mushroom)
-- Improved help messagge
-
-0.4.7.1
-- Added new faction: The Hand
-
-0.4.7.0.2
-- Fixed bug at loading map3 due to id changes.
-
-0.4.7
-- Changed shaman and mage recruit-pairs for The Guild
-- Added 2 factions: The Gang, The Trust
-
-0.4.6.4
-- Improved Melee Combat training
-- Improved Ranger Tactics training
-- Added 2 supply-village image variations
-- Minor decoration tweaks
-- Improved enemy commander xp
-
-0.4.6.3
-- Fixed Herald armor removing corruption
-- Mixed halo for Forcefield + tod aura
-- Colored pick up ring animations
-
-0.4.6.2
-- Fixed feeding not working bug introduced with corruption redifinition
-- Small improve to decorative destruction
-- Fixed missing halo on enemies with aura item
-- Fixed bonus feeding on enemies not silent
-- Added new pick up item animations
-- Extra grade for Dark Training after map2
-- Minor decoration tweak to last map (fences)
-
-0.4.6.1
-- Fixed Terrific disguise not damaging poisoned units.
-- Minor decoration fixes
-- Animation for pick up a ring
-- Fixed misssing messages in mainline strings translations
-- Added translation to French and Spanish (incomplete)
-
-0.4.6
-- Improved Melee training
-- Improved Ranger training
-- Modified Health training
-- Improved Bezoar
-- Chances of fords in map1
-- Created a Translated version
-
-0.4.5.7.6
-- More correct feeding code
-- Improved decorative castle destruction
-- Added fixed enemies randomization to lower chances of repetitive factions
-- Fixed Force field description
-- Doubled enemy helpers xp bonus
-
-0.4.5.7.5
-- Disabled mainline strings translation due to a MP bug
-- Improved Ice bow, Terrific disguise
-- Improved code perfomance to calculate recall cost
-
-0.4.5.7
-- fixed wrong id in a ruinable village
-- improved mainline strings translations and menus apearence
-- developed force recall option
-
-0.4.5.6
-- translated mainline strings
-- minor bugs fixes
-- softed menu colors
-- sylph bow improved
-
-#previous versions didnt write changelog
+(deleted changelog only valid for previous BfW versions)
