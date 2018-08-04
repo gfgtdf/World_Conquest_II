@@ -15,6 +15,24 @@ Add on icon= "misc/blank-hex.png~BG(140,85,75)~O(1%)~BLIT(units/elves-wood/sorce
 # Website= http://forums.wesnoth.org/viewtopic.php?t=39651
 
 # Changelog:
+
+0.6.4
+- Redefined The Scourge: Ghost paired with Skirmisher and Guilder-Bat (trades better scouting for less use of specialists)
+- Redefined  The Guild: Can spam Elf Fighter and Ghoul. Reduced random leaders to shamans, mages, dark adepts, and necrophages
+- Removed White Mage as random leader for The Gang (intended as neutral/flavor change; too many chances of white mages and few of orc leaders among other factions)
+- Army discipline bonus nerfed to 3%
+- small tweak to Ranger Tactics training
+- Fixed bug: recruit list not consistent for different eras after scenario transition
+- Small tweaks to generators Wicked adn Provinces
+- Fixed custom forest terrain code (small "bugs" with no gameplay effect)
+- Improved themed enemy: added outlaw to maps Wetland and Wicked
+- Added saurians and outlaws to enemy commander types
+- Each enemy faction will not get commanders of repeated faction along campaign
+- Added 2 new alternative supply village images, added 3 bonus point images
+- Improved pickup bonus point image syncro. Revised and added bonus names.
+- Fixed Classic WC junky code of store empty points as (1,1). Rewroten some code for ease reading
+- Added debug config option to end scenario
+
 0.6.3.3
 - Developed new alternative map4 (Wicked)
 - Enemy xp bonus (to commanders and units with item) now scales with enemy_power
