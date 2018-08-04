@@ -15,6 +15,30 @@ Add on icon= "misc/blank-hex.png~BG(140,85,75)~O(1%)~BLIT(units/elves-wood/sorce
 # Website= http://forums.wesnoth.org/viewtopic.php?t=39651
 
 # Changelog:
+0.6.4.4
+- Fixed bug in generating starting positions for alien eras in 2p-1p modes due to key terrain_liked=
+
+0.6.4.3
+- Developed new alternative final map (Feudal)
+- Increased forest amount on map3 Delta wich becomed too low after generation redesign
+
+0.6.4.2
+- "legendary" is renamed as "epic". Walking Corpse and Goblin Spearman heroes get new "legendary" trait  (enables special advances to Chocobone and Goblin Pillager)
+- Enemy leaders get trait "heroic"
+- Fixed glitch: unit taking only 1 item when 2 items placed on same map spot
+- Fixed typo in BfW version warning
+- WC II version becomes a variable to be consistent with code stored in savegame
+
+0.6.4.1
+- Fixed bug:Northerens bonus heroes was added twice and loyalist none to point list (responsable of 2 goblins heroes on bonus list)
+- Redefined data structure relationship between campaign and era (ease adapt other eras)
+- Removed unneccesary hack for recall store due to behavior changed in BfW 1.12
+- Rewritten/redefined junky generator-postgeneration for map3 Delta
+- Tweaked map3 Wetland postgeneration with extra obstacles in zones lacking them
+- Eliminated all players amount reference in postgenerations and made them consistent with any map size. Eliminated chance of generation expanding recruit for all maps.
+- Fixed bug: enemy with feeding item not getting scenario-based hp buff (made it also scale with enemy power)
+- Improved chances of melee recalls for enemy Elf
+- Added version warning urging to upgrade to 1.12.2 or later
 
 0.6.4
 - Redefined The Scourge: Ghost paired with Skirmisher and Guilder-Bat (trades better scouting for less use of specialists)
