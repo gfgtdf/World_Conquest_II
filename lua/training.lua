@@ -247,6 +247,7 @@ function training.apply(u)
 	if #trait > 0 then
 		u:add_modification("trait", trait)
 	end
+	u.variables.wc2_trained = true
 	u.hitpoints = u.max_hitpoints
 end
 function wesnoth.wml_actions.wc2_apply_training(cfg)
