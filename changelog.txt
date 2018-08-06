@@ -30,6 +30,8 @@ email=#####
 
 # Changelog:
 
+0.7.5
+- Fixed Gold pick in invest giving no gold.
 0.7.4
 - Fixed 'Terror disguise' and 'Herald armor' not settings alignment.
 0.7.3
