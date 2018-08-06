@@ -54,8 +54,12 @@ local function find_index(t, v)
 end
 
 function wc2_invest.do_gold()
-	local leaders = wesnoth.get_units { side = wesnoth.current.side, canrecruit = true }
+	local side_num = wesnoth.current.side
+	local side = wesnoth.sides[side_num]
+	local leaders = wesnoth.get_units { side = side_num, canrecruit = true }
+	side.gold = side.gold + 70
 	wesnoth.fire_event("wct_map_supply_village", leaders[1] )
+	
 end
 
 function wc2_invest.do_hero(t, is_local)
