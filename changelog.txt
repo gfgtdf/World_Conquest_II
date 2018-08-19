@@ -30,6 +30,9 @@ email=#####
 
 # Changelog:
 
+0.7.6
+- Fixed rare lua error when picking up training from bonus point if the
+  player cannot pick up more training.
 0.7.5
 - Fixed Gold pick in invest giving no gold.
 0.7.4
