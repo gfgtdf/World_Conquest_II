@@ -87,7 +87,7 @@ on_event("wc2_drop_pickup", function(ec)
 	local bonus_subtype = item.wc2_subtype
 	if bonus_type == 1 then
 		if not bonus.found_training(wesnoth.current.side, bonus_subtype, ec) then
-			bonus_type = wesnoth.random(1,2)
+			bonus_type = wesnoth.random(2,3)
 			bonus_subtype = nil
 		end
 	end
