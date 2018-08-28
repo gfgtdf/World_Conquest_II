@@ -29,9 +29,13 @@ function wc2_invest.initialize()
 	end
 
 	for side_num, side in ipairs(wesnoth.sides) do
-		if wc2_scenario.is_human_side(side_num) and not wc2_invest.has_items(side_num) then
-			wesnoth.set_side_variable(side_num, "wc2.items_left", table.concat(all_items, ","))
-			wc2_invest.add_items(side_num, 9)
+		if wc2_scenario.is_human_side(side_num) then
+			if not wc2_invest.has_items(side_num) then
+				wesnoth.set_side_variable(side_num, "wc2.items_left", table.concat(all_items, ","))
+				wc2_invest.add_items(side_num, 9)
+			else
+				wc2_invest.add_items(side_num, 1)				
+			end
 		end
 	end
 end
@@ -40,13 +44,6 @@ on_event("prestart", function()
 	wc2_invest.initialize()
 end)
 
-function wc2_invest.new_scenario()
-	for side_num, side in wesnoth.sides do
-		if wc2_scenario.is_human_side(side_num) then
-			add_items(side_num, 1)
-		end
-	end
-end
 local function find_index(t, v)
 	for i,v2 in ipairs(t) do
 		if v2 == v then return i end
