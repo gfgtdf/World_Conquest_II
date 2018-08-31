@@ -47,7 +47,7 @@ function wesnoth.wml_actions.wc2_show_wocopedia(cfg)
 			_ "<b>Upkeep</b>:\n" ..
 			_ "Units with trait HEROIC or holding any magic ITEM have FREE upkeep.\n\n" ..
 			_ "<b>Bonus Points</b>:\n" ..
-			_ "In every scenario the game generates as much bonus points on the map as there are players in the game, the bonus points can be picked up by player units and either contain artifacts, loyal units or training.\n\n" ..
+			_ "In every scenario the game generates as many bonus points on the map as there are players in the game, the bonus points can be picked up by player units and either contain artifacts, loyal units or training.\n\n" ..
 			_ "<b>Army discipline</b>:\n" ..
 			_ "At scenarios 1 to 3, for each training level player already own, trainers found have 2% to 4% chance to become advanced trainers (provide 2 levels). Becomes irrelevant from scenario 4 because all trainers always will be advanced.\n\n" ..
 			""
@@ -62,11 +62,11 @@ function wesnoth.wml_actions.wc2_show_wocopedia(cfg)
 			_ "Units with trait HEROIC are recalled at start of each scenario with no cost (up to castle size).\n\n" ..
 			""
 		local str_cat_training = _ "Training"
-		local str_des_training = _ "<b>Training</b>\nTraining impovemes newly recruited units, it has no effect on already recruited units. The follwing list shows all available trainings, the training you currently have is marked in green"
+		local str_des_training = _ "<b>Training</b>\nTraining improves newly recruited units, it has no effect on already recruited units. The follwing list shows all available trainings, the training you currently have is marked in green."
 		local str_cat_items = _ "Artifacts"
-		local str_des_items = _ "<b>Items</b>\nItems can be given to units to make them stronger. You can get artifcats in three ways: 1) By choosing an item as your starting bonus, 2) By finding it on a map ina  bonus point, 3) By dropping from enemies in later scenarios. Note however that not all units can pickup all items."
+		local str_des_items = _ "<b>Items</b>\nItems can be given to units to make them stronger. You can get artifcats in three ways: 1) By choosing an item as your starting bonus, 2) By finding it on a map in a bonus point, 3) By dropping from enemies in later scenarios. Note however that not all units can pickup all items."
 		local str_cat_era = _ "Factions"
-		local str_des_era = _ "<b>Factions</b>\n The Word Conquest 2 era consists of faction that are build of pairs of mainline faction of which at one has a healer abailable (Drakes, Rebels and Loyalists), and one does not (Orcs, Dwarves and Undead) the recruilist is also organizes in pairs so that you sometimes have to recruit a different units before you can recruit the units that you want. The available heroes, desertes and random leaders also depend on your factions, the item you can get do not depend on the faction you choose."
+		local str_des_era = _ "<b>Factions</b>\n The Word Conquest 2 era consists of faction that are build of pairs of mainline faction of which at one has a healer available (Drakes, Rebels and Loyalists), and one does not (Orcs, Dwarves and Undead) the recruilist is also organized in pairs so that you sometimes have to recruit a different units before you can recruit the units that you want. The available heroes, desertes and random leaders also depend on your factions, the items you can get do not depend on the faction you choose."
 		local str_cat_settings = _ "Settings"
 		
 		---- add general topic ----

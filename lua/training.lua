@@ -79,7 +79,7 @@ end
 
 function training.describe_training_level(name, level, max_level)
 	if level == max_level then
-		return tostring(wesnoth.format(_ "$name Training Maximun Level", {
+		return tostring(wesnoth.format(_ "$name Training Maximum Level", {
 			name = name
 		}))
 	else
@@ -92,7 +92,7 @@ end
 
 function training.describe_training_level2(level, max_level)
 	if level == max_level then
-		return _ "Maximun Level"
+		return _ "Maximum Level"
 	else
 		return tostring(wesnoth.format(_ "level $level", {
 			level = level
