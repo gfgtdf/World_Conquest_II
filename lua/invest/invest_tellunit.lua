@@ -1,5 +1,5 @@
 --<<
-local _ = wesnoth.textdomain 'wesnoth'
+local _ = wesnoth.textdomain 'wesnoth-World_Conquest_II'
 local invest_tellunit = {}
 
 invest_tellunit.dialog_wml = {

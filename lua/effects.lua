@@ -1,6 +1,6 @@
 --<<
 
-local _ = wesnoth.textdomain 'wesnoth'
+local _ = wesnoth.textdomain 'wesnoth-World_Conquest_II'
 helper = wesnoth.require("lua/helper.lua")
 T = wml.tag
 

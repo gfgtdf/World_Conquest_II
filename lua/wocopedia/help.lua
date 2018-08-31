@@ -1,5 +1,5 @@
 --<<
-local _ = wesnoth.textdomain 'wesnoth'
+local _ = wesnoth.textdomain 'wesnoth-World_Conquest_II'
 local dialog = wc2_wiki_dialog
 
 function wesnoth.set_dialog_text(text, ...)

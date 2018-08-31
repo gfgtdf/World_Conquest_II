@@ -1,5 +1,5 @@
 --<<
-local _ = wesnoth.textdomain 'wesnoth'
+local _ = wesnoth.textdomain 'wesnoth-World_Conquest_II'
 
 local dialog_wml = wc2_invest_dialog
 
@@ -37,7 +37,7 @@ function wc2_show_invest_dialog_impl(args)
 			cati_current = cati_current + 1
 			wesnoth.add_dialog_tree_node("category", cati_current, "left_tree")
 			wesnoth.set_dialog_value(true, "left_tree", cati_current)
-			wesnoth.set_dialog_value("Artifacts", "left_tree", cati_current, "category_name")
+			wesnoth.set_dialog_value(_ "Artifacts", "left_tree", cati_current, "category_name")
 			for i,v in ipairs(available_artifacts) do
 				local artifact_info = wc2_artifacts.list[tonumber(v)]
 				if not artifact_info then
@@ -58,17 +58,17 @@ function wc2_show_invest_dialog_impl(args)
 			cati_current = cati_current + 1
 			wesnoth.add_dialog_tree_node("category", cati_current, "left_tree")
 			wesnoth.set_dialog_value(true, "left_tree", cati_current)
-			wesnoth.set_dialog_value("Heroes", "left_tree", cati_current, "category_name")
+			wesnoth.set_dialog_value(_ "Heroes", "left_tree", cati_current, "category_name")
 			local i = 1
 			if available_commanders then
-				local desc = "Commanders will take your leaders place when the leader dies, possible commanders:"
+				local desc = _ "Commanders will take your leaders place when the leader dies, possible commanders:"
 				for j,v in ipairs(available_commanders) do
 					desc = desc .. "\n" .. wesnoth.unit_types[v].name
 				end
 				
 				wesnoth.add_dialog_tree_node("item", i, "left_tree", cati_current)
 				wesnoth.set_dialog_value(wc2_color.tc_image("units/unknown-unit.png"), "left_tree", cati_current, i, "image")
-				wesnoth.set_dialog_value("Commander\n" .. wc2_color.tc_text("promote to leader"), "left_tree", cati_current, i, "name")
+				wesnoth.set_dialog_value(_ "Commander" .. "\n" .. wc2_color.tc_text(_ "promote to leader"), "left_tree", cati_current, i, "name")
 
 				wesnoth.add_dialog_tree_node("", -1, "details")
 				wesnoth.set_dialog_value(desc, "details", details_index_counter, "label")
@@ -88,13 +88,13 @@ function wc2_show_invest_dialog_impl(args)
 				i = i + 1
 			end
 			if available_deserters then
-				local desc = "<b>possible units:</b>"
+				local desc = "<b>" .. _ "possible units:" .. "</b>"
 				for j,v in ipairs(available_deserters) do
 					desc = desc .. "\n" .. wesnoth.unit_types[v].name
 				end
 				wesnoth.add_dialog_tree_node("item", i, "left_tree", cati_current)
 				wesnoth.set_dialog_value(wc2_color.tc_image("units/unknown-unit.png"), "left_tree", cati_current, i, "image")
-				wesnoth.set_dialog_value("Deserter\n" .. wc2_color.tc_text("+15 gold"), "left_tree", cati_current, i, "name")
+				wesnoth.set_dialog_value(_ "Deserter" .. "\n" .. wc2_color.tc_text("+15 gold"), "left_tree", cati_current, i, "name")
 
 				wesnoth.add_dialog_tree_node("", -1, "details")
 				wesnoth.set_dialog_value(desc, "details", details_index_counter, "label")
@@ -106,7 +106,7 @@ function wc2_show_invest_dialog_impl(args)
 			cati_current = cati_current + 1
 			wesnoth.add_dialog_tree_node("category", cati_current, "left_tree")
 			wesnoth.set_dialog_value(true, "left_tree", cati_current)
-			wesnoth.set_dialog_value("Training", "left_tree", cati_current, "category_name")
+			wesnoth.set_dialog_value(_ "Training", "left_tree", cati_current, "category_name")
 			for i,v in ipairs(available_training) do
 				local current_grade = wc2_training.get_level(side_num, v)
 				local training_info = wc2_training.trainers[v]
@@ -122,7 +122,7 @@ function wc2_show_invest_dialog_impl(args)
 				wesnoth.set_dialog_value(desc, "left_tree", cati_current, i, "desc")
 				
 				wesnoth.add_dialog_tree_node("", -1, "details")
-				local label  = wc2_color.tc_text("<big>Before:</big>\n") .. train_message_before.message .. wc2_color.tc_text("\n<big>After:</big>\n") .. train_message.message
+				local label  = wc2_color.tc_text("<big>" .. _ "Before:" .. "</big>\n") .. train_message_before.message .. wc2_color.tc_text("\n<big>After:</big>\n") .. train_message.message
 				wesnoth.set_dialog_value(label , "details", details_index_counter, "label")
 				--wesnoth.set_dialog_value(train_message.message, "details", details_index_counter, "training_after")
 				add_index(cati_current .. "_" .. i, { pick = "training", type=v })
@@ -134,13 +134,13 @@ function wc2_show_invest_dialog_impl(args)
 			cati_current = cati_current + 1
 			wesnoth.add_dialog_tree_node("category", cati_current, "left_tree")
 			wesnoth.set_dialog_value(true, "left_tree", cati_current)
-			wesnoth.set_dialog_value("Other", "left_tree", cati_current, "category_name")
+			wesnoth.set_dialog_value(_ "Other", "left_tree", cati_current, "category_name")
 			
 			
 		
 			local colored_galleon = wc2_color.tc_image("units/transport/transport-galleon.png")
 			local supplies_image = "misc/blank-hex.png~SCALE(90,80)~BLIT(" .. colored_galleon .. ",9,4)"
-			local supplies_text = wc2_color.tc_text(_"+70 gold and +1 village")
+			local supplies_text = wc2_color.tc_text(_ "+70 gold and +1 village")
 			--"+{STR_COLOR_PLAYER ("+70 "+{STR_GOLD}+{STR_AND}+"+1 "+{STR_VILLAGE})}
 			
 			wesnoth.add_dialog_tree_node("item_desc", 1, "left_tree", cati_current)

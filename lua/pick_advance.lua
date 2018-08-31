@@ -1,6 +1,6 @@
 --<<
 local on_event = wesnoth.require("on_event")
-local _ = wesnoth.textdomain 'wesnoth'
+local _ = wesnoth.textdomain 'wesnoth-World_Conquest_II'
 local pick_advance = {}
 
 function pick_advance.has_options(u)
