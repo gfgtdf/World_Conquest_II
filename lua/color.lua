@@ -59,5 +59,29 @@ function color.tc_image(team_num, img)
 	return img .. "~TC(" .. team_num .. ",magenta)"
 end
 
+function wesnoth.wml_actions.wc2_fix_colors(cfg)
+	local player_sides = wesnoth.get_sides(wml.get_child(cfg, "player_sides"))
+	local other_sides = wesnoth.get_sides { { "not", wml.get_child(cfg, "player_sides") } }
+	local available_colors = { "red", "blue", "green", "purple", "black", "brown", "orange", "white", "teal" }
+	local taken_colors = {}
+	for side_num, side in ipairs(player_sides) do
+		local vname = "player[" .. side_num .. "].team_color"
+		if wml.variables[vname] then
+			side.color = wml.variables[vname]
+		else
+			wml.variables[vname] = side.color
+		end
+		taken_colors[side.color] = true
+	end
+	local color_num = 1
+	for side_num, side in ipairs(other_sides) do
+		while taken_colors[available_colors[color_num]] == true do
+			color_num = color_num + 1
+		end
+		side.color = available_colors[color_num]
+		taken_colors[side.color] = true
+	end
+end
+
 return color
 -->>
