@@ -148,7 +148,7 @@ end
 
 
 --[[
-	todo: the original code showed the item message in a last breathe event.
+	todo: the original code showed the item message in a last breath event.
 	
 	## drop item on death
 	[event]
@@ -181,6 +181,7 @@ on_event("die", function(event_context)
 	for object in helper.child_range(helper.get_child(unit.__cfg, "modifications") or {}, "object") do
 		if object.wc2_atrifact_id then
 			artifacts.place_item(unit.x, unit.y, object.wc2_atrifact_id)
+			artifacts.drop_message(object.item_index)
 			wesnoth.allow_undo(false)
 		end
 	end
