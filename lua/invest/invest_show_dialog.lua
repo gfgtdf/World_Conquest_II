@@ -122,7 +122,7 @@ function wc2_show_invest_dialog_impl(args)
 				wesnoth.set_dialog_value(desc, "left_tree", cati_current, i, "desc")
 				
 				wesnoth.add_dialog_tree_node("", -1, "details")
-				local label  = wc2_color.tc_text("<big>" .. _ "Before:" .. "</big>\n") .. train_message_before.message .. wc2_color.tc_text("\n<big>After:</big>\n") .. train_message.message
+				local label  = wc2_color.tc_text("<big>" .. _ "Before:" .. "</big>\n") .. train_message_before.message .. wc2_color.tc_text("\n<big>" .. _ "After:" .. "</big>\n") .. train_message.message
 				wesnoth.set_dialog_value(label , "details", details_index_counter, "label")
 				--wesnoth.set_dialog_value(train_message.message, "details", details_index_counter, "training_after")
 				add_index(cati_current .. "_" .. i, { pick = "training", type=v })
