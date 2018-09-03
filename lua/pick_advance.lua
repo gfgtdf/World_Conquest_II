@@ -13,6 +13,7 @@ on_event("pre_advance", function(ec)
 		return
 	end
 	local picked = u.variables.wc2_pya_pick
+	u.variables.wc2_pya_pick = nil
 	if picked ~= nil then
 		u.advances_to = { picked }
 	end
