@@ -122,6 +122,13 @@ on_event("wc2_drop_pickup", function(ec)
 		return
 	end
 
+	if is_human and not wml.variables["wc2_config_disable_pickup_confirm"] then
+		if not wc2_pickup_confirmation_dialog.promt_synced(unit, artifacts.list[index].icon) then
+			return
+		end
+	end
+	
+
 	wc2_dropping.item_taken = true
 	artifacts.give_item(unit, index, true)
 	wesnoth.allow_undo(false)
