@@ -188,7 +188,7 @@ on_event("die", function(event_context)
 	for object in helper.child_range(helper.get_child(unit.__cfg, "modifications") or {}, "object") do
 		if object.wc2_atrifact_id then
 			artifacts.place_item(unit.x, unit.y, object.wc2_atrifact_id)
-			artifacts.drop_message(object.item_index)
+			artifacts.drop_message(object.wc2_atrifact_id)
 			wesnoth.allow_undo(false)
 		end
 	end
