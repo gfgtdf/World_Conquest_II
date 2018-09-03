@@ -30,6 +30,11 @@ email=#####
 
 # Changelog:
 
+0.7.8
+- Added confirmation promt when picking up items.
+- Fix ai side color when player changes colors.
+- Fix item drop message.
+- Fix bug in preset advancement
 0.7.7
 - Fixed invest itemlist not increasing.
 0.7.6
