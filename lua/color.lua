@@ -66,6 +66,7 @@ function wesnoth.wml_actions.wc2_fix_colors(cfg)
 	local taken_colors = {}
 	for side_num, side in ipairs(player_sides) do
 		-- important: this creates the 'player' array.
+		-- todo: maybe use a side variable instead ?
 		local vname = "player[" .. side_num .. "].team_color"
 		if wml.variables[vname] then
 			side.color = wml.variables[vname]
