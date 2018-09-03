@@ -58,10 +58,10 @@ function wesnoth.wml_actions.wc2_start_units(cfg)
 end
 
 function wesnoth.wml_actions.wc2_store_carryover(cfg)
-	local human_sides = wesnoth.get_sides({wml.get_child(cfg, "sides")})
+	local human_sides = wesnoth.get_sides(wml.get_child(cfg, "sides"))
 	--use an the average amount of villages for this scenario to stay independent of map generator results.
 	local nvillages = cfg.nvillages
-	local turns_left = wesnoth.game_config.last_turn - wesnoth.currrrent.turn
+	local turns_left = wesnoth.game_config.last_turn - wesnoth.current.turn
 	local player_gold = 0
 
 	for side_num, side in ipairs(human_sides) do
