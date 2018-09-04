@@ -111,7 +111,7 @@ function training.generate_message(n_trainer, n_grade)
 	for unused, chance in ipairs(c_grade.chances) do
 		local vchance = chance.variable_substitution ~= false and wesnoth.tovconfig(chance) or chance
 		if (chance.value or 0) < 100 then
-			local str = wesnoth.format(_ "$chance chance to $arrow $desc", {
+			local str = wesnoth.format(_ "$chance| chance to $arrow $desc", {
 				chance = ("%d%%"):format(vchance.value),
 				desc = vchance.info or "",
 				arrow = wc2_color.tc_text(" → ")
