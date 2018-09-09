@@ -1,7 +1,8 @@
 
-wc2_invest = wesnoth.dofile("./invest")
-wc2_mapgen = wesnoth.dofile("./mapgen")
-wc2_wocopedia = wesnoth.dofile("./wocopedia")
+-- todo what are these supposed to do?
+--wc2_invest = wesnoth.dofile("./invest")
+--wc2_mapgen = wesnoth.dofile("./mapgen")
+--wc2_wocopedia = wesnoth.dofile("./wocopedia")
 
 wc2_ability_events = wesnoth.dofile("./ability_events.lua")
 wc2_artifacts = wesnoth.dofile("./artifacts.lua")
