@@ -30,6 +30,8 @@ email=#####
 
 # Changelog:
 
+0.7.8.2
+- Improve compatabiltiy with other add-ons and code cleanups.
 0.7.8
 - Added confirmation promt when picking up items.
 - Fix ai side color when player changes colors.
