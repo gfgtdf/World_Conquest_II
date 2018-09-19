@@ -74,8 +74,8 @@ function wesnoth.wml_actions.wc2_show_wocopedia(cfg)
 			wesnoth.add_dialog_tree_node("category", ti[1], "left_tree")
 			wesnoth.set_dialog_value(str_cat_mechnics, "left_tree", ti[1], "training_name")
 			wesnoth.set_dialog_value(true, "left_tree", ti[1])
-			wesnoth.add_dialog_tree_node("simpletext", -1, "training_details")
-			wesnoth.set_dialog_text(str_des_mechnics, "training_details", desc_index, "label")
+			wesnoth.add_dialog_tree_node("simpletext", -1, "details")
+			wesnoth.set_dialog_text(str_des_mechnics, "details", desc_index, "label")
 			add_index()
 		end
 		if show_help_training then
@@ -83,8 +83,8 @@ function wesnoth.wml_actions.wc2_show_wocopedia(cfg)
 			wesnoth.add_dialog_tree_node("category", ti[1], "left_tree")
 			wesnoth.set_dialog_value(str_cat_training, "left_tree", ti[1], "training_name")
 			wesnoth.set_dialog_value(true, "left_tree", ti[1])
-			wesnoth.add_dialog_tree_node("simpletext", -1, "training_details")
-			wesnoth.set_dialog_text(str_des_training, "training_details", desc_index, "label")
+			wesnoth.add_dialog_tree_node("simpletext", -1, "details")
+			wesnoth.set_dialog_text(str_des_training, "details", desc_index, "label")
 			add_index()
 			tree_enter_mode()
 			-- add specific training pages
@@ -96,16 +96,16 @@ function wesnoth.wml_actions.wc2_show_wocopedia(cfg)
 						desc.caption = "<span color='#00FF00'>" .. desc.caption .. "</span>"
 						desc.message = "<span color='#00FF00'>" .. desc.message .. "</span>"
 					end
-					wesnoth.add_dialog_tree_node("training_details", j, "training_details", desc_index, "tree_details")
-					wesnoth.set_dialog_text(desc.caption, "training_details", desc_index, "tree_details", j, "training_caption")
-					wesnoth.set_dialog_text(desc.message, "training_details", desc_index, "tree_details", j, "training_description")
+					wesnoth.add_dialog_tree_node("training_details", j, "details", desc_index, "tree_details")
+					wesnoth.set_dialog_text(desc.caption, "details", desc_index, "tree_details", j, "training_caption")
+					wesnoth.set_dialog_text(desc.message, "details", desc_index, "tree_details", j, "training_description")
 				end
 				local trainer = wc2_training.trainers[i]
 				wesnoth.add_dialog_tree_node("training_category", i, "left_tree", ti[1])
 				wesnoth.set_dialog_value(trainer.name, "left_tree", ti[1], ti[2], "training_name")
 				set_description(1, 1)
 				for j = 2, #trainer.grades, 1 do
-					wesnoth.add_dialog_tree_node("seperator", 2*j - 2, "training_details", desc_index, "tree_details")
+					wesnoth.add_dialog_tree_node("seperator", 2*j - 2, "details", desc_index, "tree_details")
 					set_description(j, 2*j - 1)
 				end
 				add_index()
@@ -126,15 +126,15 @@ function wesnoth.wml_actions.wc2_show_wocopedia(cfg)
 			wesnoth.add_dialog_tree_node("category", ti[1], "left_tree")
 			wesnoth.set_dialog_value(str_cat_era, "left_tree", ti[1], "training_name")
 			wesnoth.set_dialog_value(true, "left_tree", ti[1])
-			wesnoth.add_dialog_tree_node("simpletext", -1, "training_details")
-			wesnoth.set_dialog_text(str_des_era, "training_details", desc_index, "label")
+			wesnoth.add_dialog_tree_node("simpletext", -1, "details")
+			wesnoth.set_dialog_text(str_des_era, "details", desc_index, "label")
 			add_index()
 			tree_enter_mode()
 			for i, faction_info in ipairs(wc2_era.factions_wml) do
 				local faction_wml = wml.get_child(era_wml, "multiplayer_side", faction_info.id)
 				wesnoth.add_dialog_tree_node("training_category", ti[2], "left_tree", ti[1])
 				wesnoth.set_dialog_value(faction_info.name, "left_tree", ti[1], ti[2], "training_name")
-				wesnoth.add_dialog_tree_node("faction_info", -1, "training_details")
+				wesnoth.add_dialog_tree_node("faction_info", -1, "details")
 				j = 0
 				for p_wml in wml.child_range(faction_info, "pair") do
 					j = j + 1
@@ -142,24 +142,24 @@ function wesnoth.wml_actions.wc2_show_wocopedia(cfg)
 					local ut1 = wesnoth.unit_types[p[1]] or error("invald unit type" .. tostring(p[1]))
 					local ut2 = wesnoth.unit_types[p[2]] or error("invald unit type" .. tostring(p[2]))
 				
-					wesnoth.add_dialog_tree_node("recruit_pair", j, "training_details", desc_index, "recruit_pairs")
-					wesnoth.set_dialog_text(ut1.name, "training_details", desc_index, "recruit_pairs", j, "label1")
+					wesnoth.add_dialog_tree_node("recruit_pair", j, "details", desc_index, "recruit_pairs")
+					wesnoth.set_dialog_text(ut1.name, "details", desc_index, "recruit_pairs", j, "label1")
 					print(tostring(ut1.icon or ut1.image))
-					wesnoth.set_dialog_value(type_icon(ut1), "training_details", desc_index, "recruit_pairs", j, "image1")
-					wesnoth.set_dialog_text(ut2.name, "training_details", desc_index, "recruit_pairs", j, "label2")
-					wesnoth.set_dialog_value(type_icon(ut2), "training_details", desc_index, "recruit_pairs", j, "image2")
+					wesnoth.set_dialog_value(type_icon(ut1), "details", desc_index, "recruit_pairs", j, "image1")
+					wesnoth.set_dialog_text(ut2.name, "details", desc_index, "recruit_pairs", j, "label2")
+					wesnoth.set_dialog_value(type_icon(ut2), "details", desc_index, "recruit_pairs", j, "image2")
 				end
 				local deserters_names = wesnoth.format_conjunct_list("", wc2_era.expand_hero_names(faction_info.deserters))
-				wesnoth.set_dialog_text(deserters_names, "training_details", desc_index, "deserters")
+				wesnoth.set_dialog_text(deserters_names, "details", desc_index, "deserters")
 				if faction_wml then
 					local random_leaders = {}
 					for i,v in ipairs(wc2_utils.split_to_array(faction_wml.random_leader)) do
 						table.insert(random_leaders, wesnoth.unit_types[v].name)
 					end
 					random_leaders = wesnoth.format_conjunct_list("", random_leaders)
-					wesnoth.set_dialog_text(random_leaders, "training_details", desc_index, "random_leaders")
+					wesnoth.set_dialog_text(random_leaders, "details", desc_index, "random_leaders")
 				else
-					wesnoth.set_dialog_visible(false, "training_details", desc_index, "tit_random_leaders")
+					wesnoth.set_dialog_visible(false, "details", desc_index, "tit_random_leaders")
 				end
 				
 				add_index()
@@ -169,8 +169,8 @@ function wesnoth.wml_actions.wc2_show_wocopedia(cfg)
 		---- add general bonus point topic ----
 		--wesnoth.add_dialog_tree_node("category", ti[1], "left_tree")
 		--wesnoth.set_dialog_value(str_cat_bonus, "left_tree", ti[1], "training_name")
-		--wesnoth.add_dialog_tree_node("simpletext", -1, "training_details")
-		--wesnoth.set_dialog_text(str_des_bonus, "training_details", desc_index, "label")
+		--wesnoth.add_dialog_tree_node("simpletext", -1, "details")
+		--wesnoth.set_dialog_text(str_des_bonus, "details", desc_index, "label")
 		--add_index()
 		
 		if show_help_artifacts then
@@ -179,8 +179,8 @@ function wesnoth.wml_actions.wc2_show_wocopedia(cfg)
 
 			wesnoth.add_dialog_tree_node("category", ti[1], "left_tree")
 			wesnoth.set_dialog_value(str_cat_items, "left_tree", ti[1], "training_name")
-			wesnoth.add_dialog_tree_node("artifact_list", -1, "training_details")
-			wesnoth.set_dialog_text(str_des_items, "training_details", desc_index, "desc")
+			wesnoth.add_dialog_tree_node("artifact_list", -1, "details")
+			wesnoth.set_dialog_text(str_des_items, "details", desc_index, "desc")
 		
 			for i, artifact in ipairs(wc2_artifacts.list) do
 				local artifact_icon = artifact.icon or ""
@@ -194,9 +194,9 @@ function wesnoth.wml_actions.wc2_show_wocopedia(cfg)
 				if not_available.enemy then
 					artifact_name = artifact_name .. str_not_for_enemies
 				end
-				wesnoth.add_dialog_tree_node("artifact", i, "training_details", desc_index, "artifact_list_tv")
-				wesnoth.set_dialog_value(artifact_icon, "training_details", desc_index, "artifact_list_tv", i, "image")
-				wesnoth.set_dialog_value(artifact_name .. "\n" .. artifact_desc, "training_details", desc_index, "artifact_list_tv", i, "label")
+				wesnoth.add_dialog_tree_node("artifact", i, "details", desc_index, "artifact_list_tv")
+				wesnoth.set_dialog_value(artifact_icon, "details", desc_index, "artifact_list_tv", i, "image")
+				wesnoth.set_dialog_value(artifact_name .. "\n" .. artifact_desc, "details", desc_index, "artifact_list_tv", i, "label")
 			end
 			add_index()
 		end
@@ -205,26 +205,26 @@ function wesnoth.wml_actions.wc2_show_wocopedia(cfg)
 			wesnoth.add_dialog_tree_node("category", ti[1], "left_tree")
 			wesnoth.set_dialog_value(str_cat_settings, "left_tree", ti[1], "training_name")
 			wesnoth.set_dialog_value(true, "left_tree", ti[1])
-			wesnoth.add_dialog_tree_node("settings", -1, "training_details")
-			wesnoth.set_dialog_value(not not wml.variables["wc2_config_enable_pya"], "training_details", desc_index, "checkbox_use_pya")
-			wesnoth.set_dialog_active(false, "training_details", desc_index, "checkbox_use_pya")
-			wesnoth.set_dialog_value(not not wml.variables["wc2_config_enable_unitmarker"], "training_details", desc_index, "checkbox_use_markers")
-			wesnoth.set_dialog_active(false, "training_details", desc_index, "checkbox_use_markers")
-			wesnoth.set_dialog_value(not not wml.variables["wc2_config_experimental_pickup"], "training_details", desc_index, "checkbox_use_pickup")
-			wesnoth.set_dialog_active(false, "training_details", desc_index, "checkbox_use_pickup")
-			wesnoth.set_dialog_text(wml.variables["wc2.version"] or "unknown", "training_details", desc_index, "label_version")
-			wesnoth.set_dialog_text(wml.variables["difficulty.name"] or "unknown", "training_details", desc_index, "label_difficulty")
+			wesnoth.add_dialog_tree_node("settings", -1, "details")
+			wesnoth.set_dialog_value(not not wml.variables["wc2_config_enable_pya"], "details", desc_index, "checkbox_use_pya")
+			wesnoth.set_dialog_active(false, "details", desc_index, "checkbox_use_pya")
+			wesnoth.set_dialog_value(not not wml.variables["wc2_config_enable_unitmarker"], "details", desc_index, "checkbox_use_markers")
+			wesnoth.set_dialog_active(false, "details", desc_index, "checkbox_use_markers")
+			wesnoth.set_dialog_value(not not wml.variables["wc2_config_experimental_pickup"], "details", desc_index, "checkbox_use_pickup")
+			wesnoth.set_dialog_active(false, "details", desc_index, "checkbox_use_pickup")
+			wesnoth.set_dialog_text(wml.variables["wc2.version"] or "unknown", "details", desc_index, "label_version")
+			wesnoth.set_dialog_text(wml.variables["difficulty.name"] or "unknown", "details", desc_index, "label_difficulty")
 
-			wesnoth.set_dialog_value(not wc2_utils.global_vars.skip_pickup_dialog, "training_details", desc_index, "checkbox_show_pickup_confirmation")
-			wesnoth.set_dialog_active(true, "training_details", desc_index, "checkbox_show_pickup_confirmation")
+			wesnoth.set_dialog_value(not wc2_utils.global_vars.skip_pickup_dialog, "details", desc_index, "checkbox_show_pickup_confirmation")
+			wesnoth.set_dialog_active(true, "details", desc_index, "checkbox_show_pickup_confirmation")
 			local desc_index_copy = desc_index
 			wesnoth.set_dialog_callback(function()
-				wc2_utils.global_vars.skip_pickup_dialog = not wesnoth.get_dialog_value("training_details", desc_index_copy, "checkbox_show_pickup_confirmation")
-			end, "training_details", desc_index_copy, "checkbox_show_pickup_confirmation")
+				wc2_utils.global_vars.skip_pickup_dialog = not wesnoth.get_dialog_value("details", desc_index_copy, "checkbox_show_pickup_confirmation")
+			end, "details", desc_index_copy, "checkbox_show_pickup_confirmation")
 		
 			local mp_settings = wesnoth.game_config.mp_settings
 			if mp_settings then
-				wesnoth.set_dialog_text(mp_settings.active_mods, "training_details", desc_index, "label_activemods")
+				wesnoth.set_dialog_text(mp_settings.active_mods, "details", desc_index, "label_activemods")
 			end
 			add_index()
 		end
@@ -232,8 +232,8 @@ function wesnoth.wml_actions.wc2_show_wocopedia(cfg)
 			wesnoth.add_dialog_tree_node("category", ti[1], "left_tree")
 			wesnoth.set_dialog_value(str_cat_feedback, "left_tree", ti[1], "training_name")
 			wesnoth.set_dialog_value(true, "left_tree", ti[1])
-			wesnoth.add_dialog_tree_node("simpletext", -1, "training_details")
-			wesnoth.set_dialog_text(str_des_feedback, "training_details", desc_index, "label")
+			wesnoth.add_dialog_tree_node("simpletext", -1, "details")
+			wesnoth.set_dialog_text(str_des_feedback, "details", desc_index, "label")
 			add_index()
 		end
 		wesnoth.set_dialog_focus("left_tree")
@@ -242,7 +242,7 @@ function wesnoth.wml_actions.wc2_show_wocopedia(cfg)
 			local selected = wesnoth.get_dialog_value("left_tree")
 			local selected_page_index = index_map[table.concat(selected, '_')]
 			if selected_page_index ~= nil then
-				wesnoth.set_dialog_value(selected_page_index, "training_details")
+				wesnoth.set_dialog_value(selected_page_index, "details")
 			end
 		end, "left_tree")
 	end

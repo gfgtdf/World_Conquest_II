@@ -158,7 +158,7 @@ return {
 						},
 						T.column {
 							T.multi_page {
-								id = "training_details",
+								id = "details",
 								definition = "default",
 								horizontal_scrollbar_mode = "never",
 								T.page_definition {
