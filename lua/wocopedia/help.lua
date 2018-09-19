@@ -214,7 +214,14 @@ function wesnoth.wml_actions.wc2_show_wocopedia(cfg)
 			wesnoth.set_dialog_active(false, "training_details", desc_index, "checkbox_use_pickup")
 			wesnoth.set_dialog_text(wml.variables["wc2.version"] or "unknown", "training_details", desc_index, "label_version")
 			wesnoth.set_dialog_text(wml.variables["difficulty.name"] or "unknown", "training_details", desc_index, "label_difficulty")
-			
+
+			wesnoth.set_dialog_value(not wc2_utils.global_vars.skip_pickup_dialog, "training_details", desc_index, "checkbox_show_pickup_confirmation")
+			wesnoth.set_dialog_active(true, "training_details", desc_index, "checkbox_show_pickup_confirmation")
+			local desc_index_copy = desc_index
+			wesnoth.set_dialog_callback(function()
+				wc2_utils.global_vars.skip_pickup_dialog = not wesnoth.get_dialog_value("training_details", desc_index_copy, "checkbox_show_pickup_confirmation")
+			end, "training_details", desc_index_copy, "checkbox_show_pickup_confirmation")
+		
 			local mp_settings = wesnoth.game_config.mp_settings
 			if mp_settings then
 				wesnoth.set_dialog_text(mp_settings.active_mods, "training_details", desc_index, "label_activemods")

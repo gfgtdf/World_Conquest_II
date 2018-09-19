@@ -567,6 +567,21 @@ return {
 																T.column {
 																	horizontal_alignment="left",
 																	T.label {
+																		label = "Show pickup confirmation",
+																	}
+																},
+																T.column {
+																	horizontal_alignment="right",
+																	T.toggle_button {
+																		label = "",
+																		id="checkbox_show_pickup_confirmation",
+																	},
+																},
+															},
+															T.row {
+																T.column {
+																	horizontal_alignment="left",
+																	T.label {
 																		label = "difficulty",
 																	}
 																},

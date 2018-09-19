@@ -4,6 +4,10 @@ local _ = wesnoth.textdomain 'wesnoth-World_Conquest_II'
 local pickup_confirmation_dialog = {}
 
 local function show_dialog(unit, item_image)
+	if wc2_utils.global_vars.skip_pickup_dialog then
+		return 1
+	end
+		
 	local dialog_wml = {
 		maximum_width = 1200,
 		maximum_height = 700,
@@ -82,6 +86,7 @@ local function show_dialog(unit, item_image)
 	return res == 1 or res == -1
 end
 
+-- returns true when the item should be picked up.
 function pickup_confirmation_dialog.promt_synced(unit, item_image)
 	local res = wesnoth.synchronize_choice("Item Pickup Choice", function()
 		return { take_item = show_dialog(unit, item_image) }
