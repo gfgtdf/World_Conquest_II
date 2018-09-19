@@ -139,6 +139,10 @@ function bonus.found_hero(ec, herotype)
 	-- hero found and unit in bonus point face each other
 	wc2_utils.facing_each_other(finder, newunit)
 	wc2_heroes.founddialouge(finder, newunit)
+	wesnoth.wml_actions.redraw {
+		clear_shroud = true,
+		side = newunit.side,
+	}
 	return true
 end
 
