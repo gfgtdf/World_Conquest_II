@@ -79,6 +79,10 @@ function artifacts.give_item(unit, index, visualize)
 	--       advantage would be a smaller savefile size. Also this woudl change how savefiles
 	--       would behve if an artifacts effect has changed, i am currently not sure
 	--       whether that'd be good or bad
+	--
+	--       One of the reasons why i currently won't do this is to make the artifacts list
+	--       more flixible: the suggested approach requires that artifacts are loaded before
+	--       units are created which means artifacts must be loaded at toplevel [lua] tags
 	for effect in helper.child_range(artifacts.list[index], "effect") do
 		table.insert(object, T.effect (effect) )
 	end
