@@ -94,6 +94,7 @@ function artifacts.give_item(unit, index, visualize)
 			unit:add_modification("trait", trait)
 		end
 	end
+	unit:advance(true, true)
 end
 
 on_event("wc2_drop_pickup", function(ec)
