@@ -151,6 +151,11 @@ function wesnoth.wml_actions.wc2_show_wocopedia(cfg)
 				end
 				local deserters_names = wesnoth.format_conjunct_list("", wc2_era.expand_hero_names(faction_info.deserters))
 				wesnoth.set_dialog_text(deserters_names, "details", desc_index, "deserters")
+				local deserters_names = wesnoth.format_conjunct_list("", wc2_era.expand_hero_names(faction_info.commanders))
+				wesnoth.set_dialog_text(deserters_names, "details", desc_index, "commanders")
+				local deserters_names = wesnoth.format_conjunct_list("", wc2_era.expand_hero_names(faction_info.heroes, true))
+				wesnoth.set_dialog_text(deserters_names, "details", desc_index, "heroes")
+				
 				if faction_wml then
 					local random_leaders = {}
 					for i,v in ipairs(wc2_utils.split_to_array(faction_wml.random_leader)) do

@@ -449,9 +449,48 @@ return {
 												},
 												T.row {
 													T.column {
+														horizontal_grow=true,
 														T.scroll_label {
 															vertical_scrollbar_mode = "never",
 															id = "deserters",
+															use_markup = true,
+														}
+													}
+												},
+												T.row {
+													T.column {
+														T.label {
+															vertical_scrollbar_mode = "never",
+															label = "<b>Commanders:</b>",
+															use_markup = true,
+														}
+													}
+												},
+												T.row {
+													T.column {
+														horizontal_grow=true,
+														T.scroll_label {
+															vertical_scrollbar_mode = "never",
+															id = "commanders",
+															use_markup = true,
+														}
+													}
+												},
+												T.row {
+													T.column {
+														T.label {
+															vertical_scrollbar_mode = "never",
+															label = "<b>Heroes:</b>",
+															use_markup = true,
+														}
+													}
+												},
+												T.row {
+													T.column {
+														horizontal_grow=true,
+														T.scroll_label {
+															vertical_scrollbar_mode = "never",
+															id = "heroes",
 															use_markup = true,
 														}
 													}
@@ -468,6 +507,7 @@ return {
 												},
 												T.row {
 													T.column {
+														horizontal_grow=true,
 														T.scroll_label {
 															vertical_scrollbar_mode = "never",
 															id = "random_leaders",

@@ -177,7 +177,7 @@ function wc2_era.expand_hero_types(types_str)
 	return types_res
 end
 
-function wc2_era.expand_hero_names(types_str)
+function wc2_era.expand_hero_names(types_str, only_unitnames)
 	local types = wc2_utils.split_to_array(types_str)
 	local types_new = {}
 	local names_res = {}
@@ -188,7 +188,7 @@ function wc2_era.expand_hero_names(types_str)
 				table.insert(names_res, ut.name)
 			else
 				local group = wc2_era.hero_types[v]
-				if group.name then
+				if group.name and not only_unitnames then
 					table.insert(names_res, group.name)
 				else
 					wc2_utils.split_to_array(group.types, types_new)
