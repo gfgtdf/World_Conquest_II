@@ -30,6 +30,12 @@ email=#####
 
 # Changelog:
 
+0.7.9
+- The pickup promt can now be disabled in the wocopedia->settings page.
+- Fix unit not advancing after picking up an item that decrease max xp.
+- Improved gold carryover code to be compatiable with more mod addons.
+- Fixed unit images in messages not scaled in plot sequences.
+- Clear shroud after finding a hero in a bonus point.
 0.7.8.2
 - Improve compatabiltiy with other add-ons and code cleanups.
 0.7.8
