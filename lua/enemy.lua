@@ -286,6 +286,7 @@ function wesnoth.wml_actions.wc2_enemy(cfg)
 	}
 
 	enemy.do_castle_expansion(cfg, enemy_type_id, loc)
+	enemy.do_training(cfg, enemy_type_id, loc)
 	enemy.do_commander(cfg, enemy_type_id, loc)
 	enemy.do_supply(cfg, enemy_type_id, loc)
 	enemy.do_recall(cfg, enemy_type_id, loc)
