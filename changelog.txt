@@ -30,6 +30,8 @@ email=#####
 
 # Changelog:
 
+0.7.9.1
+- Fix enemy training.
 0.7.9
 - The pickup promt can now be disabled in the wocopedia->settings page.
 - Fix unit not advancing after picking up an item that decrease max xp.
