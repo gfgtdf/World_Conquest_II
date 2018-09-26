@@ -135,5 +135,14 @@ local global_vars = setmetatable({}, {
 
 wc2_utils.global_vars = global_vars.wc2
 
+
+function wesnoth.wml_actions.wc2_benchmark(cfg)
+	local name = cfg.name
+	local start_time = wesnoth.get_time_stamp()
+	wesnoth.wml_actions.command(cfg)
+	local end_time = wesnoth.get_time_stamp()
+	print(name .. " took " .. end_time -  start_time .. " ticks")
+end
+
 return wc2_utils
 -->>
