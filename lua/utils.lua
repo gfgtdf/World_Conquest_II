@@ -144,5 +144,58 @@ function wesnoth.wml_actions.wc2_benchmark(cfg)
 	print(name .. " took " .. end_time -  start_time .. " ticks")
 end
 
+function noise(data)
+	local locs = {}
+	local nlocs_total = 0
+	for i = 1, #data do
+		locs[i] = wesnoth.get_locations(data[i].filter)
+		nlocs_total = nlocs_total + #locs[1]
+	end
+	local nlocs_changed = 0
+	for i = 1, #data do
+		local chance = data[i].per_thousand
+		local terrains = data[i].terrain
+		local layer = data[i].layer
+		local num_tiles = #locs[i]
+		if data[i].exact then
+			num_tiles = math.ceil(num_tiles * chance / 1000)
+			chance = 1000
+		end
+		for j = 1, num_tiles do
+			local loc = locs[i][j] 
+			if chance >= 1000 or chance >= wesnoth.random(1000) then
+				wesnoth.set_terrain(loc, helper.rand(terrains), layer)
+				nlocs_changed = nlocs_changed + 1
+			end
+		end
+		--print("noise: changed" .. tostring(nlocs_changed) .. " of " .. tostring(nlocs_total) .." locs.", "ratio was " .. chance .. "/1000")
+	end
+end
+
+function wesnoth.wml_actions.wc2_terrain(cfg)
+	cfg = helper.parsed(cfg)
+	local data = {}
+	for r in wml.child_range(cfg, "change") do
+		r_new = {
+			filter = wml.get_child(r, "filter") or {},
+			terrain = r.terrain,
+			layer = r.layer,
+			exact = r.exact ~= false,
+			per_thousand = 1000,
+		}
+		if r.percentage then
+			r_new.per_thousand = r.percentage * 10
+		elseif r.per_thousand then
+			r_new.per_thousand = r.per_thousand;
+		elseif r.fraction then
+			r_new.per_thousand = math.ceil(1000 / r.fraction);
+		elseif r.fraction_rand then
+			r_new.per_thousand = math.ceil(1000 / helper.rand(r.fraction_rand));
+		end
+		table.insert(data, r_new)
+	end
+	noise(data)
+end
+
 return wc2_utils
 -->>
