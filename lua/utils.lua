@@ -153,11 +153,12 @@ function noise(data)
 	end
 	local nlocs_changed = 0
 	for i = 1, #data do
-		local chance = data[i].per_thousand
-		local terrains = data[i].terrain
-		local layer = data[i].layer
-		local num_tiles = #locs[i]
-		if data[i].exact then
+		local d = data[i]
+		local chance = d.per_thousand
+		local terrains = d.terrain
+		local layer = d.layer
+		local num_tiles = d.nlocs and math.min(data[i], d.nlocs) or #locs[i]
+		if d.exact then
 			num_tiles = math.ceil(num_tiles * chance / 1000)
 			chance = 1000
 		end
@@ -182,6 +183,7 @@ function wesnoth.wml_actions.wc2_terrain(cfg)
 			layer = r.layer,
 			exact = r.exact ~= false,
 			per_thousand = 1000,
+			nlocs = r.nlocs,
 		}
 		if r.percentage then
 			r_new.per_thousand = r.percentage * 10
