@@ -30,6 +30,9 @@ email=#####
 
 # Changelog:
 
+0.7.10
+- Improve mapgeneration speed.
+- Fix error when using alienera.
 0.7.9.1
 - Fix enemy training.
 0.7.9
