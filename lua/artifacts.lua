@@ -139,15 +139,6 @@ on_event("wc2_drop_pickup", function(ec)
 	wesnoth.allow_undo(false)
 end)
 
-on_event("prestart", function()
-	local bonus_items = {}
-	for i,v in ipairs(artifacts.list) do
-		-- the current code expects a wml array.
-		wml.variables["bonus.artifact[" .. wml.variables["bonus.artifact.length"] .. "].type"] = i
-		table.insert(bonus_items, i)
-	end
-end)
-
 function artifacts.fresh_artifacts_list(for_type)
 	local res = {} 
 	for i,v in ipairs(wc2_artifacts.list) do
