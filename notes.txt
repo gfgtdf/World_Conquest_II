@@ -1,0 +1,15 @@
+a testing savefile form last map was 4mb of text which divided as follows:
+
+- 1.1m [snapshot]
+-- 18k [event], [menu_item]
+-- 800k [side] (134 units)
+-- 21k [variables]
+-- 21k map_data
+-- 340k [lua]
+--- 162k 'data' [trainer], artifactslist etc.
+--- 21k eradata (trait_xtra, faction)
+--- 156k lua programmcode
+-- 10k other: [music], [time], [objectives], [item], unit_wml_ids=
+- 17k [statistics]
+- 2m [replay]
+- 1m [replay_start]
