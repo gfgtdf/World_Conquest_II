@@ -157,10 +157,11 @@ function noise(data)
 		local chance = d.per_thousand
 		local terrains = d.terrain
 		local layer = d.layer
-		local num_tiles = d.nlocs and math.min(data[i], d.nlocs) or #locs[i]
+		local num_tiles = d.nlocs and math.min(#locs[i], d.nlocs) or #locs[i]
 		if d.exact then
 			num_tiles = math.ceil(num_tiles * chance / 1000)
 			chance = 1000
+			helper.shuffle(locs[i])
 		end
 		for j = 1, num_tiles do
 			local loc = locs[i][j] 
