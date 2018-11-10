@@ -181,6 +181,7 @@ on_event("die", function(event_context)
 		return
 	end
 
+	-- fixme: this is currently placed below images drawn by caslte destruction.
 	for object in helper.child_range(helper.get_child(unit.__cfg, "modifications") or {}, "object") do
 		if object.wc2_atrifact_id then
 			artifacts.place_item(unit.x, unit.y, object.wc2_atrifact_id)
