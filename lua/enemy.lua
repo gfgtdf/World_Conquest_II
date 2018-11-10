@@ -237,7 +237,7 @@ function enemy.do_castle_expansion(cfg, group_id, loc)
 		wesnoth.set_terrain(candidates[i], "Ch")
 	end
 end
-	
+
 --[[
 	called like 
 	[wc2_enemy]
@@ -260,6 +260,15 @@ function wesnoth.wml_actions.wc2_enemy(cfg)
 	local loc = {dummy_unit.x,dummy_unit.y}
 	dummy_unit:erase()
 	local enemy_type_id = wc2_utils.pick_random_t("enemy_army.faction")["type"]
+	if enemy_type_id == nil then
+		--shoulodn't happen, added for robustness.
+		local n_groups = wml.variables["enemy_army.group.length"]
+		if n_groups > 0 
+			enemy_type_id = wesnoth.random(n_groups) - 1
+		else
+			error("no enemy groups defined")
+		end
+	end
 	local leader_cfg = wc2_utils.pick_random_t(("enemy_army.group[%d].leader"):format(enemy_type_id))
 	local unit = wesnoth.create_unit {	
 		x = loc[1],
