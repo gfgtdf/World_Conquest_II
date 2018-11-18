@@ -24,11 +24,11 @@ function debug_wml(cfg, use_newlines)
 	use_newlines = use_newlines ~= false
 	local indend = 0
 	local res = {}
-
+	
 	local function write(str)
 		res[#res + 1] = str
 	end
-
+	
 	local function write_newline()
 		if use_newlines then
 			res[#res + 1] = "\n" .. string.rep("\t", indend)
@@ -36,7 +36,7 @@ function debug_wml(cfg, use_newlines)
 			res[#res + 1] = " "
 		end
 	end
-
+	
 	local print_table = nil
 	local print_value = nil
 	
@@ -75,7 +75,7 @@ function debug_wml(cfg, use_newlines)
 			write("}")
 		end
 	end
-
+	
 	print_value = function(val)
 		if val == nil then
 			write("nil")

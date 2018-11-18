@@ -30,3 +30,15 @@ world_conquest_tek_scenario_res\(\1, \2, \4\)\r\n\3\4\5
 \{WORLD_CONQUEST_TEK_SCENARIO_CAMPAIGN \S+ \S+\}\r\n\{WCT_MAP_GENERATOR_(\S+)\h+(\S+)\h+(\S+)\h+(\S+)\h+(\S+)\h+(\S+)\h+(\S+)\h+(\S+)\}
 \Lwct_map_generator\("\1", "1a", \2, \3, \4, \5, \6, \7, \8\),
 }
+
+
+
+
+\[village\]\r\n\t\tterrain=(\S+)\r\n\t\tconvert_to=(\S+)\r\n\t\tadjacent_liked=([^\r]+)\r\n\t\trating=(\S+)\r\n\t\[/village\]
+\tdr_village \{\r\n\t\t\tterrain = "\1",\r\n\t\t\tconvert_to="\2",\r\n\t\t\tadjacent_liked="\3",\r\n\t\t\trating=\4\r\n\t\t\},
+
+
+\[village\]\r\n\t\tterrain=(\S+)\r\n\t\tconvert_to=(\S+)\r\n\t\trating=(\S+)\r\n\t\tadjacent_liked=([^\r]+)\r\n\t\[/village\]
+\tdr_village \{\r\n\t\t\tterrain="\1",\r\n\t\t\tconvert_to="\2",\r\n\t\t\tadjacent_liked="\4",\r\n\t\t\trating=\3\r\n\t\t\},
+
+adjacent_liked=
