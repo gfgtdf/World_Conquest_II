@@ -1,0 +1,316 @@
+2:
+noise 4sec
+repaint 2sec
+3:
+noise 8sec
+repaint 5.5sec
+
+4:
+noise 11.5sec
+repaint 8sec
+
+potdol4:
+18,20
+
+5:
+noise 14sec
+repaint 13.5sec
+
+5 with wc2_terrain:
+repaint 12sec
+noise 0.5sec.
+
+local helper = wesnoth.require "helper"
+local utils = wesnoth.require "wml-utils"
+
+function noise_swap(filter)
+	local locs = wesnoth.get_locations(filter)
+	helper.shuffle(locs)
+
+	local distance = 1 
+	local n_locs = math.ceil(#locs/2)
+	for i = 1, n_locs do
+		local loc1 = locs[i]
+		local locs2 = {}
+		for loc2 in ipairs(locs) do
+			
+			local x1 = loc1[1]
+			local y1 = loc1[2]
+			local x2 = loc2[1]
+			local y2 = loc2[2]
+			if x1 == x2 and y1 == y2 then
+				goto continue
+			end
+
+			-- optimisation: same effect as "if wesnoth.map.distance_between(x1,y1,x2,y2) <= distance then goto continue; end" but faster.
+			local d_x = math_abs(x1-x2)
+			if d_x > distance then
+				goto continue
+			end
+			if d_x % 2 ~= 0 then
+				if x1 % 2 == 0 then
+					y2 = y2 - 0.5
+				else
+					y2 = y2 + 0.5
+				end
+			end
+			local d_y = math_abs(y1-y2)
+			if d_x + 2*d_y > 2*distance then
+				goto continue
+			end
+			locs2[#locs2] = loc2
+		end
+		if #locs2 > 0 then
+			local loc2 = locs2[wesnoth.random(#locs2)]
+			local t1 = wesnoth.get_terrain(loc1)
+			local t2 = wesnoth.get_terrain(loc2)
+			wesnoth.set_terrain(loc1, t2)
+			wesnoth.set_terrain(loc2, t1)
+		end
+	end
+end
+
+tag = wml.tag
+--maritime
+noise {
+	{
+		filter = { terrain = "Gs" },
+		chance = 100/8,
+		terrain = "Gs^Fp,Gs^Fp,Hh,Hh,Hh",
+	},
+	{
+		filter = { terrain = "Dd" },
+		chance_old = 8,
+		terrain = "Hhd,Hhd,Hhd,Hd,Rd,Rd,Rd,Rd,Rd,Rd,Dd^Dr,Rd^Fet,Rd^Fdw,Dd^Do",
+	},
+	{
+		filter = { terrain = "Gg" },
+		chance_old = 9,
+		terrain = "Gg^Fet,Gg^Fet,Hh,Hh,Hh",
+	},
+	{
+		filter = { terrain = "Gd" },
+		chance_old = 9,
+		terrain = "Gd^Fmw,Gd^Fp,Hh^Fmw,Hh,Mm,Hh,Hh",
+	},
+	{
+		filter = { terrain = "Aa" },
+		chance_old = 9,
+		terrain = "Aa^Fpa,Aa^Fpa,Wwf,Ha,Ha,Ha",
+	},
+	{
+		filter = { terrain = "Uu,Uh,Uu^Uf" },
+		chance_old = 12,
+		terrain = "Ur,Uu^Uf,Uh,Uu",
+	},
+	{
+		filter = { terrain = "Mm" },
+		chance_old = 13,
+		terrain = "Gs,Gs,Gs,Gs,Hh,Hh,Hh,Gs^Fp,Gs^Fp,Gs^Fp,Mm^Xm",
+	},
+	{
+		filter = { terrain = "Hh" },
+		chance_old = 17,
+		terrain = "Gs,Gs,Gs,Gs,Gs,Gs,Gs^Fp,Gs^Fp,Gs^Fp,Mm",
+	},
+	{
+		filter = { terrain = "Ha" },
+		chance_old = 18,
+		terrain = "Aa,Aa,Aa,Aa,Wwf,Ai,Aa^Fpa,Aa^Fpa,Aa^Fpa,Mm",
+	},
+	{
+		filter = { terrain = "G*^F*" },
+		chance_old = 8,
+		terrain = "Mm,Hh,Hh",
+	},
+	{
+		filter = { terrain = "Aa^Fpa" },
+		chance_old = 22,
+		terrain = "Aa,Aa,Aa,Aa,Ai,Wwf,Gg^Fet,Ha,Ha,Ha,Ha",
+	},
+	{
+		-- open up passes into caves: impassable mountains that border cave wall
+		-- and have both cave and noncave hexes get downgraded into plain mountain
+		filter = {
+			terrain = "Mm^Xm",
+			tag.filter_adjacent {
+				terrain = "Xu",
+			},
+			tag.filter_adjacent {
+				terrain = "Uu,Uh,Uu^Uf",
+			},
+			tag.filter_adjacent {
+				--todo maybe yout count=1-6 instead of tag.not here.
+				tag["not"] {
+					terrain = "Uu,Uh,Uu^Uh,Xu",
+				}
+			},
+		},
+		chance_old = 8,
+		terrain = "Mm,Mm",
+	},
+}
+from
+\r\n(\t*)\{WCT_FRACTION_REPLACE ([^ ]*) ([^ ]*)\}
+to
+
+\r\n\1\{WCT_FRACTION_REPLACE \(
+\r\n\1\t\[filter\]
+\r\n\1\t\[/filter\]
+\r\n\1\tfraction=\"\2\"
+\r\n\1\tterrain=\"\3\"
+\r\n\1\)}
+
+\r\n\1\{WCT_FRACTION_REPLACE \(\r\n\1\t\[filter\]\r\n\1\t\[/filter\]\r\n\1\tfraction=\"\2\"\r\n\1\tterrain=\"\3\"\r\n\1\)}
+	
+	
+
+\r\n(\t+)\[store_locations\]\r\n(?:\1\t+\C+\r\n)+\1\tvariable=terrain_to_change\r\n\1+\[/store_locations\]
+
+
+-- WCT_FRACTION_REPLACE 
+^(\t+)\[store_locations\]
+((?:\1\t+\C+\r\n)+)nonewline
+\1\tvariable=terrain_to_change
+\1\[/store_locations\]
+\1{WCT_FRACTION_REPLACE ([^ \n]*) ([^ \n]*)\}
+SEPERATOR nonewline
+\1\[wct_terrain\]
+\1\t\[change\]
+\1\t\t\[filter\]
+\2nonewline
+\1\t\t\[/filter\]
+\1\t\tterrain=\"\4\"
+\1\t\tfraction=\"\3\"
+\1\t\[/change\]
+\1\[/wct_terrain\]
+-- WCT_FRACTION_REPLACE + RANDOM
+^(\t+)\[store_locations\]
+((?:\1\t+\C+\r\n)+)nonewline
+\1\tvariable=terrain_to_change
+\1\[/store_locations\]
+\1\{RANDOM ([^ \n]*)\}
+\1{WCT_FRACTION_REPLACE \$random ([^ \n]*)\}
+SEPERATOR nonewline
+\1\[wct_terrain\]
+\1\t\[change\]
+\1\t\t\[filter\]
+\2nonewline
+\1\t\t\[/filter\]
+\1\t\tterrain=\"\4\"
+\1\t\tfraction_rand=\"\3\"
+\1\t\[/change\]
+\1\[/wct_terrain\]
+-- WCT_CHANCE_REPLACE
+^(\t+)\[store_locations\]
+((?:\1\t+\C+\r\n)+)nonewline
+\1\tvariable=terrain_to_change
+\1\[/store_locations\]
+\1{WCT_CHANCE_REPLACE ([^ \n]*) ([^ \n]*)\}
+SEPERATOR nonewline
+\1\[wct_terrain\]
+\1\t\[change\]
+\1\t\t\[filter\]
+\2nonewline
+\1\t\t\[/filter\]
+\1\t\tterrain=\"\4\"
+\1\t\tpercentage=\"\3\"
+\1\t\[/change\]
+\1\[/wct_terrain\]
+--WCT_FRACTION_LAYER_REPLACE
+^(\t+)\[store_locations\]
+((?:\1\t+\C+\r\n)+)nonewline
+\1\tvariable=terrain_to_change
+\1\[/store_locations\]
+\1{WCT_FRACTION_LAYER_REPLACE ([^ \n]*) ([^ \n]*) ([^ \n]*)\}
+SEPERATOR nonewline
+\1\[wct_terrain\]
+\1\t\[change\]
+\1\t\t\[filter\]
+\2nonewline
+\1\t\t\[/filter\]
+\1\t\tterrain=\"\4\"
+\1\t\tfraction=\"\3\"
+\1\t\tlayer=\"\5\"
+\1\t\[/change\]
+\1\[/wct_terrain\]
+-- WCT_FRACTION_LAYER_REPLACE + RANDOM
+^(\t+)\[store_locations\]
+((?:\1\t+\C+\r\n)+)nonewline
+\1\tvariable=terrain_to_change
+\1\[/store_locations\]
+\1\{RANDOM ([^ \n]*)\}
+\1{WCT_FRACTION_LAYER_REPLACE \$random ([^ \n]*) ([^ \n]*)\}
+SEPERATOR nonewline
+\1\[wct_terrain\]
+\1\t\[change\]
+\1\t\t\[filter\]
+\2nonewline
+\1\t\t\[/filter\]
+\1\t\tterrain=\"\4\"
+\1\t\tfraction_rand=\"\3\"
+\1\t\tlayer=\"\5\"
+\1\t\[/change\]
+\1\[/wct_terrain\]
+--WCT_TERRAIN_REPLACE
+^(\t+)\[store_locations\]
+((?:\1\t+\C+\r\n)+)nonewline
+\1\tvariable=terrain_to_change
+\1\[/store_locations\]
+\1{WCT_TERRAIN_REPLACE ([^ \n]*)\}
+SEPERATOR nonewline
+\1\[wct_terrain\]
+\1\t\[change\]
+\1\t\t\[filter\]
+\2nonewline
+\1\t\t\[/filter\]
+\1\t\tterrain=\"\3\"
+\1\t\[/change\]
+\1\[/wct_terrain\]
+--STUPID [/filter err]
+(\t+)\[wct_terrain\]
+\1\t\[change\]
+\1\t\t\[/filter\]
+SEPERATOR nonewline
+(\t+)\[wct_terrain\]
+\1\t\[change\]
+\1\t\t\[filter\]
+
+--fixup [sotre_locations]
+
+	[store_locations]
+		terrain=Dd
+		[filter_adjacent_location]
+			terrain=Sm,*^Vud
+		[/filter_adjacent_location]
+		variable=terrain_to_change
+	[/store_locations]
+	
+^(\t+)\[store_locations\]
+((?:\1\t+\C+\r\n)*)nonewline
+\1\tvariable=terrain_to_change
+((?:\1\t+\C+\r\n)+)nonewline
+\1\[\/store_locations\]
+SEPERATOR
+^(\t+)\[store_locations\]
+((?:\1\t+\C+\r\n)*)nonewline
+\1\tvariable=terrain_to_change
+((?:\1\t+\C+\r\n)+)nonewline
+\1\[\/store_locations\]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+^(\t+)\[store_locations\]\r\n((?:\1\t+\C+\r\n)+)\1\tvariable=terrain_to_change\r\n\1\[/store_locations\]\r\n\1{WCT_TERRAIN_REPLACE ([^ \n]*)\}\r\n
+
+\1\[wct_terrain\]\r\n\1\t\[change\]\r\n\1\t\t\[/filter\]\r\n\2\1\t\t\[/filter\]\r\n\1\t\tterrain=\"\3\"\r\n\1\t\[/change\]\r\n\1\[/wct_terrain\]\r\n
