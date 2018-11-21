@@ -1,525 +1,417 @@
-#define WORLD_CONQUEST_TEK_MAP_BONUS_POINTS_EVENTS
-	{WORLD_CONQUEST_TEK_MAP_GENERATE_BONUS_POINTS}
-#enddef
 
-#define WORLD_CONQUEST_TEK_BONUS_POINTS
-	[fire_event]
-		name=wct_map_generate_points
-	[/fire_event]
-#enddef
+function random_placement(locs, num_items, min_distance, command)
+	local distance = min_distance or 0
+	local num_items = num_items or 1
+	local allow_less = true
+	local math_abs = math.abs
+	local size = #locs
+	for i = 1, num_items do
+		if size == 0 then
+			if allow_less then
+				print("placed only " .. i .. " items")
+				return
+			else
+				helper.wml_error("[random_placement] failed to place items. only " .. i .. " items were placed")
+			end
+		end
+		local index = wesnoth.random(size)
+		local point = locs[index]
 
-#define WORLD_CONQUEST_TEK_MAP_GENERATE_BONUS_POINTS
-	[event]
-		name=wct_map_generate_points
-		[store_map_dimensions]
-			variable=point.limit
-		[/store_map_dimensions]
-		[random_placement]
-			num_items=$players
-			variable=point.location
-			min_distance="$(9+$scenario)"
-			[filter_location]
-				{WCT_BONUS_LOCATION_FILTER}
-			[/filter_location]
-			[command]
-				{WCT_BONUS_CHOSE_SCENERY}
-				{WCT_PLACE_BONUS}
-			[/command]
-		[/random_placement]
-		{CLEAR_VARIABLE point}
-	[/event]
-#enddef
+		command(point, i)
+		if distance < 0 then
+			-- optimisation: nothing to do for distance < 0
+		elseif distance == 0 then
+			-- optimisation: for distance = 0 we just need to remove the element at index
+			-- optimisation: swapping elements and storing size in an extra variable is faster than table.remove(locs, j)
+			locs[index] = locs[size]
+			size = size - 1
+		else
+			-- the default case and the main reason why this was implemented.
+			for j = size, 1, -1 do
+				local x1 = locs[j][1]
+				local y1 = locs[j][2]
+				local x2 = point[1]
+				local y2 = point[2]
+				-- optimisation: same effect as "if wesnoth.map.distance_between(x1,y1,x2,y2) <= distance then goto continue; end" but faster.
+				local d_x = math_abs(x1-x2)
+				if d_x > distance then
+					goto continue
+				end
+				if d_x % 2 ~= 0 then
+					if x1 % 2 == 0 then
+						y2 = y2 - 0.5
+					else
+						y2 = y2 + 0.5
+					end
+				end
+				local d_y = math_abs(y1-y2)
+				if d_x + 2*d_y > 2*distance then
+					goto continue
+				end
+				-- optimisation: swapping elements and storing size in an extra variable is faster than table.remove(locs, j)
+				locs[j] = locs[size]
+				size = size - 1
+				::continue::
+			end
+		end
+	end
 
-#define WCT_BONUS_LOCATION_FILTER
-		terrain= G*,Hh,Uu,Uh,Dd,Ds,R*,Mm,Md,Ss,Hd,Hhd,Ww,Wwt,Wwg,Ds^Esd,Ur
-		## no adjacent to village, deep water, chasm or walls
-		[filter_adjacent_location]
-			terrain=Wo*,M*^Xm,Xu*,Q*,Mv,*^V*
-			count=0
-		[/filter_adjacent_location]
-		[and]
-			## no out/at map borders
-			[not]
-				x=0,1,$point.limit.width,"$($point.limit.width+1)"
-			[/not]
-			[not]
-				y=0,1,$point.limit.height,"$($point.limit.height+1)"
-			[/not]
-			## not too close to a keep
-			[not]
-				terrain=K*^*
-				radius="$(4+$scenario)"
-			[/not]
-			## not too close to other bonus
-			[not]
-				find_in=bonus.point
-				radius="$(9+$scenario)"
-			[/not]
-			## just isolated mountains
-			[not]
-				terrain=M*
-				[filter_adjacent_location]
-					terrain=M*
-				[/filter_adjacent_location]
-			[/not]
-			## no swamps near sand or water
-			[not]
-				terrain=Ss
-				[filter_adjacent_location]
-					terrain=Wo*,Ww,Wwg,Wwt,Ds,Ds^Esd
-				[/filter_adjacent_location]
-			[/not]
-			## no river/lake water next to 2 coast, bridge or frozen
-			## (it means restrict lilies image)
-			[not]
-				terrain=Ww*
-				[and]
-					[filter_adjacent_location]
-						terrain=Ha^*,A*^*,Ms^*,*^B*,C*
-					[/filter_adjacent_location]
-					[filter_adjacent_location]
-						terrain=W*^*
-						count=0-3
-					[/filter_adjacent_location]
-					[or]
-						[filter_adjacent_location]
-							terrain=W*^*
-							count=4
-						[/filter_adjacent_location]
-					[/or]
-				[/and]
-				[and]
-					[not]
-						{WCT_MAP_FILTER_OCEANIC}
-					[/not]
-				[/and]
-			[/not]
-		[/and]
+end
 
-#enddef
+f_wct_bonus_location_filter = f.all(
+	f.terrain("G*,Hh,Uu,Uh,Dd,Ds,R*,Mm,Md,Ss,Hd,Hhd,Ww,Wwt,Wwg,Ds^Esd,Ur"),
+	--no adjacent to village, deep water, chasm or walls
+	f.adjacent(f.terrain("Wo*,M*^Xm,Xu*,Q*,Mv,*^V*"), nil, 0),
+	--no out/at map borders
+	f.x("2-" .. map.width-3)
+	f.y("2-" .. map.height-3)
+	f.none(
+		--not too close to a keep
+		f.radius(wml.vars.scenario + 4, f.terrain("K*^*")),
+		--just isolated mountains
+		f.all(
+			f.terrain("M*"),
+			f.adjacent(f.terrain("M*"))
+		),
+		--no swamps near sand or water
+		f.all(
+			f.terrain("Ss"),
+			f.adjacent(f.terrain("Wo*,Ww,Wwg,Wwt,Ds,Ds^Esd"))
+		),
+		-- no river/lake water next to 2 coast, bridge or frozen
+		-- (it means restrict lilies image)
+		f.all(
+			f.terrain("Ww*"),
+			f.any(
+				f.all(
+					f.adjacent(f.terrain("Ha^*,A*^*,Ms^*,*^B*,C*")),
+					f.adjacent(f.terrain("W*^*"), nil, "0-3")
+				),
+				f.adjacent(f.terrain("W*^*"), nil, 4)
+			),
+			f.none(
+				--{WCT_MAP_FILTER_OCEANIC}
+				f.find_in_wml("oceanic")
+			)
+		)
+	)
+)
 
-#define ADD_SCENERY SCENERY
-	{VARIABLE point.scenery "{SCENERY},$point.scenery"}
-#enddef
+function wct_bonus_chose_scenery(loc, theme)
+	local function loc_matches(f)
+		return #map:get_locations(f, {loc}) > 0
+	end
+	local terrain = map[loc]
+	-- determine possible scenery values based on terrain
+	local scenery = "well_g,temple,tent2_g,tent1,village,monolith3,burial"
+	local terrain_to_scenery = 
+	{
+		{
+			terrain = "Re,Rd,Rb,Rr,Rrc",
+			scenery ="well_r,signpost,rock_cairn,obelisk,dolmen,monolith2,temple2,shop"
+		},
+		{
+			terrain = "Ww,Wwt,Wwg",
+			scenery ="ship1,ship2"
+		},
+		{
+			terrain = "Hh,Hhd",
+			scenery ="temple,shelter,village,monolith1,monolith4"
+		},
+		{
+			terrain = "Mm,Md",
+			scenery ="mine,mine,mine,mine,mine,mine,doors,doors,doors,doors,doors,doors,temple3,temple4"
+		},
+		{
+			terrain = "Uu",
+			scenery ="altar,coffin,bones,rock_cairn_c,trapdoor,crystal,monolith2"
+		},
+		{
+			terrain = "Ur",
+			scenery ="altar,bones,rock_cairn_c,well,monolith2,monolith3,tent1"
+		},
+		{
+			terrain = "Uh",
+			scenery ="altar,coffin,bones,rock_cairn_c,trapdoor,monolith2,crystal3,burial_c"
+		},
+		{
+			terrain = "Ds,Ds^Esd,Dd",
+			scenery ="rock1,rock4,bones,tent2,tent1,burial_s"
+		},
+		{
+			terrain = "Hd",
+			scenery ="tower_r1,tower_r4,bones,tent2,tent1,rock1,rock4"
+		},
+		{
+			terrain = "Ss",
+			scenery ="bones_s,rock3,rock3,burial,lilies,bones_s"
+		}
+	}
+	for i,v in ipairs(terrain_to_scenery) do
+		for str in utils.split(v.terrain) do
+			if str == terrain then
+				scenery = v.scenery
+				goto intial_list_screated
+			end
+		end
+	end
+	::intial_list_screated::
+	-- chance of rock cairn on isolated hills
+	if matches_location(
+		f.all(
+			f.terrain("Hh,Hhd"),
+			f.find_in_wml("point.location"),
+			f.adjacent(f.terrain("H*^*"), nil, 0)
+		)) then
+		
+		scenery = scenery .. "," .. "rock_cairn"
+	end
+	-- chance of dolmen on grass not next to forest
+	
+	if matches_location(
+		f.all(
+			f.terrain("G*"),
+			f.find_in_wml("point.location"),
+			f.adjacent(f.terrain("*^F*"), nil, 0)
+		)) then
+		scenery = scenery .. "," .. "dolmen_g"
+	end
+	-- chances of green temple on gras next to swamp, hills and forest
+	
+	if matches_location(
+		f.all(
+			f.terrain("G*"),
+			f.find_in_wml("point.location"),
+			f.adjacent(f.terrain("Ss")),
+			f.adjacent(f.terrain("Hh^*,Ha^*")),
+			f.adjacent(f.terrain("G*^F*,A*^F*,G*^Uf"))
+		)) then
+		
+		scenery = scenery .. "," .. "temple_green_g,temple_green_g,temple_green_g,temple_green_g2,temple_green_g2"
+	end
+	-- chances of green temple in hills next to swamp or cold
+	
+	if matches_location(
+		f.all(
+			f.terrain("Hh"),
+			f.find_in_wml("point.location"),
+			f.adjacent(f.terrain("Ss,Ai,A*^*,Ha^*,Ms^*"))
+		)) then
+		
+		scenery = scenery .. "," .. "temple_green_h,temple_green_h,temple_green_h,temple_green_h2,temple_green_h2"
+	end
+	-- chance of temple in hills next to mountain
+	
+	if matches_location(
+		f.all(
+			f.terrain("Hh,Hhd"),
+			f.find_in_wml("point.location"),
+			f.adjacent(f.terrain("M*^*"))
+		)) then
+		
+		scenery = scenery .. "," .. "temple4,temple4"
+	end
+	-- chances of detritus and lilies on some swamps
+	
+	if matches_location(
+		f.all(
+			f.terrain("Ss"),
+			f.find_in_wml("point.location"),
+			f.adjacent(f.terrain("*^F*,C*^*,K*^*"), nil, 0)
+		)) then
+		
+		scenery = scenery .. "," .. "detritus,detritus2,lilies_s"
+	end
+	-- chances of buildings next to road
+	if theme ~= "volcanic" and theme ~= "clayey" and theme ~= "wild" then
+		
+		if matches_location(
+			f.all(
+				f.terrain("G*,Hh*"),
+				f.find_in_wml("point.location"),
+				f.adjacent(f.terrain("R*^*,W*^Bsb*"), nil, "2-6"),
+				f.adjacent(f.terrain("*^F*"), nil, 0),
+				f.radius(7, f.terrain("*^Vh,*^Vhh,*^Ve,*^Vl,*^Vhc,*^Vd,*^Vy*,*^Vz*"))
+			)) then
+			
+			scenery = scenery .. "," .. "rock_cairn,temple2_g,shop_g"
+		end
+	end
+	-- chance of fancy shop on road
+	if theme ~= "volcanic" and theme ~= "clayey" and theme ~= "wild" then
+		
+		if matches_location(
+			f.all(
+				f.terrain("R*^*"),
+				f.find_in_wml("point.location"),
+				f.radius(5, f.terrain("*^Vh,*^Vhh,*^Ve,*^Vl,*^Vhc,*^Vd,*^Vy*,*^Vz*"))
+			)) then
+			
+			scenery = scenery .. "," .. "tent2_r"
+		end
+	end
+	-- high chances of windmill and oak surronded by flat
+	
+	if matches_location(
+		f.all(
+			f.terrain("Gg,Gs,Gll"),
+			f.find_in_wml("point.location"),
+			f.adjacent(f.terrain("G*,R*,R*^Em,G*^Efm,Wwf,G*^Em,G*^Eff,*^Gvs,W*^B*,Ce,Ch"), nil, 6)
+		)) then
+		
+		scenery = scenery .. "," .. "windmill,windmill,windmill,windmill,windmill,windmill,windmill,oak1,oak2,oak3,oak4,oak5,oak6,oak7"
+	end
+	-- remove chances of ships on river/lake coast for lilies
+	
+	if matches_location(
+		f.all(
+			f.terrain("Ww,Wwt,Wwg"),
+			f.find_in_wml("point.location"),
+			f.adjacent(f.terrain("W*^*"), nil, "0-3"),
+			f.none(
+				f.find_in_wml("oceanic")
+			)
+		)) then
+		
+		scenery = "lilies"
+	end
+	-- different meaning for roads in some maps
+	if theme == "clayey" or theme == "wild" then
+		
+		if matches_location(
+			f.all(
+				f.terrain("R*"),
+				f.find_in_wml("point.location")
+			)) then
+			scenery = "well_g,temple,tent2_g,tent1,village,monolith3,burial"
+		end
+	end
+	if theme == "wild" then
+		if matches_location(
+			f.all(
+				f.find_in_wml("point.location"),
+				f.find_in_wml("map_data.road_in_cave")
+			)) then
+			
+			scenery = "altar,bones,rock_cairn,well,monolith2,monolith3,tent1"
+		end
+	end
+	if theme == "volcanic" then
+		if matches_location(
+			f.all(
+				f.terrain("Rd,Rb"),
+				f.find_in_wml("point.location")
+			)) then
+			
+			scenery = "bones,rock_cairn,well_g,monolith2,tent1,tent1,tent2,tent2_g,monolith3,well_g,rock_cairn,dolmen,monolith2,temple,dolmen_g,monolith1_r,monolith4_r"
+		end
+		if matches_location(
+			f.all(
+				f.terrain("Ur"),
+				f.find_in_wml("point.location")
+			)) then
+			
+			scenery = "bones,rock_cairn,well_g,monolith2,tent1,monolith3,well_g,dolmen,monolith2,temple,monolith1_r,monolith4_r"
+		end
+	end
+	-- high chances of lighthouse next to ocean
+	if matches_location(
+		f.all(
+			f.terrain("!,Ww*,U*,Ss"),
+			f.find_in_wml("point.location"),
+			f.adjacent(f.all(
+				f.terrain("Ww*"),
+				f.find_in_wml("oceanic")
+			))
+		)) then
+		
+		scenery = scenery .. "," .. "lighthouse,lighthouse,lighthouse,lighthouse,lighthouse"
+		if matches_location(
+			f.all(
+				f.terrain("G*^*,R*^*"),
+				f.find_in_wml("point.location")
+			)) then
+			
+			scenery = scenery .. "," .. "lighthouse,lighthouse"
+		end
+		-- high chances of light signal on cliff next to ocean
+		
+		if matches_location(
+			f.all(
+				f.terrain("Hh,Hhd,Mm,Md"),
+				f.find_in_wml("point.location")
+			)) then
+			
+			scenery = scenery .. "," .. "campfire,campfire,campfire,campfire,lighthouse,lighthouse,lighthouse,lighthouse"
+			
+			if matches_location(
+				f.all(
+					f.terrain("Mm,Md"),
+					f.find_in_wml("point.location")
+				)) then
+				scenery = scenery .. "," .. "campfire,campfire,campfire,campfire,lighthouse,lighthouse,lighthouse,lighthouse"
+			end
+		end
+	end
+	-- chances of tower on dessert far from village
+	if matches_location(
+		f.all(
+			f.terrain("Dd,Hd"),
+			f.find_in_wml("point.location"),
+			f.none(
+				f.radius(5, f.terrain("*^V*"))
+			)
+		)) then
+		
+		scenery = scenery .. "," .. "tower_r1,tower_r4"
+	end
+	-- chance of outpost in sands
+	if matches_location(
+		f.all(
+			f.terrain("Ds,Hd,Dd"),
+			f.find_in_wml("point.location"),
+			f.adjacent(f.terrain("D*^*,Hd,G*,R*,Ur"), "se", 1),
+			f.adjacent(f.terrain("D*^*,H*^*,G*^*,R*,Ur,M*^*"), "nw,sw,n,s,ne", 5),
+			f.adjacent(f.terrain("D*^*,Hd*^*"), nil, "1-6")
+		)) then
+		
+		scenery = scenery .. "," .. "outpost,outpost"
+	end
+	-- chances of dead oak in desolated
+	if matches_location(
+		f.any(
+			f.all(
+				f.terrain("Dd"),
+				f.find_in_wml("point.location"),
+				f.adjacent(f.terrain("Dd,Ds*^*,Hd,S*"), nil, "4-6"),
+				f.adjacent(f.terrain("*^F*,C*^*,K*^*"), nil, 0)
+			),
+			f.all(
+				f.terrain("Ds,Rd"),
+				f.find_in_wml("point.location"),
+				f.adjacent(f.terrain("Dd,Ds*^*,Hd,S*,Rd"), nil, 6),
+				f.none(
+					f.radius(2, f.terrain("W*^*"))
+				)
+			)
+		)) then
+		
+		scenery = scenery .. "," .. "oak_dead,oak_dead,oak_dead,oak_dead,oak_dead2,oak_dead2,oak_dead2,oak_dead2"
+	end
+	-- pick random scenery value from our list
+	return helper.rand(scenery)
+end
 
-#define WCT_BONUS_CHOSE_SCENERY
-	## determine possible scenery values based on terrain
-	[switch]
-		variable=point.location.terrain
-		[case]
-			value=Re,Rd,Rb,Rr,Rrc
-			{VARIABLE point.scenery "well_r,signpost,rock_cairn,obelisk,dolmen,monolith2,temple2,shop"}
-		[/case]
-		[case]
-			value=Ww,Wwt,Wwg
-			{VARIABLE point.scenery "ship1,ship2"}
-		[/case]
-		[case]
-			value=Hh,Hhd
-			{VARIABLE point.scenery "temple,shelter,village,monolith1,monolith4"}
-		[/case]
-		[case]
-			value=Mm,Md
-			{VARIABLE point.scenery "mine,mine,mine,mine,mine,mine,doors,doors,doors,doors,doors,doors,temple3,temple4"}
-		[/case]
-		[case]
-			value=Uu
-			{VARIABLE point.scenery "altar,coffin,bones,rock_cairn_c,trapdoor,crystal,monolith2"}
-		[/case]
-		[case]
-			value=Ur
-			{VARIABLE point.scenery "altar,bones,rock_cairn_c,well,monolith2,monolith3,tent1"}
-		[/case]
-		[case]
-			value=Uh
-			{VARIABLE point.scenery "altar,coffin,bones,rock_cairn_c,trapdoor,monolith2,crystal3,burial_c"}
-		[/case]
-		[case]
-			value=Ds,Ds^Esd,Dd
-			{VARIABLE point.scenery "rock1,rock4,bones,tent2,tent1,burial_s"}
-		[/case]
-		[case]
-			value=Hd
-			{VARIABLE point.scenery "tower_r1,tower_r4,bones,tent2,tent1,rock1,rock4"}
-		[/case]
-		[case]
-			value=Ss
-			{VARIABLE point.scenery "bones_s,rock3,rock3,burial,lilies,bones_s"}
-		[/case]
-		[else]
-			{VARIABLE point.scenery "well_g,temple,tent2_g,tent1,village,monolith3,burial"}
-		[/else]
-	[/switch]
-	## chance of rock cairn on isolated hills
-	[if]
-		[have_location]
-			terrain=Hh,Hhd
-			find_in=point.location
-			[filter_adjacent_location]
-				terrain=H*^*
-				count=0
-			[/filter_adjacent_location]
-		[/have_location]
-		[then]
-			{ADD_SCENERY rock_cairn}
-		[/then]
-	[/if]
-	## chance of dolmen on grass not next to forest
-	[if]
-		[have_location]
-			terrain=G*
-			find_in=point.location
-			[filter_adjacent_location]
-				terrain=*^F*
-				count=0
-			[/filter_adjacent_location]
-		[/have_location]
-		[then]
-			{ADD_SCENERY dolmen_g}
-		[/then]
-	[/if]
-	## chances of green temple on gras next to swamp, hills and forest
-	[if]
-		[have_location]
-			terrain=G*
-			find_in=point.location
-			[filter_adjacent_location]
-				terrain=Ss
-			[/filter_adjacent_location]
-			[filter_adjacent_location]
-				terrain=Hh^*,Ha^*
-			[/filter_adjacent_location]
-			[filter_adjacent_location]
-				terrain=G*^F*,A*^F*,G*^Uf
-			[/filter_adjacent_location]
-		[/have_location]
-		[then]
-			{ADD_SCENERY temple_green_g,temple_green_g,temple_green_g,temple_green_g2,temple_green_g2}
-		[/then]
-	[/if]
-	## chances of green temple in hills next to swamp or cold
-	[if]
-		[have_location]
-			terrain=Hh
-			find_in=point.location
-			[filter_adjacent_location]
-				terrain=Ss,Ai,A*^*,Ha^*,Ms^*
-			[/filter_adjacent_location]
-		[/have_location]
-		[then]
-			{ADD_SCENERY temple_green_h,temple_green_h,temple_green_h,temple_green_h2,temple_green_h2}
-		[/then]
-	[/if]
-	## chance of temple in hills next to mountain
-	[if]
-		[have_location]
-			terrain=Hh,Hhd
-			find_in=point.location
-			[filter_adjacent_location]
-				terrain=M*^*
-			[/filter_adjacent_location]
-		[/have_location]
-		[then]
-			{ADD_SCENERY temple4,temple4}
-		[/then]
-	[/if]
-	## chances of detritus and lilies on some swamps
-	[if]
-		[have_location]
-			terrain=Ss
-			find_in=point.location
-			[filter_adjacent_location]
-				terrain=*^F*,C*^*,K*^*
-				count=0
-			[/filter_adjacent_location]
-		[/have_location]
-		[then]
-			{ADD_SCENERY detritus,detritus2,lilies_s}
-		[/then]
-	[/if]
-	## chances of buildings next to road
-	[if]
-		[variable]
-			name=bonus.theme
-			not_equals=volcanic
-		[/variable]
-		[variable]
-			name=bonus.theme
-			not_equals=clayey
-		[/variable]
-		[variable]
-			name=bonus.theme
-			not_equals=wild
-		[/variable]
-		[have_location]
-			terrain=G*,Hh*
-			find_in=point.location
-			[filter_adjacent_location]
-				terrain=R*^*,W*^Bsb*
-				count=2-6
-			[/filter_adjacent_location]
-			[filter_adjacent_location]
-				terrain=*^F*
-				count=0
-			[/filter_adjacent_location]
-			[and]
-				terrain=*^Vh,*^Vhh,*^Ve,*^Vl,*^Vhc,*^Vd,*^Vy*,*^Vz*
-				radius=7
-			[/and]
-		[/have_location]
-		[then]
-			{ADD_SCENERY rock_cairn,temple2_g,shop_g}
-		[/then]
-	[/if]
-	## chance of fancy shop on road
-	[if]
-		[variable]
-			name=bonus.theme
-			not_equals=volcanic
-		[/variable]
-		[variable]
-			name=bonus.theme
-			not_equals=clayey
-		[/variable]
-		[variable]
-			name=bonus.theme
-			not_equals=wild
-		[/variable]
-		[have_location]
-			terrain=R*^*
-			find_in=point.location
-			[and]
-				terrain=*^Vh,*^Vhh,*^Ve,*^Vl,*^Vhc,*^Vd,*^Vy*,*^Vz*
-				radius=5
-			[/and]
-		[/have_location]
-		[then]
-			{ADD_SCENERY tent2_r}
-		[/then]
-	[/if]
-	## high chances of windmill and oak surronded by flat
-	[if]
-		[have_location]
-			terrain=Gg,Gs,Gll
-			find_in=point.location
-			[filter_adjacent_location]
-				terrain= G*,R*,R*^Em,G*^Efm,Wwf,G*^Em,G*^Eff,*^Gvs,W*^B*,Ce,Ch
-				count=6
-			[/filter_adjacent_location]
-		[/have_location]
-		[then]
-			{ADD_SCENERY windmill,windmill,windmill,windmill,windmill,windmill,windmill,oak1,oak2,oak3,oak4,oak5,oak6,oak7}
-		[/then]
-	[/if]
-	## remove chances of ships on river/lake coast for lilies
-	[if]
-		[have_location]
-			terrain=Ww,Wwt,Wwg
-			find_in=point.location
-			[not]
-				{WCT_MAP_FILTER_OCEANIC}
-			[/not]
-			[filter_adjacent_location]
-				terrain=W*^*
-				count=0-3
-			[/filter_adjacent_location]
-		[/have_location]
-		[then]
-			{VARIABLE point.scenery "lilies"}
-		[/then]
-	[/if]
-	## different meaning for roads in some maps
-	[if]
-		[variable]
-			name=bonus.theme
-			equals=clayey
-		[/variable]
-		[or]
-			[variable]
-				name=bonus.theme
-				equals=wild
-			[/variable]
-		[/or]
-		[then]
-			[if]
-				[have_location]
-					terrain=R*
-					find_in=point.location
-				[/have_location]
-				[then]
-					{VARIABLE point.scenery "well_g,temple,tent2_g,tent1,village,monolith3,burial"}
-				[/then]
-			[/if]
-		[/then]
-	[/if]
-	[if]
-		[variable]
-			name=bonus.theme
-			equals=wild
-		[/variable]
-		[then]
-			[if]
-				[have_location]
-					find_in=point.location
-					[and]
-						find_in=map_data.road_in_cave
-					[/and]
-				[/have_location]
-				[then]
-					{VARIABLE point.scenery "altar,bones,rock_cairn,well,monolith2,monolith3,tent1"}
-				[/then]
-			[/if]
-		[/then]
-	[/if]
-	[if]
-		[variable]
-			name=bonus.theme
-			equals=volcanic
-		[/variable]
-		[then]
-			[if]
-				[have_location]
-					terrain=Rd,Rb
-					find_in=point.location
-				[/have_location]
-				[then]
-					{VARIABLE point.scenery "bones,rock_cairn,well_g,monolith2,tent1,tent1,tent2,tent2_g,monolith3,well_g,rock_cairn,dolmen,monolith2,temple,dolmen_g,monolith1_r,monolith4_r"}
-				[/then]
-			[/if]
-			[if]
-				[have_location]
-					terrain=Ur
-					find_in=point.location
-				[/have_location]
-				[then]
-					{VARIABLE point.scenery "bones,rock_cairn,well_g,monolith2,tent1,monolith3,well_g,dolmen,monolith2,temple,monolith1_r,monolith4_r"}
-				[/then]
-			[/if]
-		[/then]
-	[/if]
-	## high chances of lighthouse next to ocean
-	[if]
-		[have_location]
-			terrain=Ww*
-			[filter_adjacent_location]
-				find_in=point.location
-				terrain=!,Ww*,U*,Ss
-			[/filter_adjacent_location]
-			[and]
-				{WCT_MAP_FILTER_OCEANIC}
-			[/and]
-		[/have_location]
-		[then]
-			{ADD_SCENERY lighthouse,lighthouse,lighthouse,lighthouse,lighthouse}
-			[if]
-				[have_location]
-					find_in=point.location
-					terrain=G*^*,R*^*
-				[/have_location]
-				[then]
-					{ADD_SCENERY lighthouse,lighthouse}
-				[/then]
-			[/if]
-			## high chances of light signal on cliff next to ocean
-			[if]
-				[have_location]
-					find_in=point.location
-					terrain=Hh,Hhd,Mm,Md
-				[/have_location]
-				[then]
-					{ADD_SCENERY campfire,campfire,campfire,campfire,lighthouse,lighthouse,lighthouse,lighthouse}
-					[if]
-						[have_location]
-							find_in=point.location
-							terrain=Mm,Md
-						[/have_location]
-						[then]
-							{ADD_SCENERY campfire,campfire,campfire,campfire,lighthouse,lighthouse,lighthouse,lighthouse}
-						[/then]
-					[/if]
-				[/then]
-			[/if]
-		[/then]
-	[/if]
-	## chances of tower on dessert far from village
-	[if]
-		[have_location]
-			terrain=Dd,Hd
-			find_in=point.location
-			[and]
-				[not]
-					terrain=*^V*
-					radius=5
-				[/not]
-			[/and]
-		[/have_location]
-		[then]
-			{ADD_SCENERY tower_r1,tower_r4}
-		[/then]
-	[/if]
-	## chance of outpost in sands
-	[if]
-		[have_location]
-			terrain=Ds,Hd,Dd
-			find_in=point.location
-			[filter_adjacent_location]
-				terrain=D*^*,Hd,G*,R*,Ur
-				adjacent=se
-				count=1
-			[/filter_adjacent_location]
-			[filter_adjacent_location]
-				terrain=D*^*,H*^*,G*^*,R*,Ur,M*^*
-				adjacent=nw,sw,n,s,ne
-				count=5
-			[/filter_adjacent_location]
-			[filter_adjacent_location]
-				terrain=D*^*,Hd*^*
-				count=1-6
-			[/filter_adjacent_location]
-		[/have_location]
-		[then]
-			{ADD_SCENERY outpost,outpost}
-		[/then]
-	[/if]
-	## chances of dead oak in desolated
-	[if]
-		[have_location]
-			terrain=Dd
-			find_in=point.location
-			[filter_adjacent_location]
-				terrain=Dd,Ds*^*,Hd,S*
-				count=4-6
-			[/filter_adjacent_location]
-			[filter_adjacent_location]
-				terrain=*^F*,C*^*,K*^*
-				count=0
-			[/filter_adjacent_location]
-			[or]
-				terrain=Ds,Rd
-				find_in=point.location
-				[filter_adjacent_location]
-					terrain=Dd,Ds*^*,Hd,S*,Rd
-					count=6
-				[/filter_adjacent_location]
-				[and]
-					[not]
-						terrain=W*^*
-						radius=2
-					[/not]
-				[/and]
-			[/or]
-		[/have_location]
-		[then]
-			{ADD_SCENERY oak_dead,oak_dead,oak_dead,oak_dead,oak_dead2,oak_dead2,oak_dead2,oak_dead2}
-		[/then]
-	[/if]
-	## pick random scenery value from our list
-	{VARIABLE_OP point.scenery rand $point.scenery}
-#enddef
 
-#define WCT_PLACE_BONUS
-	[wc2_place_bonus]
-		x,y=$point.location.x,$point.location.y
-		scenery = $point.scenery
-	[/wc2_place_bonus]
-#enddef
+function world_conquest_tek_bonus_points(theme, prestart_event)
+	local possible_locs = map:get_locations(f_wct_bonus_location_filter)
+	function place_item(loc)
+		scenery = wct_bonus_chose_scenery(loc, theme)
+		table.insert(prestart_event, T.wc2_place_bonus {
+			x= loc[1],
+			y= loc[2],
+			scenery = scenery,
+		})
+	end
+	random_placement(possible_locs, 3, 9 + wml.vars.scenario, place_item)
+end

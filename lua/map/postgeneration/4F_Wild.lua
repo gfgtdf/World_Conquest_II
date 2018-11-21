@@ -3,10 +3,9 @@ function world_conquest_tek_map_postgeneration_4f()
 		name=prestart
 		{WORLD_CONQUEST_TEK_ENEMY_ARMY_EVENT}
 		{WORLD_CONQUEST_TEK_MAP_REPAINT_4F}
-		{VARIABLE bonus.theme wild}
 		{WILD_STORE_ROADS_IN_CAVE_ZONE}
 		-- WORLD_CONQUEST_TEK_BONUS_POINTS uses map_data.road_in_cave
-		{WORLD_CONQUEST_TEK_BONUS_POINTS}
+		world_conquest_tek_bonus_points("wild")
 		
 	[/event]
 end

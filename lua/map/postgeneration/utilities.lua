@@ -251,6 +251,17 @@ function wct_create_event_roads_to(destiny, terrain)
 	[/event]
 end
 
+function iterate_roads_to(get_next, radius, terrain)
+	for r = radius, 1, -1 do
+		local locs = get_next(r)
+		while #locs > 0 do
+			local loc = locs[wesnoth.random(#locs)]
+			map:set_terrain(loc, terrain)
+			locs = get_next(r)
+		end
+	end
+end
+
 function wct_iterate_roads_to(destiny, radius)
 	{VARIABLE radius {RADIUS}}
 	[while]

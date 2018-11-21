@@ -5,8 +5,7 @@ function world_conquest_tek_map_postgeneration_2e()
 	--	name=prestart
 	--	{WORLD_CONQUEST_TEK_ENEMY_ARMY_EVENT}
 	--	{WORLD_CONQUEST_TEK_MAP_REPAINT_2E}
-	--	{VARIABLE bonus.theme paradise}
-	--	{WORLD_CONQUEST_TEK_BONUS_POINTS}
+		world_conquest_tek_bonus_points("paradise")
 	--	{WCT_MAP_2E_POST_BUNUS_DECORATION}
 	--[/event]
 end

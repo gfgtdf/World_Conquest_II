@@ -1,14 +1,10 @@
 -- Clayey
 
 function world_conquest_tek_map_postgeneration_2f()
-	[event]
-	name=prestart
-	{WORLD_CONQUEST_TEK_ENEMY_ARMY_EVENT}
-	{WORLD_CONQUEST_TEK_MAP_REPAINT_2F}
-	{VARIABLE bonus.theme clayey}
-	{WORLD_CONQUEST_TEK_BONUS_POINTS}
-	{WCT_MAP_2F_POST_BUNUS_DECORATION}
-	[/event]
+	world_conquest_tek_enemy_army_event()
+	world_conquest_tek_map_repaint_2f()
+	world_conquest_tek_bonus_points("clayey")
+	wct_map_2f_post_bunus_decoration()
 end
 
 function world_conquest_tek_map_repaint_2f()
