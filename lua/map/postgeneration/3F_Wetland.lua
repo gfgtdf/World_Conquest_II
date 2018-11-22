@@ -1,14 +1,11 @@
 -- Wetland
 
 function world_conquest_tek_map_postgeneration_3f()
-	--[event]
-	--	name=prestart
 	world_conquest_tek_enemy_army_event()
-	--	{WORLD_CONQUEST_TEK_MAP_REPAINT_3F}
+	world_conquest_tek_map_repaint_3f()
 	world_conquest_tek_bonus_points()
-	--	{WCT_MAP_3F_POST_BUNUS_DECORATION}
+	wct_map_3f_post_bunus_decoration()
 	--	{WCT_MAP_ENEMY_THEMED human "Young Ogre" e Gg^Vl 8}
-	--[/event]
 end
 
 function world_conquest_tek_map_repaint_3f()

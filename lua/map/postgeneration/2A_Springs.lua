@@ -1,20 +1,17 @@
 -- Springs
 
 function world_conquest_tek_map_postgeneration_2a()
-	[event]
-	name=prestart
 	world_conquest_tek_map_noise_classic("Gs^Fp")
 	world_conquest_tek_enemy_army_event()
-	{WORLD_CONQUEST_TEK_MAP_REPAINT_2A}
-world_conquest_tek_bonus_points()
-	{WCT_MAP_2A_POST_BUNUS_DECORATION}
-	{WCT_MAP_ENEMY_THEMED undead Soulless ha Aa^Vha 12}
-	[/event]
+	world_conquest_tek_map_repaint_2a()
+	world_conquest_tek_bonus_points()
+	wct_map_2a_post_bunus_decoration()
+	--{WCT_MAP_ENEMY_THEMED undead Soulless ha Aa^Vha 12}
 end
 
 function world_conquest_tek_map_repaint_2a()
 	world_conquest_tek_map_rebuild("Uu,Uu^Uf,Uh,Uu^Uf,Uu,Uh,Ql,Qxu,Xu,Ww,Ww", 3)
-	{WORLD_CONQUEST_TEK_MAP_DECORATION_2A}
+	world_conquest_tek_map_decoration_2a()
 	world_conquest_tek_map_dirt("Gg^Uf,Gg^Uf,Gg^Uf,Gs^Uf")
 end
 

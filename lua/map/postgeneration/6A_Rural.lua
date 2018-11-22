@@ -1,18 +1,14 @@
 -- Rural
 
 function world_conquest_tek_map_postgeneration_6a()
-	--[event]
-	--	name=prestart
-	--	world_conquest_tek_map_noise_classic("Gs^Fp")
+	world_conquest_tek_map_noise_classic("Gs^Fp")
 	world_conquest_tek_enemy_army_event()
-	--	{WORLD_CONQUEST_TEK_MAP_REPAINT_6A}
-	--	{CLEAR_VARIABLE rand}
-	--[/event]
+	world_conquest_tek_map_repaint_6a()
 end
 
 function world_conquest_tek_map_repaint_6a()
 	world_conquest_tek_map_rebuild("Uu,Uu^Uf,Uh,Uu^Uf,Uu,Uu^Uf,Uh,Ql,Qxu,Xu", 3)
-	--{WORLD_CONQUEST_TEK_MAP_DECORATION_6A}
+	world_conquest_tek_map_decoration_6a()
 	world_conquest_tek_map_dirt("Gg^Uf,Gs^Uf")
 end
 
