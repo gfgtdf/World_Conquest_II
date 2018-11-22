@@ -368,7 +368,7 @@ function wct_roads_to_river()
 end
 
 function get_possible_maritime_bridge()
-	return {
+	return {{
 		type = "Bsb|",
 		locs = get_locations(f.all(
 			f.terrain("Ww"),
