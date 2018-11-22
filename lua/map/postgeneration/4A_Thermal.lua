@@ -1,19 +1,16 @@
 -- Thermal
 
 function world_conquest_tek_map_postgeneration_4a()
-	--[event]
-	--	name=prestart
 	--	world_conquest_tek_map_noise_classic("Gs^Fp")
 	world_conquest_tek_enemy_army_event()
-	--	{WORLD_CONQUEST_TEK_MAP_REPAINT_4A}
+	world_conquest_tek_map_repaint_4a()
 	world_conquest_tek_bonus_points()
-	--	{WCT_MAP_4A_POST_BUNUS_DECORATION}
-	--[/event]
+	wct_map_4a_post_bunus_decoration()
 end
 
 function world_conquest_tek_map_repaint_4a()
 	world_conquest_tek_map_rebuild("Uu,Uu^Uf,Uh,Uu^Uf,Uu,Uu^Uf,Uh,Ql,Ql,Ql", 3)
-	--{WORLD_CONQUEST_TEK_MAP_DECORATION_4A}
+	world_conquest_tek_map_decoration_4a()
 	world_conquest_tek_map_dirt("Gg^Uf,Gg^Uf,Gs^Uf")
 end
 

@@ -1,15 +1,12 @@
 -- Lakes
 
 function world_conquest_tek_map_postgeneration_2b()
-	--[event]
-	--	name=prestart
-	--	{WORLD_CONQUEST_TEK_MAP_CONSTRUCTOR_LAKES}
-	--	world_conquest_tek_map_noise_classic("Gs^Fp")
+	world_conquest_tek_map_constructor_lakes()
+	world_conquest_tek_map_noise_classic("Gs^Fp")
 	world_conquest_tek_enemy_army_event()
-	--	{WORLD_CONQUEST_TEK_MAP_REPAINT_2B}
+	world_conquest_tek_map_repaint_2b()
 	world_conquest_tek_bonus_points()
-	--	wct_noise_snow_to("Gd,Wwf,Rb")
-	--[/event]
+	wct_noise_snow_to("Gd,Wwf,Rb")
 end
 
 function world_conquest_tek_map_repaint_2b()

@@ -1,14 +1,11 @@
 -- Mines
 
 function world_conquest_tek_map_postgeneration_4c()
-	--[event]
-	--	name=prestart
 	--	world_conquest_tek_map_noise_classic("Gs^Fp")
 	world_conquest_tek_enemy_army_event()
-	--	{WORLD_CONQUEST_TEK_MAP_REPAINT_4C}
+	world_conquest_tek_map_repaint_4c()
 	world_conquest_tek_bonus_points()
-	--	{WCT_MAP_4C_POST_BUNUS_DECORATION}
-	--[/event]
+	wct_map_4c_post_bunus_decoration()
 end
 
 function world_conquest_tek_map_repaint_4c()
@@ -26,7 +23,7 @@ function world_conquest_tek_map_repaint_4c()
 	}
 	
 	wct_reduce_wall_clusters("Uu^Br/,Uu^Br\,Uu^Br|,Uu^`Dr,Qxu")
-	--{WORLD_CONQUEST_TEK_MAP_DECORATION_4C}
+	world_conquest_tek_map_decoration_4c()
 	wct_fill_lava_chasms()
 	world_conquest_tek_map_dirt("Gg^Uf,Gg^Uf,Gs^Uf")
 end

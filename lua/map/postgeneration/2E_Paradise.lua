@@ -1,18 +1,15 @@
 -- Paradise
 
 function world_conquest_tek_map_postgeneration_2e()
-	--[event]
-	--	name=prestart
 	world_conquest_tek_enemy_army_event()
-	--	{WORLD_CONQUEST_TEK_MAP_REPAINT_2E}
-		world_conquest_tek_bonus_points("paradise")
-	--	{WCT_MAP_2E_POST_BUNUS_DECORATION}
-	--[/event]
+	world_conquest_tek_map_repaint_2e()
+	world_conquest_tek_bonus_points("paradise")
+	wct_map_2e_post_bunus_decoration()
 end
 
 function wct_map_2e_post_bunus_decoration()
-	--{WCT_MAP_DECORATION_3E_KEEPS}
-	--{WCT_MAP_DECORATION_3E_LEANTOS}
+	wct_map_decoration_3e_keeps()
+	wct_map_decoration_3e_leantos()
 end
 
 function world_conquest_tek_map_repaint_2e()

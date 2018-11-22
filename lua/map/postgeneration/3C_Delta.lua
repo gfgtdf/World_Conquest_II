@@ -1,19 +1,16 @@
 -- Delta
 
 function world_conquest_tek_map_postgeneration_3c()
-	--[event]
-	--	name=prestart
-	--	{WORLD_CONQUEST_TEK_MAP_CONSTRUCTOR_DELTA}
+	world_conquest_tek_map_constructor_delta()
 	world_conquest_tek_enemy_army_event()
-	--	{WORLD_CONQUEST_TEK_MAP_REPAINT_3C}
+	world_conquest_tek_map_repaint_3c()
 	world_conquest_tek_bonus_points()
-	--	{WCT_MAP_3C_POST_BUNUS_DECORATION}
-	--[/event]
+	wct_map_3c_post_bunus_decoration()
 end
 
 function world_conquest_tek_map_repaint_3c()
 	wct_noise_delta()
-	--{WORLD_CONQUEST_TEK_MAP_DECORATION_3C}
+	world_conquest_tek_map_decoration_3c()
 end
 
 function world_conquest_tek_map_constructor_delta()

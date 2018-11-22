@@ -28,7 +28,7 @@ function world_conquest_tek_map_repaint_6c()
 	}
 	
 	
-	{WORLD_CONQUEST_TEK_MAP_DECORATION_6C}
+	world_conquest_tek_map_decoration_6c()
 	
 	wct_reduce_wall_clusters("Uu,Uu^Uf,Uh,Uu^Uf,Uu,Uu^Uf,Uh,Ql,Qxu,Xu,Uu,Rb")
 	wct_fill_lava_chasms()

@@ -1,14 +1,11 @@
 -- Provinces
 
 function world_conquest_tek_map_postgeneration_2d()
-	--[event]
-	--	name=prestart
 	world_conquest_tek_map_noise_classic("Gs^Fp")
 	world_conquest_tek_enemy_army_event()
-	--	{WORLD_CONQUEST_TEK_MAP_REPAINT_2D}
+	world_conquest_tek_map_repaint_2d()
 	world_conquest_tek_bonus_points()
-	--	{WCT_MAP_2D_POST_BUNUS_DECORATION}
-	[/event]
+	wct_map_2d_post_bunus_decoration()
 end
 
 function world_conquest_tek_map_repaint_2d()

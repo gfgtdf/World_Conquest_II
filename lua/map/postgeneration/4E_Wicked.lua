@@ -1,12 +1,10 @@
 -- Wicked
 
 function world_conquest_tek_map_postgeneration_4e()
-	--[event]
-	--name=prestart
 	world_conquest_tek_enemy_army_event()
-	--{WORLD_CONQUEST_TEK_MAP_REPAINT_4E}
+	world_conquest_tek_map_repaint_4e()
 	world_conquest_tek_bonus_points()
-	--{WCT_MAP_4E_POST_BUNUS_DECORATION}
+	wct_map_4e_post_bunus_decoration()
 	--{WCT_MAP_ENEMY_THEMED undead Soulless ha Aa^Vha 1}
 	--{WCT_MAP_ENEMY_THEMED elf Wolf v Gg^Ve 1}
 	--{WCT_MAP_ENEMY_THEMED dwarf "Giant Mudcrawler" ud Ur^Vud 1}
@@ -14,7 +12,6 @@ function world_conquest_tek_map_postgeneration_4e()
 	--{WCT_MAP_ENEMY_THEMED troll "Giant Scorpion" o Gs^Vo 1}
 	--{WCT_MAP_ENEMY_THEMED wolf "Giant Scorpion" o Gs^Vo 1}
 	--{WCT_MAP_ENEMY_THEMED human "Young Ogre" e Gg^Vl 1}
-	--[/event]
 end
 
 function world_conquest_tek_map_repaint_4e()

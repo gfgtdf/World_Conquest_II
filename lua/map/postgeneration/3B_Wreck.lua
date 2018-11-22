@@ -1,21 +1,18 @@
 -- Wreck
 
 function world_conquest_tek_map_postgeneration_3b()
-	--[event]
-	--	name=prestart
-	--	world_conquest_tek_map_noise_classic("Gs^Ft")
+	world_conquest_tek_map_noise_classic("Gs^Ft")
 	world_conquest_tek_enemy_army_event()
-	--	{WORLD_CONQUEST_TEK_MAP_REPAINT_3B}
+	world_conquest_tek_map_repaint_3b()
 	world_conquest_tek_bonus_points()
 	--	wct_map_cave_path_to("Rb")
 	--	{WCT_MAP_ENEMY_THEMED drake "Fire Guardian" d Gs^Vd 8}
 	--	{WCT_MAP_ENEMY_THEMED lizard "Fire Guardian" d Gs^Vd 8}
-	--[/event]
 end
 
 function world_conquest_tek_map_repaint_3b()
 	world_conquest_tek_map_rebuild("Uu,Uu^Uf,Uh,Uu^Uf,Uu,Uu^Uf,Uh,Ql,Qxu,Xu", 3)
-	--{WORLD_CONQUEST_TEK_MAP_DECORATION_3B}
+	world_conquest_tek_map_decoration_3b()
 	world_conquest_tek_map_dirt("Gs^Uf")
 end
 

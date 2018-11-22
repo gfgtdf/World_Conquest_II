@@ -1,13 +1,10 @@
 -- Coral
 
 function world_conquest_tek_map_postgeneration_3e()
-	--[event]
-	--	name=prestart
 	world_conquest_tek_enemy_army_event()
-	--	{WORLD_CONQUEST_TEK_MAP_REPAINT_3E}
+	world_conquest_tek_map_repaint_3e()
 	world_conquest_tek_bonus_points()
-	--	{WCT_MAP_3E_POST_BUNUS_DECORATION}
-	--[/event]
+	wct_map_3e_post_bunus_decoration()
 end
 
 function world_conquest_tek_map_repaint_3e()

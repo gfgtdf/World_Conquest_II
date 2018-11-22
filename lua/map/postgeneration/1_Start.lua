@@ -2,16 +2,16 @@ function world_conquest_tek_map_postgeneration_1()
 	--[event]
 	--name=prestart
 	--world_conquest_tek_map_noise_classic("Gs^Fp")
-	--{WORLD_CONQUEST_TEK_MAP_REPAINT_1}
+	world_conquest_tek_map_repaint_1()
 	world_conquest_tek_bonus_points()
-	--{WCT_MAP_1_POST_BUNUS_DECORATION}
+	wct_map_1_post_bunus_decoration()
 	--[event]
 	--name=start
 	-- need be applied after choose difficulty
 	-- TODO: why that? from looking at the code it seems like enemy
 	-- castle size only depends on the number of players not on difficulty.
 	world_conquest_tek_enemy_army_event()
-	--{WCT_MAP_1_POST_CASTLE_EXPANSION_FIX}
+	wct_map_1_post_castle_expansion_fix()
 	--[/event]
 	--[/event]
 end

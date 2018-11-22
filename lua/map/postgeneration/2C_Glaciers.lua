@@ -1,20 +1,17 @@
 -- Glaciers
 
 function world_conquest_tek_map_postgeneration_2c()
-	--[event]
-	--	name=prestart
-	--	world_conquest_tek_map_noise_classic("Gs^Fp")
+	world_conquest_tek_map_noise_classic("Gs^Fp")
 	world_conquest_tek_enemy_army_event()
-	--	{WORLD_CONQUEST_TEK_MAP_REPAINT_2C}
+	world_conquest_tek_map_repaint_2c()
 	world_conquest_tek_bonus_points()
-	--	wct_noise_snow_to("Rb")
+	wct_noise_snow_to("Rb")
 	--	{WCT_MAP_ENEMY_THEMED elf Wolf v Gg^Ve 12}
-	--[/event]
 end
 
 function world_conquest_tek_map_repaint_2c()
 	wct_reduce_wall_clusters("Uu,Uu^Uf,Uh,Uh^Uf,Uu,Uh,Ai,Ai,Xu,Ai,Ai")
-	--{WORLD_CONQUEST_TEK_MAP_DECORATION_2C}
+	world_conquest_tek_map_decoration_2c()
 	wct_randomize_snowed_forest()
 end
 
