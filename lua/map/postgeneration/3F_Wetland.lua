@@ -5,7 +5,7 @@ function world_conquest_tek_map_postgeneration_3f()
 	world_conquest_tek_map_repaint_3f()
 	world_conquest_tek_bonus_points()
 	wct_map_3f_post_bunus_decoration()
-	--	{WCT_MAP_ENEMY_THEMED human "Young Ogre" e Gg^Vl 8}
+	wct_map_enemy_themed("human", "Young Ogre", "e", "Gg^Vl", 8)
 end
 
 function world_conquest_tek_map_repaint_3f()

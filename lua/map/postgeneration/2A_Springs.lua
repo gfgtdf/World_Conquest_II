@@ -6,7 +6,7 @@ function world_conquest_tek_map_postgeneration_2a()
 	world_conquest_tek_map_repaint_2a()
 	world_conquest_tek_bonus_points()
 	wct_map_2a_post_bunus_decoration()
-	--{WCT_MAP_ENEMY_THEMED undead Soulless ha Aa^Vha 12}
+	wct_map_enemy_themed("undead", "Soulless", "ha", "Aa^Vha", 12)
 end
 
 function world_conquest_tek_map_repaint_2a()

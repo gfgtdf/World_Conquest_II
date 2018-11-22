@@ -5,13 +5,13 @@ function world_conquest_tek_map_postgeneration_4e()
 	world_conquest_tek_map_repaint_4e()
 	world_conquest_tek_bonus_points()
 	wct_map_4e_post_bunus_decoration()
-	--{WCT_MAP_ENEMY_THEMED undead Soulless ha Aa^Vha 1}
-	--{WCT_MAP_ENEMY_THEMED elf Wolf v Gg^Ve 1}
-	--{WCT_MAP_ENEMY_THEMED dwarf "Giant Mudcrawler" ud Ur^Vud 1}
-	--{WCT_MAP_ENEMY_THEMED orc "Giant Scorpion" o Gs^Vo 1}
-	--{WCT_MAP_ENEMY_THEMED troll "Giant Scorpion" o Gs^Vo 1}
-	--{WCT_MAP_ENEMY_THEMED wolf "Giant Scorpion" o Gs^Vo 1}
-	--{WCT_MAP_ENEMY_THEMED human "Young Ogre" e Gg^Vl 1}
+	wct_map_enemy_themed("undead", "Soulless", "ha", "Aa^Vha", 1)
+	wct_map_enemy_themed("elf", "Wolf", "v", "Gg^Ve", 1)
+	wct_map_enemy_themed("dwarf", "Giant Mudcrawler", "ud", "Ur^Vud", 1)
+	wct_map_enemy_themed("orc", "Giant Scorpion", "o", "Gs^Vo", 1)
+	wct_map_enemy_themed("troll", "Giant Scorpion", "o", "Gs^Vo", 1)
+	wct_map_enemy_themed("wolf", "Giant Scorpion", "o", "Gs^Vo", 1)
+	wct_map_enemy_themed("human", "Young Ogre", "e", "Gg^Vl", 1)
 end
 
 function world_conquest_tek_map_repaint_4e()

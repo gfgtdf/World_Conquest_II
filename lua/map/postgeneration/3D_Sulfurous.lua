@@ -4,8 +4,8 @@ function world_conquest_tek_map_postgeneration_3d()
 	world_conquest_tek_enemy_army_event()
 	world_conquest_tek_map_repaint_3d()
 	world_conquest_tek_bonus_points()
-	--	{WCT_MAP_ENEMY_THEMED drake "Fire Guardian" d Gs^Vd 2}
-	--	{WCT_MAP_ENEMY_THEMED lizard "Fire Guardian" d Gs^Vd 2}
+	wct_map_enemy_themed("drake", "Fire Guardian", "d", "Gs^Vd", 2)
+	wct_map_enemy_themed("lizard", "Fire Guardian", "d", "Gs^Vd", 2)
 end
 
 function world_conquest_tek_map_repaint_3d()

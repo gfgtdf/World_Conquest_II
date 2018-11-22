@@ -6,7 +6,7 @@ function world_conquest_tek_map_postgeneration_2c()
 	world_conquest_tek_map_repaint_2c()
 	world_conquest_tek_bonus_points()
 	wct_noise_snow_to("Rb")
-	--	{WCT_MAP_ENEMY_THEMED elf Wolf v Gg^Ve 12}
+	wct_map_enemy_themed("elf", "Wolf", "v", "Gg^Ve", 12)
 end
 
 function world_conquest_tek_map_repaint_2c()

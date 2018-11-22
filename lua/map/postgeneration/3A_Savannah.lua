@@ -6,9 +6,9 @@ function world_conquest_tek_map_postgeneration_3a()
 	world_conquest_tek_map_repaint_3a()
 	world_conquest_tek_bonus_points()
 	wct_map_cave_path_to("Re")
-	--	{WCT_MAP_ENEMY_THEMED orc "Giant Scorpion" o Gs^Vo 8}
-	--	{WCT_MAP_ENEMY_THEMED troll "Giant Scorpion" o Gs^Vo 8}
-	--	{WCT_MAP_ENEMY_THEMED wolf "Giant Scorpion" o Gs^Vo 8}
+	wct_map_enemy_themed("orc", "Giant Scorpion", "o", "Gs^Vo", 8)
+	wct_map_enemy_themed("troll", "Giant Scorpion", "o", "Gs^Vo", 8)
+	wct_map_enemy_themed("wolf", "Giant Scorpion", "o", "Gs^Vo", 8)
 end
 
 function world_conquest_tek_map_repaint_3a()

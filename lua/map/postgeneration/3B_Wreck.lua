@@ -6,8 +6,8 @@ function world_conquest_tek_map_postgeneration_3b()
 	world_conquest_tek_map_repaint_3b()
 	world_conquest_tek_bonus_points()
 	--	wct_map_cave_path_to("Rb")
-	--	{WCT_MAP_ENEMY_THEMED drake "Fire Guardian" d Gs^Vd 8}
-	--	{WCT_MAP_ENEMY_THEMED lizard "Fire Guardian" d Gs^Vd 8}
+	wct_map_enemy_themed("drake", "Fire Guardian", "d", "Gs^Vd", 8)
+	wct_map_enemy_themed("lizard", "Fire Guardian", "d", "Gs^Vd", 8)
 end
 
 function world_conquest_tek_map_repaint_3b()

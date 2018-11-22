@@ -5,7 +5,7 @@ function world_conquest_tek_map_postgeneration_4b()
 	world_conquest_tek_enemy_army_event()
 	world_conquest_tek_map_repaint_4b()
 		world_conquest_tek_bonus_points("volcanic")
-	--	{WCT_MAP_ENEMY_THEMED dwarf "Giant Mudcrawler" ud Ur^Vud 5}
+	wct_map_enemy_themed("dwarf", "Giant Mudcrawler", "ud", "Ur^Vud", 5)
 end
 
 function world_conquest_tek_map_repaint_4b()
