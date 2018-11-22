@@ -592,140 +592,93 @@ function wct_dirty_deltas()
 end
 
 function wct_conect_factory_rails()
-	[store_locations]
-		terrain=*^Br*
-		[filter_adjacent_location]
-			terrain=*^Vhh
-		[/filter_adjacent_location]
-		variable=rails_conected
-	[/store_locations]
-	[while]
-		[have_location]
-			[not]
-				find_in=rails_conected
-			[/not]
-			terrain=*^Br*
-			[filter_adjacent_location]
-				find_in=rails_conected
-			[/filter_adjacent_location]
-		[/have_location]
-		[do]
-			[terrain]
-				terrain=*^Br|
-				layer=overlay
-				[not]
-					find_in=rails_conected
-				[/not]
-				[filter_adjacent_location]
-					find_in=rails_conected
-					adjacent=n,s
-				[/filter_adjacent_location]
-				[and]
-					terrain=*^Br*
-				[/and]
-			[/terrain]
-			[terrain]
-				terrain=*^Br\
-				layer=overlay
-				[not]
-					find_in=rails_conected
-				[/not]
-				[not]
-					[filter_adjacent_location]
-						terrain=*^Br\
-						adjacent=ne,sw
-					[/filter_adjacent_location]
-				[/not]
-				[filter_adjacent_location]
-					find_in=rails_conected
-					adjacent=nw,se
-				[/filter_adjacent_location]
-				[and]
-					terrain=*^Br*
-				[/and]
-			[/terrain]
-			[terrain]
-				terrain=*^Br/
-				layer=overlay
-				[not]
-					find_in=rails_conected
-				[/not]
-				[not]
-					[filter_adjacent_location]
-						terrain=*^Br/
-						adjacent=nw,se
-					[/filter_adjacent_location]
-				[/not]
-				[filter_adjacent_location]
-					find_in=rails_conected
-					adjacent=ne,sw
-				[/filter_adjacent_location]
-				[and]
-					terrain=*^Br*
-				[/and]
-			[/terrain]
-			[store_locations]
-				terrain=*^Br*
-				[and]
-					find_in=rails_conected
-					radius=1
-				[/and]
-				variable=rails_conected
-			[/store_locations]
-		[/do]
-	[/while]
-	{CLEAR_VARIABLE rails_conected}
-	[terrain]
-		terrain=*^Br|
-		layer=overlay
-		[and]
-			terrain=*^Br\,*^Br/
-			[filter_adjacent_location]
-				terrain=*^Br\,*^Br/
-				adjacent=n,s
-			[/filter_adjacent_location]
-		[/and]
-	[/terrain]
-	[terrain]
-		terrain=*^Br/
-		layer=overlay
-		[and]
-			terrain=*^Br|
-			[filter_adjacent_location]
-				terrain=*^Br|
-				adjacent=ne
-			[/filter_adjacent_location]
-			[filter_adjacent_location]
-				terrain=*^Br|
-				adjacent=n,s
-				count=0-1
-			[/filter_adjacent_location]
-			[filter_adjacent_location]
-				terrain=*^Vhh
-				adjacent=n,s
-				count=0
-			[/filter_adjacent_location]
-		[/and]
-	[/terrain]
-	[terrain]
-		terrain=*^Br\
-		layer=overlay
-		[and]
-			terrain=*^Br|
-			[filter_adjacent_location]
-				terrain=*^Br|
-				adjacent=nw
-			[/filter_adjacent_location]
-			[filter_adjacent_location]
-				terrain=*^Br|
-				adjacent=n,s
-				count=0-1
-			[/filter_adjacent_location]
-			[filter_adjacent_location]
-				terrain=*^Vhh
-				adjacent=n,s
-				count=0
-			[/filter_adjacent_location]
-		[/and]
-	[/terrain]
+	local rails_conected = get_locations(f.all(
+		f.terrain("*^Br*"),
+		f.adjacent(f.terrain("*^Vhh"))
+	))
+	while #map:get_locations(wesnoth.create_filter(
+		f.all(
+			f.terrain("*^Br*"),
+			f.adjacent(f.find_in("rails_conected")),
+			f.none(
+				f.find_in("rails_conected")
+			)
+		),
+		{ rails_conected = rails_conected }
+	)) > 0
+	do
+		set_terrain { "*^Br|",
+			f.all(
+				f.adjacent(f.find_in("rails_conected"), "n,s", nil),
+				f.none(
+					f.find_in("rails_conected")
+				),
+				f.terrain("*^Br*")
+			),
+			filter_extra = { rails_conected = rails_conected },
+			layer = "overlay",
+		}
+		set_terrain { "*^Br\\",
+			f.all(
+				f.adjacent(f.find_in("rails_conected"), "nw,se", nil),
+				f.none(
+					f.find_in("rails_conected")
+				),
+				f.none(
+					f.adjacent(f.terrain("*^Br\\"), "ne,sw", nil)
+				),
+				f.terrain("*^Br*")
+			),
+			filter_extra = { rails_conected = rails_conected },
+			layer = "overlay",
+		}
+		set_terrain { "*^Br/",
+			f.all(
+				f.adjacent(f.find_in("rails_conected"), "ne,sw", nil),
+				f.none(
+					f.find_in("rails_conected")
+				),
+				f.none(
+					f.adjacent(f.terrain("*^Br/"), "nw,se", nil)
+				),
+				f.terrain("*^Br*")
+			),
+			filter_extra = { rails_conected = rails_conected },
+			layer = "overlay",
+		}
+		rails_conected = get_locations(wesnoth.create_filter(
+			f.all(
+				f.terrain("*^Br*"),
+				f.radius(1, f.find_in("rails_conected"))
+			),
+			{ rails_conected = rails_conected }
+		))
+	end
+	rails_conected = nil
+	set_terrain { "*^Br|",
+		f.all(
+			f.terrain("*^Br\\,*^Br/"),
+			f.adjacent(f.terrain("*^Br\\,*^Br/"), "n,s", nil)
+		),
+		layer = "overlay",
+	}
+	set_terrain { "*^Br/",
+		f.all(
+			f.terrain("*^Br|"),
+			f.adjacent(f.terrain("*^Br|"), "ne", nil),
+			f.adjacent(f.terrain("*^Br|"), "n,s", "0-1"),
+			f.adjacent(f.terrain("*^Vhh"), "n,s", 0)
+		),
+		layer = "overlay",
+	}
+	set_terrain { "*^Br\\",
+		f.all(
+			f.terrain("*^Br|"),
+			f.adjacent(f.terrain("*^Br|"), "nw", nil),
+			f.adjacent(f.terrain("*^Br|"), "n,s", "0-1"),
+			f.adjacent(f.terrain("*^Vhh"), "n,s", 0)
+		),
+		layer = "overlay",
+	}
+	
 end

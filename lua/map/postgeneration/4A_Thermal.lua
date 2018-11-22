@@ -4,9 +4,9 @@ function world_conquest_tek_map_postgeneration_4a()
 	--[event]
 	--	name=prestart
 	--	world_conquest_tek_map_noise_classic("Gs^Fp")
-	--	{WORLD_CONQUEST_TEK_ENEMY_ARMY_EVENT}
+	world_conquest_tek_enemy_army_event()
 	--	{WORLD_CONQUEST_TEK_MAP_REPAINT_4A}
-	--	{WORLD_CONQUEST_TEK_BONUS_POINTS}
+	world_conquest_tek_bonus_points()
 	--	{WCT_MAP_4A_POST_BUNUS_DECORATION}
 	--[/event]
 end

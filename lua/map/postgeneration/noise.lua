@@ -299,8 +299,7 @@
 	[/wc2_terrain]
 #enddef
 
-#define NOISE_SNOW
-Sm^Em #enddef
+noise_snow = "Sm^Em"
 
 #define WCT_NOISE_SNOW_TO TERRAIN
 	[wc2_terrain]

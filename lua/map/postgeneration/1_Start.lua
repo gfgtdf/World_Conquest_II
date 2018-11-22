@@ -3,14 +3,14 @@ function world_conquest_tek_map_postgeneration_1()
 	--name=prestart
 	--world_conquest_tek_map_noise_classic("Gs^Fp")
 	--{WORLD_CONQUEST_TEK_MAP_REPAINT_1}
-	--{WORLD_CONQUEST_TEK_BONUS_POINTS}
+	world_conquest_tek_bonus_points()
 	--{WCT_MAP_1_POST_BUNUS_DECORATION}
 	--[event]
 	--name=start
 	-- need be applied after choose difficulty
 	-- TODO: why that? from looking at the code it seems like enemy
 	-- castle size only depends on the number of players not on difficulty.
-	--{WORLD_CONQUEST_TEK_ENEMY_ARMY_EVENT}
+	world_conquest_tek_enemy_army_event()
 	--{WCT_MAP_1_POST_CASTLE_EXPANSION_FIX}
 	--[/event]
 	--[/event]
@@ -18,7 +18,7 @@ end
 
 function world_conquest_tek_map_repaint_1()
 	world_conquest_tek_map_rebuild("Uu,Uu^Uf,Uh,Uu^Uf,Uu,Ai,Uh,Ql,Qxu,Xu", 3)
-	--{WORLD_CONQUEST_TEK_MAP_DECORATION_1}
+	world_conquest_tek_map_decoration_1()
 	world_conquest_tek_map_dirt("Gg^Uf")
 end
 
@@ -114,10 +114,10 @@ function world_conquest_tek_map_decoration_1()
 end
 
 function wct_map_1_post_bunus_decoration()
-	--[item]
-	--terrain={NOISE_SNOW}
-	--image=scenery/snowbits.png
-	--[/item]
+	table.insert(prestart_event, wml.tag.item {
+		terrain = noise_snow,
+		image = "scenery/snowbits.png",
+	})
 	wct_noise_snow_to("Gg,Gg,Rb")
 	-- some small mushrooms
 	set_terrain { "Gg^Em",

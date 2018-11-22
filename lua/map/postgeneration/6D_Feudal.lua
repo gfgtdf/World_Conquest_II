@@ -4,7 +4,7 @@ function world_conquest_tek_map_postgeneration_6d()
 	{WCT_ROADS_TO_FEUDAL_CASTLE_EVENTS}
 	[event]
 		name=prestart
-		{WORLD_CONQUEST_TEK_ENEMY_ARMY_EVENT}
+		world_conquest_tek_enemy_army_event()
 		{WORLD_CONQUEST_TEK_MAP_REPAINT_6D}
 		{WCT_MAP_ENEMY_THEMED undead Soulless ha Aa^Vha 1}
 		{WCT_MAP_ENEMY_THEMED elf Wolf v Gg^Ve 1}

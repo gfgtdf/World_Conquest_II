@@ -4,7 +4,7 @@ function world_conquest_tek_map_postgeneration_4b()
 	--[event]
 	--	name=prestart
 	--	world_conquest_tek_map_noise_classic("Gs^Fp")
-	--	{WORLD_CONQUEST_TEK_ENEMY_ARMY_EVENT}
+	world_conquest_tek_enemy_army_event()
 	--	{WORLD_CONQUEST_TEK_MAP_REPAINT_4B}
 		world_conquest_tek_bonus_points("volcanic")
 	--	{WCT_MAP_ENEMY_THEMED dwarf "Giant Mudcrawler" ud Ur^Vud 5}

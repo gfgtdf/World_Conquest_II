@@ -3,9 +3,9 @@
 function world_conquest_tek_map_postgeneration_4e()
 	--[event]
 	--name=prestart
-	--{WORLD_CONQUEST_TEK_ENEMY_ARMY_EVENT}
+	world_conquest_tek_enemy_army_event()
 	--{WORLD_CONQUEST_TEK_MAP_REPAINT_4E}
-	--{WORLD_CONQUEST_TEK_BONUS_POINTS}
+	world_conquest_tek_bonus_points()
 	--{WCT_MAP_4E_POST_BUNUS_DECORATION}
 	--{WCT_MAP_ENEMY_THEMED undead Soulless ha Aa^Vha 1}
 	--{WCT_MAP_ENEMY_THEMED elf Wolf v Gg^Ve 1}

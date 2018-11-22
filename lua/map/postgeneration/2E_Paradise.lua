@@ -3,7 +3,7 @@
 function world_conquest_tek_map_postgeneration_2e()
 	--[event]
 	--	name=prestart
-	--	{WORLD_CONQUEST_TEK_ENEMY_ARMY_EVENT}
+	world_conquest_tek_enemy_army_event()
 	--	{WORLD_CONQUEST_TEK_MAP_REPAINT_2E}
 		world_conquest_tek_bonus_points("paradise")
 	--	{WCT_MAP_2E_POST_BUNUS_DECORATION}
@@ -218,10 +218,12 @@ function wct_map_decoration_3e_leantos()
 	for i, v in ipairs(terrain_to_change) do
 		if wesnoth.random(3) == 1 then
 			map:set_terrain(v, "Rrc")
-			--				[item]
-			--					pos=v
-			--					image={IMG_CITADEL_LEANTO}
-			--				[/item]
+			
+			table.insert(prestart_event, wml.tag.item {
+				x = v[1],
+				y = v[2],
+				image = imgages.citadel_leanto,
+			})
 		end
 	end
 end

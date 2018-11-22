@@ -3,9 +3,9 @@
 function world_conquest_tek_map_postgeneration_3d()
 	--[event]
 	--	name=prestart
-	--	{WORLD_CONQUEST_TEK_ENEMY_ARMY_EVENT}
+	world_conquest_tek_enemy_army_event()
 	--	{WORLD_CONQUEST_TEK_MAP_REPAINT_3D}
-	--	{WORLD_CONQUEST_TEK_BONUS_POINTS}
+	world_conquest_tek_bonus_points()
 	--	{WCT_MAP_ENEMY_THEMED drake "Fire Guardian" d Gs^Vd 2}
 	--	{WCT_MAP_ENEMY_THEMED lizard "Fire Guardian" d Gs^Vd 2}
 	--[/event]

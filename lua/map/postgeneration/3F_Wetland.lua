@@ -3,9 +3,9 @@
 function world_conquest_tek_map_postgeneration_3f()
 	--[event]
 	--	name=prestart
-	--	{WORLD_CONQUEST_TEK_ENEMY_ARMY_EVENT}
+	world_conquest_tek_enemy_army_event()
 	--	{WORLD_CONQUEST_TEK_MAP_REPAINT_3F}
-	--	{WORLD_CONQUEST_TEK_BONUS_POINTS}
+	world_conquest_tek_bonus_points()
 	--	{WCT_MAP_3F_POST_BUNUS_DECORATION}
 	--	{WCT_MAP_ENEMY_THEMED human "Young Ogre" e Gg^Vl 8}
 	--[/event]

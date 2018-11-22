@@ -4,9 +4,9 @@ function world_conquest_tek_map_postgeneration_4c()
 	--[event]
 	--	name=prestart
 	--	world_conquest_tek_map_noise_classic("Gs^Fp")
-	--	{WORLD_CONQUEST_TEK_ENEMY_ARMY_EVENT}
+	world_conquest_tek_enemy_army_event()
 	--	{WORLD_CONQUEST_TEK_MAP_REPAINT_4C}
-	--	{WORLD_CONQUEST_TEK_BONUS_POINTS}
+	world_conquest_tek_bonus_points()
 	--	{WCT_MAP_4C_POST_BUNUS_DECORATION}
 	--[/event]
 end
@@ -244,11 +244,11 @@ function wct_map_4c_post_bunus_decoration()
 			map:set_terrain(v, "Kv")
 		end
 	end
-	-- todo
-	--[item]
-	--	terrain=Kv
-	--	image={IMG_DARVISH_ANVILS}
-	--[/item]
+
+	table.insert(prestart_event, wml.tag.item {
+		terrain = "Kv",
+		image = imgages.darvish_anvils,
+	})
 	set_terrain { "Cud"
 		t.terrain("Kv")
 	}

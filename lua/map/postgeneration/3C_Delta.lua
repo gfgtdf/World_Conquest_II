@@ -4,9 +4,9 @@ function world_conquest_tek_map_postgeneration_3c()
 	--[event]
 	--	name=prestart
 	--	{WORLD_CONQUEST_TEK_MAP_CONSTRUCTOR_DELTA}
-	--	{WORLD_CONQUEST_TEK_ENEMY_ARMY_EVENT}
+	world_conquest_tek_enemy_army_event()
 	--	{WORLD_CONQUEST_TEK_MAP_REPAINT_3C}
-	--	{WORLD_CONQUEST_TEK_BONUS_POINTS}
+	world_conquest_tek_bonus_points()
 	--	{WCT_MAP_3C_POST_BUNUS_DECORATION}
 	--[/event]
 end

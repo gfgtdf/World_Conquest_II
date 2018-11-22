@@ -1,7 +1,7 @@
 function world_conquest_tek_map_postgeneration_4f()
 	[event]
 		name=prestart
-		{WORLD_CONQUEST_TEK_ENEMY_ARMY_EVENT}
+		world_conquest_tek_enemy_army_event()
 		{WORLD_CONQUEST_TEK_MAP_REPAINT_4F}
 		{WILD_STORE_ROADS_IN_CAVE_ZONE}
 		-- WORLD_CONQUEST_TEK_BONUS_POINTS uses map_data.road_in_cave
