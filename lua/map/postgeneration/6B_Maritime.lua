@@ -166,7 +166,7 @@ function world_conquest_tek_map_decoration_6b()
 				y = ship_loc[2],
 				image = images.dock_ship
 			})
-		else
+			else
 			table.insert(prestart_event, wml.tag.item {
 				x = ship_loc[1],
 				y = ship_loc[2],
@@ -185,8 +185,8 @@ function world_conquest_tek_map_decoration_6b()
 			f.terrain("Ds"),
 			f.adjacent(f.terrain("Iwr"))
 		),
-		}
-		set_terrain { "Ds^Edt",
+	}
+	set_terrain { "Ds^Edt",
 		f.all(
 			f.terrain("W*"),
 			f.adjacent(f.terrain("Iwr")),
@@ -368,35 +368,36 @@ function wct_roads_to_river()
 end
 
 function get_possible_maritime_bridge()
-	return {{
-		type = "Bsb|",
-		locs = get_locations(f.all(
-			f.terrain("Ww"),
-			f.adjacent(f.terrain("Chw"), "s,n", nil),
-			f.adjacent(f.terrain("Ch,Kh"), "s,n", nil),
-			f.adjacent(f.terrain("*^B*"), nil, 0)
-		))
-	},
-	{
-		type = "Bsb\\",
-		locs = get_locations(f.all(
-			f.terrain("Ww"),
-			f.adjacent(f.terrain("Chw"), "se,nw", nil),
-			f.adjacent(f.terrain("Ch,Kh"), "se,nw", nil),
-			f.adjacent(f.terrain("*^B*"), nil, 0)
-		))
-	},
-	{
-		type = "Bsb/",
-		locs = get_locations(f.all(
-			f.terrain("Ww"),
-			f.adjacent(f.terrain("Chw"), "sw,ne", nil),
-			f.adjacent(f.terrain("Ch,Kh"), "sw,ne", nil),
-			f.adjacent(f.terrain("*^B*"), nil, 0)
-		))
+	return {
+		{
+			type = "Bsb|",
+			locs = get_locations(f.all(
+				f.terrain("Ww"),
+				f.adjacent(f.terrain("Chw"), "s,n", nil),
+				f.adjacent(f.terrain("Ch,Kh"), "s,n", nil),
+				f.adjacent(f.terrain("*^B*"), nil, 0)
+			))
+		},
+		{
+			type = "Bsb\\",
+			locs = get_locations(f.all(
+				f.terrain("Ww"),
+				f.adjacent(f.terrain("Chw"), "se,nw", nil),
+				f.adjacent(f.terrain("Ch,Kh"), "se,nw", nil),
+				f.adjacent(f.terrain("*^B*"), nil, 0)
+			))
+		},
+		{
+			type = "Bsb/",
+			locs = get_locations(f.all(
+				f.terrain("Ww"),
+				f.adjacent(f.terrain("Chw"), "sw,ne", nil),
+				f.adjacent(f.terrain("Ch,Kh"), "sw,ne", nil),
+				f.adjacent(f.terrain("*^B*"), nil, 0)
+			))
+		}
 	}
-}
-
+	
 end
 
 function wct_maritime_bridges()
