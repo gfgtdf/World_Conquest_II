@@ -1,473 +1,441 @@
 -- Feudal
 
 function world_conquest_tek_map_postgeneration_6d()
-	{WCT_ROADS_TO_FEUDAL_CASTLE_EVENTS}
-	[event]
-		name=prestart
-		world_conquest_tek_enemy_army_event()
-		{WORLD_CONQUEST_TEK_MAP_REPAINT_6D}
-		{WCT_MAP_ENEMY_THEMED undead Soulless ha Aa^Vha 1}
-		{WCT_MAP_ENEMY_THEMED elf Wolf v Gg^Ve 1}
-		{WCT_MAP_ENEMY_THEMED dwarf "Giant Mudcrawler" ud Ur^Vud 1}
-		{WCT_MAP_ENEMY_THEMED orc "Giant Scorpion" o Gs^Vo 1}
-		{WCT_MAP_ENEMY_THEMED troll "Giant Scorpion" o Gs^Vo 1}
-		{WCT_MAP_ENEMY_THEMED wolf "Giant Scorpion" o Gs^Vo 1}
-		{WCT_MAP_ENEMY_THEMED human "Young Ogre" e Gg^Vl 1}
-		{WCT_MAP_ENEMY_THEMED drake "Fire Guardian" d Gg^Vd 1}
-		{WCT_MAP_ENEMY_THEMED lizard "Fire Guardian" d Gg^Vd 1}
-	[/event]
+	world_conquest_tek_enemy_army_event()
+	world_conquest_tek_map_repaint_6d()
+	--	{WCT_MAP_ENEMY_THEMED undead Soulless ha Aa^Vha 1}
+	--	{WCT_MAP_ENEMY_THEMED elf Wolf v Gg^Ve 1}
+	--	{WCT_MAP_ENEMY_THEMED dwarf "Giant Mudcrawler" ud Ur^Vud 1}
+	--	{WCT_MAP_ENEMY_THEMED orc "Giant Scorpion" o Gs^Vo 1}
+	--	{WCT_MAP_ENEMY_THEMED troll "Giant Scorpion" o Gs^Vo 1}
+	--	{WCT_MAP_ENEMY_THEMED wolf "Giant Scorpion" o Gs^Vo 1}
+	--	{WCT_MAP_ENEMY_THEMED human "Young Ogre" e Gg^Vl 1}
+	--	{WCT_MAP_ENEMY_THEMED drake "Fire Guardian" d Gg^Vd 1}
+	--	{WCT_MAP_ENEMY_THEMED lizard "Fire Guardian" d Gg^Vd 1}
 end
 
 function world_conquest_tek_map_repaint_6d()
-		-- fix generator mark "anti-castle-generation"
-set_terrain { "Gg",
-	f.terrain("Wot"),
-}
-
+	-- fix generator mark "anti-castle-generation"
+	set_terrain { "Gg",
+		f.terrain("Wot"),
+	}
+	
 	-- soft rough terrain around caves
-set_terrain { "Aa,Aa,Aa,Gs",
-	f.terrain("Ha"),
-	fraction = 3,
-}
-set_terrain { "Gs",
-	f.terrain("Hh"),
-	fraction = 2,
-}
-set_terrain { "Gg",
-	f.terrain("Hhd"),
-	fraction = 2,
-}
-set_terrain { "Aa,Aa,Aa,Aa,Gs",
-	f.terrain("Ms"),
-	fraction = 3,
-}
-set_terrain { "Gs",
-	f.terrain("Mm"),
-	fraction = 2,
-}
-
+	set_terrain { "Aa,Aa,Aa,Gs",
+		f.terrain("Ha"),
+		fraction = 3,
+	}
+	set_terrain { "Gs",
+		f.terrain("Hh"),
+		fraction = 2,
+	}
+	set_terrain { "Gg",
+		f.terrain("Hhd"),
+		fraction = 2,
+	}
+	set_terrain { "Aa,Aa,Aa,Aa,Gs",
+		f.terrain("Ms"),
+		fraction = 3,
+	}
+	set_terrain { "Gs",
+		f.terrain("Mm"),
+		fraction = 2,
+	}
+	
 	-- rough terrain on snow
-set_terrain { "Ha,Ha,Ha,Aa^Fpa,Aa^Fpa,Ha^Fpa,Ms,Gs,Ha,Ha,Ha,Aa^Fpa,Aa^Fma,Ha^Fma,Ms,Wwf",
-	f.terrain("Aa"),
-	fraction = 6,
-}
-set_terrain { "Coa,Coa,Coa,Coa,Aa,Re",
-	f.terrain("Coa"),
-	fraction = 3,
-}
-
+	set_terrain { "Ha,Ha,Ha,Aa^Fpa,Aa^Fpa,Ha^Fpa,Ms,Gs,Ha,Ha,Ha,Aa^Fpa,Aa^Fma,Ha^Fma,Ms,Wwf",
+		f.terrain("Aa"),
+		fraction = 6,
+	}
+	set_terrain { "Coa,Coa,Coa,Coa,Aa,Re",
+		f.terrain("Coa"),
+		fraction = 3,
+	}
+	
 	-- rough terrain on dessert
-set_terrain { "Hd,Hd,Hd,Hd,Hd,Hd,Md",
-	f.terrain("Dd"),
-	fraction = 7,
-}
-set_terrain { "Dd,Dd,Dd^Ftp,Dd^Do,Dd,Dd,Dd^Ftp,Dd^Do,Sm",
-	f.all(
+	set_terrain { "Hd,Hd,Hd,Hd,Hd,Hd,Md",
 		f.terrain("Dd"),
-		f.adjacent(f.terrain("Dd^*,Hd^*,Md"), nil, "0-5")
-	),
-	fraction = 6,
-}
-set_terrain { "Cd,Cd,Cd,Cd,Re",
-	f.terrain("Cd"),
-	fraction = 3,
-}
-
+		fraction = 7,
+	}
+	set_terrain { "Dd,Dd,Dd^Ftp,Dd^Do,Dd,Dd,Dd^Ftp,Dd^Do,Sm",
+		f.all(
+			f.terrain("Dd"),
+			f.adjacent(f.terrain("Dd^*,Hd^*,Md"), nil, "0-5")
+		),
+		fraction = 6,
+	}
+	set_terrain { "Cd,Cd,Cd,Cd,Re",
+		f.terrain("Cd"),
+		fraction = 3,
+	}
+	
 	-- castles around roads
-set_terrain { "Chs",
-	f.all(
-		f.terrain("!,W*,Ds,Ss,C*,K*,*^V*"),
-		f.adjacent(f.terrain("Re,C*,K*"), nil, 0),
-		f.radius(4, f.terrain("Re"), f.terrain("!,W*,*^V*,Ds,Ch,Kh^*"))
-	),
-	fraction = 40,
-}
-
-	{WCT_ITERATE_ROADS_TO feudal_castle 3}
-set_terrain { "Khs",
-	f.terrain("Chs"),
-}
-set_terrain { "Chs",
-	f.all(
-		f.terrain("!,W*,Ds,Ss,C*,K*,*^V*"),
-		f.adjacent(f.terrain("C*,K*"), nil, 0),
-		f.none(
-			f.radius(4, f.terrain("Re"))
+	set_terrain { "Chs",
+		f.all(
+			f.terrain("!,W*,Ds,Ss,C*,K*,*^V*"),
+			f.adjacent(f.terrain("Re,C*,K*"), nil, 0),
+			f.radius(4, f.terrain("Re"), f.terrain("!,W*,*^V*,Ds,Ch,Kh^*"))
 		),
-		f.radius(5, f.terrain("Khs"))
-	),
-	fraction = 40,
-}
-
-	{WCT_ITERATE_ROADS_TO feudal_castle 4}
-set_terrain { "Khs",
-	f.terrain("Chs"),
-}
-set_terrain { "Chs",
-	f.all(
-		f.terrain("!,W*,Ds,Ss,C*,K*,*^V*"),
-		f.adjacent(f.terrain("C*,K*"), nil, 0),
-		f.none(
-			f.radius(8, f.terrain("Re"))
+		fraction = 40,
+	}
+	
+	wct_iterate_roads_to(wct_roads_to_feudal_castle, 3, "Rr")
+	set_terrain { "Khs",
+		f.terrain("Chs"),
+	}
+	set_terrain { "Chs",
+		f.all(
+			f.terrain("!,W*,Ds,Ss,C*,K*,*^V*"),
+			f.adjacent(f.terrain("C*,K*"), nil, 0),
+			f.none(
+				f.radius(4, f.terrain("Re"))
+			),
+			f.radius(5, f.terrain("Khs"))
 		),
-		f.radius(6, f.terrain("Khs"))
-	),
-	fraction = 40,
-}
-
-
+		fraction = 40,
+	}
+	
+	wct_iterate_roads_to(wct_roads_to_feudal_castle, 4, "Rr")
+	set_terrain { "Khs",
+		f.terrain("Chs"),
+	}
+	set_terrain { "Chs",
+		f.all(
+			f.terrain("!,W*,Ds,Ss,C*,K*,*^V*"),
+			f.adjacent(f.terrain("C*,K*"), nil, 0),
+			f.none(
+				f.radius(8, f.terrain("Re"))
+			),
+			f.radius(6, f.terrain("Khs"))
+		),
+		fraction = 40,
+	}
+	
+	
 	{WCT_ITERATE_ROADS_TO feudal_castle 5}
 	-- rebuild cave
 	wct_reduce_wall_clusters("Uu")
-set_terrain { "Uh,Uh,Uu^Uf,Uh,Uh,Uu^Uf,Uh,Uh,Uu^Uf,Uh,Uh,Uu^Uf,Uh,Uh,Uu^Uf,Uh,Uu^Uf,Uu,Qxu,Qxu,Ql",
-	f.terrain("Uu"),
-	fraction = 4,
-}
-set_terrain { "Qxu,Uh^Uf,Ql,Urb,Urb,Urb,Urb,Urb,Urb,Urb,Urb,Urb,Urb,Urb,Urb,Urb,Urb,Uh,Uh,Uu^Uf",
-	f.terrain("Uu"),
-	fraction = 5,
-}
-
+	set_terrain { "Uh,Uh,Uu^Uf,Uh,Uh,Uu^Uf,Uh,Uh,Uu^Uf,Uh,Uh,Uu^Uf,Uh,Uh,Uu^Uf,Uh,Uu^Uf,Uu,Qxu,Qxu,Ql",
+		f.terrain("Uu"),
+		fraction = 4,
+	}
+	set_terrain { "Qxu,Uh^Uf,Ql,Urb,Urb,Urb,Urb,Urb,Urb,Urb,Urb,Urb,Urb,Urb,Urb,Urb,Urb,Uh,Uh,Uu^Uf",
+		f.terrain("Uu"),
+		fraction = 5,
+	}
+	
 	wct_fill_lava_chasms()
 	wct_volcanos()
 	wct_volcanos_dirt()
 	wct_break_walls("M*^Xm", "Mm,Mm,Hh,Hh,Hh^Fp,Hh^Fp,Hh^Uf,Hh^Uf,Gs^Fp,Rb,Rb,Rb")
 	wct_break_walls("X*", "Uh,Uh,Uh,Uh,Uh^Uf,Uu^Uf,Uu,Rd,Rd,Rd")
-set_terrain { "Mm^Xm",
-	f.all(
-		f.adjacent(f.terrain("U*^*,Q*"), nil, 0),
-		f.terrain("X*")
-	),
-}
-set_terrain { "Xu,Xu,Xu,Xu,Xuc",
-	f.all(
-		f.terrain("Mm^Xm"),
-		f.adjacent(f.terrain("U*^*,Q*"))
-	),
-	fraction = 2,
-}
-set_terrain { "Mm^Xm",
-	f.terrain("Rb"),
-}
-set_terrain { "Xu",
-	f.terrain("Rd"),
-}
-set_terrain { "Mm^Xm,Xu",
-	f.all(
-		f.terrain("Mm^Xm"),
-		f.adjacent(f.terrain("U*^*"))
-	),
-}
-set_terrain { "Xuc",
-	f.all(
-		f.terrain("Xu"),
-		f.radius(999, f.terrain("Xuc"), f.terrain("X*"))
-	),
-}
-
+	set_terrain { "Mm^Xm",
+		f.all(
+			f.adjacent(f.terrain("U*^*,Q*"), nil, 0),
+			f.terrain("X*")
+		),
+	}
+	set_terrain { "Xu,Xu,Xu,Xu,Xuc",
+		f.all(
+			f.terrain("Mm^Xm"),
+			f.adjacent(f.terrain("U*^*,Q*"))
+		),
+		fraction = 2,
+	}
+	set_terrain { "Mm^Xm",
+		f.terrain("Rb"),
+	}
+	set_terrain { "Xu",
+		f.terrain("Rd"),
+	}
+	set_terrain { "Mm^Xm,Xu",
+		f.all(
+			f.terrain("Mm^Xm"),
+			f.adjacent(f.terrain("U*^*"))
+		),
+	}
+	set_terrain { "Xuc",
+		f.all(
+			f.terrain("Xu"),
+			f.radius(999, f.terrain("Xuc"), f.terrain("X*"))
+		),
+	}
+	
 	-- forest on some hills
-set_terrain { "Hh^Fp",
-	f.terrain("Hh"),
-	fraction = 5,
-}
-set_terrain { "Hh^Fp,Hh^Uf",
-	f.terrain("Hh"),
-	fraction = 12,
-}
-set_terrain { "Hh^Fp",
-	f.terrain("Hhd"),
-	fraction = 5,
-}
-set_terrain { "Hhd^Fp,Hhd^Fp,Hh^Uf,Gg^Uf",
-	f.terrain("Hhd"),
-	fraction = 10,
-}
-
+	set_terrain { "Hh^Fp",
+		f.terrain("Hh"),
+		fraction = 5,
+	}
+	set_terrain { "Hh^Fp,Hh^Uf",
+		f.terrain("Hh"),
+		fraction = 12,
+	}
+	set_terrain { "Hh^Fp",
+		f.terrain("Hhd"),
+		fraction = 5,
+	}
+	set_terrain { "Hhd^Fp,Hhd^Fp,Hh^Uf,Gg^Uf",
+		f.terrain("Hhd"),
+		fraction = 10,
+	}
+	
 	-- extra rough terrain
-set_terrain { "Gg^Fp,Gg^Fp,Gg^Fp,Gg^Fp,Gg^Fp,Gg^Fp,Gg^Fp,Gg^Fp,Gg^Fp,Gg^Fp,Gg^Fp,Gg^Fp,Gg^Fp,Gg^Fp,Gg^Fp,Gg^Fp,Hh,Hh,Hh,Hh,Hh,Hh,Hh,Hh,Hhd^Fp,Hhd^Fp,Mm,Mm,Mm,Gg^Uf,Hh^Uf,Ss",
-	f.terrain("Gg"),
-	fraction = 3,
-}
-set_terrain { "Gs^Fp,Gs^Fp,Gs^Fp,Gs^Fp,Gs^Fp,Gs^Fp,Gs^Fp,Gs^Fp,Gs^Fp,Gs^Fp,Gs^Fp,Gs^Fp,Gs^Fp,Gs^Fp,Gs^Fp,Gs^Fp,Hh,Hh,Hh,Hh,Hh,Hh,Hh,Hh,Hh^Fp,Hh^Fp,Mm,Mm,Mm,Gs^Uf,Hh^Uf,Ss",
-	f.terrain("Gs"),
-	fraction = 4,
-}
-
+	set_terrain { "Gg^Fp,Gg^Fp,Gg^Fp,Gg^Fp,Gg^Fp,Gg^Fp,Gg^Fp,Gg^Fp,Gg^Fp,Gg^Fp,Gg^Fp,Gg^Fp,Gg^Fp,Gg^Fp,Gg^Fp,Gg^Fp,Hh,Hh,Hh,Hh,Hh,Hh,Hh,Hh,Hhd^Fp,Hhd^Fp,Mm,Mm,Mm,Gg^Uf,Hh^Uf,Ss",
+		f.terrain("Gg"),
+		fraction = 3,
+	}
+	set_terrain { "Gs^Fp,Gs^Fp,Gs^Fp,Gs^Fp,Gs^Fp,Gs^Fp,Gs^Fp,Gs^Fp,Gs^Fp,Gs^Fp,Gs^Fp,Gs^Fp,Gs^Fp,Gs^Fp,Gs^Fp,Gs^Fp,Hh,Hh,Hh,Hh,Hh,Hh,Hh,Hh,Hh^Fp,Hh^Fp,Mm,Mm,Mm,Gs^Uf,Hh^Uf,Ss",
+		f.terrain("Gs"),
+		fraction = 4,
+	}
+	
 	-- expand snow from lower altitude
-set_terrain { "Ha",
-	f.all(
-		f.terrain("Hh,Hhd"),
-		f.adjacent(f.terrain("A*^*"), nil, "2-6")
-	),
-	layer = "base",
-}
-set_terrain { "Ms",
-	f.all(
-		f.terrain("Mm^*"),
-		f.adjacent(f.terrain("A*^*,Ha^*"))
-	),
-	layer = "base",
-}
-
+	set_terrain { "Ha",
+		f.all(
+			f.terrain("Hh,Hhd"),
+			f.adjacent(f.terrain("A*^*"), nil, "2-6")
+		),
+		layer = "base",
+	}
+	set_terrain { "Ms",
+		f.all(
+			f.terrain("Mm^*"),
+			f.adjacent(f.terrain("A*^*,Ha^*"))
+		),
+		layer = "base",
+	}
+	
 	-- feudal villages
-set_terrain { "Ch^Vh",
-	f.all(
-		f.terrain("*^V*"),
-		f.adjacent(f.terrain("Khs,Chs,R*")),
-		f.adjacent(f.terrain("Kh^*,Ch"), nil, 0)
-	),
-}
-
+	set_terrain { "Ch^Vh",
+		f.all(
+			f.terrain("*^V*"),
+			f.adjacent(f.terrain("Khs,Chs,R*")),
+			f.adjacent(f.terrain("Kh^*,Ch"), nil, 0)
+		),
+	}
+	
 	-- theme castles
-set_terrain { "Koa",
-	f.all(
+	set_terrain { "Koa",
+		f.all(
+			f.terrain("Chs"),
+			f.adjacent(f.terrain("A*^*,Ha^*,Ms^*"))
+		),
+	}
+	set_terrain { "Coa",
+		f.all(
+			f.terrain("Khs"),
+			f.adjacent(f.terrain("A*^*,Ha^*,Ms^*"))
+		),
+	}
+	set_terrain { "Kv",
+		f.all(
+			f.terrain("Chs"),
+			f.adjacent(f.terrain("*^F*"), nil, "3-6")
+		),
+	}
+	set_terrain { "Cv",
+		f.all(
+			f.terrain("Khs"),
+			f.adjacent(f.terrain("*^F*"), nil, "3-6")
+		),
+	}
+	set_terrain { "Kd",
+		f.all(
+			f.terrain("Chs"),
+			f.adjacent(f.terrain("Dd^*,Hd^*,Md"))
+		),
+	}
+	set_terrain { "Cd",
+		f.all(
+			f.terrain("Khs"),
+			f.adjacent(f.terrain("Dd^*,Hd^*,Md"))
+		),
+	}
+	set_terrain { "Kud",
+		f.all(
+			f.terrain("Chs"),
+			f.adjacent(f.terrain("U*^*,Q*"))
+		),
+	}
+	set_terrain { "Cud",
+		f.all(
+			f.terrain("Khs"),
+			f.adjacent(f.terrain("U*^*,Q*"))
+		),
+	}
+	set_terrain { "Ce",
+		f.all(
+			f.terrain("Khs"),
+			f.adjacent(f.terrain("Ss^*"))
+		),
+	}
+	set_terrain { "Kh",
 		f.terrain("Chs"),
-		f.adjacent(f.terrain("A*^*,Ha^*,Ms^*"))
-	),
-}
-set_terrain { "Coa",
-	f.all(
+	}
+	set_terrain { "Ch",
 		f.terrain("Khs"),
-		f.adjacent(f.terrain("A*^*,Ha^*,Ms^*"))
-	),
-}
-set_terrain { "Kv",
-	f.all(
-		f.terrain("Chs"),
-		f.adjacent(f.terrain("*^F*"), nil, "3-6")
-	),
-}
-set_terrain { "Cv",
-	f.all(
-		f.terrain("Khs"),
-		f.adjacent(f.terrain("*^F*"), nil, "3-6")
-	),
-}
-set_terrain { "Kd",
-	f.all(
-		f.terrain("Chs"),
-		f.adjacent(f.terrain("Dd^*,Hd^*,Md"))
-	),
-}
-set_terrain { "Cd",
-	f.all(
-		f.terrain("Khs"),
-		f.adjacent(f.terrain("Dd^*,Hd^*,Md"))
-	),
-}
-set_terrain { "Kud",
-	f.all(
-		f.terrain("Chs"),
-		f.adjacent(f.terrain("U*^*,Q*"))
-	),
-}
-set_terrain { "Cud",
-	f.all(
-		f.terrain("Khs"),
-		f.adjacent(f.terrain("U*^*,Q*"))
-	),
-}
-set_terrain { "Ce",
-	f.all(
-		f.terrain("Khs"),
-		f.adjacent(f.terrain("Ss^*"))
-	),
-}
-set_terrain { "Kh",
-	f.terrain("Chs"),
-}
-set_terrain { "Ch",
-	f.terrain("Khs"),
-}
+	}
 	wct_map_reduce_castle_expanding_recruit("Ce,Cd,Coa", "Rrc")
-set_terrain { "Wwf",
-	f.all(
+	set_terrain { "Wwf",
+		f.all(
+			f.terrain("Rrc"),
+			f.adjacent(f.terrain("W*^*"), nil, "2-6")
+		),
+	}
+	set_terrain { "Re",
 		f.terrain("Rrc"),
-		f.adjacent(f.terrain("W*^*"), nil, "2-6")
-	),
-}
-set_terrain { "Re",
-	f.terrain("Rrc"),
-}
-set_terrain { "Coa^Vo",
-	f.all(
-		f.terrain("Ch^Vh"),
-		f.adjacent(f.terrain("Coa,Koa"))
-	),
-}
-set_terrain { "Cud^Vud",
-	f.all(
-		f.terrain("Ch^Vh"),
-		f.adjacent(f.terrain("Cud,Kud,U*^*,Q*"))
-	),
-}
-set_terrain { "Cv^Ve",
-	f.all(
-		f.terrain("Ch^Vh"),
-		f.adjacent(f.terrain("Cv,Kv"))
-	),
-}
-set_terrain { "Cd^Vd",
-	f.all(
-		f.terrain("Ch^Vh"),
-		f.adjacent(f.terrain("Cd,Kd"))
-	),
-}
-set_terrain { "Ce^Vl",
-	f.all(
-		f.terrain("Ch^Vh"),
-		f.adjacent(f.terrain("Ce"))
-	),
-}
-set_terrain { "Ch^Vhc",
-	f.all(
-		f.terrain("Ch^Vh"),
-		f.radius(2, f.terrain("Ch,Kh^*"))
-	),
-}
-
+	}
+	set_terrain { "Coa^Vo",
+		f.all(
+			f.terrain("Ch^Vh"),
+			f.adjacent(f.terrain("Coa,Koa"))
+		),
+	}
+	set_terrain { "Cud^Vud",
+		f.all(
+			f.terrain("Ch^Vh"),
+			f.adjacent(f.terrain("Cud,Kud,U*^*,Q*"))
+		),
+	}
+	set_terrain { "Cv^Ve",
+		f.all(
+			f.terrain("Ch^Vh"),
+			f.adjacent(f.terrain("Cv,Kv"))
+		),
+	}
+	set_terrain { "Cd^Vd",
+		f.all(
+			f.terrain("Ch^Vh"),
+			f.adjacent(f.terrain("Cd,Kd"))
+		),
+	}
+	set_terrain { "Ce^Vl",
+		f.all(
+			f.terrain("Ch^Vh"),
+			f.adjacent(f.terrain("Ce"))
+		),
+	}
+	set_terrain { "Ch^Vhc",
+		f.all(
+			f.terrain("Ch^Vh"),
+			f.radius(2, f.terrain("Ch,Kh^*"))
+		),
+	}
+	
 	-- elvish villages next to 3 forest
-set_terrain { "G*^Ve",
-	f.all(
-		f.terrain("G*^Vc"),
-		f.adjacent(f.terrain("*^F*"), nil, "3-6")
-	),
-	layer = "overlay",
-}
-
+	set_terrain { "G*^Ve",
+		f.all(
+			f.terrain("G*^Vc"),
+			f.adjacent(f.terrain("*^F*"), nil, "3-6")
+		),
+		layer = "overlay",
+	}
+	
 	-- fix roads
-set_terrain { "Re",
-	f.terrain("Rr"),
-}
-set_terrain { "Urb",
-	f.all(
-		f.adjacent(f.terrain("U*^*,Cud^*,Kud,X*,R*,Q*,Mv,*^Xm"), nil, 6),
-		f.terrain("Re")
-	),
-}
-
+	set_terrain { "Re",
+		f.terrain("Rr"),
+	}
+	set_terrain { "Urb",
+		f.all(
+			f.adjacent(f.terrain("U*^*,Cud^*,Kud,X*,R*,Q*,Mv,*^Xm"), nil, 6),
+			f.terrain("Re")
+		),
+	}
+	
 	-- fix forest types
-set_terrain { "*^Fet",
-	f.all(
-		f.terrain("*^F*"),
-		f.radius(2, f.terrain("Cv^*,Kv"))
-	),
-	layer = "overlay",
-}
-set_terrain { "Gg^Fms",
-	f.terrain("Gg^Fp"),
-	fraction = 2,
-}
-set_terrain { "Gg^Ftr",
-	f.all(
-		f.adjacent(f.terrain("*^F*,Ss^*"), nil, "2-6"),
-		f.terrain("Gg^Fp")
-	),
-}
-set_terrain { "Gs^Fmw",
-	f.terrain("Gs^Fp"),
-	fraction = 3,
-}
-set_terrain { "Hh^Fmw",
-	f.terrain("Hh^Fp"),
-	fraction = 2,
-}
-set_terrain { "Hh^Fms",
-	f.terrain("Hhd^Fp"),
-	fraction = 5,
-}
-set_terrain { "Gg^Fds",
-	f.all(
-		f.adjacent(f.terrain("*^Fmw")),
-		f.terrain("Gg^Ftr")
-	),
-}
-
+	set_terrain { "*^Fet",
+		f.all(
+			f.terrain("*^F*"),
+			f.radius(2, f.terrain("Cv^*,Kv"))
+		),
+		layer = "overlay",
+	}
+	set_terrain { "Gg^Fms",
+		f.terrain("Gg^Fp"),
+		fraction = 2,
+	}
+	set_terrain { "Gg^Ftr",
+		f.all(
+			f.adjacent(f.terrain("*^F*,Ss^*"), nil, "2-6"),
+			f.terrain("Gg^Fp")
+		),
+	}
+	set_terrain { "Gs^Fmw",
+		f.terrain("Gs^Fp"),
+		fraction = 3,
+	}
+	set_terrain { "Hh^Fmw",
+		f.terrain("Hh^Fp"),
+		fraction = 2,
+	}
+	set_terrain { "Hh^Fms",
+		f.terrain("Hhd^Fp"),
+		fraction = 5,
+	}
+	set_terrain { "Gg^Fds",
+		f.all(
+			f.adjacent(f.terrain("*^Fmw")),
+			f.terrain("Gg^Ftr")
+		),
+	}
+	
 	-- remove temperature mark on hills
-set_terrain { "Hh",
-	f.terrain("Hhd^*"),
-	layer = "base",
-}
-
+	set_terrain { "Hh",
+		f.terrain("Hhd^*"),
+		layer = "base",
+	}
+	
 	-- fix rivers
-set_terrain { "Wwf,Wwf,Wwf,Wwf,Wwf,Wwf,Wwf,Wwf,Ww,Ww,Ss",
-	f.all(
-		f.terrain("Ww"),
-		f.adjacent(f.terrain("*^B*"), nil, 0),
-		f.none(
-			f.radius(4, f.terrain("Wwg^*,Wog"), f.terrain("W*^*,C*^*,K*^*"))
-		)
-	),
-	fraction = 2,
-}
-
+	set_terrain { "Wwf,Wwf,Wwf,Wwf,Wwf,Wwf,Wwf,Wwf,Ww,Ww,Ss",
+		f.all(
+			f.terrain("Ww"),
+			f.adjacent(f.terrain("*^B*"), nil, 0),
+			f.none(
+				f.radius(4, f.terrain("Wwg^*,Wog"), f.terrain("W*^*,C*^*,K*^*"))
+			)
+		),
+		fraction = 2,
+	}
+	
 	-- reefs
-set_terrain { "Wwrg",
-	f.all(
-		f.terrain("Wwg,Wog"),
-		f.radius(4, f.terrain("G*^*,H*^*,M*^*"))
-	),
-	fraction_rand = "24..240",
-}
-
-if wesnoth.random(20) == 1 then
-			wct_map_decorative_docks()
-end
+	set_terrain { "Wwrg",
+		f.all(
+			f.terrain("Wwg,Wog"),
+			f.radius(4, f.terrain("G*^*,H*^*,M*^*"))
+		),
+		fraction_rand = "24..240",
+	}
+	
+	if wesnoth.random(20) == 1 then
+		wct_map_decorative_docks()
+	end
 	-- beachs sand and stones
-set_terrain { "Ds^Esd",
-	f.all(
-		f.terrain("Ds"),
-		f.adjacent(f.terrain("Wwg,Wog"))
-	),
-	fraction_rand = "7..12",
-}
-
+	set_terrain { "Ds^Esd",
+		f.all(
+			f.terrain("Ds"),
+			f.adjacent(f.terrain("Wwg,Wog"))
+		),
+		fraction_rand = "7..12",
+	}
+	
 end
 
-function wct_roads_to_feudal_castle_events()
-	[event]
-		name=wct_store_roads_feudal_castle
-		first_time_only=no
-		[store_locations]
-			terrain=!,W*,*^V*,Ds,C*,K*,R*
-			[filter_adjacent_location]
-				terrain=Chs,Rr
-				[not]
-					terrain=Re,Khs
-					radius=$radius
-					[filter_radius]
-						terrain=!,W*,*^V*,Ds,Ch,Kh^*
-					[/filter_radius]
-				[/not]
-				[not]
-					terrain=K*
-					radius=999
-					[filter_radius]
-						terrain=R*,*^B*,K*,C*
-					[/filter_radius]
-				[/not]
-				[filter_adjacent_location]
-					terrain=Rr,Chs
-					[and]
-						terrain=Re,Khs
-						radius=$radius
-						[filter_radius]
-							terrain=!,W*,*^V*,Ds,Ch,Kh^*
-						[/filter_radius]
-					[/and]
-					count=0
-				[/filter_adjacent_location]
-			[/filter_adjacent_location]
-
-			[and]
-				terrain=Re,Khs
-				radius=$radius
-				[filter_radius]
-					terrain=!,W*,*^V*,Ds,Ch,Kh^*
-				[/filter_radius]
-			[/and]
-			variable=terrain_to_change
-		[/store_locations]
-	[/event]
-	{WCT_CREATE_EVENT_ROADS_TO feudal_castle Rr}
+function wct_roads_to_feudal_castle(radius)
+	return get_locations(f.all(
+		f.terrain("!,W*,*^V*,Ds,C*,K*,R*"),
+		f.adjacent(f.all(
+			f.terrain("Chs,Rr"),
+			f.adjacent(f.all(
+				f.terrain("Rr,Chs"),
+				f.radius(radius, f.terrain("Re,Khs"), f.terrain("!,W*,*^V*,Ds,Ch,Kh^*"))
+			), nil, 0),
+			f.none(
+				f.radius(radius, f.terrain("Re,Khs"), f.terrain("!,W*,*^V*,Ds,Ch,Kh^*"))
+			),
+			f.none(
+				f.radius(999, f.terrain("K*"), f.terrain("R*,*^B*,K*,C*"))
+			)
+		)),
+		f.radius(radius, f.terrain("Re,Khs"), f.terrain("!,W*,*^V*,Ds,Ch,Kh^*"))
+	))
 end
