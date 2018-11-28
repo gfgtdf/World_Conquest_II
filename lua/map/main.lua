@@ -6,20 +6,29 @@ local generators {
 	[6] = {"6a", "6b", "6c", "6d"},
 }
 
-connected_components(locs)
+--for the 'wild' mapgen.
+function connected_components(locs)
 	local l_set = Set(locs)
 	local color_i = 1
+	local w = 1000
+	
+	local function loc_to_index(loc)
+		return loc[1] + 1 + loc[2] * w
+	end
+
 	for loc, v in pairs(l_set) do
+		local loc_i = loc_to_index(loc)
 		if v == true then
 			local todo = { loc }
-			l_set[loc] = color_i
+			l_set[loc_i] = color_i
 			while #todo ~= 0 do
 				for i, loc_ad in ipairs(wesnoth.adjacent_locs(loc)) do
-					if l_set[loc_ad] == true then
-						l_set[loc_ad] = color_i
+					local loc_ad_i = loc_to_index(loc_ad)
+					if l_set[loc_ad_i] == true then
+						l_set[loc_ad_i] = color_i
 						todo[#todo + 1] = loc_ad
 					else
-						assert(l_set[loc_ad] = color_i)
+						assert(l_set[loc_ad_i] = color_i)
 					end
 					
 				end
@@ -33,6 +42,8 @@ connected_components(locs)
 		res[i] = {}
 	end
 	for i, loc in ipairs(loc) do
-		
+		local t = res[l_set[loc_to_index(loc)]]
+		t[#t + 1] = loc
 	end
+	return res
 end
