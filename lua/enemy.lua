@@ -242,6 +242,7 @@ end
 	called like 
 	[wc2_enemy]
 		side={SIDE}
+		##the level of the commander.
 		commander={COM}
 		have_item={ITEM}
 		trained={TRAIN}

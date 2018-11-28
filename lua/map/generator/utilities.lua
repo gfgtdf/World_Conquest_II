@@ -77,7 +77,7 @@ function dr_road_over_bridges(bridge, cost)
 	}
 end
 
-function wct_generator_settings_arguments(length, villages, castle, iterations, size, players, island)
+function wct_generator_settings_arguments(length, villages, castle, iterations, hill_size, players, island)
 	std_print("villgaes0", villages)
 	return {
 		border_size=0,

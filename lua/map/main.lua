@@ -6,44 +6,51 @@ local generators {
 	[6] = {"6a", "6b", "6c", "6d"},
 }
 
---for the 'wild' mapgen.
-function connected_components(locs)
-	local l_set = Set(locs)
-	local color_i = 1
-	local w = 1000
-	
-	local function loc_to_index(loc)
-		return loc[1] + 1 + loc[2] * w
-	end
+local map_parameters = {
+	enemy = {
+		bonus_gold = 135,
+		sides = {
+			{
+				commander=0
+				have_item=0
+				trained=0
+				supply=0
+				recall_level2 = 3,
+				recall_level3 = 0,
+			},
+			{
+				commander=0
+				have_item=1
+				trained=0
+				supply=0
+				recall_level2 = 3,
+				recall_level3 = 0,
+			}
+		}
+	}
+}
+--difficulty_enemy_power is in [6,9]
+function adjust_enemy_bonus_gold(bonus_gold, nplayers, difficulty_enemy_power)
+--	{VARIABLE enemy_army.bonus_gold "$($players*$difficulty.enemy_power*{GOLD}/6+$difficulty.enemy_power*{GOLD}/6-{GOLD}*2)"}
+	local factor = (nlayers + 1) * (difficulty_enemy_power/6) - 2
+	return factor * bonus_gold 
+end
 
-	for loc, v in pairs(l_set) do
-		local loc_i = loc_to_index(loc)
-		if v == true then
-			local todo = { loc }
-			l_set[loc_i] = color_i
-			while #todo ~= 0 do
-				for i, loc_ad in ipairs(wesnoth.adjacent_locs(loc)) do
-					local loc_ad_i = loc_to_index(loc_ad)
-					if l_set[loc_ad_i] == true then
-						l_set[loc_ad_i] = color_i
-						todo[#todo + 1] = loc_ad
-					else
-						assert(l_set[loc_ad_i] = color_i)
-					end
-					
-				end
-				table.remove(todo, 1)
-			end
-			color_i = color_i + 1
-		end
-	end
+function pick_enemy_types(enemy_param, )
+	local available_factions = {}
+	local avaiable_allies = {}
 	local res = {}
-	for i = 1, color_i - 1 do end
-		res[i] = {}
+	for side_num, side_data in ipairs(enemy_param) do
+		res[#res + 1] = {}
+		res.faction = utils.random_extract(available_factions)
+		if 
 	end
-	for i, loc in ipairs(loc) do
-		local t = res[l_set[loc_to_index(loc)]]
-		t[#t + 1] = loc
+end
+
+function default_gnerator(name)
+	return function()
+		local generate1 = wesnoth.dofile("./generator/" .. name .. ".lua")
+		generate1(length, villages, castle, iterations, hill_size, players, island)
+		
 	end
-	return res
 end
