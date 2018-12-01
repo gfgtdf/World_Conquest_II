@@ -1,0 +1,32 @@
+\{WCT_MAP_GENERATOR_(\S+)\h+(\S+)\h+(\S+)\h+(\S+)\h+(\S+)\h+(\S+)\h+(\S+)\h+(\S+)\}
+\Lwct_map_generator\("\1", \2, \3, \4, \5, \6, \7, \8\),
+
+\A\r\n(.*)
+\r\nlocal generators = \{\r\n\1\}\r\n
+
+\r\n\s+
+\r\n
+
+.*next_scenario=.*\r\n
+
+.*WORLD_CONQUEST_TEK_SCENARIO.*\r\n
+
+
+\[/?\S+\]\r\n
+
+\A\r\n
+local generators =
+
+
+\{WORLD_CONQUEST_TEK_SCENARIO_RES (\S+) (\S+)\}\r\n(\{WORLD_CONQUEST_TEK_SCENARIO \S+ \S+ \S+ \S+ )(\S+)(\})
+local generators = {
+world_conquest_tek_scenario_res\(\1, \2, \4\)\r\n\3\4\5
+
+
+
+\{WORLD_CONQUEST_TEK_SCENARIO \S+ (\S+) (\S+) \S+ \S+\}\r\n\{WCT_MAP_GENERATOR_(\S+)\h+(\S+)\h+(\S+)\h+(\S+)\h+(\S+)\h+(\S+)\h+(\S+)\h+(\S+)\}
+\Lwct_map_generator\("\3", "\1\2", \4, \5, \6, \7, \8, \9, \10\),
+
+\{WORLD_CONQUEST_TEK_SCENARIO_CAMPAIGN \S+ \S+\}\r\n\{WCT_MAP_GENERATOR_(\S+)\h+(\S+)\h+(\S+)\h+(\S+)\h+(\S+)\h+(\S+)\h+(\S+)\h+(\S+)\}
+\Lwct_map_generator\("\1", "1a", \2, \3, \4, \5, \6, \7, \8\),
+}
