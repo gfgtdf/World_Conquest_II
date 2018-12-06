@@ -69,7 +69,7 @@ function wesnoth.wml_actions.wc2_fix_colors(cfg)
 		-- todo: maybe use a side variable instead ?
 		local vname = "player[" .. side_num .. "].team_color"
 		if wml.variables[vname] then
-			wesnoth.set_side_id(side, nil, wml.variables[vname])
+			wesnoth.set_side_id(side_num, nil, wml.variables[vname])
 		else
 			wml.variables[vname] = side.color
 		end
@@ -80,7 +80,7 @@ function wesnoth.wml_actions.wc2_fix_colors(cfg)
 		while taken_colors[available_colors[color_num]] == true do
 			color_num = color_num + 1
 		end
-		wesnoth.set_side_id(side, nil, available_colors[color_num])
+		wesnoth.set_side_id(side_num, nil, available_colors[color_num])
 		taken_colors[side.color] = true
 	end
 end

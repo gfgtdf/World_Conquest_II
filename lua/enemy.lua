@@ -263,7 +263,7 @@ function wesnoth.wml_actions.wc2_enemy(cfg)
 	if enemy_type_id == nil then
 		--shoulodn't happen, added for robustness.
 		local n_groups = wml.variables["enemy_army.group.length"]
-		if n_groups > 0 
+		if n_groups > 0 then
 			enemy_type_id = wesnoth.random(n_groups) - 1
 		else
 			error("no enemy groups defined")
