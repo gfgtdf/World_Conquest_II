@@ -55,8 +55,10 @@ function wc2_invest.do_gold()
 	local side = wesnoth.sides[side_num]
 	local leaders = wesnoth.get_units { side = side_num, canrecruit = true }
 	side.gold = side.gold + 70
-	wesnoth.fire_event("wct_map_supply_village", leaders[1] )
-	
+	wesnoth.wml_actions.wc2_map_supply_village { 
+		x = leaders[1].x,
+		y = leaders[1].y
+	}
 end
 
 function wc2_invest.do_hero(t, is_local)

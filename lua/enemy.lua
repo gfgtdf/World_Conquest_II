@@ -103,11 +103,9 @@ function enemy.do_supply(cfg, group_id, loc)
 
 	wesnoth.wml_actions.event {
 		name = "side " .. cfg.side .. " turn 2",
-		T.fire_event {
-			name = "wct_map_supply_village",
-			T.primary_unit {
-				id = u.id
-			}
+		T.wc2_map_supply_village {
+			x = u.x,
+			y = u.y,
 		}
 	}
 end

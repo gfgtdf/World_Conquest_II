@@ -1,3 +1,5 @@
+T = wml.tag
+on_event = wesnoth.require("on_event")
 
 wc2_ability_events = wesnoth.dofile("./ability_events.lua")
 wc2_artifacts = wesnoth.dofile("./artifacts.lua")
@@ -28,7 +30,8 @@ wc2_invest_dialog = wesnoth.dofile("./invest/invest_dialog.lua")
 wc2_invest_show_dialog = wesnoth.dofile("./invest/invest_show_dialog.lua")
 wc2_invest_tellunit = wesnoth.dofile("./invest/invest_tellunit.lua")
 
-local on_event = wesnoth.require("on_event")
+wesnoth.dofile("./autorecall.lua")
+wesnoth.dofile("./promote_commander.lua")
 
 --	{WC_II_COLOR_HACK}
 on_event("prestart", function(cx)
@@ -37,7 +40,7 @@ on_event("prestart", function(cx)
 			side="1,2,3",
 			wml.tag.has_unit {
 				canrecruit = true,
-			}
+				}
 		}
 	}
 end)

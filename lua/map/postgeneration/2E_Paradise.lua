@@ -208,7 +208,8 @@ function wct_map_decoration_3e_leantos()
 			table.insert(prestart_event, wml.tag.item {
 				x = v[1],
 				y = v[2],
-				image = imgages.citadel_leanto,
+				image = images.citadel_leanto,
+				name = "wc2_citadel_leanto",
 			})
 		end
 	end
