@@ -117,7 +117,8 @@ function world_conquest_tek_map_decoration_6b()
 		fraction = 3,
 		layer = "base",
 	}
-	set_terrain { "Gs*^*",
+	set_terrain { "Gs^*",
+	--set_terrain { "Gs*^*",
 		f.all(
 			f.terrain("Gd*^*"),
 			f.radius(3, f.terrain("Ww"))

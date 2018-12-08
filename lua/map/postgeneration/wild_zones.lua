@@ -171,7 +171,8 @@ local wild_replacement_chances_zone_2_1 = {
 			value=8,
 			command = {
 				wct_terrain_replace { terrain = "Aa,Aa,Aa,Aa,Aa,Aa,Aa,Aa,Ai,Gg,Wwf,Rb"},
-				wct_terrain_replace { terrain = "Aa^Fpa,Aa^Fpa,Ha,Ha,Ha^Fpa,Gg^Fp,Aa^Fpa,Ha,Ha,Ha^Fpa,Ms,Ms,Aa^Fmwa,Ha,Aa^Fmf", percentage = 23, strict = false}
+				wct_terrain_replace { terrain = "Aa^Fpa,Aa^Fpa,Ha,Ha,Ha^Fpa,Gg^Fp,Aa^Fpa,Ha,Ha,Ha^Fpa,Ms,Ms,Ha,Aa^Fmf", percentage = 23, strict = false}
+				--				wct_terrain_replace { terrain = "Aa^Fpa,Aa^Fpa,Ha,Ha,Ha^Fpa,Gg^Fp,Aa^Fpa,Ha,Ha,Ha^Fpa,Ms,Ms,Aa^Fmwa,Ha,Aa^Fmf", percentage = 23, strict = false}
 			}
 		},
 		{
@@ -251,7 +252,8 @@ local wild_replacement_chances_zone_3_1 = {
 			value=11,
 			command = {
 				wct_terrain_replace { terrain = "Aa,Aa,Aa,Aa,Aa,Aa,Aa,Aa,Ai,Gg,Wwf,Rb"},
-				wct_terrain_replace { terrain = "Aa^Fpa,Aa^Fpa,Ha,Ha,Ha^Fpa,Gg^Fp,Aa^Fpa,Ha,Ha,Ha^Fpa,Ms,Ms,Aa^Fmwa,Ha,Aa^Fmf", percentage = 30, strict = false}
+				wct_terrain_replace { terrain = "Aa^Fpa,Aa^Fpa,Ha,Ha,Ha^Fpa,Gg^Fp,Aa^Fpa,Ha,Ha,Ha^Fpa,Ms,Ms,Ha,Aa^Fmf", percentage = 30, strict = false}
+				--wct_terrain_replace { terrain = "Aa^Fpa,Aa^Fpa,Ha,Ha,Ha^Fpa,Gg^Fp,Aa^Fpa,Ha,Ha,Ha^Fpa,Ms,Ms,Aa^Fmwa,Ha,Aa^Fmf", percentage = 30, strict = false}
 			}
 		},
 		{
@@ -414,7 +416,9 @@ local wild_replacement_chances_zone_5_1 = {
 		{
 			value=17,
 			command = {
-				wct_terrain_replace { terrain = "Ms,Ha,Ms,Ms,Ha^Fdwa,Ha^Fmwa,,Ha^Fpa,Aa^Fmwa,Aa^Fdwa,Aa"}
+				wct_terrain_replace { terrain = "Ms,Ha,Ms,Ms,Ha^Fpa,Aa"}
+				--				--todo: the odl code contained invaldi terraisncodes
+				--				wct_terrain_replace { terrain = "Ms,Ha,Ms,Ms,Ha^Fdwa,Ha^Fmwa,,Ha^Fpa,Aa^Fmwa,Aa^Fdwa,Aa"}
 			}
 		},
 		{

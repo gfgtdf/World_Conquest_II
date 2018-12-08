@@ -245,7 +245,8 @@ function world_conquest_tek_map_repaint_4c()
 		),
 	}
 	
-	wct_reduce_wall_clusters("Uu^Br/,Uu^Br\,Uu^Br|,Uu^`Dr,Qxu")
+--	wct_reduce_wall_clusters("Uu^Br/,Uu^Br\\,Uu^Br|,Uu^`Dr,Qxu")
+	wct_reduce_wall_clusters("Uu^Br/,Uu^Br\\,Uu^Br|,Uu^Dr,Qxu")
 	world_conquest_tek_map_decoration_4c()
 	wct_fill_lava_chasms()
 	world_conquest_tek_map_dirt("Gg^Uf,Gg^Uf,Gs^Uf")

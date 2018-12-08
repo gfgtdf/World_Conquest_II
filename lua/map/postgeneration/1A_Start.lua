@@ -29,18 +29,21 @@ function world_conquest_tek_map_decoration_1()
 	set_terrain { "Hh^Fmw",
 		f.terrain("Hh^Fp"),
 	}
-	set_terrain { "Hh^Fmd",
-		f.all(
-			f.terrain("Hh^F*,!,Hh^Fmf"),
-			f.radius(2, f.terrain("Ql,Mv"))
-		),
-	}
-	set_terrain { "Gg^Fmd",
-		f.all(
-			f.terrain("G*^F*,!,Gs^Fmf"),
-			f.radius(2, f.terrain("Ql,Mv"))
-		),
-	}
+	if false then
+		--'Hh^Fmd', 'Gg^Fmd' doesn't seem to be valid terrain.
+		set_terrain { "Hh^Fmd",
+			f.all(
+				f.terrain("Hh^F*,!,Hh^Fmf"),
+				f.radius(2, f.terrain("Ql,Mv"))
+			),
+		}
+		set_terrain { "Gg^Fmd",
+			f.all(
+				f.terrain("G*^F*,!,Gs^Fmf"),
+				f.radius(2, f.terrain("Ql,Mv"))
+			),
+		}
+	end
 	set_terrain { "Gs^Vo",
 		f.terrain("Gs^Vht"),
 	}
