@@ -1,5 +1,13 @@
 schema = {}
 
+local function split_to_array(s, res)
+	res = res or {}
+	for part in tostring(s or ""):gmatch("[^%s,][^,]*") do
+		table.insert(res, part)
+	end
+	return res
+end
+
 schema.lua =  {
 	tags = {
 		args = {
@@ -63,6 +71,9 @@ schema.side =  {
 			type = "list", 
 			id = "unit",
 		},
+		variables = {
+			type = "single",
+		},
 	}
 }
 
@@ -91,14 +102,78 @@ schema.mg_main =  {
 	}
 }
 
+schema.wct_enemy_group_recall =  {
+	attributes = {
+		level2 = "comma_list",
+		level3 = "comma_list",
+	}
+}
+schema.wct_enemy_group_commander =  {
+	attributes = {
+		level1 = "comma_list",
+		level2 = "comma_list",
+		level3 = "comma_list",
+	}
+}
+schema.wct_enemy_group_leader =  {
+	attributes = {
+		recruit = "comma_list",
+	}
+}
+
+schema.wct_enemy_group =  {
+	tags = {
+		recall = {
+			type = "single",
+			id = "wct_enemy_group_recall",
+		},
+		commander = {
+			type = "single",
+			id = "wct_enemy_group_commander",
+		},
+		leader = {
+			type = "list", 
+			id = "wct_enemy_group_leader",
+		},
+	},
+	attributes = {
+		recruit = "comma_list",
+		allies_available = "comma_list",
+	}
+}
+
+schema.wct_enemy =  {
+	tags = {
+		group = {
+			type = "list", 
+			id = "wct_enemy_group",
+		},
+	},
+	attributes = {
+		factions_available = "comma_list",
+	}
+}
+
+schema.__attributes = {}
+schema.__attributes.comma_list = 
+{
+	to_lon = function(attr)
+		return split_to_array(attr)
+	end,
+	to_wml = function(val)
+		return table.concat(val, ",")
+	end,
+}
 function wml_to_lon(cfg, name)
 	local tag_info = schema[name or "aasdfasdf"]
 	if tag_info == nil or tag_info.type == "preserve_order" then
 		return cfg
 	end
+	local attrs = tag_info.attributes or {}
+	local tags = tag_info.tags or {}
 	
 	local res = {}
-	for name2, info2 in pairs(tag_info.tags) do
+	for name2, info2 in pairs(tags) do
 		if info2.type == "single" then
 			res[name2] = wml_to_lon(wml.get_child(cfg, name2), info2.id)
 		elseif info2.type == "list" then
@@ -113,7 +188,12 @@ function wml_to_lon(cfg, name)
 	for k,v in pairs(cfg) do
 		if type(k) == "number" then
 		else --string
-			res[k] = v
+			local conv = attrs[k] and schema.__attributes[attrs[k]]
+			if conv then 
+				res[k] = conv.to_lon(v)
+			else
+				res[k] = v
+			end
 		end
 	end
 	return res
@@ -124,9 +204,11 @@ function lon_to_wml(t, name)
 	if tag_info == nil then
 		return t
 	end
+	local attrs = tag_info.attributes or {}
+	local tags = tag_info.tags or {}
 	
 	local res = {}
-	for name2, info2 in pairs(tag_info.tags) do
+	for name2, info2 in pairs(tags) do
 		if info2.type == "single" then
 			local st = t[name2]
 			if st ~= nil then
@@ -140,8 +222,13 @@ function lon_to_wml(t, name)
 	end
 	
 	for k,v in pairs(t) do
-		if not tag_info.tags[k] then
-			res[k] = v
+		if not tags[k] then
+			local conv = attrs[k] and schema.__attributes[attrs[k]]
+			if conv then 
+				res[k] = conv.to_wml(v)
+			else
+				res[k] = v
+			end
 		end
 	end
 	return res
