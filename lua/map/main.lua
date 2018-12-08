@@ -7,6 +7,7 @@ wesnoth.dofile("./pretty_print.lua")
 wesnoth.dofile("./bonus_points.lua")
 wesnoth.dofile("./wct_map_generator.lua")
 wesnoth.dofile("./wml_lua_schema.lua")
+wesnoth.dofile("./plot.lua")
 
 --difficulty_enemy_power is in [6,9]
 function adjust_enemy_bonus_gold(bonus_gold, nplayers, difficulty_enemy_power)
@@ -153,6 +154,7 @@ function wc_ii_generate_scenario(nplayers)
 		})
 		add_enemy_side(scenario, enemy_data.gold + enemy_bonus_gold, i + nplayers)
 	end	
+	add_plot(scenario, scenario_num, nplayers)
 	local generator = scenario_data.generators[wesnoth.random(#scenario_data.generators)]	
 	generator(scenario)
 	--std_print(debug_wml(scenario))
