@@ -2,7 +2,7 @@ world_conquest_tek_scenario_res(1, 3, 38)
 local generators = {
 	wct_map_generator("savannah", "3a", 45, 15, 7, 9680, 5, 4, 7),
 	wct_map_generator("wreck", "3b", 45, 15, 7, 9680, 5, 4, 7),
-	wct_map_generator("delta", "3c", 45, 14, 7, 9196, 3, 4, 7),
+	--wct_map_generator("delta", "3c", 45, 14, 7, 9196, 3, 4, 7),
 	wct_map_generator("sulfurous", "3d", 45, 15, 7, 9680, 5, 4, 7),
 	wct_map_generator("coral", "3e", 45, 15, 7, 9680, 5, 4, 7),
 	wct_map_generator("wetland", "3f", 45, 15, 7, 14520, 4, 4, 7),
