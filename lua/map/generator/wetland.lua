@@ -1,9 +1,13 @@
 ----------------------------------------
 local function generate(length, villages, castle, iterations, size, players, island)
+	local width = length
+	if width % 2 == 1 then
+		width = width + 1
+	end
 	----------------------------------------
 	local res = {}
 	res.border_size=0
-	res.map_width=length
+	res.map_width=width
 	res.map_height=length
 	res.iterations=iterations
 	res.hill_size=size
