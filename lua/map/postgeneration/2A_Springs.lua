@@ -24,10 +24,12 @@ function world_conquest_tek_map_decoration_2a()
 			f.terrain("Hh*^F*"),
 			f.adjacent(f.terrain("Xu,U*^*,Mv,Ql,Qxu"))
 		))
-		local r = wesnoth.random(0, #terrain_to_change - 3)
-		for i = 1, r do
-			local loc = terrain_to_change[wesnoth.random(#terrain_to_change)]
-			map:set_terrain(loc, "Hh^Ftp")
+		if #terrain_to_change > 3 then
+			local r = wesnoth.random(0, #terrain_to_change - 3)
+			for i = 1, r do
+				local loc = terrain_to_change[wesnoth.random(#terrain_to_change)]
+				map:set_terrain(loc, "Hh^Ftp")
+			end
 		end
 	end
 	if wesnoth.random(2) == 1 then
