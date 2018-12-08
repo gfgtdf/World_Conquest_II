@@ -11,12 +11,24 @@ local function wct_roads_to_feudal_castle(radius)
 			f.none(
 				f.radius(radius, f.terrain("Re,Khs"), f.terrain("!,W*,*^V*,Ds,Ch,Kh^*"))
 			),
+			--not if it is already connected to another Keep?
 			f.none(
 				f.radius(999, f.terrain("K*"), f.terrain("R*,*^B*,K*,C*"))
 			)
 		)),
 		f.radius(radius, f.terrain("Re,Khs"), f.terrain("!,W*,*^V*,Ds,Ch,Kh^*"))
 	))
+end
+local function roads_to_feudal_castle(radius)
+	wct_iterate_roads_to_ex {
+		terrain_road = "Rr",
+		f_validpath = f.terrain("!,W*,*^V*,Ds,C*,K*,R*"),
+		f_src = f.terrain("Chs"),
+		f_dest = f.terrain("Khs"),
+		radius = radius
+	}
+	
+	--wct_iterate_roads_to_2(t.f_validpath, t.f_src, t.f_dest, t.terrain_road, t.radius)
 end
 
 local function world_conquest_tek_map_repaint_6d()
@@ -83,8 +95,8 @@ local function world_conquest_tek_map_repaint_6d()
 		),
 		fraction = 40,
 	}
-	
-	wct_iterate_roads_to(wct_roads_to_feudal_castle, 3, "Rr")
+	roads_to_feudal_castle(3)
+	--wct_iterate_roads_to(wct_roads_to_feudal_castle, 3, "Rr")
 	set_terrain { "Khs",
 		f.terrain("Chs"),
 	}
@@ -99,25 +111,54 @@ local function world_conquest_tek_map_repaint_6d()
 		),
 		fraction = 40,
 	}
-	
-	wct_iterate_roads_to(wct_roads_to_feudal_castle, 4, "Rr")
+	roads_to_feudal_castle(4)
+	--wct_iterate_roads_to(wct_roads_to_feudal_castle, 4, "Rr")
 	set_terrain { "Khs",
 		f.terrain("Chs"),
 	}
-	set_terrain { "Chs",
-		f.all(
-			f.terrain("!,W*,Ds,Ss,C*,K*,*^V*"),
-			f.adjacent(f.terrain("C*,K*"), nil, 0),
-			f.none(
-				f.radius(8, f.terrain("Re"))
+	if false then
+		-- this one was slow.
+		set_terrain { "Chs",
+			f.all(
+				f.terrain("!,W*,Ds,Ss,C*,K*,*^V*"),
+				f.adjacent(f.terrain("C*,K*"), nil, 0),
+				f.none(
+					f.radius(8, f.terrain("Re"))
+				),
+				f.radius(6, f.terrain("Khs"))
 			),
-			f.radius(6, f.terrain("Khs"))
-		),
-		fraction = 40,
-	}
-	
-	
-	wct_iterate_roads_to(wct_roads_to_feudal_castle, 5, "Rr")
+			fraction = 40,
+		}
+	else
+		-- this is faster.
+		local r8_Re = map:get_tiles_radius(
+			map:get_locations(f.terrain("Re")),
+			wesnoth.create_filter(f.all()),
+			8
+		)
+		local r6_Khs = map:get_tiles_radius(
+			map:get_locations(f.terrain("Khs")),
+			wesnoth.create_filter(f.all()),
+			6
+		)
+		set_terrain { "Chs",
+			f.all(
+				f.terrain("!,W*,Ds,Ss,C*,K*,*^V*"),
+				f.adjacent(f.terrain("C*,K*"), nil, 0),
+				f.none(
+					f.find_in("r8_Re")
+				),
+				f.find_in("r6_Khs")
+			),
+			filter_extra = {
+				r6_Khs = r6_Khs,
+				r8_Re = r8_Re,
+			},
+			fraction = 40,
+		}
+	end
+	roads_to_feudal_castle(5)
+	--wct_iterate_roads_to(wct_roads_to_feudal_castle, 5, "Rr")
 	-- rebuild cave
 	wct_reduce_wall_clusters("Uu")
 	set_terrain { "Uh,Uh,Uu^Uf,Uh,Uh,Uu^Uf,Uh,Uh,Uu^Uf,Uh,Uh,Uu^Uf,Uh,Uh,Uu^Uf,Uh,Uu^Uf,Uu,Qxu,Qxu,Ql",
@@ -136,8 +177,8 @@ local function world_conquest_tek_map_repaint_6d()
 	wct_break_walls("X*", "Uh,Uh,Uh,Uh,Uh^Uf,Uu^Uf,Uu,Rd,Rd,Rd")
 	set_terrain { "Mm^Xm",
 		f.all(
-			f.adjacent(f.terrain("U*^*,Q*"), nil, 0),
-			f.terrain("X*")
+			f.terrain("X*"),
+			f.adjacent(f.terrain("U*^*,Q*"), nil, 0)
 		),
 	}
 	set_terrain { "Xu,Xu,Xu,Xu,Xuc",
@@ -342,8 +383,8 @@ local function world_conquest_tek_map_repaint_6d()
 	}
 	set_terrain { "Urb",
 		f.all(
-			f.adjacent(f.terrain("U*^*,Cud^*,Kud,X*,R*,Q*,Mv,*^Xm"), nil, 6),
-			f.terrain("Re")
+			f.terrain("Re"),
+			f.adjacent(f.terrain("U*^*,Cud^*,Kud,X*,R*,Q*,Mv,*^Xm"), nil, 6)
 		),
 	}
 	
@@ -361,8 +402,8 @@ local function world_conquest_tek_map_repaint_6d()
 	}
 	set_terrain { "Gg^Ftr",
 		f.all(
-			f.adjacent(f.terrain("*^F*,Ss^*"), nil, "2-6"),
-			f.terrain("Gg^Fp")
+			f.terrain("Gg^Fp"),
+			f.adjacent(f.terrain("*^F*,Ss^*"), nil, "2-6")
 		),
 	}
 	set_terrain { "Gs^Fmw",
@@ -379,8 +420,8 @@ local function world_conquest_tek_map_repaint_6d()
 	}
 	set_terrain { "Gg^Fds",
 		f.all(
-			f.adjacent(f.terrain("*^Fmw")),
-			f.terrain("Gg^Ftr")
+			f.terrain("Gg^Ftr"),
+			f.adjacent(f.terrain("*^Fmw"))
 		),
 	}
 	

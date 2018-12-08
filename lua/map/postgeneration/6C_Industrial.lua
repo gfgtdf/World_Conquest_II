@@ -131,6 +131,7 @@ end
 
 
 local function wct_rails_to_industrial_keep(radius)
+	-- "Cud^Br|"
 	return get_locations(f.all(
 		f.terrain("C*"),
 		f.adjacent(f.all(
@@ -148,6 +149,7 @@ local function wct_rails_to_industrial_keep(radius)
 end
 
 local function wct_roads_to_industrial_village(radius)
+	-- "Rb"
 	return get_locations(f.all(
 		f.terrain("!,W*^*,*^V*,*^Bcx*,Urb,C*,K*^*,R*"),
 		f.adjacent(f.all(
@@ -165,6 +167,7 @@ local function wct_roads_to_industrial_village(radius)
 end
 
 local function wct_roads_to_industrial_city(radius)
+	-- "Rrc"
 	return get_locations(f.all(
 		f.terrain("!,W*^*,*^V*,*^Bcx*,Urb,C*,K*^*,R*"),
 		f.adjacent(f.all(
@@ -182,6 +185,7 @@ local function wct_roads_to_industrial_city(radius)
 end
 
 local function wct_roads_to_factory(radius)
+	--"Rr"
 	return get_locations(f.all(
 		f.terrain("!,W*^*,*^V*,*^Bcx*,Urb,C*,K*^*,R*"),
 		f.adjacent(f.all(
@@ -199,6 +203,7 @@ local function wct_roads_to_factory(radius)
 end
 
 local function wct_roads_to_river_industry(radius)
+	-- "Re"
 	return get_locations(f.all(
 		f.terrain("!,W*^*,*^V*,*^Bcx*,Urb,C*,K*^*,R*"),
 		f.adjacent(f.all(

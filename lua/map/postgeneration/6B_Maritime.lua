@@ -45,6 +45,16 @@ function wct_maritime_bridges()
 	end
 end
 
+function roads_to_dock(radius)
+	wct_iterate_roads_to_ex {
+		terrain_road = "Rp",
+		f_validpath = f.terrain("!,W*^*"),
+		f_src = f.terrain("Iwr^Vl"),
+		f_dest = f.terrain("Ch*,Kh*^*,Re"),
+		radius = radius
+	}
+end
+
 function wct_roads_to_dock(radius)
 	return get_locations(f.all(
 		f.terrain("!,W*^*"),
@@ -62,20 +72,36 @@ function wct_roads_to_dock(radius)
 	))
 end
 
-function wct_roads_to_river()
+function roads_to_river(radius)
+	wct_iterate_roads_to_ex {
+		terrain_road = "Rp",
+		f_validpath = f.terrain("!,W*^*"),
+		f_src = f.terrain("*^Vhc"),
+		f_dest = f.terrain("Ch*,Kh*^*,Re"),
+		radius = radius
+	}
+end
+
+function wct_roads_to_river(radius)
+	
+	local f_valid_path_tiles = f.terrain("!,W*^*")
+	local f_dest = f.terrain("Ch*,Kh*^*,Re")
+	local f_src = f.terrain("*^Vhc")
+	local f_path_taken = f.terrain("Rp")
+	
 	return get_locations(f.all(
-		f.terrain("!,W*^*"),
+		f_valid_path_tiles,
 		f.adjacent(f.all(
-			f.terrain("*^Vhc,Rp"),
+			f.any(f_src, f_path_taken),
 			f.adjacent(f.all(
-				f.terrain("Rp"),
-				f.radius("$radius", f.terrain("Ch*,Kh*^*,Re"), f.terrain("!,W*^*"))
+				f_path_taken,
+				f.radius(radius, f_dest, f_valid_path_tiles)
 			), nil, 0),
 			f.none(
-				f.radius("$radius", f.terrain("Ch*,Kh*^*,Re"), f.terrain("!,W*^*"))
+				f.radius(radius, f_dest, f_valid_path_tiles)
 			)
 		)),
-		f.radius("$radius", f.terrain("Ch*,Kh*^*,Re"), f.terrain("!,W*^*"))
+		f.radius(radius, f_dest, f_valid_path_tiles)
 	))
 end
 
@@ -136,8 +162,10 @@ function world_conquest_tek_map_decoration_6b()
 		),
 	}
 	
-	wct_iterate_roads_to(wct_roads_to_dock, 3, "Rp")
-	wct_iterate_roads_to(wct_roads_to_river, 3, "Rp")
+	--wct_iterate_roads_to(wct_roads_to_dock, 3, "Rp")
+	--wct_iterate_roads_to(wct_roads_to_river, 3, "Rp")
+	roads_to_dock(4)
+	roads_to_river(4)
 	
 	if #get_locations(f.terrain("Iwr^Vl")) == 0 then
 		local locs = get_locations(f.all(

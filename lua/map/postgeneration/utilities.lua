@@ -48,7 +48,7 @@ function world_conquest_tek_map_rebuild(cave, reef)
 	-- replace hills for mushrooms
 	-- base amount in map surface
 	local r = helper.rand(tostring(total_tiles // 500) .. ".." .. tostring(total_tiles // 250))
-	std_print(type(r))
+	--std_print(type(r))
 	set_terrain { "Hh^Uf",
 		f.all(
 			f.terrain("Hh,Hh^F*"),
@@ -226,6 +226,7 @@ function wct_road_to_village(road, village)
 end
 
 function wct_iterate_roads_to(get_next, radius, terrain)
+	print_time("wct_iterate_roads_to start")
 	for r = radius, 1, -1 do
 		local locs = get_next(r)
 		while #locs > 0 do
@@ -234,8 +235,71 @@ function wct_iterate_roads_to(get_next, radius, terrain)
 			locs = get_next(r)
 		end
 	end
+	print_time("wct_iterate_roads_to end")
 end
 
+function wct_iterate_roads_to_2(f_validpath, f_src, f_dest, terrain_road, radius)
+	local src_tiles = get_locations(f_src)
+	local dest_tiles = get_locations(f_dest)
+	local filter_path = wesnoth.create_filter(f_validpath)
+	--std_print("filter:", debug_wml(f_validpath))
+	local map = _G.map
+
+	local function filter_path_function(x, y)
+		local xy_list = { {x,y} }
+		local res = #map:get_locations(filter_path, xy_list) > 0
+		--std_print("location ", x, y, map:get_terrain({x, y}), res and " matches" or " doesn't match")
+		return res
+	end
+	local distmap = Map:create(map.width, map.height)
+	distmap:calculate_distances(dest_tiles, radius, filter_path_function)
+	--distmap:std_print()
+	for i_src, loc_src in ipairs(src_tiles) do
+		local dist = nil
+		for i_ad, loc_ad in ipairs(distmap:adjacent_tiles(loc_src)) do
+			local dist_ad = distmap:get(loc_ad)
+			if (not dist) or (dist_ad and dist_ad < dist) then
+				dist = dist_ad
+			end
+		end
+		dist = (dist or 999) + 1
+		--std_print("dist2:", dist)
+		if dist <= radius then
+			local path = { }
+			local loc = loc_src
+			while dist > 1 do
+				local next_locs = {}
+				for i_ad, loc_ad in ipairs(distmap:adjacent_tiles(loc)) do
+					local dist_ad = distmap:get(loc_ad)
+					--std_print("checking ad loc (", loc_ad[1], loc_ad[2], ") dist:",dist_ad)
+					--(map:get(loc_ad) or 999) < dist imples filter_path_function(loc_ad[1], loc_ad[2])
+					if (dist_ad or 999) < dist then
+						next_locs[#next_locs + 1] = loc_ad
+					end
+					if dist_ad and map:get_terrain(loc_ad) == terrain_road then
+						--we merged with another path. 
+						goto path_found
+					end
+				end
+				path[#path + 1] = next_locs[wesnoth.random(#next_locs)]
+				loc = path[#path]
+				dist = distmap:get(loc)
+				--std_print("new loc (", loc[1], loc[2], ") dist:", dist)
+			end
+			::path_found::
+			--std_print("path:", debug_wml(path))
+			for i, ploc in ipairs(path) do
+				map:set_terrain(ploc, terrain_road)
+			end
+		end
+	end
+end
+
+function wct_iterate_roads_to_ex(t)	
+	print_time("wct_iterate_roads_to_ex start")
+	wct_iterate_roads_to_2(t.f_validpath, t.f_src, t.f_dest, t.terrain_road, t.radius)
+	print_time("wct_iterate_roads_to_ex end")
+end
 function wct_break_walls(wall, terrain)
 	
 	local terrain_to_change = wct_store_broken_wall_candidates(wall)
