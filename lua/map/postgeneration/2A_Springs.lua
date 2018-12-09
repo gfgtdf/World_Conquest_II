@@ -33,15 +33,16 @@ function world_conquest_tek_map_decoration_2a()
 		end
 	end
 	if wesnoth.random(2) == 1 then
-		
 		local terrain_to_change = map:get_locations(f.all(
 			f.terrain("G*^F*"),
 			f.adjacent(f.terrain("Xu,U*^*,Mv,Ql,Qxu"))
 		))
+		if #terrain_to_change > 3 then
 		local r = wesnoth.random(0, #terrain_to_change - 3)
-		for i = 1, r do
-			local loc = terrain_to_change[wesnoth.random(#terrain_to_change)]
-			map:set_terrain(loc, "Gs^Ftp")
+			for i = 1, r do
+				local loc = terrain_to_change[wesnoth.random(#terrain_to_change)]
+				map:set_terrain(loc, "Gs^Ftp")
+			end
 		end
 	end
 	-- tropical forest near sand, swamp or water
