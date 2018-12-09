@@ -131,7 +131,7 @@ end
 
 
 return function()
-	world_conquest_tek_enemy_army_event()
+	wct_enemy_castle_expansion()
 	world_conquest_tek_map_repaint_4d()
 	world_conquest_tek_bonus_points()
 	wct_map_4d_post_bunus_decoration()

@@ -103,6 +103,59 @@ function wct_reduce_wall_clusters(cave_terrain)
 	
 end
 
+function wct_castle_expansion_side(side_num)
+	if true then
+		--map.special_locations is borken
+		return
+	end
+	local n_tiles_wanted = scenario_data.nplayers + 1
+	local keep_loc = map.special_locations[tostring(side_num)]
+	if keep_loc == nil then
+		return
+	end
+	local castle = map:get_tiles_radius({keep_loc}, f.terrain("C*,K*"), 1)
+	local keep_area = map:get_tiles_radius({keep_loc}, f.all(), 2)
+
+	local candidates = get_locations {
+		filter = f.all(
+			f.none("C*,K*"),
+			f.adjacent(f.find_in("castle"))
+		),
+		locs = keep_area,
+		filter_extra = { castle = castle }
+	}
+
+	local function filter_candidates(t)
+		local candidates_fav = get_locations {
+			filter = t.filter,
+			filter_extra = t.filter_extra,
+			locs = candidates,
+		}
+		if #candidates_fav >= n_tiles_wanted then
+			candidates = candidates_fav
+		end
+	end
+	
+	filter_candidates {
+		filter = f.none(f.radius(1, f.terrain("Mv")))
+	}
+
+	filter_candidates {
+		filter = f.none(f.terrain("C*,K*,X*,*^Xm,Ww,Wwt,Wwg,Wo*,Wwr*,*^V*"))
+	}
+	
+	helper.shuffle(candidates)
+	for i = 1, n_tiles_wanted do
+		map:set_terrain(candidates[i], "Ch")
+	end
+end
+
+function wct_enemy_castle_expansion()
+	local n_enemy_sides = 1
+	for side_num = 3, 3 + n_enemy_sides do
+		wct_castle_expansion_side(side_num)
+	end
+end
 
 function get_oceanic()
 	--[[

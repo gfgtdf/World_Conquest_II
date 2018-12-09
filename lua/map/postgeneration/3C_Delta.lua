@@ -389,7 +389,7 @@ end
 
 return function()
 	world_conquest_tek_map_constructor_delta()
-	world_conquest_tek_enemy_army_event()
+	wct_enemy_castle_expansion()
 	world_conquest_tek_map_repaint_3c()
 	world_conquest_tek_bonus_points()
 	wct_map_3c_post_bunus_decoration()

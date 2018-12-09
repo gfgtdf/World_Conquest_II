@@ -153,7 +153,7 @@ return function()
 	-- need be applied after choose difficulty
 	-- TODO: why that? from looking at the code it seems like enemy
 	-- castle size only depends on the number of players not on difficulty.
-	world_conquest_tek_enemy_army_event()
+	wct_enemy_castle_expansion()
 	wct_map_1_post_castle_expansion_fix()
 	--[/event]
 	--[/event]

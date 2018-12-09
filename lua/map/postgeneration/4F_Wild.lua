@@ -265,7 +265,7 @@ end
 
 return function()
 	local map_data = {}
-	world_conquest_tek_enemy_army_event()
+	wct_enemy_castle_expansion()
 	repaint(map_data)
 	wild_store_roads_in_cave_zone(map_data)
 	-- WORLD_CONQUEST_TEK_BONUS_POINTS uses map_data.road_in_cave

@@ -245,7 +245,7 @@ end
 return function()
 	world_conquest_tek_map_constructor_lakes()
 	world_conquest_tek_map_noise_classic("Gs^Fp")
-	world_conquest_tek_enemy_army_event()
+	wct_enemy_castle_expansion()
 	world_conquest_tek_map_repaint_2b()
 	world_conquest_tek_bonus_points()
 	wct_noise_snow_to("Gd,Wwf,Rb")

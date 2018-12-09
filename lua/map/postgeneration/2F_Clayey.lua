@@ -123,7 +123,7 @@ end
 
 
 return function()
-	world_conquest_tek_enemy_army_event()
+	wct_enemy_castle_expansion()
 	world_conquest_tek_map_repaint_2f()
 	world_conquest_tek_bonus_points("clayey")
 	wct_map_2f_post_bunus_decoration()

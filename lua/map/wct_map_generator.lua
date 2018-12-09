@@ -9,13 +9,10 @@ for i, v in ipairs(wesnoth.read_file("./postgeneration")) do
 	end
 end
 
-function world_conquest_tek_enemy_army_event()
-end
-
 function wct_map_enemy_themed()
 end
 
-local function run_postgeneration(map_data, id, scenario_content)
+local function run_postgeneration(map_data, id, scenario_content, nplayers)
 	local postgen_starttime = wesnoth.get_time_stamp()
 	wesnoth.dofile("./postgeneration/utilities.lua")
 	wesnoth.dofile("./postgeneration/events.lua")
@@ -23,6 +20,10 @@ local function run_postgeneration(map_data, id, scenario_content)
 	wesnoth.dofile("./postgeneration/noise.lua")
 	local postgenfile = postgenerators[id] or id .. "./lua"
 	--local postgenfile = postgenerators["2f"] or id .. "./lua"
+	_G.scenario_data = {
+		nplayers = nplayers,
+		scenario = scenario_content,
+	}
 	_G.map = wesnoth.create_map(map_data)
 	_G.total_tiles = _G.map.width * _G.map.height
 	_G.prestart_event = scenario_content.event[1]
@@ -38,6 +39,7 @@ local function run_postgeneration(map_data, id, scenario_content)
 	_G.map = nil
 	_G.total_tiles = nil
 	_G.prestart_event = nil
+	_G.scenario_data = nil
 	return map
 end
 
@@ -50,7 +52,7 @@ function wct_map_generator(default_id, postgen_id, length, villages, castle, ite
 		local map_data =generate1(length, villages, castle, iterations, hill_size, players, island)
 		
 		--std_print(map_data)
-		map_data = run_postgeneration(map_data, postgen_id, scenario)
+		map_data = run_postgeneration(map_data, postgen_id, scenario, players)
 		scenario.map_data = map_data
 	end
 end

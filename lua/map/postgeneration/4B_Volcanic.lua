@@ -405,7 +405,7 @@ end
 
 return function()
 	--	world_conquest_tek_map_noise_classic("Gs^Fp")
-	world_conquest_tek_enemy_army_event()
+	wct_enemy_castle_expansion()
 	world_conquest_tek_map_repaint_4b()
 	world_conquest_tek_bonus_points("volcanic")
 	wct_map_enemy_themed("dwarf", "Giant Mudcrawler", "ud", "Ur^Vud", 5)
