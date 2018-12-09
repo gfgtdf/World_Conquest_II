@@ -247,7 +247,7 @@ function wct_map_3f_post_bunus_decoration()
 end
 
 function wct_store_cave_passages_candidates()
-	return get_locations(f.all(
+	return map:get_locations(f.all(
 		f.terrain("Mm^Xm"),
 		f.adjacent(f.terrain("Mm^Xm,Xu"), nil, "2-6"),
 		f.adjacent(f.terrain("U*^*"))

@@ -49,7 +49,7 @@ function repaint(map_data)
 	local heights = wesnoth.dofile("./wild_zones.lua")
 	
 	-- store and remove villages
-	local villages = get_locations(f.terrain("*^Vh"))
+	local villages = map:get_locations(f.terrain("*^Vh"))
 	set_terrain { "*",
 		f.terrain("*^Vh"),
 		layer = "overlay",
@@ -256,7 +256,7 @@ end
 
 -- to place right image in bonus points
 function wild_store_cave_zone(map_data)
-	map_data.road_in_cave = get_locations(f.terrain("X*^*"))
+	map_data.road_in_cave = map:get_locations(f.terrain("X*^*"))
 end
 
 function wild_store_roads_in_cave_zone(map_data)

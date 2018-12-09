@@ -198,7 +198,7 @@ function convert_filter()
 			local variable = content.variable
 			local f = parse_wml_filter(content)
 			
-			std_print("local " .. variable .. " = get_locations(" .. print_filter(f, 1) .. ")")
+			std_print("local " .. variable .. " = map:get_locations(" .. print_filter(f, 1) .. ")")
 		end
 	end
 	--local filter = parse_wml_filter(cfg)

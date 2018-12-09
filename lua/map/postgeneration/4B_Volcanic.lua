@@ -187,7 +187,7 @@ function world_conquest_tek_map_repaint_4b()
 	}
 	
 	-- create volcanos where possible and force one
-	local terrain_to_change = get_locations(f.all(
+	local terrain_to_change = map:get_locations(f.all(
 		f.terrain("Ql"),
 		f.adjacent(f.terrain("M*,M*^Xm"), "se,s,sw", 2),
 		f.adjacent(f.terrain("K*^*,C*^*,*^V"), "se,s,sw", 0)
@@ -207,7 +207,7 @@ function world_conquest_tek_map_repaint_4b()
 			f.adjacent(f.terrain("Md^Xm,Md"), "se,s,sw", 3)
 		),
 	}
-	local terrain_to_change = get_locations(f.terrain("Mv"))
+	local terrain_to_change = map:get_locations(f.terrain("Mv"))
 	
 	for i, v in ipairs(terrain_to_change) do
 		--[sound_source]
@@ -274,7 +274,7 @@ function world_conquest_tek_map_repaint_4b()
 	}
 	
 	-- mushrooms, base amount in map surface
-	local terrain_to_change = get_locations(f.terrain("Hhd,Hhd^F^*"))
+	local terrain_to_change = map:get_locations(f.terrain("Hhd,Hhd^F^*"))
 	helper.shuffle(terrain_to_change)
 	local r = helper.rand(tostring(total_tiles // 600) .. ".." .. tostring(total_tiles // 300))
 	
@@ -313,7 +313,7 @@ function world_conquest_tek_map_repaint_4b()
 	}
 	
 	-- whirpools
-	local terrain_to_change = get_locations(f.all(
+	local terrain_to_change = map:get_locations(f.all(
 		f.terrain("Ww"),
 		f.adjacent(f.terrain("Wo")),
 		f.adjacent(f.terrain("Uue"))
@@ -345,7 +345,7 @@ function world_conquest_tek_map_repaint_4b()
 	}
 	
 	-- very dirt coast
-	local terrain_to_change = get_locations(f.terrain("Ds"))
+	local terrain_to_change = map:get_locations(f.terrain("Ds"))
 	
 	helper.shuffle(terrain_to_change)
 	for i = 1, #terrain_to_change // wesnoth.random(3, 4) do

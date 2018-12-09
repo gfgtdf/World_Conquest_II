@@ -4,7 +4,7 @@ local function wct_terrain_replace(t)
 end
 
 local function wild_volcano_for_lava_zone(terrain_to_change)
-	local possible_volcano = get_locations(f.all(
+	local possible_volcano = map:get_locations(f.all(
 		f.find_in("terrain_to_change"),
 		f.adjacent(f.find_in("terrain_to_change"), "se,s,sw", 3)
 	), { terrain_to_change = terrain_to_change })

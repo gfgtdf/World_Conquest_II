@@ -171,7 +171,7 @@ function wct_map_decorative_docks()
 end
 
 function wct_store_possible_flowers(terrain)
-	return get_locations(f.all(
+	return map:get_locations(f.all(
 		f.terrain("Gs,Gg"),
 		f.adjacent(f.terrain(terrain)),
 		f.adjacent(f.terrain("D*^*,S*^*,Hd"), nil, 0)
@@ -181,7 +181,7 @@ function wct_store_possible_flowers(terrain)
 end
 
 function wct_store_possible_map4_castle(value)
-	return  get_locations(f.all(
+	return  map:get_locations(f.all(
 		f.terrain("H*^F*"),
 		f.adjacent(f.terrain("H*^F*"), nil, 6)
 	))
@@ -197,14 +197,14 @@ function wct_possible_map4_castle(terrain, value)
 end
 
 function wct_store_possible_dwarven_castle()
-	return get_locations(f.all(
+	return map:get_locations(f.all(
 		f.terrain("Uh"),
 		f.adjacent(f.terrain("Uh"), nil, "5-6")
 	))
 end
 
 function wct_store_possible_roads(village)
-	return get_locations(f.all(
+	return map:get_locations(f.all(
 		f.terrain("Gg,Gs"),
 		f.adjacent(f.all(
 			f.terrain(village),
@@ -239,8 +239,8 @@ function wct_iterate_roads_to(get_next, radius, terrain)
 end
 
 function wct_iterate_roads_to_2(f_validpath, f_src, f_dest, terrain_road, radius)
-	local src_tiles = get_locations(f_src)
-	local dest_tiles = get_locations(f_dest)
+	local src_tiles = map:get_locations(f_src)
+	local dest_tiles = map:get_locations(f_dest)
 	local filter_path = wesnoth.create_filter(f_validpath)
 	--std_print("filter:", debug_wml(f_validpath))
 	local map = _G.map
@@ -311,7 +311,7 @@ function wct_break_walls(wall, terrain)
 end
 
 function wct_store_broken_wall_candidates(wall)
-	return get_locations(f.all(
+	return map:get_locations(f.all(
 		f.terrain(wall),
 		f.adjacent(f.terrain("M*^Xm,X*"), nil, "2-6"),
 		f.adjacent(f.terrain("Mv"), nil, 0)
@@ -320,7 +320,7 @@ function wct_store_broken_wall_candidates(wall)
 end
 
 function wct_store_possible_muddy_swamps()
-	return get_locations(f.all(
+	return map:get_locations(f.all(
 		f.terrain("Ss"),
 		f.adjacent(f.terrain("D*^*,Hd,Sm,Rd"), nil, "5-6")
 	))

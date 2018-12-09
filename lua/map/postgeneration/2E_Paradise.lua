@@ -120,7 +120,7 @@ function world_conquest_tek_map_repaint_2e()
 end
 
 function wct_map_yard(directions, counter_directions)
-	local terrain_to_change = get_locations(f.all(
+	local terrain_to_change = map:get_locations(f.all(
 		f.terrain("Gg"),
 		f.adjacent(f.terrain("Gg"), directions, 3),
 		f.any(
@@ -142,7 +142,7 @@ function wct_map_yard(directions, counter_directions)
 end
 
 function wct_conect_isolated_citadel()
-	local isolated = get_locations(f.all(
+	local isolated = map:get_locations(f.all(
 		f.terrain("Rr*^*,Ch,Kh,W*^Bsb*"),
 		f.adjacent(f.terrain("R*^*,Ch,Kh,W*^Bsb*"), nil, 0)
 	))
@@ -164,7 +164,7 @@ function wct_conect_isolated_citadel()
 end
 
 function wct_store_empty_citadel()
-	return get_locations(f.all(
+	return map:get_locations(f.all(
 		f.terrain("Rr"),
 		f.none(
 			f.radius(4, f.terrain("Rr^Vhc"), f.terrain("Rr*^*,Ch*,Kh*,W*^Bsb*"))
@@ -185,7 +185,7 @@ function wct_map_decoration_3e_keeps()
 end
 
 function wct_map_decoration_3e_leantos()
-	local terrain_to_change = get_locations(f.all(
+	local terrain_to_change = map:get_locations(f.all(
 		f.terrain("Rr"),
 		f.none(
 			f.find_in_wml("bounus.point")

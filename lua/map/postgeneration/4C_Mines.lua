@@ -2,7 +2,7 @@
 
 function wct_map_4c_conect_rails()
 	-- conect rails where possible
-	local terrain_to_change = get_locations(f.any(
+	local terrain_to_change = map:get_locations(f.any(
 		f.all(
 			f.terrain("*^Br|"),
 			f.adjacent(f.terrain("*^Br*"), "n,s", 0)
@@ -253,7 +253,7 @@ function world_conquest_tek_map_repaint_4c()
 end
 function wct_map_4c_post_bunus_decoration()
 	-- dwarvish forges and keeps
-	local terrain_to_change = get_locations(f.all(
+	local terrain_to_change = map:get_locations(f.all(
 		f.terrain("*^Uf"),
 		f.adjacent(f.terrain("*^Vud"))
 	))

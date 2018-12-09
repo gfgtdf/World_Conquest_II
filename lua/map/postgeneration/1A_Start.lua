@@ -134,7 +134,7 @@ function wct_map_1_post_castle_expansion_fix()
 end
 
 function wct_store_possible_encampment_ford()
-	return get_locations(f.all(
+	return map:get_locations(f.all(
 		f.terrain("Ww"),
 		f.adjacent(f.terrain("Ce,Chw,Chs*^V*")),
 		f.adjacent(f.terrain("W*^B*,Wo"), nil, 0)

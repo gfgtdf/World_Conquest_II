@@ -1,6 +1,6 @@
 -- Feudal
 local function wct_roads_to_feudal_castle(radius)
-	return get_locations(f.all(
+	return map:get_locations(f.all(
 		f.terrain("!,W*,*^V*,Ds,C*,K*,R*"),
 		f.adjacent(f.all(
 			f.terrain("Chs,Rr"),

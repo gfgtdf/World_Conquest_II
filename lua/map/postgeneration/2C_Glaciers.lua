@@ -137,7 +137,7 @@ function world_conquest_tek_map_decoration_2c()
 		fraction = 15,
 	}
 	
-	local terrain_to_change = get_locations(f.all(
+	local terrain_to_change = map:get_locations(f.all(
 		f.terrain("Wo"),
 		f.adjacent(f.terrain("!,Wo"), nil, 0)
 	))	
@@ -148,7 +148,7 @@ function world_conquest_tek_map_decoration_2c()
 		map:set_terrain(terrain_to_change[i], "Ai")
 	end
 	
-	local terrain_to_change = get_locations(f.all(
+	local terrain_to_change = map:get_locations(f.all(
 		f.terrain("Wo"),
 		f.adjacent(f.terrain("!,Wo,Ai"), nil, 0)
 	))

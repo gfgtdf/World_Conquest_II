@@ -88,7 +88,8 @@ end
 
 -- helper functions for lua map generation.
 function get_locations(t)
-	return map:get_locations(t)
+	local filter = wesnoth.create_filter(t.filter, t.filter_extra)
+	return map:get_locations(t, t.locs)
 end
 
 function world_conquest_tek_enemy_army_event()
