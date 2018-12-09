@@ -1,114 +1,85 @@
-#define WCT_MAP_ENEMY_THEMED RACE PET CASTLE VILLAGE CHANCE
-	[set_variables]
-		name=enemy_themed
-		[value]
-			race={RACE}
-			pet={PET}
-			castle={CASTLE}
-			village={VILLAGE}
-			chance={CHANCE}
-		[/value]
-	[/set_variables]
-	[fire_event]
-		name=wct_enemy_themed
-	[/fire_event]
-#enddef
+-- does not work yet becasue we have no access to wesnoth.unit_types during map generation.
+local function matches_race(type_id, race)
+	local unit_data = wesnoth.unit_types[type_id]
+	if race == "human" and unit_data.alignment ~= "chaotic" then
+		-- human means only outlaw
+		return false
+	end
+	return unit_data == race
+end
 
-#define WORLD_CONQUEST_TEK_MAP_ENEMY_THEMED
-	[event]
-		name=wct_enemy_themed
-		id=wct_enemy_themed
-		first_time_only=no
-		{RANDOM 0..99}
-		[store_unit]
-			[filter]
-				side=4,5,6,7,8,9
-				canrecruit=yes
-				race=$enemy_themed.race
-				## human means only outlaw
-				[not]
-					race=human
-					[not]
-						[filter_wml]
-							alignment=chaotic
-						[/filter_wml]
-					[/not]
-				[/not]
-			[/filter]
-			variable=enemy_themed.boss
-		[/store_unit]
-		[if]
-			{VARIABLE_CONDITIONAL random less_than $enemy_themed.chance}
-			{VARIABLE_CONDITIONAL enemy_themed.boss.length greater_than 0}
-			[then]
-				## give themed castle
-				[terrain]
-					x=$enemy_themed.boss.x
-					y=$enemy_themed.boss.y
-					terrain=K$enemy_themed.castle
-					layer=base
-				[/terrain]
-				[terrain]
-					terrain=C$enemy_themed.castle
-					[and]
-						terrain=C*,*^C*
-						[and]
-							[filter]
-								x=$enemy_themed.boss.x
-								y=$enemy_themed.boss.y
-							[/filter]
-							radius=999
-							[filter_radius]
-								terrain=K*^*,C*^*,*^K*,*^C*
-							[/filter_radius]
-						[/and]
-					[/and]
-				[/terrain]
-				[terrain]
-					terrain=Ket
-					layer=base
-					[and]
-						terrain=Ke
-					[/and]
-				[/terrain]
-				## extra tweak with trees to elvish castle
-				[wc2_terrain]
-					[change]
-						[filter]
-							terrain=Cv
-							[filter_adjacent_location]
-								terrain=Kv^*
-							[/filter_adjacent_location]
-						[/filter]
-						terrain=Cv^Fet
-						fraction_rand=2..3
-					[/change]
-				[/wc2_terrain]
-				## adjacent themed villages
-				[terrain]
-					terrain=$enemy_themed.village
-					[and]
-						terrain=*^V*
-						[filter_adjacent_location]
-							terrain=C$enemy_themed.castle,K$enemy_themed.castle|^*
-						[/filter_adjacent_location]
-					[/and]
-				[/terrain]
-				## give pet
-				[unit]
-					x,y=$enemy_themed.boss.x,$enemy_themed.boss.y
-					type=$enemy_themed.pet
-					side=$enemy_themed.boss.side
-					name= {STR_ENEMY_PET}
-					role=hero
-					overlays=misc/hero-icon.png
-					[modifications]
-						{WORLD_CONQUEST_II_TRAIT_HEROIC}
-						{WORLD_CONQUEST_II_TRAIT_EXPERT}
-					[/modifications]
-				[/unit]
-			[/then]
-		[/if]
-		{CLEAR_VARIABLE enemy_themed}
-	[/event]
-#enddef
+-- TODO: this cannot work:
+--   The problem is that we want the selection of the enemy to depend on the chosen era
+--   but we cannot know the ery yet becasue the user might change it after this code is run.
+function wct_map_enemy_themed(race, pet, castle, village, chance)
+	if wesnoth.random(100) > chance then
+		return
+	end
+	local side_num = false
+	for i = 4, #scenario.side do
+		side_num = side_num or (matches_race(scenario.side[i].type, race) and i)
+	end
+	if not side_num then
+		return false
+	end
+	local keep_loc = map.special_locations[tostring(side_num)]
+	local castle_locs = map:get_tiles_radius(
+		{ keep_loc },
+		wesnoth.create_filter(f.terrain("K*^*,C*^*,*^K*,*^C*")),
+		999
+	)
+	-- give themed castle
+	map:set_terrain(keep_loc, "K" .. castle, "base")
+	set_terrain {
+		terrain = "C" .. castle,
+		filter = f.terrain("C*,*^C*"),
+		locs = castle_locs
+	}
+	set_terrain {
+		terrain = "Ket",
+		filter = f.terrain("Ke"),
+		layer = "base"
+	}
+	-- extra tweak with trees to elvish castle
+	set_terrain {
+		terrain = "Cv^Fet",
+		filter = f.and(
+			f.terrain("Cv"),
+			f.adjacent(t.terrain("Kv^*"))
+		),
+		fraction_rand = "2..3"
+	}
+	-- adjacent themed villages
+	set_terrain {
+		terrain = village,
+		filter = f.and(
+			f.terrain("*^V*"),
+			f.adjacent(t.find_in("castle"))
+		),
+		filter_extra = { castle = castle_locs }
+	}
+	-- give pet
+	table.insert(prestart_event, {
+		-- we cannot just insert a [unit] in [scenario][side] becasue we want the pet to have the
+		-- name '<leader name>'s pet' and we don't knwo the leader name yet.
+		-- maybe this is also the reason why we give the undead leaders random names?
+		wml.tag.wc2_enemy_pet {
+			side = side_num,
+			type = pet
+		}
+	})
+end
+
+--	## give pet
+--	[unit]
+--		x,y=$enemy_themed.boss.x,$enemy_themed.boss.y
+--		type=$enemy_themed.pet
+--		side=$enemy_themed.boss.side
+--		name= {STR_ENEMY_PET}
+--		role=hero
+--		overlays=misc/hero-icon.png
+--		[modifications]
+--			{WORLD_CONQUEST_II_TRAIT_HEROIC}
+--			{WORLD_CONQUEST_II_TRAIT_EXPERT}
+--		[/modifications]
+--	[/unit]
