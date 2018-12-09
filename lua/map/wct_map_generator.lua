@@ -9,7 +9,14 @@ for i, v in ipairs(wesnoth.read_file("./postgeneration")) do
 	end
 end
 
-function wct_map_enemy_themed()
+function wct_map_enemy_themed(race, pet, castle, village, chance)
+	table.insert(prestart_event, wml.tag.wc2_enemy_themed {
+		race = race,
+		pet = pet,
+		castle = castle,
+		village = village,
+		chance = chance
+	})
 end
 
 local function run_postgeneration(map_data, id, scenario_content, nplayers)
