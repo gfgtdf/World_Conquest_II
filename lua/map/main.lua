@@ -110,7 +110,6 @@ function pick_enemy_type(enemy_army)
 end
 
 function wc_ii_generate_scenario(nplayers)
-	nplayers = 2
 	local scenario_num = wesnoth.get_variable("scenario") or 1
 	local enemy_stength = wesnoth.get_variable("difficulty.enemy_power") or 6
 	local scenario_data = wesnoth.dofile(string.format("./scenarios/WC_II_%dp_scenario%d.lua", nplayers, scenario_num))
@@ -141,10 +140,10 @@ function wc_ii_generate_scenario(nplayers)
 			players = nplayers,
 		},
 		side = {},
-		id = "WC_II_" .. nplayers .. "p_new",
-		next_scenario = "WC_II_" .. nplayers .. "p_new",
-		name = "WC_II_" .. nplayers .. "p_new3",
-		description = "WC_II_" .. nplayers .. "p_new2",
+		id = "WC_II_" .. nplayers .. "p",
+		next_scenario = "WC_II_" .. nplayers .. "p",
+		name = "WC_II_" .. nplayers .. "p_name",
+		description = "WC_II_" .. nplayers .. "p_desc",
 		modify_placing = false,
 	}
 	local enemy_army = nil
