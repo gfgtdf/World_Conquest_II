@@ -120,11 +120,11 @@ function wc_ii_generate_scenario(nplayers)
 		event = {
 			prestart_event
 		},
-		--lua = {
-		--	{
-		--		code = "wesnoth.dofile('~add-ons/World_Conquest_II/lua/main.lua')",
-		--	},
-		--},
+		lua = {
+			{
+				code = "wesnoth.dofile('~add-ons/World_Conquest_II/lua/campaign_main.lua')",
+			},
+		},
 		load_resource = {
 			--{
 			--	id = "wc2_era_res"

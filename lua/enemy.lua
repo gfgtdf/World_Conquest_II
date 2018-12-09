@@ -13,7 +13,7 @@ local function get_advanced_units(level, list, res)
 			else
 				add_units(unittype.advances_to)
 			end
-		end
+			end
 	end
 	add_units(list)
 	return res
@@ -193,51 +193,6 @@ function enemy.do_training(cfg, group_id, loc)
 	end
 end
 
-function enemy.do_castle_expansion(cfg, group_id, loc)
-	local candidates = wesnoth.get_locations {
-		T["not"] {
-			terrain = "C*,K*,X*,*^Xm,Ww,Wwt,Wwg,Wo*,Wwr*,*^V*",
-		},
-		T["not"] {
-			terrain="Mv",
-			radius=1,
-		},
-		T.filter_adjacent_location {
-			terrain = "C*,K*",
-			T["and"] {
-				T.filter {
-					side = cfg.side,
-				},
-				radius = 1,
-			}
-		}
-	}
-	if #candidates < wml.variables["players"] + 1 then
-		candidates = wesnoth.get_locations {
-			T["not"] {
-				terrain = "C*,K*",
-			},
-			T["not"] {
-				terrain="Mv",
-				radius=1,
-			},
-			T.filter_adjacent_location {
-				terrain = "C*,K*",
-				T["and"] {
-					T.filter {
-						side = cfg.side,
-					},
-					radius = 1,
-				}
-			}
-		}
-	end
-	helper.shuffle(candidates)
-	for i = 1, wml.variables["players"] + 1 do
-		wesnoth.set_terrain(candidates[i], "Ch")
-	end
-end
-
 --[[
 	called like 
 	[wc2_enemy]
@@ -295,7 +250,6 @@ function wesnoth.wml_actions.wc2_enemy(cfg)
 		type = leader_cfg.recruit
 	}
 
-	enemy.do_castle_expansion(cfg, enemy_type_id, loc)
 	enemy.do_training(cfg, enemy_type_id, loc)
 	enemy.do_commander(cfg, enemy_type_id, loc)
 	enemy.do_supply(cfg, enemy_type_id, loc)
@@ -305,6 +259,8 @@ function wesnoth.wml_actions.wc2_enemy(cfg)
 		wesnoth.set_side_variable(side_num, "wc2.random_items", 1)
 	end
 end
+function wesnoth.wml_actions.wc2_enemy_themed(cfg)
 
+end
 return enemy
 -->>
