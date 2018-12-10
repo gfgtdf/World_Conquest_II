@@ -139,6 +139,9 @@ function wc_ii_generate_scenario(nplayers)
 		variables = {
 			scenario = scenario_num,
 			players = nplayers,
+			wml.tag.wct {
+				versions = "1.9"
+			}
 		},
 		side = {},
 		id = "WC_II_" .. nplayers .. "p",
@@ -193,7 +196,7 @@ function wc_ii_generate_scenario(nplayers)
 	generator(scenario)
 	--std_print(debug_wml(scenario))
 	local res = lon_to_wml(scenario, "scenario")
-	std_print(debug_wml(res))
+	--std_print(debug_wml(res))
 	return res
 end
 
