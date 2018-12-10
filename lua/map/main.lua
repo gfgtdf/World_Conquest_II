@@ -97,9 +97,10 @@ end
 function pick_enemy_type(enemy_army)
 	local res = {}
 	res.faction_num_i = wesnoth.random(#enemy_army.factions_available)
-	res.faction_num = enemy_army.factions_available[res.faction_num_i]
+	res.faction_num = tonumber(enemy_army.factions_available[res.faction_num_i])
 
 	local group = enemy_army.group[res.faction_num]
+	
 	res.leader_i = wesnoth.random(#group.leader)
 	res.leader = group.leader[res.leader_i]
 	res.recruits = table_join(res.leader.recruit, group.recruit)
