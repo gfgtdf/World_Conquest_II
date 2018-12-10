@@ -26,7 +26,7 @@ function adjust_enemy_bonus_gold(bonus_gold, nplayers, difficulty_enemy_power)
 	return factor * bonus_gold
 end
 
-function add_enemy_side(scenario, gold, starting_pos, recruits, enemy_leader_type)
+function add_enemy_side(scenario, gold, starting_pos)
 	std_print("starting pos:", starting_pos)
 	local side_num = #scenario.side + 1
 	local side = {
@@ -35,7 +35,7 @@ function add_enemy_side(scenario, gold, starting_pos, recruits, enemy_leader_typ
 			caution=0.1,
 		},
 		side = side_num,
-		type = enemy_leader_type,
+		type = "Peasant",
 		location_id = starting_pos,
 		persistent = false,
 		canrecruit = true,
@@ -48,7 +48,7 @@ function add_enemy_side(scenario, gold, starting_pos, recruits, enemy_leader_typ
 		terrain_liked = "",
 		allow_player = false,
 		disallow_observers = true,
-		recruit = table.concat(recruits, ",")
+		recruit = "", --table.concat(recruits, ",")
 	}
 	table.insert(scenario.side, side)
 end
@@ -93,7 +93,7 @@ function add_empty_side(scenario)
 	}
 	table.insert(scenario.side, side)
 end
-
+--[[
 function pick_enemy_type(enemy_army)
 	local res = {}
 	res.faction_num_i = wesnoth.random(#enemy_army.factions_available)
@@ -109,6 +109,9 @@ function pick_enemy_type(enemy_army)
 	table.remove(group.leader, res.leader_i)
 	return res
 end
+--]]
+
+local n_villages = {27, 40, 53, 63}
 
 function wc_ii_generate_scenario(nplayers)
 	local scenario_num = wesnoth.get_variable("scenario") or 1
@@ -165,12 +168,15 @@ function wc_ii_generate_scenario(nplayers)
 	for i = nplayers + 1, 3 do
 		add_empty_side(scenario)
 	end
+	if scenario_num == 1 then
+		--table.insert(prestart_event, wml.tag.wc2_import_enemy_data {})
+	end
 	local enemy_data = scenario_data.get_enemy_data(enemy_stength)
 	local enemy_bonus_gold = adjust_enemy_bonus_gold(enemy_data.bonus_gold, nplayers, enemy_stength)
 	for i = 1, scenario_num do
-		local enemy_pick = pick_enemy_type(enemy_army)
+		--local enemy_pick = pick_enemy_type(enemy_army)
 		local side_data = enemy_data.sides[i]
-		local enemy_leader_type = scenario_num == 1 and enemy_pick.leader.level2 or enemy_pick.leader.level3
+		--local enemy_leader_type = scenario_num == 1 and enemy_pick.leader.level2 or enemy_pick.leader.level3
 		table.insert(prestart_event, wml.tag.wc2_enemy {
 			side = #scenario.side + 1,
 			commander = side_data.commander,
@@ -181,17 +187,45 @@ function wc_ii_generate_scenario(nplayers)
 				level2 = side_data.recall_level2,
 				level3 = side_data.recall_level3,
 			},
-			wml.tag.pick {
-				faction_num_i = enemy_pick.faction_num_i,
-				faction_num = enemy_pick.faction_num,
+			--wml.tag.pick {
+			--	faction_num_i = enemy_pick.faction_num_i,
+			--	faction_num = enemy_pick.faction_num,
 
-				leader_i = enemy_pick.leader_i,
-				leader = enemy_pick.leader.level3,
+			--	leader_i = enemy_pick.leader_i,
+			--	leader = enemy_pick.leader.level3,
 			}
 		})
-		add_enemy_side(scenario, enemy_data.gold + enemy_bonus_gold, i + nplayers, enemy_pick.recruits, enemy_leader_type)
+		add_enemy_side(scenario, enemy_data.gold + enemy_bonus_gold, i + nplayers)
 	end	
 	add_plot(scenario, scenario_num, nplayers)
+	if scenario_num < #n_villages then
+		table.insert(scenario.event, {
+			name = "victory",
+			wml.tag.wc2_store_carryover {
+				nvillages = n_villages[scenario_num] + 2 * nplayers,
+				wml.tag.sides {
+					side="1,2,3",
+					wml.tag.has_unit {
+					}
+				}
+			}
+		})
+	end
+	if scenario_num ~= 1 then
+		--todo: maybe move this into here
+		table.insert(scenario.event, {
+			name = "start",
+			wml.tag.gold {
+					amount = "$($carryover+$difficulty.extra_gold)"
+					side="1,2,3",
+					wml.tag.has_unit {
+				}
+			}
+			wml.tag.clear_variable {
+				name = "carryover"
+			}
+		})
+	end
 	local generator = scenario_data.generators[wesnoth.random(#scenario_data.generators)]	
 	generator(scenario)
 	--std_print(debug_wml(scenario))
