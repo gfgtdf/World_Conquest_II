@@ -19,12 +19,16 @@ function wesnoth.wml_actions.wc2_place_bonus(cfg)
 	--       the number of thimes random is called does not (random is called even if there is
 	--       only one option), so this doesn't cause OOS.
 	local name1 = wc2_random_names.generate()
-	local name2 = helper.rand(tostring(c_scenery.names or _"place"))
+	local name_options = c_scenery.names or { _"place" }
+	local name2 = tostring(name_options[wesnoth.random(#name_options)])
 	
+	local function span_font_family(str, fam)
+		return string.format("<span font-family='%s'>%s</span>", fam, str)
+	end
 	wesnoth.wml_actions.label {
 		x = x,
 		y = y,
-		text = wesnoth.format(_ "$name's $type", {name = name1, type = name2})
+		text = span_font_family(wesnoth.format(_ "$name's $type", {name = name1, type = name2}), "Lucida Sans Unicode")
 	}
 end
 
@@ -183,5 +187,19 @@ function bonus.init_data(cfg)
 	end
 end
 
+if true then
+	local sceneries = bonus.sceneries
+	local strings, images = wesnoth.dofile("./bonus_point_definitions.lua")
+	for k,v in pairs(strings) do
+		local scenery = sceneries[k] or {}
+		scenery.names = v
+		sceneries[k] = scenery
+	end
+	for k,v in pairs(images) do
+		local scenery = sceneries[k] or {}
+		scenery.image = v
+		sceneries[k] = scenery
+	end
+end
 return bonus
 -->>
