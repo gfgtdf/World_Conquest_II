@@ -10,7 +10,7 @@ function wesnoth.wml_actions.wc2_place_bonus(cfg)
 	local scenery = cfg.scenery or helper.wml_error("[wc2_place_bonus] missing required 'scenery' attribute")
 	local c_scenery = bonus.sceneries[scenery]
 	if not c_scenery then
-		helper.wml_error("[wc2_place_bonus] invalid 'scenery' attribute")
+		helper.wml_error("[wc2_place_bonus] invalid 'scenery' attribute: ".. tostring(scenery))
 	end
 	local image = c_scenery.image or scenery
 	bonus.place_item(x, y, image)
