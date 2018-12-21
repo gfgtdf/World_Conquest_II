@@ -87,7 +87,20 @@ on_event("wc2_drop_pickup", function(ec)
 		return
 	end
 
-	local bonus_type = item.wc2_type or wesnoth.random(3)
+	local bonus_type = item.wc2_type
+	if bonus_type == nil then
+		local training_chance = wml.variables.wc2_config_training_chance or 1
+		local hero_chance = wml.variables.wc2_config_hero_chance or 1
+		local item_chance = wml.variables.wc2_config_item_chance or 1
+		local r = wesnoth.random(training_chance + hero_chance + item_chance)
+		if r <= training_chance then
+			bonus_type = 1
+		elseif r <= training_chance + item_chance then
+			bonus_type = 2
+		else
+			bonus_type = 3			
+		end
+	end
 	local bonus_subtype = item.wc2_subtype
 	if bonus_type == 1 then
 		if not bonus.found_training(wesnoth.current.side, bonus_subtype, ec) then
