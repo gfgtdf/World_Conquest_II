@@ -1,4 +1,7 @@
 -- Mines
+local images = {
+	darvish_anvils = "misc/blank-hex.png~BLIT(items/anvil.png~CROP(10,13,62,59))~BLIT(items/anvil.png~CROP(0,0,66,66),6,6)"
+}
 
 function wct_map_4c_conect_rails()
 	-- conect rails where possible
@@ -269,8 +272,6 @@ function wct_map_4c_post_bunus_decoration()
 		end
 	end
 	
-	--todo
-	local images= {darvish_anvils = "" }
 	table.insert(prestart_event, wml.tag.item {
 		terrain = "Kv",
 		image = images.darvish_anvils,

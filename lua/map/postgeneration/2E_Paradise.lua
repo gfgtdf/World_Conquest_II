@@ -1,4 +1,9 @@
 -- Paradise
+
+local images = {
+	citadel_leanto = "misc/blank-hex.png~BLIT(scenery/leanto.png~CS(10,10,0)~CROP(0,6,72,66))",
+}
+
 function wct_map_2e_post_bunus_decoration()
 	wct_map_decoration_3e_keeps()
 	wct_map_decoration_3e_leantos()

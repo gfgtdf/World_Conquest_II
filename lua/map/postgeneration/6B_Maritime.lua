@@ -1,4 +1,8 @@
 -- Maritime
+local images = {
+	dock_ship = "misc/blank-hex.png~BLIT(units/transport/boat.png~CROP(0,15,72,57))",
+	dock_ship_2 = "misc/blank-hex.png~BLIT(units/transport/boat.png~FL()~CROP(0,15,72,57))"
+}
 
 function get_possible_maritime_bridge()
 	return {
