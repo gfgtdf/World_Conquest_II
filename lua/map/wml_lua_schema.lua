@@ -55,6 +55,9 @@ schema.scenario =  {
 		variables = {
 			type = "single",
 		},
+		options = {
+			type = "single",
+		},
 	}
 }
 
