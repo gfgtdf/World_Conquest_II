@@ -71,7 +71,8 @@ function enemy.do_commander(cfg, group_id, loc)
 		return
 	end
 	local scenario = wml.variables["scenario"]
-	local ally_i = wc2_utils.pick_random_t(("enemy_army.group[%d].ally"):format(group_id))["type"]
+	wesnoth.message("do_commander", wml.variables[("enemy_army.group[%d].allies_available"):format(group_id)])
+	local ally_i = wc2_utils.pick_random(("enemy_army.group[%d].allies_available"):format(group_id)) - 1
 	local leader_index = wesnoth.random(wml.variables[("enemy_army.group[%d].leader.length"):format(ally_i)]) - 1
 	local new_recruits = wml.variables[("enemy_army.group[%d].leader[%d].recruit"):format(ally_i, leader_index)]
 	wesnoth.wml_actions.allow_recruit {
@@ -87,7 +88,7 @@ function enemy.do_commander(cfg, group_id, loc)
 		generate_name = true,
 		role = "commander",
 		overlays = wc2_heroes.commander_overlay,
-		experience = scenario * (wml.variables["difficulty.enemy_power"] - 7 + cfg.commander),
+		experience = scenario * ((wml.variables["difficulty.enemy_power"] or 6) - 7 + cfg.commander),
 		wml.tag.modifications (wc2_heroes.trait_heroic),
 	}
 end
@@ -209,13 +210,14 @@ end
 	[/wc2_enemy]
 --]]
 function wesnoth.wml_actions.wc2_enemy(cfg)
+		wesnoth.message("wc2_enemy", wml.variables["enemy_army.length"])
 	local side_num = cfg.side
 	local side = wesnoth.sides[side_num]
 	local scenario = wc2_scenario.scenario_num()
 	local dummy_unit = wesnoth.get_units({side = side_num, canrecruit = true})[1]
 	local loc = {dummy_unit.x,dummy_unit.y}
 	dummy_unit:erase()
-	local enemy_type_id = wc2_utils.pick_random_t("enemy_army.faction")["type"]
+	local enemy_type_id = wc2_utils.pick_random("enemy_army.factions_available") - 1
 	if enemy_type_id == nil then
 		--shoulodn't happen, added for robustness.
 		local n_groups = wml.variables["enemy_army.group.length"]
@@ -254,8 +256,8 @@ function wesnoth.wml_actions.wc2_enemy(cfg)
 	enemy.do_commander(cfg, enemy_type_id, loc)
 	enemy.do_supply(cfg, enemy_type_id, loc)
 	enemy.do_recall(cfg, enemy_type_id, loc)
-	side.gold = side.gold + wml.variables["enemy_army.bonus_gold"]
-	if cfg.have_item > 0 and cfg.have_item <= wml.variables["difficulty.enemy_power"] then
+	-- side.gold = side.gold + wml.variables["enemy_army.bonus_gold"]
+	if cfg.have_item > 0 and cfg.have_item <= (wml.variables["difficulty.enemy_power"] or 6) then
 		wesnoth.set_side_variable(side_num, "wc2.random_items", 1)
 	end
 end
