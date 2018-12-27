@@ -37,7 +37,7 @@ function wc_ii_generate_scenario(nplayers, gen_args)
 				id = "wc2_scenario_res"
 			},
 			{
-				id = "wc2_campaign_start"
+				id = "wc2_scenario_res_extra"
 			},
 		},
 		options = {
@@ -76,9 +76,15 @@ function wc_ii_generate_scenario(nplayers, gen_args)
 		carryover_report = false,
 		carryover_add = false,
 		force_lock_settings = true,
+		-- TODO:
 		--{DEFAULT_SCHEDULE}
 		--{DEFAULT_MUSIC_PLAYLIST}
 	}
+	if scenario_num == 1 then
+		table.insert(scenario.load_resource, {
+			id = "wc2_campaign_start"
+		})
+	end
 	-- sides
 	local enemy_data = scenario_data.get_enemy_data(enemy_stength)
 	wc_ii_generate_sides(scenario, prestart_event, nplayers, scenario_num, enemy_stength, enemy_data, scenario_data)
