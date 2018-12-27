@@ -1,7 +1,12 @@
 --<<
 local on_event = wesnoth.require("on_event")
 local _ = wesnoth.textdomain 'wesnoth-World_Conquest_II'
+local t = wml.tag
 local pick_advance = {}
+
+local strings = {
+	presect_advacement = _ "Preset Advancement",
+}
 
 function pick_advance.has_options(u)
 	return u and #u.advances_to > 1 and wml.variables.wc2_config_enable_pya
@@ -66,4 +71,29 @@ function wesnoth.wml_actions.wc2_pya_pick(cfg)
 end
 
 return pick_advance
+
+on_event("start", function()
+	wesnoth.wml_actions.set_menu_item {
+		id = "3_WCT_Preset_Advancement_Option",
+		description = strings.presect_advacement,
+		t.show_if {
+			t.have_unit {
+				side = "$side_number",
+				x="$x1",
+				y="$y1",
+				lua_function="wc2_pick_advance.has_options",
+			},
+			t.variable {
+				name="wc2_config_enable_pya",
+				boolean_not_equals=false,
+			},
+		},
+		t.command {
+			t.wc2_pya_pick {
+				x="$x1",
+				y="$y1",
+			},
+		},
+	}
+end)
 -->>
