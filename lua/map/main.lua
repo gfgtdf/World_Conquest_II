@@ -13,7 +13,8 @@ wesnoth.dofile("./side_definitions.lua")
 
 local n_villages = {27, 40, 53, 63}
 
-function wc_ii_generate_scenario(nplayers)
+function wc_ii_generate_scenario(nplayers, gen_args)
+	local scenario_extra = wml.get_child(gen_args, "scenario")
 	local scenario_num = wesnoth.get_variable("scenario") or 1
 	local enemy_stength = wesnoth.get_variable("difficulty.enemy_power") or 6
 	local scenario_data = wesnoth.dofile(string.format("./scenarios/WC_II_%dp_scenario%d.lua", nplayers, scenario_num))
@@ -138,6 +139,10 @@ function wc_ii_generate_scenario(nplayers)
 	--std_print(debug_wml(scenario))
 	local res = lon_to_wml(scenario, "scenario")
 	std_print(debug_wml(res))
+	for i, v in ipairs(scenario_extra) do
+		--insert music and scedule tags.
+		table.insert(res, v)
+	end
 	return res
 end
 
