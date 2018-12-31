@@ -62,8 +62,7 @@ end)
 --	WORLD_CONQUEST_TEK_BONUS_SCENARIO_GOLD
 on_event("prestart", function(cx)
 	local gold = (wml.variables.carryover or 0) + (wml.variables["difficulty.extra_gold"] or 0)
-	-- todo: ply player sides.
-	for i = 1, 3 do
+	for i = 1, wml.variables.players do
 		wesnoth.sides[i].gold = wesnoth.sides[i].gold + gold
 	end
 end)

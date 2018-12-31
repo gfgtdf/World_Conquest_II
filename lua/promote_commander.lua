@@ -21,8 +21,7 @@ on_event("die", function(cx)
 		commander:extract()
 		commander.id = u.id
 		commander.canrecruit = true
-		--todo: (maybe remove the colrrespongind effect instead?)
-		--commander.overlays = ""
+		commander:remove_modifications({ id = "wc2_commander_overlay" })
 		commander:to_map()
 			wesnoth.wml_actions.wc2_message {
 				id = commander.id,

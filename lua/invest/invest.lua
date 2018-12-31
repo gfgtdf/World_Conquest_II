@@ -1,6 +1,7 @@
 --<<
 local wc2_invest = {}
 local on_event = wesnoth.require("on_event")
+local _ = wesnoth.textdomain 'wesnoth-World_Conquest_II'
 
 function wc2_invest.add_items(side_num, num_items)
 	local items_left = wc2_utils.split_to_array(wesnoth.get_side_variable(side_num, "wc2.items_left"))
@@ -131,9 +132,8 @@ function wc2_invest.invest()
 	local trainings_available = wc2_training.list_available(side_num, {2,3,4,5,6})
 	local gold_available = true
 	for i =1,2 do
-		-- todo translate
 		local is_local = false
-		local res = wesnoth.synchronize_choice("WC2 Invest", function()
+		local res = wesnoth.synchronize_choice(_"WC2 Invest", function()
 			is_local = true
 			return wc2_show_invest_dialog {
 				items_available = items_available,

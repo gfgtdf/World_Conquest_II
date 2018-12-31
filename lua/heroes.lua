@@ -63,12 +63,18 @@ function wc2_heroes.place(t, side, x, y, is_commander)
 	local modifications = wc2_heroes.generate_traits(t)
 	table.insert(modifications, 1, T.advancement { wc2_scenario.experience_penalty() })
 
+	table.insert(modifications, T.object {
+		id = is_commander and "wc2_commander_overlay" or "wc2_hero_overlay",
+		T.effect {
+			apply_to="overlay",
+			add = is_commander and wc2_heroes.commander_overlay or wc2_heroes.hero_overlay
+		} 
+	})
 	local u = wesnoth.create_unit { 
 		type = t, 
 		side = side,
 		random_traits = false,
 		role = is_commander and "commander" or nil,
-		overlays = is_commander and wc2_heroes.commander_overlay or wc2_heroes.hero_overlay,
 		T.modifications (modifications),
 	}
 	if is_commander then
