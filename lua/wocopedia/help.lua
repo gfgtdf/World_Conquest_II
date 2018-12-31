@@ -254,4 +254,21 @@ function wesnoth.wml_actions.wc2_show_wocopedia(cfg)
 	
 	wesnoth.show_dialog(dialog, preshow)
 end
+
+wc2_utils.menu_item {
+	id = "5_WCT_Wocopedia_Option",
+	description = _ "WoCopedia",
+	image= "help/closed_section.png~SCALE(18,17)",
+	filter = function(x, y)
+		local u = wesnoth.get_unit(x, y)
+		return not (u and u.side == wesnoth.current.side)
+	end,
+	handler = function(cx)
+		wesnoth.wml_actions.wc2_show_wocopedia {
+			x = cx.x1,
+			y = cx.y1,
+		}
+	end
+}
+
 -->>

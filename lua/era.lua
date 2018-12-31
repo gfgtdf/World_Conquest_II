@@ -1,10 +1,20 @@
 --<<
 helper = wesnoth.require("lua/helper.lua")
 local on_event = wesnoth.require("on_event")
+local _ = wesnoth.textdomain 'wesnoth-World_Conquest_II'
 local wc2_era = {}
 wc2_era.factions_wml = {}
 wc2_era.hero_types = {}
 wc2_era.hero_traits = {}
+
+local strings = {
+	info_menu = _"Tell me how my recruit works",
+	info_recruit = _"Every time you recruit a unit, it is replaced in your recruit list by its pair. The following pairs can also be found here:",
+}
+
+local images = {
+	menu_recruit_info = "icons/action/editor-tool-unit_25.png~CROP(3,4,18,18)~GS()"
+}
 
 local function remove_dublicates(t)
 	local found = {}
@@ -247,6 +257,29 @@ function wesnoth.wml_actions.wc2_recruit_info(cfg)
 	end
 	wesnoth.wml_actions.message(message)
 end
+
+wc2_utils.menu_item {
+	id="1_WC_II_Era_Info_Recruit_Option",
+	description=strings.info_menu,
+	image=images.menu_recruit_info,
+	synced=false,
+	filter = function (x, y)
+		local u wesnoth.get_unit(x, y)
+		if u and u.side == wesnoth.current.side then
+			return false
+		end
+		if not wc2_era.get_faction(wesnoth.get_viewing_side()) then
+			return false
+		end
+		--todo: check whether there is an artifact on that tile.
+		return true
+	end,
+	handler = function(cx)
+		wesnoth.wml_actions.wc2_recruit_info {
+			message = strings.info_recruit
+		}
+	end
+}
 
 return wc2_era
 -->>

@@ -70,30 +70,24 @@ function wesnoth.wml_actions.wc2_pya_pick(cfg)
 	wesnoth.wml_actions.message(message_wml)
 end
 
-return pick_advance
 
-on_event("start", function()
-	wesnoth.wml_actions.set_menu_item {
-		id = "3_WCT_Preset_Advancement_Option",
-		description = strings.presect_advacement,
-		t.show_if {
-			t.have_unit {
-				side = "$side_number",
-				x="$x1",
-				y="$y1",
-				lua_function="wc2_pick_advance.has_options",
-			},
-			t.variable {
-				name="wc2_config_enable_pya",
-				boolean_not_equals=false,
-			},
-		},
-		t.command {
-			t.wc2_pya_pick {
-				x="$x1",
-				y="$y1",
-			},
-		},
-	}
-end)
+wc2_utils.menu_item {
+	id = "3_WCT_Preset_Advancement_Option",
+	description = strings.presect_advacement,
+	filter = function (x, y)
+		if wml.variables.wc2_config_enable_pya == false then
+			return false
+		end
+		local u = wesnoth.get_unit(x, y)
+		return u and u.side == wesnoth.current.side and pick_advance.has_options(u)
+	end,
+	handler = function(cx)
+		wesnoth.wml_actions.wc2_pya_pick {
+			x=cx.x1,
+			y=cx.y1,
+		}
+	end
+}
+
+return pick_advance
 -->>

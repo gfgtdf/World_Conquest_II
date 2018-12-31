@@ -22,7 +22,7 @@ function wesnoth.effects.wc2_unitmarker(u, cfg)
 	
 end
 
-wesnoth.wml_actions.wc2_toggle_overlay(cfg)
+function wesnoth.wml_actions.wc2_toggle_overlay(cfg)
 	local units = wesnoth.get_units(cfg)
 	for i, u in ipairs(units) do
 		local has_overlay = u.variables["mods.wc2_has_unitmarker"]
@@ -39,27 +39,21 @@ wesnoth.wml_actions.wc2_toggle_overlay(cfg)
 	end
 end
 
-on_event("start", function()
-	wesnoth.wml_actions.set_menu_item {
-		id = "2_WCT_Special_Overlay_Option",
-		description = strings.special_overlay,
-		image= img_is_special_menu
-		t.show_if {
-			t.have_unit {
-				side = "$side_number",
-				x="$x1",
-				y="$y1",
-			},
-			t.variable {
-				name="wc2_config_enable_unitmarker",
-				boolean_not_equals=false,
-			},
-		},
-		t.command {
-			t.wc2_unitmarker {
-				x="$x1",
-				y="$y1",
-			},
-		},
-	}
-end)
+wc2_utils.menu_item {
+	id = "2_WCT_Special_Overlay_Option",
+	description = strings.special_overlay,
+	image= img_is_special_menu,
+	filter = function(x, y)
+		if wml.variables.wc2_config_enable_unitmarker == false then
+			return false
+		end
+		local u = wesnoth.get_unit(x, y)
+		return u and u.side == wesnoth.current.side
+	end,
+	handler = function(cx)
+		wesnoth.wml_actions.wc2_toggle_overlay {
+			x = cx.x1,
+			y = cx.y1,
+		}
+	end
+}

@@ -219,6 +219,20 @@ function wesnoth.wml_actions.wc2_show_item_info(cfg)
 	end
 end
 
+wc2_utils.menu_item {
+	id="4_WCT_Item_Info_Option",
+	description = _ "Remind me what this item does",
+	image = "icons/terrain/terrain_type_info.png",
+	synced = false,
+	filter = artifacts.is_item_at,
+	handler = function(cx)
+		wesnoth.wml_actions.wc2_show_item_info {
+			x = cx.x1,
+			y = cx.y1,
+		}
+	end
+}
+
 function wesnoth.wml_actions.wc2_give_item(cfg)
 	local units = wesnoth.get_units (wml.get_child(cfg, "filter"))
 	artifacts.give_item(units[1], cfg.item_index, cfg.visualize)
