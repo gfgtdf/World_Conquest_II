@@ -60,8 +60,7 @@ function artifacts.give_item(unit, index, visualize)
 	--todo: and not unit.variables.wc2.is_commander or hero
 	--todo: does the 'unit.upkeep ~= 0' part break thise code fo level 0 units?
 	if make_holder_loyal and (not unit.canrecruit) and (unit.upkeep ~= 0) and (unit.upkeep ~= "loyal") then
-		-- todow16: use an actual [effect].
-		unit:add_modification("object", { T.effect { apply_to = "wc2_overlay", add = "misc/loyal-icon.png" }}, false )
+		unit:add_modification("object", { T.effect { apply_to = "wc2_overlay", add = "misc/loyal-icon.png" }})
 	end
 
 	local object = {
