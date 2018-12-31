@@ -32,6 +32,7 @@ wc2_invest_tellunit = wesnoth.dofile("./invest/invest_tellunit.lua")
 
 wesnoth.dofile("./autorecall.lua")
 wesnoth.dofile("./promote_commander.lua")
+wesnoth.dofile("./objectives.lua")
 
 --	{WC_II_COLOR_HACK}
 on_event("prestart", function(cx)
@@ -93,3 +94,10 @@ on_event("victory", function(cx)
 	end
 end)
 
+on_event("start", function(cx)
+	local is_first_scenario = wml.variables["difficulty.length"] == 0
+	if is_first_scenario then
+		wesnoth.dofile("./difficulty.lua")
+	end
+	wesnoth.wml_actions.wc2_objectives({})
+end)
