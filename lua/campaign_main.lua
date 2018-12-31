@@ -1,6 +1,9 @@
 T = wml.tag
 on_event = wesnoth.require("on_event")
 
+wc2_utils = wesnoth.require("./utils.lua")
+wc2_era = wesnoth.require("./era.lua")
+
 wc2_ability_events = wesnoth.dofile("./ability_events.lua")
 wc2_artifacts = wesnoth.dofile("./artifacts.lua")
 wc2_bonus = wesnoth.dofile("./bonus.lua")
@@ -8,7 +11,6 @@ wc2_color = wesnoth.dofile("./color.lua")
 wc2_dropping = wesnoth.dofile("./dropping.lua")
 wc2_effects = wesnoth.dofile("./effects.lua")
 wc2_enemy = wesnoth.dofile("./enemy.lua")
-wc2_era = wesnoth.dofile("./era.lua")
 wc2_heroes = wesnoth.dofile("./heroes.lua")
 wc2_items = wesnoth.dofile("./items.lua")
 wc2_map_utils = wesnoth.dofile("./map_utils.lua")
@@ -20,7 +22,6 @@ wc2_recall = wesnoth.dofile("./recall.lua")
 wc2_scenario = wesnoth.dofile("./scenario.lua")
 wc2_training = wesnoth.dofile("./training.lua")
 wc2_unittypedata = wesnoth.dofile("./unittypedata.lua")
-wc2_utils = wesnoth.dofile("./utils.lua")
 
 wc2_wiki_dialog = wesnoth.dofile("./wocopedia/help_dialog.lua")
 wc2_wiki = wesnoth.dofile("./wocopedia/help.lua")
