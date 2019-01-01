@@ -64,7 +64,8 @@ function wesnoth.wml_actions.wc2_fix_colors(cfg)
 	local other_sides = wesnoth.get_sides { { "not", wml.get_child(cfg, "player_sides") } }
 	local available_colors = { "red", "blue", "green", "purple", "black", "brown", "orange", "white", "teal" }
 	local taken_colors = {}
-	for side_num, side in ipairs(player_sides) do
+	for i, side in ipairs(player_sides) do
+		local side_num = side.side
 		-- important: this creates the 'player' array.
 		-- todo: maybe use a side variable instead ?
 		local vname = "player[" .. side_num .. "].team_color"
@@ -76,7 +77,8 @@ function wesnoth.wml_actions.wc2_fix_colors(cfg)
 		taken_colors[side.color] = true
 	end
 	local color_num = 1
-	for side_num, side in ipairs(other_sides) do
+	for i, side in ipairs(other_sides) do
+		local side_num = side.side
 		while taken_colors[available_colors[color_num]] == true do
 			color_num = color_num + 1
 		end
