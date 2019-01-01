@@ -52,6 +52,21 @@ function Set (list)
 	return set
 end
 
+function shuffle_special_locations(map, loc_ids)
+	local locs = {}
+	for i , v in ipairs(loc_ids) do
+		-- this tostring fixes a problem becasue  map.special_locations
+		-- is actually a table with map at index 1 so map.special_locations[1]
+		-- would just return 1.
+		locs[i] = map.special_locations[tostring(v)]
+	end
+	assert(#locs == #loc_ids)
+	helper.shuffle(locs)
+	for i , v in ipairs(loc_ids) do
+		map.special_locations[tostring(v)] = locs[i]
+	end
+end
+
 function shallow_copy(t)
 	local res = {}
 	for i, v in pairs(t) do
