@@ -15,17 +15,17 @@ dropping.index_to_loc = function(index)
 	return index - y_m1 * 1000, y_m1 + 1
 end
 
--- TODO: this should not be needed anymore since wesnoth 1.13 allows removing images by id.
-dropping.decorate_imagename = function(imagename, id)
-	return imagename;-- .. "~BLIT(misc/tpixel.png~O(" .. id .."))"
+dropping.decorate_imagename = function(id)
+	return "wc2_item_" .. id
 end
 
 dropping.place_image = function(x, y, cfg)
 	wesnoth.add_tile_overlay(x, y, {
-		image = dropping.decorate_imagename(cfg.image, cfg.id),
+		image = cfg.image,
 		team_name = cfg.team_name,
 		visible_in_fog = cfg.visible_in_fog,
-		redraw = cfg.redraw,		
+		redraw = cfg.redraw,
+		name = dropping.decorate_imagename(cfg.id)
 	})
 end
 
@@ -64,7 +64,7 @@ dropping.remove_item = function(x, y, id)
 	local entries = dropping.get_entries_at_readwrite(x,y)
 	for i,v in ipairs(entries) do
 		if v.id == id then
-			wesnoth.remove_tile_overlay(x, y, dropping.decorate_imagename(v.image, id))
+			wesnoth.remove_tile_overlay(x, y, dropping.decorate_imagename(id))
 			table.remove(entries, i)
 			break
 		end
@@ -77,7 +77,7 @@ dropping.remove_all_items = function(filter)
 		local x, y = dropping.index_to_loc(k)
 		for i = start, 1, -1 do
 			if filter(v[i], x, y) then
-				wesnoth.remove_tile_overlay(x, y, dropping.decorate_imagename(v[i].image, v[i].id))
+				wesnoth.remove_tile_overlay(x, y, dropping.decorate_imagename(v[i].id))
 				table.remove(v, i)
 			end
 		end
@@ -87,7 +87,7 @@ end
 dropping.remove_current_item = function()
 	local v = dropping.current_item
 	local ec = wesnoth.current.event_context
-	wesnoth.remove_tile_overlay(ec.x1, ec.y1, dropping.decorate_imagename(v.image, v.id))
+	wesnoth.remove_tile_overlay(ec.x1, ec.y1, dropping.decorate_imagename(v.id))
 	dropping.item_taken = true
 end
 
@@ -130,7 +130,7 @@ on_event("moveto", function(event_context)
 		wesnoth.fire_event("wc2_drop_pickup", x, y)
 		if dropping.item_taken then
 			table.remove(entries, i)
-			wesnoth.remove_tile_overlay(x, y, dropping.decorate_imagename(v.image, v.id))
+			wesnoth.remove_tile_overlay(x, y, dropping.decorate_imagename(v.id))
 			wesnoth.allow_undo(false)
 		else
 			i = i + 1
