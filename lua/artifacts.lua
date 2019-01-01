@@ -35,6 +35,7 @@ function artifacts.place_item(x, y, index)
 	wc2_dropping.add_item(x, y, {
 		wc2_atrifact_id = index,
 		image = artifacts.list[index].icon,
+		z_order = 20,
 	})
 end
 

@@ -1,5 +1,6 @@
 --<<
 
+-- todo: this is defined twice.
 --places a  suppliy villgae on the map at the location of unit @a u.
 function wesnoth.wml_actions.wc2_map_supply_village(u)
 	if getmetatable(u) ~= "unit" then
@@ -11,6 +12,7 @@ function wesnoth.wml_actions.wc2_map_supply_village(u)
 		x = u.x,
 		y = u.y,
 		image = wml.variables["images.supply[0].image"],
+		z_order = -10,
 	}
 	wesnoth.wml_actions.set_variables {
 		mode = "append",

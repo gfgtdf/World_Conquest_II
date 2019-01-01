@@ -25,7 +25,8 @@ dropping.place_image = function(x, y, cfg)
 		team_name = cfg.team_name,
 		visible_in_fog = cfg.visible_in_fog,
 		redraw = cfg.redraw,
-		name = dropping.decorate_imagename(cfg.id)
+		name = dropping.decorate_imagename(cfg.id),
+		z_order = cfg.z_order
 	})
 end
 

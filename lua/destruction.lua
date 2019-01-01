@@ -64,7 +64,14 @@ on_event("die", function(cx)
 	if not matches_terrain("K*^*,C*^*,*^Fet,G*^F*,G*^Uf,A*,*^Effy,*^B*,Rrc,Iwr,*^Vhh,*^Vy*,*^Vz*,*^Fz*") then
 		return
 	end
-	
+	local function item(image)
+		wesnoth.wml_actions.item {
+			x = cx.x1,
+			y = cx.y1,
+			image = image,
+			z_order = -10,
+		}
+	end
 	if matches_terrain("Kh,Kha,Kh^Vov,Kha^Vov") then
 		wesnoth.set_terrain(loc, "Khr", "base")
 		
@@ -111,7 +118,6 @@ on_event("die", function(cx)
 				y = cx.y1,
 				image = "wc2_citadel_leanto"
 			}
-			--todo: this is currently broken fix it by drawing this image _under_ the artifact
 			item("scenery/trash.png")
 			wesnoth.set_terrain(loc, "Rrc^Edt")
 		end
@@ -124,7 +130,6 @@ on_event("die", function(cx)
 		--		find_in=items.point
 		--	[/not]
 		--[/remove_item]
-		--todo: this is currently broken fix it by drawing this image _under_ the artifact
 		item("scenery/trash.png")
 		wesnoth.set_terrain(loc, "Iwr^Edt")
 	elseif matches_terrain("*^Vy*,*^Vz*,*^Fz*") then

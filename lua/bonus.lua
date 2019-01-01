@@ -12,7 +12,7 @@ function wesnoth.wml_actions.wc2_place_bonus(cfg)
 	local c_scenery = bonus.sceneries[scenery]
 	if not c_scenery then
 		helper.wml_error("[wc2_place_bonus] invalid 'scenery' attribute: ".. tostring(scenery))
-	end
+		end
 	local image = c_scenery.image or scenery
 	bonus.place_item(x, y, image)
 	
@@ -48,6 +48,7 @@ function bonus.place_item(x, y, image)
 	wc2_dropping.add_item(x, y, {
 		wc2_is_bonus = true,
 		image = image,
+		z_order = 10,
 	})
 end
 
@@ -66,6 +67,7 @@ function bonus.remove_current_item(ec)
         x = ec.x1,
 		y = ec.y1,
         image = "scenery/rubble.png",
+		z_order = -10,
     }
 end
 

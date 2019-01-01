@@ -26,6 +26,7 @@ function wesnoth.wml_actions.wc2_map_supply_village(t)
 	wesnoth.wml_actions.item {
 		x = loc[1],
 		y = loc[2],
-		image = supply_images[supply_image]
+		image = supply_images[supply_image],
+		z_order = -10,
 	}
 end
