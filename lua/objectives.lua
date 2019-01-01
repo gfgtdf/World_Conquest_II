@@ -10,22 +10,22 @@ local strings = {
 
 function wesnoth.wml_actions.wc2_objectives(cfg)
 	wesnoth.wml_actions.objectives {
-		t.objective {
+		wml.tag.objective {
 			description = strings.wct_victory_condition,
 			condition = "win",
 		},
-		t.objective {
+		wml.tag.objective {
 			description = strings.turns,
 			condition = "lose",
 		},
-		t.objective {
+		wml.tag.objective {
 			description = strings.wct_defeat_condition,
 			condition = "lose",
 		},
-		t.note {
+		wml.tag.note {
 			description = strings.difficulty .. wml.variables["difficulty.name"],
 		},
-		t.note {
+		wml.tag.note {
 			description = strings.version .. wml.variables["wct.version"],
 		},
 		note = wc2_artifacts.color_help(strings.help_available)
