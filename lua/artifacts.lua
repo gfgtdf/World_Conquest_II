@@ -59,8 +59,9 @@ function artifacts.give_item(unit, index, visualize)
 		end
 	end
 	local make_holder_loyal = wml.variables["wc2_config_items_make_loyal"] ~= false
-	--todo: and not unit.variables.wc2.is_commander or hero
-	--todo: does the 'unit.upkeep ~= 0' part break thise code fo level 0 units?
+	-- is_commander or is_hero imples unit.upkeep == "loyal"
+	-- note that the following `unit.upkeep` does not match normal
+	-- level 0 (which have still 'full' upkeep) only units with upkeep=0 explicitly set
 	if make_holder_loyal and (not unit.canrecruit) and (unit.upkeep ~= 0) and (unit.upkeep ~= "loyal") then
 		unit:add_modification("object", { T.effect { apply_to = "wc2_overlay", add = "misc/loyal-icon.png" }})
 	end

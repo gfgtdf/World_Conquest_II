@@ -248,5 +248,5 @@ function default_generate_map(data)
 	end
 	cfg.seed = wesnoth.random(5000) + 7
 	return wesnoth.generate_default_map(w, h, cfg)
-	--FIXME: shuffle players stating locations.
+	--todo: FIXME: shuffle players stating locations.
 end
