@@ -261,6 +261,9 @@ wc2_utils.menu_item {
 	image= "help/closed_section.png~SCALE(18,17)",
 	filter = function(x, y)
 		local u = wesnoth.get_unit(x, y)
+		if wc2_artifacts.is_item_at(x, y) then
+			return false
+		end
 		return not (u and u.side == wesnoth.current.side)
 	end,
 	handler = function(cx)

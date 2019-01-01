@@ -260,7 +260,9 @@ wc2_utils.menu_item {
 		if not wc2_era.get_faction(wesnoth.get_viewing_side()) then
 			return false
 		end
-		--todo: check whether there is an artifact on that tile.
+		if wc2_artifacts.is_item_at(x, y) then
+			return false
+		end
 		return true
 	end,
 	handler = function(cx)
