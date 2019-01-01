@@ -1,3 +1,4 @@
+local _ = wesnoth.textdomain 'wesnoth-World_Conquest_II'
 local strings = {
 	wct_victory_condition = _"Defeat all enemy leaders and commanders",
 	turns = _"Turns run out",
