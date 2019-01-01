@@ -17,25 +17,4 @@ function wesnoth.wml_actions.wc2_set_recall_cost(cfg)
 	end
 end
 
-
-
---compability code. todo: remove
-
-local T = wml.tag
-local on_event = wesnoth.require("on_event")
-
-on_event("prestart", function()
-	for i, u in ipairs(wesnoth.get_recall_units()) do
-		local name = u.variables.name
-		if name then
-			print(type(name))
-			print(tostring(name):find("%d+ gold"))
-		end
-		if type(name) == "string" and tostring(u.name):find("%d+ gold") then
-			u.name = name
-			u.variables.name = nil
-			add_rc_object(u)
-		end
-	end
-end)
 -->>

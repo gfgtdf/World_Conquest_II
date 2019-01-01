@@ -55,18 +55,6 @@ on_event("recruit", function(ctx)
 	end
 end)
 
---compatability code, todo: remove it
-function fix_faction_wml(cfg)
-	for p in wml.child_range(cfg, "pair") do
-		local u1 = wml.get_child(p, "unit")
-		local u2 = wml.get_child(p, "replace") or {}
-		if u1 then
-			for k,v in pairs(p) do p[k]=nil end
-			p.types = table.concat({u1.type, u2.type}, ",")
-		end
-	end
-end
-
 function wc2_era.get_faction(id)
 	if type(id) == "number" then
 		id = wesnoth.get_side_variable(id, "wc2.faction_id") or wesnoth.sides[id].faction
@@ -84,16 +72,8 @@ local function init_side(side_num)
 		-- don't do this twice.
 		return
 	end
-	local old_faction = wml.variables["player[" .. side_num .. "].faction.id"]
-	if old_faction then
-		--compatabiltiy code: remove all in player[side_num] except training.
-		-- don't keep heroes, commanders, pairs, etc. They will be regenerated.
-		local training = wml.array_access.get("player[" .. side_num .. "].training")
-		wml.variables["player[" .. side_num .. "]"] = {}
-		wml.array_access.set("player[" .. side_num .. "].training", training)
-	end
 	local side = wesnoth.sides[side_num]
-	local faction = wc2_era.get_faction(old_faction or side_num)
+	local faction = wc2_era.get_faction(side_num)
 
 	if faction and wesnoth.get_side_variable(side_num, "wc2.pair.length") == 0 and wml.get_child(faction, "pair") then
 		wesnoth.set_side_variable(side_num, "wc2.faction_id", faction.id)
@@ -145,7 +125,6 @@ function wesnoth.wml_actions.wc2_init_era(cfg)
 	
 	wc2_era.wc2_era_id = cfg.wc2_era_id -- TODO removed for testing or error("missing wc2_era_id")
 	for faction in wml.child_range(cfg, "faction") do
-		fix_faction_wml(faction)
 		table.insert(wc2_era.factions_wml, faction)
 	end
 	for i,v in ipairs(wml.get_child(cfg, "hero_types")) do

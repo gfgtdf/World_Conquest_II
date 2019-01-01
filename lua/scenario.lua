@@ -24,15 +24,6 @@ on_event("preload", function()
 	wml.variables["wc2.version"] = "0.7.10.2"
 end)
 
-on_event("prestart", function()	
-	if wml.variables["player[1].training.length"] > 0 then
-		-- todo: remove compatability code.
-		wml.variables["wc2.version_0_6_compat"] = true
-	end
-	wc2_training.do_compatability()
-end)
-
-
 -- happens before training events.
 on_event("recruit", 1, function(ec)
 	local u = wesnoth.get_unit(ec.x1, ec.y1)
