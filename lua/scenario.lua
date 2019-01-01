@@ -26,6 +26,7 @@ end)
 
 on_event("prestart", function()	
 	if wml.variables["player[1].training.length"] > 0 then
+		-- todo: remove compatability code.
 		wml.variables["wc2.version_0_6_compat"] = true
 	end
 	wc2_training.do_compatability()

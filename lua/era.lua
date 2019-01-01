@@ -55,6 +55,7 @@ on_event("recruit", function(ctx)
 	end
 end)
 
+--compatability code, todo: remove it
 function fix_faction_wml(cfg)
 	for p in wml.child_range(cfg, "pair") do
 		local u1 = wml.get_child(p, "unit")
@@ -158,6 +159,7 @@ function wesnoth.wml_actions.wc2_init_era(cfg)
 	end
 end
 
+-- picks a deserter for the side @a side_num using the list of posibel deserters for that sides faction.
 function wc2_era.pick_deserter(side_num)
 	local deserters = wc2_utils.split_to_array(wesnoth.get_side_variable(side_num, "wc2.deserters"))
 	local index = #deserters
@@ -167,6 +169,9 @@ function wc2_era.pick_deserter(side_num)
 	return res
 end
 
+-- replaces group ids with the corresponding unit lists.
+-- @a types_str a comma seperated list of unti types and group ids.
+-- @returns an array of unit types.
 function wc2_era.expand_hero_types(types_str)
 	local types = wc2_utils.split_to_array(types_str)
 	local types_new = {}
@@ -187,6 +192,9 @@ function wc2_era.expand_hero_types(types_str)
 	return types_res
 end
 
+-- replaces group ids with the corresponding unit lists.and replaces unit type ids with their names. (used by wocopedia)
+-- @a types_str a comma seperated list of unti types and group ids.
+-- @returns an array of unit type names.
 function wc2_era.expand_hero_names(types_str, only_unitnames)
 	local types = wc2_utils.split_to_array(types_str)
 	local types_new = {}
@@ -217,10 +225,12 @@ on_event("prestart", function()
 	end
 end)
 
+-- Generates the list of possible unit types that can be found in bonus points.
 function wc2_era.generate_bonus_heroes()
 	return wc2_era.expand_hero_types("Bonus_All")
 end
 
+-- shows the recruit info dialog for the faction of the currently viewing side.
 function wesnoth.wml_actions.wc2_recruit_info(cfg)
 		
 	local side_num = wesnoth.get_viewing_side()

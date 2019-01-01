@@ -10,7 +10,7 @@ local terrain_map = { fungus = "Uft", cave = "Ut", sand = "Dt",
 	village = "Vt", impassable = "Xt", unwalkable = "Qt", rails = "Rt"
 }
 
--- for all attacks that match [filter_attack], it 
+-- for all attacks that match [filter_attack], it add a dublicate fo that attack and modifres is as describes in the [attack]  subtag which uses the apply_to=attack syntax
 function wesnoth.effects.wc2_optional_attack(u, cfg)
 	local name_suffix = cfg.name_suffix or helper.wml_error("apply_to=wc2_optional_attack missing required name_suffix= attribute.")
 	local attack_mod = helper.get_child(cfg, "attack") or helper.wml_error("apply_to=wc2_optional_attack missing required [attack] subtag")
@@ -37,6 +37,7 @@ function wesnoth.effects.wc2_optional_attack(u, cfg)
 	wesnoth.add_modification(u, "object", { T.effect (attack_mod) }, false)
 end
 
+-- The implementation of the moves defense bonus in movement training.
 function wesnoth.effects.wc2_moves_defense(u, cfg)
 	wesnoth.add_modification(u, "object", { T.effect {
 		apply_to = "defense",
@@ -61,6 +62,7 @@ function wesnoth.effects.wc2_moves_defense(u, cfg)
 	}}, false)
 end
 
+-- Like apply_to=resistance with replace=true, but never decreases resistances.
 function wesnoth.effects.wc2_min_resistance(u, cfg)
 	local resistance_new = {}
 	local resistance_old = helper.parsed(helper.get_child(cfg, "resistance"))
@@ -85,6 +87,7 @@ function wesnoth.effects.wc2_min_resistance(u, cfg)
 end
 
 
+-- Like apply_to=defense with replace=true, but never decreases defense.
 function wesnoth.effects.wc2_min_defense(u, cfg)
 	local defense_new = {}
 	local defense_old = helper.parsed(helper.get_child(cfg, "defense"))
@@ -105,6 +108,7 @@ end
 -- filter_lua function cannot be used in [effect][filter]
 -- because it tries to pass the unit by its location while
 -- the unit is usually not on the map when a effect is applied.
+-- todo: this migth not be needed anymore in wesnoth 1.15
 function wesnoth.effects.wc2_fixed_lua_filter(u, cfg)
 	local path = wc2_utils.split_to_array(cfg.lua_filter)
 	local current = _G
@@ -119,6 +123,7 @@ function wesnoth.effects.wc2_fixed_lua_filter(u, cfg)
 	end
 end
 
+-- Sets the auro accordingly if unit might have multiple of illumination, darkness or forcefield abilities.
 function wesnoth.effects.wc2_update_aura(u, cfg)
 	local illuminates = wesnoth.match_unit(u, { ability = "illumination" } )
 	local darkens = wesnoth.match_unit(u, { ability = "darkness" } )
@@ -147,7 +152,7 @@ function wesnoth.effects.wc2_update_aura(u, cfg)
 	}, false)
 end
 
--- similar to the usualy overlay but does not add overlays the the unit already has.
+-- Similar to the usual apply_to=overlay effect but does not add overlays the the unit already has.
 function wesnoth.effects.wc2_overlay(u, cfg)
 	if cfg.add then
 		local to_add_old = wc2_utils.split_to_array(cfg.add)
@@ -171,13 +176,13 @@ function wesnoth.effects.wc2_overlay(u, cfg)
 	wesnoth.add_modification(u, "object", { T.effect(cfg)} , false)
 end
 
--- can move in same turn as when recruited/recalled
+-- Can move in same turn as when recruited/recalled
 function wesnoth.effects.wc2_move_on_recruit(u, cfg)
 	-- maybe better use a status than a variable ?
 	u.variables["mods.wc2_move_on_recruit"] = true
 end
 
--- similar to the usualy overlay but does not add overlays the the unit already has.
+-- The implementation of this mods reduced recall costs, all units get an object with this effect.
 function wesnoth.effects.wc2_recall_cost(u, cfg)
 	local t = wesnoth.unit_types[u.type]
 	u.recall_cost = math.min(20, t.cost + 3)

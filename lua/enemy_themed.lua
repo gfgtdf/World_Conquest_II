@@ -4,7 +4,9 @@ local on_event = wesnoth.require("on_event")
 local strings = {
 	enemy_pet = _ "$name|'s pet" 
 }
-
+-- in the later scenarios there is a small chance that a scenario will be themed for an enemy
+-- which means in paticular changing the castle of the enemy accorign to the unit type of that
+-- enemy, and giving him an extra unit.
 local function wct_map_enemy_themed(race, pet, castle, village, chance)
 	if wesnoth.random(100) > chance then
 		return

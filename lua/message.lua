@@ -1,6 +1,5 @@
 --<<
-
--- like core [message] but adds scalex3 to uniticions from untis without profiles.
+---- defines a wml tag [wc2_message] that is the same as core [message] but adds scalex3 to uniticons for untis without profiles.
 
 
 local function get_speaker(cfg)
@@ -38,8 +37,7 @@ function wesnoth.wml_actions.wc2_message(cfg)
 		-- dont fix portrait if its not used because the unit was not found.
 		return wesnoth.wml_actions.message(cfg)
 	end
-	
-	
+
 	local u_cfg = speaker.__cfg
 	if u_cfg.profile and u_cfg.profile ~= "" and u_cfg.profile ~= "unit_image" then
 		return wesnoth.wml_actions.message(cfg)
@@ -51,6 +49,5 @@ function wesnoth.wml_actions.wc2_message(cfg)
 	
 	return wesnoth.wml_actions.message(cfg_parsed)
 end
-
 
 -->>

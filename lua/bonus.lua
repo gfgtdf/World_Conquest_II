@@ -4,6 +4,7 @@ local on_event = wesnoth.require("on_event")
 local bonus = {}
 bonus.sceneries = {}
 
+-- places a bonus point on the map.
 function wesnoth.wml_actions.wc2_place_bonus(cfg)
 	local x = cfg.x or helper.wml_error("[wc2_place_bonus] missing required 'x' attribute")
 	local y = cfg.y or helper.wml_error("[wc2_place_bonus] missing required 'y' attribute")
@@ -68,13 +69,17 @@ function bonus.remove_current_item(ec)
     }
 end
 
+-- check to be overwritten by other mods.
 function bonus.can_pickup_bonus(side_num, x, y)
 	return wc2_scenario.is_human_side(side_num)
 end
 
+-- callback to be overwritten by other mods.
 function bonus.post_pickup(side_num, x, y)
 end
 
+
+-- event fired by dropping.lua
 on_event("wc2_drop_pickup", function(ec)
 	local item = wc2_dropping.current_item
 	local side_num = wesnoth.current.side

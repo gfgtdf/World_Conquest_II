@@ -1,4 +1,6 @@
 --<<
+-- The addons own 'pick your advances' mod. 
+-- Works independed from the reset of the wc2 code (but needs wc2_utils.lua)
 local on_event = wesnoth.require("on_event")
 local _ = wesnoth.textdomain 'wesnoth-World_Conquest_II'
 local t = wml.tag

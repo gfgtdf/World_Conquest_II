@@ -66,6 +66,7 @@ on_event("recruit", function(ec)
 	wesnoth.allow_undo(false)
 end)
 
+--Gives the enemy side @cfg.side a commander (a hero unit)
 function enemy.do_commander(cfg, group_id, loc)
 	if not cfg.commander or cfg.commander <= 0 then
 		return
@@ -146,6 +147,9 @@ on_event("recruit", function(ec)
 	wesnoth.set_side_variable(side_num, "wc2.to_recall", table.concat(to_recall, ","))
 end)
 
+--Gives the enemy side @cfg.side units that it can recall.
+--It does not really addthem to the recall list but
+--emulates that by placing higher level units on the map in that sides
 function enemy.do_recall(cfg, group_id, loc)
 	local group = wml.variables[("enemy_army.group[%d]"):format(group_id)]
 	local to_recall = wc2_utils.split_to_array(wesnoth.get_side_variable(cfg.side, "wc2.to_recall"))
@@ -217,7 +221,7 @@ function wesnoth.wml_actions.wc2_enemy(cfg)
 	dummy_unit:erase()
 	local enemy_type_id = wc2_utils.pick_random("enemy_army.factions_available") - 1
 	if enemy_type_id == nil then
-		--shoulodn't happen, added for robustness.
+		--should't happen, added for robustness.
 		local n_groups = wml.variables["enemy_army.group.length"]
 		if n_groups > 0 then
 			enemy_type_id = wesnoth.random(n_groups) - 1
@@ -254,6 +258,7 @@ function wesnoth.wml_actions.wc2_enemy(cfg)
 	enemy.do_commander(cfg, enemy_type_id, loc)
 	enemy.do_supply(cfg, enemy_type_id, loc)
 	enemy.do_recall(cfg, enemy_type_id, loc)
+	-- todo: remove or uncomment (i think this was moved to scenario generation)
 	-- side.gold = side.gold + wml.variables["enemy_army.bonus_gold"]
 	if cfg.have_item > 0 and cfg.have_item <= (wml.variables["difficulty.enemy_power"] or 6) then
 		wesnoth.set_side_variable(side_num, "wc2.random_items", 1)

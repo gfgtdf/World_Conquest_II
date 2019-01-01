@@ -1,4 +1,5 @@
-
+-- The difficulty dialog. unlike other files this does not 'export' functions,
+-- just run this file to show the diffculty dialog.
 local _ = wesnoth.textdomain 'wesnoth-World_Conquest_II'
 local vars = wml.variables
 local strings = {

@@ -1,5 +1,6 @@
 --<<
 
+--places a  suppliy villgae on the map at the location of unit @a u.
 function wesnoth.wml_actions.wc2_map_supply_village(u)
 	if getmetatable(u) ~= "unit" then
 		u = wesnoth.get_units(u)[1]
@@ -36,6 +37,7 @@ local function extract_unit(x, y)
 	end
 end
 
+--todo: move this to the mapgen and remove it here.
 function wesnoth.wml_actions.wc2_shuffle_locations(cfg)
 	local sides = {}
 	local locs = {}

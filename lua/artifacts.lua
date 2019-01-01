@@ -29,7 +29,8 @@ function artifacts.drop_message(index)
 		image = artifacts.list[index].icon,
 	}
 end
--- lua artifacts.place_item(30,20,1)
+
+-- can be used from the bug console as `lua wc2_artifacts.place_item(30,20,1)`
 function artifacts.place_item(x, y, index)
 	wc2_dropping.add_item(x, y, {
 		wc2_atrifact_id = index,
@@ -259,7 +260,7 @@ end
 function wesnoth.wml_actions.wc2_place_item(cfg)
 	artifacts.place_item(cfg.x, cfg.y, cfg.item_index)
 	if cfg.message then
-		-- todo: was this before the actual dropping in the riginal code?
+		-- todo: was this before the actual dropping in the original code?
 		artifacts.drop_message(cfg.item_index)
 	end
 end

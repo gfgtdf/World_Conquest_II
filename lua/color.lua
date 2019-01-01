@@ -42,6 +42,9 @@ function color.color_text(color_str, text)
 	return "<span color='#" .. color_str .. "'>" .. text .. "</span>"
 end
 
+-- todo go through all callers and make sure that the have te correct secodn parmater
+-- (that the don't leave it empy when they actually want the viewing side instead 
+-- of the currently playing side)
 function color.tc_text(team_num, text)
 	if text == nil then
 		text = team_num
@@ -59,6 +62,9 @@ function color.tc_image(team_num, img)
 	return img .. "~TC(" .. team_num .. ",magenta)"
 end
 
+-- Fixes the colors in mp campaigns: in case that the players changed the
+-- colors in the mp setup screen, we have to remember those settings and
+-- set the teams color in later scenarios acccordingly.
 function wesnoth.wml_actions.wc2_fix_colors(cfg)
 	local player_sides = wesnoth.get_sides(wml.get_child(cfg, "player_sides"))
 	local other_sides = wesnoth.get_sides { { "not", wml.get_child(cfg, "player_sides") } }

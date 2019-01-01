@@ -1,6 +1,6 @@
 --<<
--- overwrite this to allow puttin an z_order to each item.
-
+-- overwrite this to allow poutting an z_order to each item.
+-- todo: this might no longer be needed in 1.15, remove this.
 local helper = wesnoth.require "helper"
 local wml_actions = wesnoth.wml_actions
 

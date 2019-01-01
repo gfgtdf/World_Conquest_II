@@ -1,3 +1,5 @@
+-- Changes terrain when unit die on that tile. works mostly independend of the rest of the addon.
+
 local snow = {
 	"misc/blank-hex.png~BLIT(terrain/wct-snowcrater1.png~SCALE(63,63),5,5)",
 	"misc/blank-hex.png~BLIT(terrain/wct-snowcrater2.png~SCALE(63,63),5,5)",
@@ -39,7 +41,7 @@ local function wct_map_custom_ruin_village(loc)
 	end
 	if matches_terrain("*^Vzc,*^Vzca") then
 		wesnoth.set_terrain(loc, "*^Vzcr", "overlay")
-	end
+		end
 	if matches_terrain("*^Vzd,*^Vzda") then
 		wesnoth.set_terrain(loc, "*^Vzdr", "overlay")
 	end
