@@ -46,17 +46,3 @@ on_event("prestart", function(cx)
 		}
 	}
 end)
---	{WORLD_CONQUEST_TEK_INVEST_EVENTS}
-on_event("side turn 1", function(cx)
-	if wesnoth.current.side > 3 then
-		return
-	end
-	wesnoth.wml_actions.event {
-		name = "recruit,recall",
-		wml.tag.filter {
-			side = wesnoth.current.side
-		},
-		wml.tag.wc2_invest {
-		}
-	}
-end)
