@@ -259,8 +259,5 @@ function wesnoth.wml_actions.wc2_enemy(cfg)
 		wesnoth.set_side_variable(side_num, "wc2.random_items", 1)
 	end
 end
-function wesnoth.wml_actions.wc2_enemy_themed(cfg)
-
-end
 return enemy
 -->>

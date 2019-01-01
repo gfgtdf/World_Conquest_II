@@ -1,3 +1,8 @@
+if true then
+	error("this code is broken, only for reference")
+end
+
+
 -- does not work yet becasue we have no access to wesnoth.unit_types during map generation.
 local function matches_race(type_id, race)
 	local unit_data = wesnoth.unit_types[type_id]

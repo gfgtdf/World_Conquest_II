@@ -34,6 +34,7 @@ wc2_invest_tellunit = wesnoth.dofile("./invest/invest_tellunit.lua")
 wesnoth.dofile("./autorecall.lua")
 wesnoth.dofile("./promote_commander.lua")
 wesnoth.dofile("./objectives.lua")
+wesnoth.dofile("./enemy_themed.lua")
 
 --	{WC_II_COLOR_HACK}
 on_event("prestart", function(cx)
