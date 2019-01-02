@@ -182,8 +182,6 @@ on_event("die", function(event_context)
 	if not wml.variables["wc2_config_experimental_pickup"] and wc2_scenario.is_human_side(unit.side) then
 		return
 	end
-
-	-- fixme: this is currently placed below images drawn by caslte destruction.
 	for object in helper.child_range(helper.get_child(unit.__cfg, "modifications") or {}, "object") do
 		if object.wc2_atrifact_id then
 			artifacts.place_item(unit.x, unit.y, object.wc2_atrifact_id)
