@@ -91,14 +91,7 @@ function artifacts.give_item(unit, index, visualize)
 	unit:add_modification("object", object)
 	--rebuild unit, to reduce savefile size.
 	unit:transform(unit.type)
-	
-	-- todo: is this still used?
-	for trait in helper.child_range(artifacts.list[index], "trait") do
-		if unit:matches { T.filter_wml { T.modifications { T.trait { id = trait.id } } } } then
-		else
-			unit:add_modification("trait", trait)
-		end
-	end
+	-- the artifact might reduce the max xp.
 	unit:advance(true, true)
 end
 
