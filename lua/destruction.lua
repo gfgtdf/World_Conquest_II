@@ -122,14 +122,11 @@ on_event("die", function(cx)
 			wesnoth.set_terrain(loc, "Rrc^Edt")
 		end
 	elseif matches_terrain("Iwr") then
-		-- fixme:
-		--[remove_item]
-		--	x,y=$x1,$y1
-		--	--todo: this is currently broken
-		--	[not]
-		--		find_in=items.point
-		--	[/not]
-		--[/remove_item]
+		wesnoth.wml_actions.remove_item {
+			x = cx.x1,
+			y = cx.y1,
+			image = "wc2_dock_ship"
+		}
 		item("scenery/trash.png")
 		wesnoth.set_terrain(loc, "Iwr^Edt")
 	elseif matches_terrain("*^Vy*,*^Vz*,*^Fz*") then

@@ -229,13 +229,15 @@ function world_conquest_tek_map_decoration_6b()
 			table.insert(prestart_event, wml.tag.item {
 				x = ship_loc[1],
 				y = ship_loc[2],
-				image = images.dock_ship
+				image = images.dock_ship,
+				name = "wc2_dock_ship",
 			})
 		else
 			table.insert(prestart_event, wml.tag.item {
 				x = ship_loc[1],
 				y = ship_loc[2],
 				image = images.dock_ship_2
+				name = "wc2_dock_ship",
 			})
 		end
 	end
