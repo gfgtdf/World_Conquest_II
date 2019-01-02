@@ -233,30 +233,6 @@ wc2_utils.menu_item {
 	end
 }
 
-function wesnoth.wml_actions.wc2_give_item(cfg)
-	local units = wesnoth.get_units (wml.get_child(cfg, "filter"))
-	artifacts.give_item(units[1], cfg.item_index, cfg.visualize)
-end
-
-function wesnoth.wml_actions.wc2_give_enemy_item(cfg)
-	local units = wesnoth.get_units (wml.get_child(cfg, "filter"))
-	local unit = units[1]
-	local enemy_items = wc2_utils.split_to_array(wml.variables["enemy_army.artifacts"])
-	-- list of indexes to enemy_items
-	local possible_artifacts = {}
-	for i, v in ipairs(enemy_items) do
-		local filter = wml.get_child(artifacts.list[tonumber(v)], "filter")
-		if not filter or unit:matches(filter) then
-			table.insert(possible_artifacts, i)
-		end
-	end
-	local i = possible_artifacts[wesnoth.random(#possible_artifacts)]
-	local artifact_id = enemy_items[i]
-	table.remove(enemy_items, i)
-	artifacts.give_item(unit, artifact_id, false)
-	wml.variables["enemy_army.artifacts"] = table.concat(enemy_items, ",")
-end
-
 function wesnoth.wml_actions.wc2_place_item(cfg)
 	artifacts.place_item(cfg.x, cfg.y, cfg.item_index)
 	if cfg.message then

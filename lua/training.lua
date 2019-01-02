@@ -161,12 +161,6 @@ function training.bonus_calculate_amount(side_num)
 	return amount
 end
 
-function training.pick_random()
-	--wesnoth.random(#training.trainers)
-	local options = {1,2,3,4,5,6,2,3,4,5,6,2,3,4,5,6}
-	return options[wesnoth.random(#options)]
-end
-
 function training.pick_bonus(side_num)
 	local amount = training.bonus_calculate_amount(side_num)
 	-- dark training reduced chances
@@ -180,13 +174,6 @@ function training.pick_bonus(side_num)
 		amount = math.min(training.trainings_left(side_num, traintype_index), math.max(amount, wc2_scenario.scenario_num() - 1))
 	end
 	return traintype_index, amount
-end
-
-function wesnoth.wml_actions.wc2_bonus_training(cfg)
-	local res = training.give_bonus(wesnoth.current.side)
-	if res == "not_possible" then
-		wml.variables["training_failed"] = true
-	end
 end
 
 function training.init_data(cfg)

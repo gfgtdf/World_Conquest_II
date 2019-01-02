@@ -56,7 +56,6 @@ on_event("recruit", function(ec)
 	end
 	wesnoth.set_side_variable(wesnoth.current.side, "wc2.random_items", needs_item - 1)
 	local unit = wesnoth.get_unit(ec.x1, ec.y1)
-	-- wesnoth.wml_actions.wc2_give_enemy_item { T.filter { id = unit.id }}
 	local item_id = enemy.pick_suitable_enemy_item(unit)
 	wc2_artifacts.give_item(unit, item_id, false)
 	if true then

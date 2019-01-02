@@ -16,18 +16,6 @@ local images = {
 	menu_recruit_info = "icons/action/editor-tool-unit_25.png~CROP(3,4,18,18)~GS()"
 }
 
-local function remove_dublicates(t)
-	local found = {}
-	for i = #t, 1, -1 do
-		local v = t[i]
-		if found[v] then
-			table.remove(t, i)
-		else
-			found[v] = true
-		end
-	end
-end
-
 -- the wc2 recruit pair logic.
 on_event("recruit", function(ctx)
 	local unit = wesnoth.get_unit(ctx.x1, ctx.y1)
@@ -167,7 +155,7 @@ function wc2_era.expand_hero_types(types_str)
 		types = types_new
 		types_new = {}
 	end
-	remove_dublicates(types_res)
+	wc2_utils.remove_dublicates(types_res)
 	return types_res
 end
 

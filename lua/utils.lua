@@ -1,8 +1,6 @@
 --<<
 local wc2_utils = {}
 local on_event = wesnoth.require("on_event")
--- variabel access with 
---local wc2_utils.vars = {}
 
 function wc2_utils.split_to_array(s, res)
 	res = res or {}
@@ -30,10 +28,6 @@ function wc2_utils.remove_dublicates(t)
 			found[v] = true
 		end
 	end
-end
-
-function wc2_utils.wml_sub(str)
-	return wml.tovconfig({str = str}).str
 end
 
 --comma seperated list
@@ -135,72 +129,6 @@ local global_vars = setmetatable({}, {
 })
 
 wc2_utils.global_vars = global_vars.wc2
-
-
-function wesnoth.wml_actions.wc2_benchmark(cfg)
-	local name = cfg.name
-	local start_time = wesnoth.get_time_stamp()
-	wesnoth.wml_actions.command(cfg)
-	local end_time = wesnoth.get_time_stamp()
-	print(name .. " took " .. end_time -  start_time .. " ticks")
-end
-
-function noise(data)
-	local locs = {}
-	local nlocs_total = 0
-	for i = 1, #data do
-		locs[i] = wesnoth.get_locations(data[i].filter)
-		nlocs_total = nlocs_total + #locs[1]
-	end
-	local nlocs_changed = 0
-	for i = 1, #data do
-		local d = data[i]
-		local chance = d.per_thousand
-		local terrains = d.terrain
-		local layer = d.layer
-		local num_tiles = d.nlocs and math.min(#locs[i], d.nlocs) or #locs[i]
-		if d.exact then
-			num_tiles = math.ceil(num_tiles * chance / 1000)
-			chance = 1000
-			helper.shuffle(locs[i])
-		end
-		for j = 1, num_tiles do
-			local loc = locs[i][j] 
-			if chance >= 1000 or chance >= wesnoth.random(1000) then
-				wesnoth.set_terrain(loc, helper.rand(terrains), layer)
-				nlocs_changed = nlocs_changed + 1
-			end
-		end
-		--print("noise: changed" .. tostring(nlocs_changed) .. " of " .. tostring(nlocs_total) .." locs.", "ratio was " .. chance .. "/1000")
-	end
-end
-
-function wesnoth.wml_actions.wc2_terrain(cfg)
-	cfg = helper.parsed(cfg)
-	local data = {}
-	for r in wml.child_range(cfg, "change") do
-		r_new = {
-			filter = wml.get_child(r, "filter") or {},
-			terrain = r.terrain,
-			layer = r.layer,
-			exact = r.exact ~= false,
-			per_thousand = 1000,
-			nlocs = r.nlocs,
-		}
-		if r.percentage then
-			r_new.per_thousand = r.percentage * 10
-		elseif r.per_thousand then
-			r_new.per_thousand = r.per_thousand;
-		elseif r.fraction then
-			r_new.per_thousand = math.ceil(1000 / r.fraction);
-		elseif r.fraction_rand then
-			r_new.per_thousand = math.ceil(1000 / helper.rand(r.fraction_rand));
-		end
-		table.insert(data, r_new)
-	end
-	noise(data)
-end
-
 
 if rawget(_G, "wc2_menu_filters") == nil then
 	wc2_menu_filters = {}

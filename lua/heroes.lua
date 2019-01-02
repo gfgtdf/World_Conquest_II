@@ -85,19 +85,6 @@ function wc2_heroes.place(t, side, x, y, is_commander)
 	return u
 end
 
-function wesnoth.wml_actions.wc2_place_hero(cfg)
-	local u = wc2_heroes.place(
-		cfg.type or helper.wml_error("missing type= attribute in [wc2_place_hero]"),
-		cfg.side or helper.wml_error("missing side= attribute in [wc2_place_hero]"),
-		cfg.x or helper.wml_error("missing x= attribute in [wc2_place_hero]"),
-		cfg.y or helper.wml_error("missing y= attribute in [wc2_place_hero]"),
-		cfg.is_commander
-	)
-	wml.variables[cfg.variable or "hero"] = u.id
-	-- fixes BfW 1.12 fog bug
-	wesnoth.wml_actions.redraw {}
-end
-
 function wesnoth.wml_actions.wc2_random_hero(cfg)
 	local side_num = cfg.side or helper.wml_error("missing side= attribute in [wc2_initial_hero]")
 	local x = cfg.x or helper.wml_error("missing x= attribute in [wc2_initial_hero]")
@@ -127,12 +114,6 @@ function wc2_heroes.founddialouge(finder, found)
 		id = finder.id,
 		message = reply,
 	}
-end
-
-function wesnoth.wml_actions.wc2_founddialogue(cfg)
-	local u_finder = wesnoth.get_unit(cfg.finder)
-	local u_found = wesnoth.get_unit(cfg.found)
-	wc2_heroes.founddialouge(u_finder, u_found)
 end
 
 return wc2_heroes
