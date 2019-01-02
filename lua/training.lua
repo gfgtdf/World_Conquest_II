@@ -231,6 +231,8 @@ function training.apply(u)
 	trait.description = wc2_utils.concat(descriptions, "\n")
 	if #trait > 0 then
 		u:add_modification("trait", trait)
+		--rebuild unit, to reduce savefile size.
+		u:transform(u.type)
 	end
 	u.variables.wc2_trained = true
 	u.hitpoints = u.max_hitpoints
