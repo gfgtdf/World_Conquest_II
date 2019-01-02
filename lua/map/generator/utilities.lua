@@ -1,4 +1,16 @@
 
+function flatten1(list)
+	local res = {}
+	assert(type(list) == "table")
+	for i1, v1 in ipairs(list) do
+		assert(type(v1) == "table")
+		for i2, v2 in ipairs(v1) do
+			res[#res + 1] = v2
+		end
+	end
+	return res
+end
+
 function dr_height(height, terrain)
 	return {
 		height = height,
@@ -206,7 +218,7 @@ function default_generate_map(data)
 	data.road_cost = flatten1(data.road_cost or {})
 	data.convert = flatten1(data.convert or {})
 	
-	local cfg = lon_to_wml(data, "mg_main")
+	local cfg = wc2_convert.lon_to_wml(data, "mg_main")
 	
 	--std_print("-------------------LUA-------------------")
 	--std_print(ilua.val2str(cfg))

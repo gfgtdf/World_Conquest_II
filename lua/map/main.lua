@@ -6,7 +6,7 @@ wesnoth.dofile("./utility.lua")
 wesnoth.dofile("./pretty_print.lua")
 wesnoth.dofile("./bonus_points.lua")
 wesnoth.dofile("./wct_map_generator.lua")
-wesnoth.dofile("./wml_lua_schema.lua")
+wc2_convert = wesnoth.dofile("./../wml_converter.lua")
 wesnoth.dofile("./plot.lua")
 wesnoth.dofile("./side_definitions.lua")
 
@@ -85,15 +85,6 @@ function wc_ii_generate_scenario(nplayers, gen_args)
 	wc_ii_generate_sides(scenario, prestart_event, nplayers, scenario_num, enemy_stength, enemy_data, scenario_data)
 	-- plot
 	add_plot(scenario, scenario_num, nplayers)
-
-	local enemy_army = nil
-	if wesnoth.get_variable("enemy_army.length") == 0 or wesnoth.get_variable("enemy_army.length") == nil then
-		enemy_army = wesnoth.dofile("./enemy_data.lua")
-		table.insert(scenario.variables, wml.tag.enemy_army (lon_to_wml(enemy_army, "wct_enemy")))
-	else
-		std_print("enemy_army.length:", type(wesnoth.get_variable("enemy_army.length")))
-		enemy_army = wml_to_lon(wesnoth.get_variable("enemy_army[0]"), "wct_enemy")
-	end
 	-- todo check in campaign,aon,lua so that we dont do this fase.
 	if scenario_num < #n_villages then
 		table.insert(scenario.event, {
@@ -138,7 +129,7 @@ function wc_ii_generate_scenario(nplayers, gen_args)
 	local generator = scenario_data.generators[wesnoth.random(#scenario_data.generators)]	
 	generator(scenario, nplayers)
 	--std_print(debug_wml(scenario))
-	local res = lon_to_wml(scenario, "scenario")
+	local res = wc2_convert.lon_to_wml(scenario, "scenario")
 	std_print(debug_wml(res))
 	for i, v in ipairs(scenario_extra) do
 		--insert music and scedule tags.

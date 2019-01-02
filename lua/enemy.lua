@@ -195,6 +195,17 @@ function enemy.do_training(cfg, group_id, loc)
 	end
 end
 
+function enemy.init_data()
+	if wml.variables.enemy_army == nil then
+		-- give eras an option to overwrite the enemy data.
+		wesnoth.fire_event("wc2_init_enemy")
+	end
+	if wml.variables.enemy_army == nil then
+		-- give eras an option to overwrite the enemy data.
+		local enemy_army = wesnoth.dofile("./enemy_data.lua")
+		wml.variables.enemy_army = wc2_convert.lon_to_wml(enemy_army, "wct_enemy")
+	end
+end
 --[[
 	called like 
 	[wc2_enemy]
@@ -211,7 +222,7 @@ end
 	[/wc2_enemy]
 --]]
 function wesnoth.wml_actions.wc2_enemy(cfg)
-		wesnoth.message("wc2_enemy", wml.variables["enemy_army.length"])
+	enemy.init_data()
 	local side_num = cfg.side
 	local side = wesnoth.sides[side_num]
 	local scenario = wc2_scenario.scenario_num()

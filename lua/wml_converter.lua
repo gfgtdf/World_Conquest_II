@@ -1,5 +1,5 @@
-schema = {}
-
+local schema = {}
+local converter = {}
 local function split_to_array(s, res)
 	res = res or {}
 	for part in tostring(s or ""):gmatch("[^%s,][^,]*") do
@@ -167,7 +167,7 @@ schema.__attributes.comma_list =
 		return table.concat(val, ",")
 	end,
 }
-function wml_to_lon(cfg, name)
+function converter.wml_to_lon(cfg, name)
 	local tag_info = schema[name or "aasdfasdf"]
 	if tag_info == nil or tag_info.type == "preserve_order" then
 		return cfg
@@ -178,12 +178,12 @@ function wml_to_lon(cfg, name)
 	local res = {}
 	for name2, info2 in pairs(tags) do
 		if info2.type == "single" then
-			res[name2] = wml_to_lon(wml.get_child(cfg, name2), info2.id)
+			res[name2] = converter.wml_to_lon(wml.get_child(cfg, name2), info2.id)
 		elseif info2.type == "list" then
 			local list = {}
 			res[name2] = list
 			for tag in wml.child_range(cfg, name2) do
-				list[#list + 1] = wml_to_lon(tag, info2.id)
+				list[#list + 1] = converter.wml_to_lon(tag, info2.id)
 			end
 		end
 	end
@@ -202,7 +202,7 @@ function wml_to_lon(cfg, name)
 	return res
 end
 
-function lon_to_wml(t, name)
+function converter.lon_to_wml(t, name)
 	local tag_info = schema[name]
 	if tag_info == nil then
 		return t
@@ -215,11 +215,11 @@ function lon_to_wml(t, name)
 		if info2.type == "single" then
 			local st = t[name2]
 			if st ~= nil then
-				res[#res + 1] = { name2, lon_to_wml(st, info2.id) }
+				res[#res + 1] = { name2, converter.lon_to_wml(st, info2.id) }
 			end
 		elseif info2.type == "list" then
 			for i, v in ipairs(t[name2] or {}) do
-				res[#res + 1] = { name2, lon_to_wml(v, info2.id) }
+				res[#res + 1] = { name2, converter.lon_to_wml(v, info2.id) }
 			end
 		end
 	end
@@ -236,15 +236,4 @@ function lon_to_wml(t, name)
 	end
 	return res
 end
-
-function flatten1(list)
-	local res = {}
-	assert(type(list) == "table")
-	for i1, v1 in ipairs(list) do
-		assert(type(v1) == "table")
-		for i2, v2 in ipairs(v1) do
-			res[#res + 1] = v2
-		end
-	end
-	return res
-end
+return converter
