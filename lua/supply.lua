@@ -21,8 +21,8 @@ function wesnoth.wml_actions.wc2_map_supply_village(t)
 	
 	wesnoth.set_village_owner(loc, unit.side, false)
 	
-	local supply_image = ((wml.variables.supply_image_counter or 0) % #supply_images ) + 1
-	wml.variables.supply_image_counter = supply_image
+	local supply_image = ((wml.variables.wc2_supply_image_counter or 0) % #supply_images ) + 1
+	wml.variables.wc2_supply_image_counter = supply_image
 	wesnoth.wml_actions.item {
 		x = loc[1],
 		y = loc[2],
