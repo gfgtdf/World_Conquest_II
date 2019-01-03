@@ -2,7 +2,10 @@ local on_event = wesnoth.require("on_event")
 local _ = wesnoth.textdomain 'wesnoth-World_Conquest_II'
 local t = wml.tag
 
-local img_is_special_overlay = "misc/blank-hex.png~BLIT(cursors/attack.png~MASK(misc/wct-blank.png)~CROP(0,0,23,23)~SCALE(16,16)~R(10),42,5)~BLIT(misc/is_special.png)"
+local img_is_special_overlays = {
+	"misc/blank-hex.png~BLIT(cursors/attack.png~MASK(misc/wct-blank.png)~CROP(0,0,23,23)~SCALE(16,16)~R(10),42,5)~BLIT(misc/is_special.png)",
+	"misc/blank-hex.png~BLIT(help/closed_section.png~MASK(misc/dfghdfghfdh.png)~CROP(0,0,23,23)~SCALE(16,16)~R(10),42,5)~BLIT(misc/dfhfdghf.png)"
+}
 local img_is_special_menu = "misc/blank-hex.png~BLIT(cursors/attack.png~MASK(misc/wct-blank.png)~CROP(0,0,23,23)~SCALE(16,16)~R(10),23,20)~BLIT(misc/is_special.png~CROP(35,3,21,14),20,20)~CROP(20,20,22,16)"
 
 local strings = {
@@ -11,12 +14,13 @@ local strings = {
 
 -- can move in same turn as when recruited/recalled
 function wesnoth.effects.wc2_unitmarker(u, cfg)
-	-- maybe better use a status than a variable ?
-	u.variables["mods.wc2_has_unitmarker"] = true
+	local number = math.min(cfg.number or 1, #img_is_special_overlays)
+	
+	u.variables["mods.wc2_unitmarker"] = number
 	u:add_modification("object", {
 		wml.tag.effect {
 			apply_to = "overlay",
-			add = img_is_special_overlay,
+			add = img_is_special_overlays[number],
 		}
 	}, false)
 	
@@ -25,16 +29,19 @@ end
 function wesnoth.wml_actions.wc2_toggle_overlay(cfg)
 	local units = wesnoth.get_units(cfg)
 	for i, u in ipairs(units) do
-		local has_overlay = u.variables["mods.wc2_has_unitmarker"]
-		if has_overlay then
+		local overlay_nr = u.variables["mods.wc2_unitmarker"]
+		if overlay_nr ~= nil then
+			u:remove_modifications({ id = "wc2_unitmarker" })
+		end
+		if (overlay_nr or 0) < #img_is_special_overlays then
+			overlay_nr = (overlay_nr or 0) + 1
 			u:add_modification("object", {
 				id = "wc2_unitmarker",
 				wml.tag.effect {
-					apply_to = "wc2_unitmarker"
+					apply_to = "wc2_unitmarker",
+					number = overlay_nr,
 				}
 			})
-		else
-			u:remove_modifications({ id = "wc2_unitmarker" })
 		end
 	end
 end
