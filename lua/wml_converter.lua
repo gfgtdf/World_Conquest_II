@@ -1,3 +1,5 @@
+-- scema based wml <-> lua table (lon) converter
+
 local schema = {}
 local converter = {}
 local function split_to_array(s, res)
@@ -154,6 +156,71 @@ schema.wct_enemy =  {
 	},
 	attributes = {
 		factions_available = "comma_list",
+	}
+}
+
+schema.wct_artifact =  {
+	tags = {
+		animate_unit = {
+			type = "list", 
+		},
+		effect = {
+			type = "list",
+			--id = "effect",
+		},
+		filter = {
+			type = "single",
+			--id = "standard_unit_filter",
+		},
+	},
+	attributes = {
+	}
+}
+schema.wct_artifact_list =  {
+	tags = {
+		artifact = {
+			type = "list",
+			id = "wct_artifact"
+		},
+	},
+	attributes = {
+	}
+}
+
+
+-- i cannot do this because the code in training.lua does 
+-- variable subsutution on [chance] which only works on configs.
+-- schema.wct_trainer_chance =  {
+-- }
+
+schema.wct_trainer_grade =  {
+	tags = {
+		chance = {
+			type = "list",
+			id = "wct_trainer_chance"
+		},
+	},
+}
+
+schema.wct_trainer =  {
+	tags = {
+		grade = {
+			type = "list",
+			id = "wct_trainer_grade"
+		},
+	},
+	attributes = {
+	}
+}
+
+schema.wct_trainer_list =  {
+	tags = {
+		trainer = {
+			type = "list",
+			id = "wct_trainer"
+		},
+	},
+	attributes = {
 	}
 }
 

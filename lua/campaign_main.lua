@@ -2,7 +2,7 @@ T = wml.tag
 on_event = wesnoth.require("on_event")
 
 wc2_utils = wesnoth.require("./utils.lua")
-wc2_converter = wesnoth.require("./wml_converter.lua")
+wc2_convert = wesnoth.require("./wml_converter.lua")
 wc2_era = wesnoth.require("./era.lua")
 
 wc2_ability_events = wesnoth.dofile("./ability_events.lua")

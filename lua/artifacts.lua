@@ -7,10 +7,7 @@ local artifacts = {}
 artifacts.list = {}
 
 function artifacts.init_data(cfg)
-	cfg = helper.literal(cfg)
-	for artifact in wml.child_range(cfg, "artifact") do
-		table.insert(artifacts.list, artifact)
-	end
+	artifacts.list = wc2_convert.wml_to_lon(helper.literal(cfg), "wct_artifact_list").artifact
 end
 
 function artifacts.color_bonus(str)
@@ -54,7 +51,7 @@ function artifacts.give_item(unit, index, visualize)
 				name = artifacts.list[index].sound_female or ""
 			}
 		end
-		for animate_unit in helper.child_range(artifacts.list[index], "animate_unit") do
+		for i, animate_unit in ipairs(artifacts.list[index].animate_unit) do
 			wesnoth.wml_actions.animate_unit(animate_unit)
 		end
 	end
@@ -85,7 +82,7 @@ function artifacts.give_item(unit, index, visualize)
 	--       One of the reasons why i currently won't do this is to make the artifacts list
 	--       more flixible: the suggested approach requires that artifacts are loaded before
 	--       units are created which means artifacts must be loaded at toplevel [lua] tags
-	for effect in helper.child_range(artifacts.list[index], "effect") do
+	for i, effect in ipairs(artifacts.list[index].effect) do
 		table.insert(object, T.effect (effect) )
 	end
 	unit:add_modification("object", object)
@@ -114,7 +111,7 @@ on_event("wc2_drop_pickup", function(ec)
 	
 
 	local index = item.wc2_atrifact_id
-	local filter = wml.get_child(artifacts.list[index], "filter")
+	local filter = artifacts.list[index].filter
 	if filter and not unit:matches(filter) then
 		if is_human then
 			wesnoth.wml_actions.wc2_message {
