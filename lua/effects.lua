@@ -31,10 +31,13 @@ function wesnoth.effects.wc2_optional_attack(u, cfg)
 		wesnoth.add_modification(u, "object", { T.effect ( v)}, false)
 	end
 
-	attack_mod.apply_to = "attack"
-	attack_mod.name = table.concat(names, ",")
+	if #names > 0 then
+		-- if names is empty then it would give 'name=""' which would match all attacks.
+		attack_mod.apply_to = "attack"
+		attack_mod.name = table.concat(names, ",")
 
-	wesnoth.add_modification(u, "object", { T.effect (attack_mod) }, false)
+		wesnoth.add_modification(u, "object", { T.effect (attack_mod) }, false)
+	end
 end
 
 -- The implementation of the moves defense bonus in movement training.
