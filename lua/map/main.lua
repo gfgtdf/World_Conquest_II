@@ -76,9 +76,6 @@ function wc_ii_generate_scenario(nplayers, gen_args)
 		carryover_report = false,
 		carryover_add = false,
 		force_lock_settings = true,
-		-- TODO:
-		--{DEFAULT_SCHEDULE}
-		--{DEFAULT_MUSIC_PLAYLIST}
 	}
 	-- sides
 	local enemy_data = scenario_data.get_enemy_data(enemy_stength)
