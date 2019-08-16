@@ -2,15 +2,15 @@ function connected_components(locs)
 	local l_set = {}
 	local color_i = 1
 	local w = 1000
-	
+
 	local function loc_to_index(loc)
 		return loc[1] + 1 + loc[2] * w
 	end
-	
+
 	for i, v in ipairs(locs) do
 		l_set[loc_to_index(v)] = true
 	end
-	
+
 	for i, loc in pairs(locs) do
 		local loc_i = loc_to_index(loc)
 		if l_set[loc_i] == true then
@@ -47,7 +47,7 @@ end
 
 function repaint(map_data)
 	local heights = wesnoth.dofile("./wild_zones.lua")
-	
+
 	-- store and remove villages
 	local villages = map:get_locations(f.terrain("*^Vh"))
 	set_terrain { "*",
@@ -55,9 +55,9 @@ function repaint(map_data)
 		layer = "overlay",
 	}
 	wild_store_cave_zone(map_data)
-	
+
 	wild_zones_store(heights)
-	
+
 	-- fix ocean water, add reefs
 	set_terrain { "Wwrg",
 		f.all(
@@ -68,7 +68,7 @@ function repaint(map_data)
 		percentage = 5,
 		exact = false,
 	}
-	
+
 	if wesnoth.random(4) == 1 then
 		set_terrain { "Ww",
 			f.terrain("Wwg^*"),
@@ -80,11 +80,11 @@ function repaint(map_data)
 		set_terrain { "Wo",
 			f.terrain("Wog"),
 		}
-		
+
 	end
-	
+
 	wild_zones_replace(heights)
-	
+
 	-- remove roads
 	set_terrain { "Ur",
 		f.all(
@@ -98,7 +98,7 @@ function repaint(map_data)
 	set_terrain { "Gs",
 		f.terrain("Rr"),
 	}
-	
+
 	-- cave walls
 	set_terrain { "Xu",
 		f.all(
@@ -123,17 +123,17 @@ function repaint(map_data)
 		percentage = 50,
 		exact = false,
 	}
-	
+
 	-- wood castles
 	set_terrain { "Ce",
 		f.terrain("Ch"),
 	}
-	
-	
+
+
 	wct_fill_lava_chasms()
 	wct_volcanos()
 	wct_volcanos_dirt()
-	
+
 	-- restore villages
 	set_terrain { "*^Vo",
 		f.all(
@@ -205,7 +205,7 @@ function repaint(map_data)
 			f.adjacent(f.terrain("D*^*,Gs^*,Md^*"))
 		),
 	}
-	
+
 end
 
 function wild_zones_store(heights)
@@ -264,6 +264,7 @@ function wild_store_roads_in_cave_zone(map_data)
 end
 
 return function()
+	set_map_name(_"Wild")
 	local map_data = {}
 	wct_enemy_castle_expansion()
 	repaint(map_data)

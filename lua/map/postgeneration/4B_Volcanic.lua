@@ -27,7 +27,7 @@ function world_conquest_tek_map_repaint_4b()
 		),
 		fraction = 3,
 	}
-	
+
 	wct_fill_lava_chasms()
 	set_terrain { "Uh",
 		f.all(
@@ -44,7 +44,7 @@ function world_conquest_tek_map_repaint_4b()
 			)
 		),
 	}
-	
+
 	for obsidian_i = 1, 3 do
 		set_terrain { "Ur",
 			f.all(
@@ -54,7 +54,7 @@ function world_conquest_tek_map_repaint_4b()
 			layer = "base",
 		}
 	end
-	
+
 	for scorched_i = 1, 2 do
 		set_terrain { "Rd",
 			f.all(
@@ -90,27 +90,27 @@ function world_conquest_tek_map_repaint_4b()
 		f.terrain("Dd^Vda"),
 		fraction = 3,
 	}
-	
+
 	if wesnoth.random(2) == 1 then
 		set_terrain { "Ur^Vd",
 			f.terrain("Ur^Vu"),
 			fraction_rand = "2..3",
 		}
-		
+
 	end
 	if wesnoth.random(2) == 1 then
 		set_terrain { "Rd^Vd",
 			f.terrain("Rd^Vhh"),
 			fraction_rand = "2..3",
 		}
-		
+
 	end
 	if wesnoth.random(2) == 1 then
 		set_terrain { "Ds^Vd",
 			f.terrain("D*^V*"),
 			fraction_rand = "3..4",
 		}
-		
+
 	end
 	-- dry terrain
 	set_terrain { "Sm",
@@ -151,7 +151,7 @@ function world_conquest_tek_map_repaint_4b()
 		f.terrain("*^Fet"),
 		layer = "overlay",
 	}
-	
+
 	-- change some forest
 	set_terrain { "Gd^Fdw,Gd^Fmw",
 		f.terrain("G*^Ft"),
@@ -169,7 +169,7 @@ function world_conquest_tek_map_repaint_4b()
 		f.terrain("Hhd^Ft"),
 		fraction = 2,
 	}
-	
+
 	-- difumine dry/grass border
 	set_terrain { "Rd",
 		f.all(
@@ -185,7 +185,7 @@ function world_conquest_tek_map_repaint_4b()
 		),
 		fraction = 3,
 	}
-	
+
 	-- create volcanos where possible and force one
 	local terrain_to_change = map:get_locations(f.all(
 		f.terrain("Ql"),
@@ -208,7 +208,7 @@ function world_conquest_tek_map_repaint_4b()
 		),
 	}
 	local terrain_to_change = map:get_locations(f.terrain("Mv"))
-	
+
 	for i, v in ipairs(terrain_to_change) do
 		--[sound_source]
 		--	id=volcano$i
@@ -250,7 +250,7 @@ function world_conquest_tek_map_repaint_4b()
 		),
 		fraction_rand = "9..11",
 	}
-	
+
 	-- rubble
 	set_terrain { "Rd^Dr,Hhd^Dr",
 		f.all(
@@ -272,12 +272,12 @@ function world_conquest_tek_map_repaint_4b()
 		f.terrain("Uh"),
 		fraction_rand = "9..13",
 	}
-	
+
 	-- mushrooms, base amount in map surface
 	local terrain_to_change = map:get_locations(f.terrain("Hhd,Hhd^F^*"))
 	helper.shuffle(terrain_to_change)
 	local r = helper.rand(tostring(total_tiles // 600) .. ".." .. tostring(total_tiles // 300))
-	
+
 	for mush_i = 1, math.min(r, #terrain_to_change) do
 		map:set_terrain(terrain_to_change[mush_i], "Hhd^Uf")
 	end
@@ -288,7 +288,7 @@ function world_conquest_tek_map_repaint_4b()
 		f.terrain("Dd"),
 		fraction_rand = "4..6",
 	}
-	
+
 	-- grass near muddy or earthy cave become dark dirt
 	set_terrain { "Rb",
 		f.all(
@@ -296,13 +296,13 @@ function world_conquest_tek_map_repaint_4b()
 			f.terrain("G*^*")
 		),
 	}
-	
+
 	-- some small mushrooms on dark dirt
 	set_terrain { "Rb^Em",
 		f.terrain("Rb"),
 		fraction_rand = "9..11",
 	}
-	
+
 	-- some extra reefs
 	set_terrain { "Wwr",
 		f.all(
@@ -311,14 +311,14 @@ function world_conquest_tek_map_repaint_4b()
 		),
 		fraction_rand = "18..22",
 	}
-	
+
 	-- whirpools
 	local terrain_to_change = map:get_locations(f.all(
 		f.terrain("Ww"),
 		f.adjacent(f.terrain("Wo")),
 		f.adjacent(f.terrain("Uue"))
 	))
-	
+
 	helper.shuffle(terrain_to_change)
 	for i = 1, #terrain_to_change // wesnoth.random(4, 15) do
 		--[item]
@@ -343,10 +343,10 @@ function world_conquest_tek_map_repaint_4b()
 			f.terrain("Ds")
 		),
 	}
-	
+
 	-- very dirt coast
 	local terrain_to_change = map:get_locations(f.terrain("Ds"))
-	
+
 	helper.shuffle(terrain_to_change)
 	for i = 1, #terrain_to_change // wesnoth.random(3, 4) do
 		map:set_terrain(terrain_to_change[i], "Ds^Esd")
@@ -367,7 +367,7 @@ function world_conquest_tek_map_repaint_4b()
 		f.terrain("Sm"),
 		fraction_rand = "4..6",
 	}
-	
+
 	-- 1.12 new forest
 	set_terrain { "*^Ft",
 		f.terrain("*^Fp"),
@@ -392,18 +392,19 @@ function world_conquest_tek_map_repaint_4b()
 		fraction_rand = "2..4",
 		layer = "overlay",
 	}
-	
-	
+
+
 	local r = wesnoth.random(20)
 	if r == 1 then
 		wct_change_map_water("g")
 	elseif r == 2 then
 		wct_change_map_water("t")
 	end
-	
+
 end
 
 return function()
+	set_map_name(_"Volcanic")
 	--	world_conquest_tek_map_noise_classic("Gs^Fp")
 	wct_enemy_castle_expansion()
 	world_conquest_tek_map_repaint_4b()

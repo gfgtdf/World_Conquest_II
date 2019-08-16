@@ -23,13 +23,13 @@ function world_conquest_tek_map_repaint_4e()
 		f.terrain("Mm,Md"),
 		fraction = 3,
 	}
-	
+
 	-- store map size and create axi filters variables
 	local f_north_half = f.x("1-" .. (map.height // 2))
 	local f_south_half = f.none(f_north_half)
 	local f_west_half = f.y("1-" .. (map.width // 2))
 	local f_east_half = f.none(f_west_half)
-	
+
 	-- north and west ice become snow, else becomes sand
 	set_terrain { "Aa",
 		f.all(
@@ -43,7 +43,7 @@ function world_conquest_tek_map_repaint_4e()
 	set_terrain { "Ds",
 		f.terrain("Ai"),
 	}
-	
+
 	-- north dessert become swamp
 	set_terrain { "Ss",
 		f.all(
@@ -69,7 +69,7 @@ function world_conquest_tek_map_repaint_4e()
 		),
 		layer = "base",
 	}
-	
+
 	-- north cave water become ice
 	set_terrain { "Ai",
 		f.all(
@@ -77,7 +77,7 @@ function world_conquest_tek_map_repaint_4e()
 			f.terrain("Wwg")
 		),
 	}
-	
+
 	-- south snow become swamp or water
 	set_terrain { "Wwt",
 		f.all(
@@ -139,7 +139,7 @@ function world_conquest_tek_map_repaint_4e()
 		),
 		fraction = 3,
 	}
-	
+
 	-- expand ice west
 	set_terrain { "Ds,Ai,Ai,Ai",
 		f.all(
@@ -159,7 +159,7 @@ function world_conquest_tek_map_repaint_4e()
 			f.adjacent(f.terrain("Aa^*,Ha^*,Ms^*"))
 		),
 	}
-	
+
 	-- oasis and dessert plants southwest
 	set_terrain { "Dd^Do,Dd^Edpp",
 		f.all(
@@ -171,7 +171,7 @@ function world_conquest_tek_map_repaint_4e()
 		),
 		fraction = 7,
 	}
-	
+
 	-- swamp mushrooms east
 	set_terrain { "Ss^Uf",
 		f.all(
@@ -183,7 +183,7 @@ function world_conquest_tek_map_repaint_4e()
 		fraction = 10,
 		layer = "overlay",
 	}
-	
+
 	-- castles
 	set_terrain { "Coa",
 		f.all(
@@ -225,7 +225,7 @@ function world_conquest_tek_map_repaint_4e()
 		),
 		fraction = 12,
 	}
-	
+
 	-- reefs
 	set_terrain { "Ww",
 		f.terrain("Wwt,Wwg"),
@@ -246,7 +246,7 @@ function world_conquest_tek_map_repaint_4e()
 		),
 		fraction = 14,
 	}
-	
+
 	-- twisted water
 	set_terrain { "Wwg",
 		f.all(
@@ -282,7 +282,7 @@ function world_conquest_tek_map_repaint_4e()
 		),
 		fraction = 2,
 	}
-	
+
 	-- fix south grass
 	set_terrain { "Gd",
 		f.all(
@@ -320,7 +320,7 @@ function world_conquest_tek_map_repaint_4e()
 		),
 		layer = "base",
 	}
-	
+
 	-- forest and extra rough
 	set_terrain { "Hh^Fp",
 		f.terrain("Ha,Hh,Hhd"),
@@ -349,7 +349,7 @@ function world_conquest_tek_map_repaint_4e()
 		f.terrain("Dd"),
 		fraction = 8,
 	}
-	
+
 	wct_randomize_snowed_forest()
 	set_terrain { "Gg^Fp,Gg^Fms,Gg^Fds,Gg^Fds,Gg^Ft,Gg^Ftp,Gg^Ftr,Gg^Ftd,Gg^Fet,Gg^Fet",
 		f.all(
@@ -362,7 +362,7 @@ function world_conquest_tek_map_repaint_4e()
 		fraction = 1,
 		layer = "overlay",
 	}
-	
+
 	local r = "Gs^Fp,Gs^Fms,Gs^Fds,Gs^Ft,Gs^Ft,Gs^Ftp,Gs^Ftr,Gs^Ftd,Gs^Fet"
 	if wesnoth.get_variable("wct.custom_terrain") then
 		r = "Gs^Fp,Gs^Fms,Gs^Fds,Gs^Fyt,Gs^Ft,Gs^Ftp,Gs^Ftr,Gs^Ftd,Gs^Fet"
@@ -377,7 +377,7 @@ function world_conquest_tek_map_repaint_4e()
 			)
 		),
 	}
-	
+
 	local r = "Gs^Fp,Gs^Fms,Gs^Fds,Gs^Ftp,Gs^Ft,Gs^Ftp,Gs^Ftr,Gs^Ftd,Gs^Fet,Gs^Fts,Gs^Fts,Gs^Ft,Gs^Ft,Gs^Ftd,Gs^Fp"
 	if wesnoth.get_variable("wct.custom_terrain") then
 		r = "Gs^Fp,Gs^Fms,Gs^Fds,Gs^Fyt,Gs^Ft,Gs^Ftp,Gs^Ftr,Gs^Ftd,Gs^Fet,Gs^Fts,Gs^Fts,Gs^Fyt,Gs^Ft,Gs^Ftd,Gs^Fp"
@@ -423,7 +423,7 @@ function world_conquest_tek_map_repaint_4e()
 			f.terrain("Gg^F*")
 		),
 	}
-	
+
 	-- expand snow northwest
 	set_terrain { "Ms",
 		f.all(
@@ -433,7 +433,7 @@ function world_conquest_tek_map_repaint_4e()
 		),
 		layer = "base",
 	}
-	
+
 	-- fix villages
 	set_terrain { "Ww^Vm",
 		f.terrain("W*^V*"),
@@ -548,7 +548,7 @@ function world_conquest_tek_map_repaint_4e()
 		),
 		layer = "overlay",
 	}
-	
+
 	-- fix roads
 	set_terrain { "Rb",
 		f.all(
@@ -572,7 +572,7 @@ function world_conquest_tek_map_repaint_4e()
 			)
 		),
 	}
-	
+
 	wct_volcanos()
 	wct_volcanos_dirt()
 	wct_dirt_beachs("9..11")
@@ -595,7 +595,7 @@ function wct_map_4e_post_bunus_decoration()
 		),
 		fraction = wesnoth.random(10,30),
 	}
-	
+
 	-- small mushrooms northeast
 	set_terrain { "Gg^Em",
 		f.all(
@@ -609,7 +609,7 @@ function wct_map_4e_post_bunus_decoration()
 		),
 		fraction = wesnoth.random(2,3),
 	}
-	
+
 	-- slighty soft dessert southwest
 	set_terrain { "Dd,Dd,Rd,Dd,Dd,Rd,Dd,Dd,Rd,Dd,Dd,Gd",
 		f.all(
@@ -622,7 +622,7 @@ function wct_map_4e_post_bunus_decoration()
 		),
 		fraction = 3,
 	}
-	
+
 	-- slighty soft muddy swamps
 	set_terrain { "Sm,Sm,Rb",
 		f.all(
@@ -631,7 +631,7 @@ function wct_map_4e_post_bunus_decoration()
 		),
 		fraction = 3,
 	}
-	
+
 	-- cave paths
 	set_terrain { "Rb",
 		f.all(
@@ -639,13 +639,14 @@ function wct_map_4e_post_bunus_decoration()
 			f.terrain("Ur")
 		),
 	}
-	
+
 	wct_map_cave_path_to("Re")
-	
+
 end
 
 
 return function()
+	set_map_name(_"Wicked")
 	wct_enemy_castle_expansion()
 	world_conquest_tek_map_repaint_4e()
 	world_conquest_tek_bonus_points()

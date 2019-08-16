@@ -34,7 +34,7 @@ function wct_map_4c_conect_rails()
 		f.adjacent(f.terrain("*^Br*"), "ne,sw", nil),
 		layer = "overlay",
 	}
-	
+
 end
 
 
@@ -93,7 +93,7 @@ function wct_map_chasm_bridges_direction()
 		fraction = 1,
 		layer = "overlay",
 	}
-	
+
 	-- eliminate impossible bridges
 	set_terrain { "Q*",
 		f.all(
@@ -116,7 +116,7 @@ function wct_map_chasm_bridges_direction()
 		),
 		layer = "overlay",
 	}
-	
+
 end
 
 
@@ -145,7 +145,7 @@ function world_conquest_tek_map_decoration_4c()
 		),
 		fraction_rand = "1..2",
 	}
-	
+
 	-- add some rubble
 	set_terrain { "Uu^Dr,Uu^Dr,Uu^Dr,Uu^Dr,Uu^Dr,Uu^Dr,Uh^Dr,Uh,Uh",
 		f.all(
@@ -167,7 +167,7 @@ function world_conquest_tek_map_decoration_4c()
 		),
 		fraction = 2,
 	}
-	
+
 	-- change walls look
 	set_terrain { "Xuc",
 		f.terrain("Xu"),
@@ -180,7 +180,7 @@ function world_conquest_tek_map_decoration_4c()
 			)
 		),
 	}
-	
+
 	-- change forests look
 	set_terrain { "*^Fms",
 		f.terrain("*^Fp"),
@@ -203,7 +203,7 @@ function world_conquest_tek_map_decoration_4c()
 	set_terrain { "Gg^Ftr",
 		f.terrain("G*^Ft"),
 	}
-	
+
 	-- fix villages
 	set_terrain { "Gs^Vd",
 		f.terrain("G*^Vht"),
@@ -219,7 +219,7 @@ function world_conquest_tek_map_decoration_4c()
 		),
 		layer = "base",
 	}
-	
+
 	-- stones near rails
 	set_terrain { "*^Es",
 		f.all(
@@ -229,7 +229,7 @@ function world_conquest_tek_map_decoration_4c()
 		fraction_rand = "1..2",
 		layer = "overlay",
 	}
-	
+
 	if wesnoth.random(20) == 1 then
 		wct_change_map_water("t")
 	end
@@ -239,7 +239,7 @@ function world_conquest_tek_map_repaint_4c()
 	set_terrain { "(Qxu^Bs|,Qxu^Bs\\,Qxu^Bs/,Qxu^Bh|,Qxu^Bh\\,Qxu^Bh/,Qxu,Qxu^Bs|,Qxu^Bs\\,Qxu^Bs/,Qxu)",
 		f.terrain("Ur"),
 	}
-	
+
 	world_conquest_tek_map_rebuild("Uu^Br/,Uu^Br\\,Uu^Br|", 2)
 	set_terrain { "Xu",
 		f.all(
@@ -247,7 +247,7 @@ function world_conquest_tek_map_repaint_4c()
 			f.adjacent(f.terrain("Mv"), "n,ne,nw", 0)
 		),
 	}
-	
+
 --	wct_reduce_wall_clusters("Uu^Br/,Uu^Br\\,Uu^Br|,Uu^`Dr,Qxu")
 	wct_reduce_wall_clusters("Uu^Br/,Uu^Br\\,Uu^Br|,Uu^Dr,Qxu")
 	world_conquest_tek_map_decoration_4c()
@@ -260,7 +260,7 @@ function wct_map_4c_post_bunus_decoration()
 		f.terrain("*^Uf"),
 		f.adjacent(f.terrain("*^Vud"))
 	))
-	
+
 	for forge_i, v in ipairs(terrain_to_change) do
 		local r = wesnoth.random(6)
 		if r == 1 then
@@ -271,7 +271,7 @@ function wct_map_4c_post_bunus_decoration()
 			map:set_terrain(v, "Kv")
 		end
 	end
-	
+
 	table.insert(prestart_event, wml.tag.item {
 		terrain = "Kv",
 		image = images.darvish_anvils,
@@ -283,6 +283,7 @@ function wct_map_4c_post_bunus_decoration()
 end
 
 return function()
+	set_map_name(_"Mines")
 	--	world_conquest_tek_map_noise_classic("Gs^Fp")
 	wct_enemy_castle_expansion()
 	world_conquest_tek_map_repaint_4c()

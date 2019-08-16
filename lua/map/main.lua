@@ -128,6 +128,14 @@ function wc_ii_generate_scenario(nplayers, gen_args)
 
 	local generator = scenario_data.generators[wesnoth.random(#scenario_data.generators)]
 	generator(scenario, nplayers)
+
+	local scenario_desc = _ "Scenario" .. scenario_num
+	if false then --final_battle
+		scenario_desc = _"Final Battle"
+	end
+
+	scenario.name = "WC_II_" .. nplayers .. " " .. scenario_desc .. " - ".. scenario.map_name
+
 	--std_print(debug_wml(scenario))
 	local res = wc2_convert.lon_to_wml(scenario, "scenario")
 	std_print(debug_wml(res))

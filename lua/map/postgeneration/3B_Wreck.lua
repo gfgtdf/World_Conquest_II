@@ -18,7 +18,7 @@ function world_conquest_tek_map_decoration_3b()
 			f.adjacent(f.terrain("Mm,Mm^Xm"), nil, 0)
 		),
 	}
-	
+
 	wct_map_reduce_castle_expanding_recruit("Chs", "Re")
 	-- hunging bridges between high terrain
 	wct_hunging_bridge("\\", "nw,se")
@@ -36,7 +36,7 @@ function world_conquest_tek_map_decoration_3b()
 		f.terrain("Gg"),
 		layer = "base",
 	}
-	
+
 	-- 1.12 new forest
 	set_terrain { "Gs^Ftp",
 		f.terrain("*^Fet"),
@@ -46,7 +46,7 @@ function world_conquest_tek_map_decoration_3b()
 		fraction = 2,
 		layer = "overlay",
 	}
-	
+
 	wct_change_map_water("t")
 end
 
@@ -73,6 +73,7 @@ end
 
 
 return function()
+	set_map_name(_"civilization^Wreck")
 	world_conquest_tek_map_noise_classic("Gs^Ft")
 	wct_enemy_castle_expansion()
 	world_conquest_tek_map_repaint_3b()

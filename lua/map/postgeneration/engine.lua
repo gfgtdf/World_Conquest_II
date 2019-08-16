@@ -29,7 +29,7 @@ function set_terrain_impl(data)
 			helper.shuffle(locs[i])
 		end
 		for j = 1, num_tiles do
-			local loc = locs[i][j] 
+			local loc = locs[i][j]
 			if chance >= 1000 or chance >= wesnoth.random(1000) then
 				map:set_terrain(loc, helper.rand(terrains), layer)
 				nlocs_changed = nlocs_changed + 1
@@ -68,4 +68,8 @@ end
 
 function set_terrain(a)
 	set_terrain_simul({a})
+end
+
+function set_map_name(str)
+	scenario_data.map_name = str
 end

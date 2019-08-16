@@ -27,7 +27,7 @@ local function roads_to_feudal_castle(radius)
 		f_dest = f.terrain("Khs"),
 		radius = radius
 	}
-	
+
 	--wct_iterate_roads_to_2(t.f_validpath, t.f_src, t.f_dest, t.terrain_road, t.radius)
 end
 
@@ -36,7 +36,7 @@ local function world_conquest_tek_map_repaint_6d()
 	set_terrain { "Gg",
 		f.terrain("Wot"),
 	}
-	
+
 	-- soft rough terrain around caves
 	set_terrain { "Aa,Aa,Aa,Gs",
 		f.terrain("Ha"),
@@ -58,7 +58,7 @@ local function world_conquest_tek_map_repaint_6d()
 		f.terrain("Mm"),
 		fraction = 2,
 	}
-	
+
 	-- rough terrain on snow
 	set_terrain { "Ha,Ha,Ha,Aa^Fpa,Aa^Fpa,Ha^Fpa,Ms,Gs,Ha,Ha,Ha,Aa^Fpa,Aa^Fma,Ha^Fma,Ms,Wwf",
 		f.terrain("Aa"),
@@ -68,7 +68,7 @@ local function world_conquest_tek_map_repaint_6d()
 		f.terrain("Coa"),
 		fraction = 3,
 	}
-	
+
 	-- rough terrain on dessert
 	set_terrain { "Hd,Hd,Hd,Hd,Hd,Hd,Md",
 		f.terrain("Dd"),
@@ -85,7 +85,7 @@ local function world_conquest_tek_map_repaint_6d()
 		f.terrain("Cd"),
 		fraction = 3,
 	}
-	
+
 	-- castles around roads
 	set_terrain { "Chs",
 		f.all(
@@ -169,7 +169,7 @@ local function world_conquest_tek_map_repaint_6d()
 		f.terrain("Uu"),
 		fraction = 5,
 	}
-	
+
 	wct_fill_lava_chasms()
 	wct_volcanos()
 	wct_volcanos_dirt()
@@ -206,7 +206,7 @@ local function world_conquest_tek_map_repaint_6d()
 			f.radius(999, f.terrain("Xuc"), f.terrain("X*"))
 		),
 	}
-	
+
 	-- forest on some hills
 	set_terrain { "Hh^Fp",
 		f.terrain("Hh"),
@@ -224,7 +224,7 @@ local function world_conquest_tek_map_repaint_6d()
 		f.terrain("Hhd"),
 		fraction = 10,
 	}
-	
+
 	-- extra rough terrain
 	set_terrain { "Gg^Fp,Gg^Fp,Gg^Fp,Gg^Fp,Gg^Fp,Gg^Fp,Gg^Fp,Gg^Fp,Gg^Fp,Gg^Fp,Gg^Fp,Gg^Fp,Gg^Fp,Gg^Fp,Gg^Fp,Gg^Fp,Hh,Hh,Hh,Hh,Hh,Hh,Hh,Hh,Hhd^Fp,Hhd^Fp,Mm,Mm,Mm,Gg^Uf,Hh^Uf,Ss",
 		f.terrain("Gg"),
@@ -234,7 +234,7 @@ local function world_conquest_tek_map_repaint_6d()
 		f.terrain("Gs"),
 		fraction = 4,
 	}
-	
+
 	-- expand snow from lower altitude
 	set_terrain { "Ha",
 		f.all(
@@ -250,7 +250,7 @@ local function world_conquest_tek_map_repaint_6d()
 		),
 		layer = "base",
 	}
-	
+
 	-- feudal villages
 	set_terrain { "Ch^Vh",
 		f.all(
@@ -259,7 +259,7 @@ local function world_conquest_tek_map_repaint_6d()
 			f.adjacent(f.terrain("Kh^*,Ch"), nil, 0)
 		),
 	}
-	
+
 	-- theme castles
 	set_terrain { "Koa",
 		f.all(
@@ -367,7 +367,7 @@ local function world_conquest_tek_map_repaint_6d()
 			f.radius(2, f.terrain("Ch,Kh^*"))
 		),
 	}
-	
+
 	-- elvish villages next to 3 forest
 	set_terrain { "G*^Ve",
 		f.all(
@@ -376,7 +376,7 @@ local function world_conquest_tek_map_repaint_6d()
 		),
 		layer = "overlay",
 	}
-	
+
 	-- fix roads
 	set_terrain { "Re",
 		f.terrain("Rr"),
@@ -387,7 +387,7 @@ local function world_conquest_tek_map_repaint_6d()
 			f.adjacent(f.terrain("U*^*,Cud^*,Kud,X*,R*,Q*,Mv,*^Xm"), nil, 6)
 		),
 	}
-	
+
 	-- fix forest types
 	set_terrain { "*^Fet",
 		f.all(
@@ -424,13 +424,13 @@ local function world_conquest_tek_map_repaint_6d()
 			f.adjacent(f.terrain("*^Fmw"))
 		),
 	}
-	
+
 	-- remove temperature mark on hills
 	set_terrain { "Hh",
 		f.terrain("Hhd^*"),
 		layer = "base",
 	}
-	
+
 	-- fix rivers
 	set_terrain { "Wwf,Wwf,Wwf,Wwf,Wwf,Wwf,Wwf,Wwf,Ww,Ww,Ss",
 		f.all(
@@ -442,7 +442,7 @@ local function world_conquest_tek_map_repaint_6d()
 		),
 		fraction = 2,
 	}
-	
+
 	-- reefs
 	set_terrain { "Wwrg",
 		f.all(
@@ -451,7 +451,7 @@ local function world_conquest_tek_map_repaint_6d()
 		),
 		fraction_rand = "24..240",
 	}
-	
+
 	if wesnoth.random(20) == 1 then
 		wct_map_decorative_docks()
 	end
@@ -463,11 +463,12 @@ local function world_conquest_tek_map_repaint_6d()
 		),
 		fraction_rand = "7..12",
 	}
-	
+
 end
 
 
 return function()
+	set_map_name(_"Feudal")
 	wct_enemy_castle_expansion()
 	world_conquest_tek_map_repaint_6d()
 	wct_map_enemy_themed("undead", "Soulless", "ha", "Aa^Vha", 1)
@@ -480,4 +481,3 @@ return function()
 	wct_map_enemy_themed("drake", "Fire Guardian", "d", "Gg^Vd", 1)
 	wct_map_enemy_themed("lizard", "Fire Guardian", "d", "Gg^Vd", 1)
 end
-

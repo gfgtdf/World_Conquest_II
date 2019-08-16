@@ -47,7 +47,7 @@ function world_conquest_tek_map_decoration_1()
 	set_terrain { "Gs^Vo",
 		f.terrain("Gs^Vht"),
 	}
-	
+
 	-- tweak roads
 	if wesnoth.random(20) ~= 1 then
 		local rad = wesnoth.random(5, 9)
@@ -63,13 +63,13 @@ function world_conquest_tek_map_decoration_1()
 	end
 	-- chances of fords
 	local terrain_to_change = wct_store_possible_encampment_ford();
-	
+
 	while #terrain_to_change > 0 and wesnoth.random(2) == 1 do
 		local i = wesnoth.random(#terrain_to_change)
 		map:set_terrain(terrain_to_change[i], "Wwf")
 		terrain_to_change = wct_store_possible_encampment_ford()
 	end
-	
+
 	if wesnoth.random(20) ~= 1 then
 		wct_change_map_water("g")
 	end
@@ -78,7 +78,7 @@ function world_conquest_tek_map_decoration_1()
 		f.terrain("G*^Fmw,G*^Fp"),
 		fraction = 11,
 	}
-	
+
 	-- become impassible mountains isolated walls
 	set_terrain { "Ms^Xm",
 		f.all(
@@ -87,7 +87,7 @@ function world_conquest_tek_map_decoration_1()
 			f.adjacent(f.terrain("A*^*,Ha^*,Ms^*"))
 		),
 	}
-	
+
 	if wesnoth.random(8) ~= 1 then
 		set_terrain { "Mm^Xm",
 			f.all(
@@ -95,7 +95,7 @@ function world_conquest_tek_map_decoration_1()
 				f.adjacent(f.terrain("U*^*,Q*^*"), nil, 0)
 			),
 		}
-		
+
 	end
 end
 
@@ -116,7 +116,7 @@ function wct_map_1_post_bunus_decoration()
 		),
 		fraction_rand = "12..48",
 	}
-	
+
 	wct_map_cave_path_to("Rb")
 end
 
@@ -130,7 +130,7 @@ function wct_map_1_post_castle_expansion_fix()
 			f.adjacent(f.terrain("Ce"))
 		),
 	}
-	
+
 end
 
 function wct_store_possible_encampment_ford()
@@ -142,6 +142,7 @@ function wct_store_possible_encampment_ford()
 end
 
 return function()
+	set_map_name(_"Start")
 	--[event]
 	--name=prestart
 	--world_conquest_tek_map_noise_classic("Gs^Fp")

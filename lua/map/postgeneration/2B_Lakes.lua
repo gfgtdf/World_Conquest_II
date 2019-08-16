@@ -6,7 +6,7 @@ local function world_conquest_tek_map_repaint_2b()
 			f.terrain("!,Ss,D*^*,Hd,W*^*,Mm^Xm,Xu,Mv,Q*^*,U*^*"),
 			f.radius(2, f.terrain("M*^*"))
 		))
-		
+
 		-- base amount in map surface
 		local r = helper.rand(tostring(total_tiles // 675) .. ".." .. tostring(total_tiles // 330))
 		wct_storm(terrain_to_change, r)
@@ -57,13 +57,13 @@ local function world_conquest_tek_map_repaint_2b()
 		f.terrain("Hh^Vhh"),
 		fraction = 2,
 	}
-	
+
 	if wesnoth.random(20) ~= 1 then
 		set_terrain { "Gg",
 			f.terrain("Gs^*"),
 			layer = "base",
 		}
-		
+
 	end
 	if wesnoth.random(20) ~= 1 then
 		set_terrain { "Gg^Gvs",
@@ -75,7 +75,7 @@ local function world_conquest_tek_map_repaint_2b()
 			),
 			fraction_rand = "5..17",
 		}
-		
+
 	else
 		set_terrain { "Gg^Efm",
 			f.all(
@@ -86,7 +86,7 @@ local function world_conquest_tek_map_repaint_2b()
 			),
 			fraction_rand = "3..5",
 		}
-		
+
 	end
 	if wesnoth.random(20) == 1 then
 		wct_map_decorative_docks()
@@ -102,7 +102,7 @@ local function world_conquest_tek_map_repaint_2b()
 	set_terrain { "Wo" .. terrain_mod,
 		f.terrain("Wot"),
 	}
-	
+
 	-- chance of frozen lakes
 	if wesnoth.random(9) == 1 then
 		set_terrain { "Ai",
@@ -138,11 +138,11 @@ local function world_conquest_tek_map_repaint_2b()
 				f.radius(1, f.terrain("Ai"))
 			),
 		}
-		
+
 	end
 	-- chance of diferent forest based in map temperature
 	local terrain_to_change = map:get_locations(f.terrain("A*^*,Ha*^*,Ms^*"))
-	
+
 	local chance = 2000 * #terrain_to_change // total_tiles
 	if wesnoth.random(0, 99 ) > chance then
 		set_terrain { "*^Ftd",
@@ -154,8 +154,8 @@ local function world_conquest_tek_map_repaint_2b()
 		f.terrain("*^Ft"),
 		layer = "overlay",
 	}
-	
-	
+
+
 end
 
 function world_conquest_tek_map_constructor_lakes()
@@ -173,7 +173,7 @@ function world_conquest_tek_map_constructor_lakes()
 	set_terrain { "Wwt,Wwt,Wwt,Wwt,Wwt,Wwt,Wwt,Wwt,Wwt,Wot",
 		f.terrain("Mm^Xm"),
 	}
-	
+
 	-- convert road to bridge if possible
 	set_terrain { "Wwt^Bw|",
 		f.all(
@@ -199,7 +199,7 @@ function world_conquest_tek_map_constructor_lakes()
 			f.adjacent(f.terrain("W*^*"), "s,sw", "1-2")
 		),
 	}
-	
+
 	-- expand lakes with fords
 	set_terrain { "Wwf",
 		f.all(
@@ -218,7 +218,7 @@ function world_conquest_tek_map_constructor_lakes()
 		),
 		fraction = 2,
 	}
-	
+
 	-- add mushrooms
 	set_terrain { "Gg^Uf",
 		f.all(
@@ -230,9 +230,9 @@ function world_conquest_tek_map_constructor_lakes()
 		),
 		fraction_rand = "11..13",
 	}
-	
+
 	local r = helper.rand(tostring(total_tiles // 675) .. ".." .. tostring(total_tiles // 285))
-	
+
 	set_terrain { "Hh^Uf",
 		f.all(
 			f.terrain("Hh^F*,Hh"),
@@ -243,6 +243,7 @@ function world_conquest_tek_map_constructor_lakes()
 end
 
 return function()
+	set_map_name(_"Lakes")
 	world_conquest_tek_map_constructor_lakes()
 	world_conquest_tek_map_noise_classic("Gs^Fp")
 	wct_enemy_castle_expansion()

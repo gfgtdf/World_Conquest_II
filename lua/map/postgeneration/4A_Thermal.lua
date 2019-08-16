@@ -45,7 +45,7 @@ function world_conquest_tek_map_decoration_4a()
 			f.adjacent(f.terrain("Gg^Fds"))
 		),
 	}
-	
+
 	-- tropical forest near lava
 	set_terrain { "Hh^Ft",
 		f.all(
@@ -83,7 +83,7 @@ function world_conquest_tek_map_decoration_4a()
 			f.adjacent(f.terrain("Gg^Fet"))
 		),
 	}
-	
+
 	-- Soft pines clusters
 	set_terrain { "Hh^Fms",
 		f.all(
@@ -99,7 +99,7 @@ function world_conquest_tek_map_decoration_4a()
 		),
 		fraction = 5,
 	}
-	
+
 	-- better road near castle
 	local rad = helper.rand("1,2,3,3,3,3,4,4")
 	set_terrain { "Rr",
@@ -108,7 +108,7 @@ function world_conquest_tek_map_decoration_4a()
 			f.radius(rad, f.terrain("Ch"))
 		),
 	}
-	
+
 	-- randomize a few forest
 	set_terrain { "Gg^Fds",
 		f.all(
@@ -137,7 +137,7 @@ function world_conquest_tek_map_decoration_4a()
 		f.terrain("Hh*^F*"),
 		fraction = 11,
 	}
-	
+
 	-- chances of few elvish castles
 	wct_possible_map4_castle("Cv^Fds", 1)
 	-- High quality villages near castle or stone road
@@ -147,7 +147,7 @@ function world_conquest_tek_map_decoration_4a()
 			f.radius(1, f.terrain("Ch,Cha,Kh*^*,Rr"))
 		),
 	}
-	
+
 	-- chances flowers
 	local terrain_to_change = wct_store_possible_flowers("Rr^Vhc")
 	while #terrain_to_change > 0 and wesnoth.random(10) > 5 do
@@ -161,7 +161,7 @@ function world_conquest_tek_map_decoration_4a()
 		fraction = 2,
 		layer = "overlay",
 	}
-	
+
 	if wesnoth.random(20) == 1 then
 		set_terrain { "*^Ftr",
 			f.terrain("G*^Fds"),
@@ -196,6 +196,7 @@ function wct_map_4a_post_bunus_decoration()
 end
 
 return function()
+	set_map_name(_"Thermal")
 	--	world_conquest_tek_map_noise_classic("Gs^Fp")
 	wct_enemy_castle_expansion()
 	world_conquest_tek_map_repaint_4a()

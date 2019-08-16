@@ -41,7 +41,7 @@ function world_conquest_tek_map_decoration_3a()
 			f.adjacent(f.terrain("U*^*,Xu,Qxu"), nil, 0)
 		),
 	}
-	
+
 	wct_map_reduce_castle_expanding_recruit("Ce", "Rd")
 	set_terrain { "Gs^Vd",
 		f.all(
@@ -61,7 +61,7 @@ function world_conquest_tek_map_decoration_3a()
 			f.adjacent(f.terrain("Gs^Vd,Dd,Hd"))
 		),
 	}
-	
+
 	-- dry grass, hills and mountains near dessert
 	set_terrain { "Gd",
 		f.all(
@@ -99,7 +99,7 @@ function world_conquest_tek_map_decoration_3a()
 			)
 		),
 	}
-	
+
 	-- desrt plants near wet terrain
 	set_terrain { "Dd^Edp",
 		f.all(
@@ -108,7 +108,7 @@ function world_conquest_tek_map_decoration_3a()
 		),
 		fraction_rand = "2..3",
 	}
-	
+
 	-- 1.12 new forest
 	set_terrain { "*^Ftd",
 		f.terrain("*^Ft"),
@@ -138,14 +138,14 @@ function world_conquest_tek_map_decoration_3a()
 	set_terrain { "Xue",
 		f.terrain("Xu"),
 	}
-	
+
 	if wesnoth.random(20) ~= 1 then
 		wct_change_map_water("t")
 	end
 	set_terrain { "Gs^Ft",
 		f.terrain("*^Fet"),
 	}
-	
+
 	-- old tropical forest instead savannah near swamp
 	if wesnoth.get_variable("wct.custom_terrain") then
 		set_terrain { "*^Fyt",
@@ -167,14 +167,14 @@ function wct_castle_swamp_bridge(bridge, directions ,terrain)
 		),
 		layer = "overlay",
 	}
-	
+
 end
 
 function world_conquest_tek_castle_swamp_bridges()
 	wct_castle_swamp_bridge("Bh\\", "se,nw", "Hh*^*,Mm,Md,,M*^V*")
 	wct_castle_swamp_bridge("Bh/", "sw,ne", "Hh*^*,Mm,Md,,M*^V*")
 	wct_castle_swamp_bridge("Bh|", "s,n", "Hh*^*,Mm,Md,M*^V*")
-	
+
 	wct_castle_swamp_bridge("Bw|", "s,n", "!,Ds,S*,*^B*,Xu,Q*,M*^*,W*,Ch*,Kh*")
 	wct_castle_swamp_bridge("Bw/", "sw,ne", "!,Ds,S*,*^B*,Xu,Q*,M*^*,W*,Ch*,Kh*")
 	wct_castle_swamp_bridge("Bw\\", "se,nw", "!,Ds,S*,*^B*,Xu,Q*,M*^*,W*,Ch*,Kh*")
@@ -182,6 +182,7 @@ end
 
 
 return function()
+	set_map_name(_"Savannah")
 	world_conquest_tek_map_noise_classic("Gs^Ft")
 	wct_enemy_castle_expansion()
 	world_conquest_tek_map_repaint_3a()

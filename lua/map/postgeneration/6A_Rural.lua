@@ -65,7 +65,7 @@ local function world_conquest_tek_map_decoration_6a()
 	set_terrain { "Gs^Ve",
 		f.terrain("Gs^Vht"),
 	}
-	
+
 	-- stone roads, better ones near castle
 	local rad = wesnoth.random(4, 6)
 	set_terrain { "Rrc",
@@ -77,7 +77,7 @@ local function world_conquest_tek_map_decoration_6a()
 	set_terrain { "Rr",
 		f.terrain("Re"),
 	}
-	
+
 	-- change some villages, best ones near castle or road
 	set_terrain { "Gs^Vc",
 		f.all(
@@ -91,7 +91,7 @@ local function world_conquest_tek_map_decoration_6a()
 			f.radius(4, f.terrain("Ch,Rr,Rrc"))
 		),
 	}
-	
+
 	wct_road_to_village( "Rr", "Rr^Vhc")
 	-- change best villages with no road
 	set_terrain { "Gs^Vd",
@@ -139,7 +139,7 @@ local function world_conquest_tek_map_decoration_6a()
 			f.adjacent(f.terrain("Gs^Fetd,Dd,Hd"))
 		),
 	}
-	
+
 	-- stone bridges near castle
 	set_terrain { "Ww^Bsb|",
 		f.all(
@@ -159,13 +159,13 @@ local function world_conquest_tek_map_decoration_6a()
 			f.radius(6, f.terrain("Ch"))
 		),
 	}
-	
+
 	-- stone isolated castles
 	wct_map_reduce_castle_expanding_recruit("Ce", "Rrc")
 	set_terrain { "Ch",
 		f.terrain("Ce"),
 	}
-	
+
 	-- add snow, base amount in map surface
 	local terrain_to_change = map:get_locations(f.all(
 		f.terrain("!,Ss,D*^*,Hd,W*^*,Mm^Xm,Xu,Mv,Q*^*,U*^*"),
@@ -174,10 +174,10 @@ local function world_conquest_tek_map_decoration_6a()
 			f.adjacent(f.terrain("Gd^Fdf,Hh,Hh^Fdf"), nil, 6)
 		))
 	))
-	
+
 	local r = helper.rand(tostring(total_tiles // 930) .. ".." .. tostring(total_tiles // 210))
 	wct_storm(terrain_to_change, r + 2)
-	
+
 	wct_expand_snow()
 	--fixme: in the orignal code WCT_EXPAND_SNOW might have changes $random was that intentional?
 	wct_storm(terrain_to_change, r)
@@ -206,7 +206,7 @@ local function world_conquest_tek_map_decoration_6a()
 			f.adjacent(f.terrain("Aa^*,Ai,Ms,Ha^*,Cha,Kha^*"), nil, "3-6")
 		),
 	}
-	
+
 	-- fallen forests lose leaves near orc villages
 	set_terrain { "Hh^Fdw",
 		f.all(
@@ -222,7 +222,7 @@ local function world_conquest_tek_map_decoration_6a()
 			f.radius(7, f.terrain("Hh^Vo*"))
 		),
 	}
-	
+
 	-- soft forest clusters
 	set_terrain { "Hh^Fmw,Hh^Fdw,Hh^Fdf,Hh^Fmf",
 		f.all(
@@ -252,7 +252,7 @@ local function world_conquest_tek_map_decoration_6a()
 		),
 		fraction = 6,
 	}
-	
+
 	-- pines near lava
 	set_terrain { "Hh^Fp",
 		f.all(
@@ -266,9 +266,9 @@ local function world_conquest_tek_map_decoration_6a()
 			f.radius(2, f.terrain("Ql,Mv"))
 		),
 	}
-	
+
 	-- chances of few dwarven castles
-	
+
 	local terrain_to_change = wct_store_possible_dwarven_castle()
 	while #terrain_to_change > 0 and wesnoth.random(2) == 1 do
 		local loc = terrain_to_change[wesnoth.random(#terrain_to_change)]
@@ -310,7 +310,7 @@ local function world_conquest_tek_map_decoration_6a()
 		f.terrain("Hh*^Fmf"),
 		fraction = 11,
 	}
-	
+
 	-- leaf litter
 	set_terrain { "Gll",
 		f.all(
@@ -318,7 +318,7 @@ local function world_conquest_tek_map_decoration_6a()
 			f.adjacent(f.terrain("*^Fdf"), nil, "3-6")
 		),
 	}
-	
+
 	-- chance of fences near farmlands
 	if wesnoth.random(2) == 1 then
 		local terrain_to_change = map:get_locations(f.all(
@@ -333,7 +333,7 @@ local function world_conquest_tek_map_decoration_6a()
 			map:set_terrain(loc, map:get_terrain(loc) .. "^Eff")
 		end
 	end
-	
+
 	if wesnoth.random(2) == 1 then
 		set_terrain { "Gs^Eff",
 			f.any(
@@ -348,7 +348,7 @@ local function world_conquest_tek_map_decoration_6a()
 			),
 			layer = "overlay",
 		}
-		
+
 	end
 	-- chances of stone walls and dark roads near darven castls
 	local rad = wesnoth.random(1, 4)
@@ -358,7 +358,7 @@ local function world_conquest_tek_map_decoration_6a()
 			f.radius(rad, f.terrain("Cud"))
 		),
 	}
-	
+
 	wct_map_cave_path_to("Re")
 	local r = helper.rand("Ur,Urb")
 	set_terrain { r,
@@ -367,7 +367,7 @@ local function world_conquest_tek_map_decoration_6a()
 			f.radius(6, f.terrain("Cud"))
 		),
 	}
-	
+
 	if wesnoth.random(3) == 0 then
 		set_terrain { "Xuc",
 			f.all(
@@ -381,7 +381,7 @@ local function world_conquest_tek_map_decoration_6a()
 				f.radius(999, f.terrain("Xuc"), f.terrain("Xu*"))
 			),
 		}
-		
+
 	end
 	if wesnoth.random(20) == 1 then
 		wct_map_decorative_docks()
@@ -390,7 +390,7 @@ local function world_conquest_tek_map_decoration_6a()
 		wct_change_map_water("g")
 	end
 	wct_noise_snow_to("Wwf")
-	
+
 end
 
 local function world_conquest_tek_map_repaint_6a()
@@ -400,6 +400,7 @@ local function world_conquest_tek_map_repaint_6a()
 end
 
 return function()
+	set_map_name(_"Rural")
 	world_conquest_tek_map_noise_classic("Gs^Fp")
 	wct_enemy_castle_expansion()
 	world_conquest_tek_map_repaint_6a()

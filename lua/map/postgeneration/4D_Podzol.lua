@@ -3,7 +3,7 @@
 local function world_conquest_tek_map_repaint_4d()
 	local rad = helper.rand("1,2,2")
 	world_conquest_tek_map_noise_proxy(rad,  2 , "!,W*^*,Ai,Ds*^*,Xu,M*^Xm,R*^*,Ch*,Cud,K*,U*^*,Ql^B*")
-	
+
 	wct_reduce_wall_clusters("Uu,Uu,Uu,Uu,Uh,Uh,Ai")
 	wct_fill_lava_chasms()
 	-- tweak rough terrain generated
@@ -33,7 +33,7 @@ local function world_conquest_tek_map_repaint_4d()
 		),
 		fraction = 7,
 	}
-	
+
 	-- extra rough terrain on big plains
 	set_terrain { "Ha,Ha^Fpa,Ms,Aa^Fpa",
 		f.all(
@@ -59,14 +59,14 @@ local function world_conquest_tek_map_repaint_4d()
 		exact = false,
 		percentage = 10,
 	}
-	
+
 	-- fix castles
 	wct_map_reduce_castle_expanding_recruit("Ce", "Gll^Fet")
 	wct_map_reduce_castle_expanding_recruit("Cud", "Rb")
 	set_terrain { "Ch",
 		f.terrain("Cud"),
 	}
-	
+
 	-- better looking adjacences to lava and frozen
 	set_terrain { "Uu,Uh,Uu^Uf",
 		f.all(
@@ -93,15 +93,15 @@ local function world_conquest_tek_map_repaint_4d()
 			f.adjacent(f.terrain("Aa^*,Ai,Ms*^*,Ha^*,Kha,Cha"))
 		),
 	}
-	
-	
+
+
 	wct_dirt_beachs("15..20")
 	wct_volcanos()
 	-- set sea color and river temperature
 	set_terrain { "Wwg",
 		f.terrain("Ww"),
 	}
-	
+
 	if wesnoth.random(2) == 1 then
 		set_terrain { "Ai",
 			f.all(
@@ -131,6 +131,7 @@ end
 
 
 return function()
+	set_map_name(_"Podzol")
 	wct_enemy_castle_expansion()
 	world_conquest_tek_map_repaint_4d()
 	world_conquest_tek_bonus_points()

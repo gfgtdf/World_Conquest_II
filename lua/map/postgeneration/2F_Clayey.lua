@@ -7,7 +7,7 @@ function world_conquest_tek_map_repaint_2f()
 			f.terrain("Mm^Xm")
 		),
 	}
-	
+
 	wct_volcanos()
 	wct_volcanos_dirt()
 	-- fix water types
@@ -40,7 +40,7 @@ function world_conquest_tek_map_repaint_2f()
 			f.terrain("Wwf")
 		),
 	}
-	
+
 	-- extra random rough terrain
 	set_terrain { "*^Fp,*^Fp,*^Fp,*^Fp,*^Fp,*^Fp,*^Fp,*^Fpa,*^Fpa,*^Fma,*^Fda",
 		f.terrain("G*,R*,Dd"),
@@ -107,7 +107,7 @@ function world_conquest_tek_map_repaint_2f()
 		f.terrain("Gg^Vht"),
 		fraction = 2,
 	}
-	
+
 end
 
 function wct_map_2f_post_bunus_decoration()
@@ -123,6 +123,7 @@ end
 
 
 return function()
+	set_map_name(_"Clayey")
 	wct_enemy_castle_expansion()
 	world_conquest_tek_map_repaint_2f()
 	world_conquest_tek_bonus_points("clayey")

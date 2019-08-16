@@ -34,11 +34,11 @@ function get_possible_maritime_bridge()
 			))
 		}
 	}
-	
+
 end
 
 function wct_maritime_bridges()
-	
+
 	local pb = get_possible_maritime_bridge()
 	while #pb[1].locs > 0 or #pb[2].locs > 0 or #pb[3].locs > 0 do
 		pb = functional.filter(pb, function(t) return #t.locs >0 end)
@@ -87,12 +87,12 @@ function roads_to_river(radius)
 end
 
 function wct_roads_to_river(radius)
-	
+
 	local f_valid_path_tiles = f.terrain("!,W*^*")
 	local f_dest = f.terrain("Ch*,Kh*^*,Re")
 	local f_src = f.terrain("*^Vhc")
 	local f_path_taken = f.terrain("Rp")
-	
+
 	return map:get_locations(f.all(
 		f_valid_path_tiles,
 		f.adjacent(f.all(
@@ -155,7 +155,7 @@ function world_conquest_tek_map_decoration_6b()
 		),
 		layer = "base",
 	}
-	
+
 	-- generate big docks villages
 	set_terrain { "Iwr^Vl",
 		f.all(
@@ -165,12 +165,12 @@ function world_conquest_tek_map_decoration_6b()
 			f.radius(4, f.terrain("Ch,Kh*^*"))
 		),
 	}
-	
+
 	--wct_iterate_roads_to(wct_roads_to_dock, 3, "Rp")
 	--wct_iterate_roads_to(wct_roads_to_river, 3, "Rp")
 	roads_to_dock(4)
 	roads_to_river(4)
-	
+
 	if #map:get_locations(f.terrain("Iwr^Vl")) == 0 then
 		local locs = map:get_locations(f.all(
 			f.terrain("*^V*"),
@@ -180,7 +180,7 @@ function world_conquest_tek_map_decoration_6b()
 		loc = locs[wesnoth.random(#locs)];
 		map:set_terrain(loc, "Iwr^Vl")
 	end
-	
+
 	set_terrain { "Wwg,Iwr,Wwg^Bw\\,Wwg^Bw\\,Wwg^Bw\\,Wwg^Bw\\",
 		f.all(
 			f.terrain("Wog,Wwg"),
@@ -260,7 +260,7 @@ function world_conquest_tek_map_decoration_6b()
 			f.adjacent(f.terrain("W*^*"), nil, 0)
 		),
 	}
-	
+
 	-- some villages tweaks
 	set_terrain { "*^Vd",
 		f.terrain("M*^V*"),
@@ -287,7 +287,7 @@ function world_conquest_tek_map_decoration_6b()
 		),
 		layer = "overlay",
 	}
-	
+
 	-- fix badlooking dunes
 	set_terrain { "Hhd",
 		f.all(
@@ -295,7 +295,7 @@ function world_conquest_tek_map_decoration_6b()
 			f.adjacent(f.terrain("D*^*,Rd^*"), nil, 0)
 		),
 	}
-	
+
 	-- expnad dock road
 	set_terrain { "Rp",
 		f.all(
@@ -303,7 +303,7 @@ function world_conquest_tek_map_decoration_6b()
 			f.adjacent(f.terrain("*^Vl"))
 		),
 	}
-	
+
 	-- contruction dirt near beach roads
 	set_terrain { "Hd,Ds^Dr",
 		f.all(
@@ -312,7 +312,7 @@ function world_conquest_tek_map_decoration_6b()
 			f.adjacent(f.terrain("Rp"))
 		),
 	}
-	
+
 	-- rebuild some swamps far from rivers
 	set_terrain { "Gs,Ds,Ds",
 		f.all(
@@ -332,7 +332,7 @@ function world_conquest_tek_map_decoration_6b()
 		),
 		fraction = 8,
 	}
-	
+
 	-- some mushrooms on hills near river or caves
 	set_terrain { "Hh^Uf",
 		f.all(
@@ -341,7 +341,7 @@ function world_conquest_tek_map_decoration_6b()
 		),
 		fraction = 14,
 	}
-	
+
 	-- reefs
 	set_terrain { "Wwrg",
 		f.all(
@@ -353,7 +353,7 @@ function world_conquest_tek_map_decoration_6b()
 		),
 		fraction = 6,
 	}
-	
+
 	-- chance of expand rivers into sea
 	local r = tonumber(helper.rand("0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,2,2,3"))
 	for i = 1 , r do
@@ -373,7 +373,7 @@ function world_conquest_tek_map_decoration_6b()
 			f.terrain("Wwrg"),
 			locs = terrain_to_change
 		}
-		
+
 	end
 	wct_map_reduce_castle_expanding_recruit("Chw", "Wwf")
 	-- soft castle towards river defense
@@ -390,7 +390,7 @@ function world_conquest_tek_map_decoration_6b()
 		exact = false,
 		percentage = 83,
 	}
-	
+
 	wct_maritime_bridges()
 end
 
@@ -408,7 +408,7 @@ function world_conquest_tek_map_repaint_6b()
 		),
 		layer = "base",
 	}
-	
+
 	-- lava dry mountains
 	set_terrain { "Md",
 		f.all(
@@ -417,7 +417,7 @@ function world_conquest_tek_map_repaint_6b()
 		),
 		layer = "base",
 	}
-	
+
 	-- dirt beachs far from docks
 	set_terrain { "Ds^Esd",
 		f.all(
@@ -429,14 +429,14 @@ function world_conquest_tek_map_repaint_6b()
 		),
 		fraction = 10,
 	}
-	
+
 	wct_map_cave_path_to("Rb")
 	wct_noise_snow_to("Rb")
 end
 
 return function()
+	set_map_name(_"Maritime")
 	wct_enemy_castle_expansion()
 	world_conquest_tek_map_noise_maritime()
 	world_conquest_tek_map_repaint_6b()
 end
-

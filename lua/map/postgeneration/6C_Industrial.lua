@@ -89,7 +89,7 @@ local function wct_conect_factory_rails()
 		),
 		layer = "overlay",
 	}
-	
+
 end
 
 local function wct_store_possible_dirty_delta()
@@ -100,7 +100,7 @@ local function wct_store_possible_dirty_delta()
 end
 
 local function wct_dirty_deltas()
-	
+
 	local terrain_to_change = wct_store_possible_dirty_delta()
 	while #terrain_to_change > 0 do
 		local loc = 1--terrain_to_change[wesnoth.random(#terrain_to_change)]
@@ -115,11 +115,11 @@ local function wct_store_possible_ford_delta()
 		f.terrain("Wwf"),
 		f.adjacent(f.terrain("W*^*"), nil, "5-6")
 	))
-	
+
 end
 
 local function wct_ford_deltas()
-	
+
 	local terrain_to_change = wct_store_possible_ford_delta()
 	while #terrain_to_change > 0 do
 		local loc = terrain_to_change[1]-- terrain_to_change[wesnoth.random(#terrain_to_change)]
@@ -224,7 +224,7 @@ local function wct_roads_to_river_industry(radius)
 end
 
 local function wct_industry_bridge(bridge, directions)
-	
+
 	set_terrain { "*^Bw" .. bridge,
 		f.all(
 			f.terrain("Ww,"),
@@ -239,7 +239,7 @@ local function wct_industry_bridge(bridge, directions)
 			f.adjacent(f.terrain("*^Bw" .. bridge), directions, "1-2")
 		),
 	}
-	
+
 end
 
 local function world_conquest_tek_map_decoration_6c()
@@ -262,7 +262,7 @@ local function world_conquest_tek_map_decoration_6c()
 			f.adjacent(f.terrain("Ww"))
 		),
 	}
-	
+
 	-- expand infrastructure of industrial villages near river
 	wct_industry_bridge("\\", "nw,se")
 	wct_industry_bridge("/", "ne,sw")
@@ -283,13 +283,13 @@ local function world_conquest_tek_map_decoration_6c()
 		f.terrain("*^Bw|"),
 		layer = "overlay",
 	}
-	
+
 	wct_iterate_roads_to(wct_roads_to_river_industry, 4, "Re")
 	set_terrain { "Urb",
 		f.terrain("Rr,Rp,Re,Gs^Vud"),
 		layer = "base",
 	}
-	
+
 	-- expand infrastructure to factories
 	set_terrain { "*^Vhh",
 		f.all(
@@ -298,7 +298,7 @@ local function world_conquest_tek_map_decoration_6c()
 		),
 		layer = "overlay",
 	}
-	
+
 	wct_iterate_roads_to(wct_roads_to_factory, 4, "Rr")
 	set_terrain { "Rr^Vhh",
 		f.terrain("G*^Vhh"),
@@ -306,7 +306,7 @@ local function world_conquest_tek_map_decoration_6c()
 	set_terrain { "Hhd^Vhh",
 		f.terrain("H*^Vhh"),
 	}
-	
+
 	-- expand infrastructure to cities
 	set_terrain { "*^Vhc",
 		f.all(
@@ -318,7 +318,7 @@ local function world_conquest_tek_map_decoration_6c()
 	set_terrain { "Rrc^Vhc",
 		f.terrain("G*^Vhc"),
 	}
-	
+
 	wct_iterate_roads_to(wct_roads_to_industrial_city, 5, "Rrc")
 	-- sawmills
 	set_terrain { "*^Vl",
@@ -331,7 +331,7 @@ local function world_conquest_tek_map_decoration_6c()
 	set_terrain { "Rb^Vl",
 		f.terrain("G*^Vl"),
 	}
-	
+
 	-- villages
 	set_terrain { "*^Ve",
 		f.all(
@@ -343,7 +343,7 @@ local function world_conquest_tek_map_decoration_6c()
 	set_terrain { "Rb^Ve",
 		f.terrain("G*^Ve"),
 	}
-	
+
 	-- expand infrastructure to villages and sawmills
 	wct_iterate_roads_to(wct_roads_to_industrial_village, 3, "Rb")
 	-- castle rails
@@ -353,7 +353,7 @@ local function world_conquest_tek_map_decoration_6c()
 			f.radius(8, f.terrain("K*^*"), f.terrain("Rr,C*,K*^*"))
 		),
 	}
-	
+
 	wct_iterate_roads_to(wct_rails_to_industrial_keep, 3, "Cud^Br|")
 	set_terrain { "Rr^Br\\",
 		f.all(
@@ -369,7 +369,7 @@ local function world_conquest_tek_map_decoration_6c()
 		),
 		layer = "overlay",
 	}
-	
+
 	wct_conect_factory_rails()
 	-- muddy rivers
 	set_terrain { "Sm",
@@ -383,7 +383,7 @@ local function world_conquest_tek_map_decoration_6c()
 		f.terrain("Sm^*"),
 		f.adjacent(f.terrain("Ww^*"))
 	))
-	
+
 	for swamp_i, swamp_loc in ipairs(terrain_to_change) do
 		local r = wesnoth.random(3, map.width // 4)
 		set_terrain { "Sm",
@@ -400,7 +400,7 @@ local function world_conquest_tek_map_decoration_6c()
 		f.terrain("Sm^*"),
 		f.adjacent(f.terrain("Ww^*"))
 	))
-	
+
 	for water_i, water_loc in ipairs(terrain_to_change) do
 		local r = wesnoth.random(4, map.width // 6)
 		set_terrain { "Wwg",
@@ -423,8 +423,8 @@ local function world_conquest_tek_map_decoration_6c()
 		),
 		layer = "base",
 	}
-	
-	
+
+
 	-- narrow rivers
 	wct_ford_deltas()
 	wct_dirty_deltas()
@@ -441,7 +441,7 @@ local function world_conquest_tek_map_decoration_6c()
 			f.adjacent(f.terrain("Sm,*^Vud"))
 		),
 	}
-	
+
 	-- reefs
 	set_terrain { "Wwr",
 		f.all(
@@ -453,7 +453,7 @@ local function world_conquest_tek_map_decoration_6c()
 		),
 		fraction = 15,
 	}
-	
+
 	-- beachs sand and stones
 	set_terrain { "Ds^Esd",
 		f.all(
@@ -462,7 +462,7 @@ local function world_conquest_tek_map_decoration_6c()
 		),
 		fraction_rand = "9..11",
 	}
-	
+
 	-- extra rough near clean water
 	set_terrain { "Hh",
 		f.all(
@@ -487,7 +487,7 @@ local function world_conquest_tek_map_decoration_6c()
 		f.terrain("H*^Efm,Gd^Efm"),
 		layer = "overlay",
 	}
-	
+
 	-- fix ocean water type
 	set_terrain { "Rd",
 		f.all(
@@ -513,7 +513,7 @@ local function world_conquest_tek_map_decoration_6c()
 	set_terrain { "Wwg",
 		f.terrain("Rd"),
 	}
-	
+
 	-- castle kinds
 	set_terrain { "Cud",
 		f.all(
@@ -525,7 +525,7 @@ local function world_conquest_tek_map_decoration_6c()
 	set_terrain { "Chw",
 		f.terrain("Ch"),
 	}
-	
+
 	-- industry damages landscape
 	set_terrain { "Re,Gd",
 		f.all(
@@ -580,7 +580,7 @@ local function world_conquest_tek_map_decoration_6c()
 		),
 		fraction = 2,
 	}
-	
+
 	-- rough extra terrain noise
 	set_terrain { "Gs^Fp,Gs^Fp,Gs^Fp,Gs^Fp,Gs^Fp,Gs^Fmw,Gs^Fmf,Hh^Fp,Hh,Hh,Mm,Mm,Gs^Uf",
 		f.all(
@@ -605,13 +605,13 @@ local function world_conquest_tek_map_decoration_6c()
 		f.terrain("Dd"),
 		fraction = 10,
 	}
-	
+
 	-- cave path
 	set_terrain { "Rb",
 		f.terrain("Uh,Uu"),
 		fraction = 20,
 	}
-	
+
 	-- difumine dry border
 	set_terrain { "Gs",
 		f.all(
@@ -625,7 +625,7 @@ local function world_conquest_tek_map_decoration_6c()
 		f.terrain("Gd^Fet,Re^Fet"),
 		layer = "overlay",
 	}
-	
+
 end
 
 local function world_conquest_tek_map_repaint_6c()
@@ -633,7 +633,7 @@ local function world_conquest_tek_map_repaint_6c()
 	set_terrain { "Ch",
 		f.terrain("Ce"),
 	}
-	
+
 	-- soft hills clusters
 	set_terrain { "Gs,Gs,Gg,Gs,Gs,Gg,Gs,Gs,Gg,Gs,Gs,Gg,Hh^Fp",
 		f.all(
@@ -649,10 +649,10 @@ local function world_conquest_tek_map_repaint_6c()
 		),
 		fraction = 2,
 	}
-	
-	
+
+
 	world_conquest_tek_map_decoration_6c()
-	
+
 	wct_reduce_wall_clusters("Uu,Uu^Uf,Uh,Uu^Uf,Uu,Uu^Uf,Uh,Ql,Qxu,Xu,Uu,Rb")
 	wct_fill_lava_chasms()
 	wct_volcanos()
@@ -665,7 +665,7 @@ local function world_conquest_tek_map_repaint_6c()
 		),
 		layer = "base",
 	}
-	
+
 	-- lava dry mountains
 	set_terrain { "Md",
 		f.all(
@@ -674,16 +674,17 @@ local function world_conquest_tek_map_repaint_6c()
 		),
 		layer = "base",
 	}
-	
+
 	-- decoration fix to first intended
 	set_terrain { "Rb",
 		f.terrain("Urb^*"),
 		layer = "base",
 	}
-	
+
 end
 
 return function()
+	set_map_name(_"Industrial")
 	wct_enemy_castle_expansion()
 	world_conquest_tek_map_repaint_6c()
 end

@@ -1,13 +1,13 @@
 -- Sulfurous
 function world_conquest_tek_map_repaint_3d()
-	
+
 	world_conquest_tek_map_noise_proxy(2, 2, "!,Wwt^*,Wot,Ds*^*,Xu,M*^Xm,R*^*,C*,K*,U*^*,Ql,*^B*")
 	wct_reduce_wall_clusters("Uu,Uu,Uu,Uue,Uu,Uu,Ql,Uh,Uu^Dr,Uue^Dr")
 	set_terrain { "Md^Vd,Md",
 		f.terrain("Qlf"),
 		fraction = 8,
 	}
-	
+
 	wct_volcanos()
 	set_terrain { "Re",
 		f.all(
@@ -51,13 +51,14 @@ function world_conquest_tek_map_repaint_3d()
 		),
 		fraction = 20,
 	}
-	
+
 	wct_volcanos_dirt()
 	wct_dirt_beachs("7..10")
 end
 
 
 return function()
+	set_map_name(_"Sulfurous")
 	wct_enemy_castle_expansion()
 	world_conquest_tek_map_repaint_3d()
 	world_conquest_tek_bonus_points()

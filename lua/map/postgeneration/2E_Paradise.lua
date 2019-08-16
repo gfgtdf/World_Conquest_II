@@ -11,7 +11,7 @@ end
 
 function world_conquest_tek_map_repaint_2e()
 	world_conquest_tek_map_noise_proxy(1, wesnoth.random(1,2), "!,W*^*,Ds*^*,X*,M*^Xm,R*^*,Ch*,K*,U*^*,Ql^B*")
-	
+
 	-- create citadel castles
 	wct_map_reduce_castle_expanding_recruit("Xos", "Rr^Fet")
 	set_terrain { "Ch",
@@ -52,7 +52,7 @@ function world_conquest_tek_map_repaint_2e()
 			f.adjacent(f.terrain("R*^*,C*,G*^V*,W*^Bsb|"), "n,s", "0-1")
 		),
 	}
-	
+
 	wct_conect_isolated_citadel()
 	-- create villages in empty citadels
 	local terrain_to_change = wct_store_empty_citadel()
@@ -84,7 +84,7 @@ function world_conquest_tek_map_repaint_2e()
 		),
 		layer = "overlay",
 	}
-	
+
 	-- decorative yards near log villages
 	--[store_map_dimensions]
 	--	variable=map_data
@@ -99,14 +99,14 @@ function world_conquest_tek_map_repaint_2e()
 		end
 		wct_map_yard(yard_dir, yard_cdir)
 	end
-	
-	
+
+
 	-- chance of farms replacing yards
 	if wesnoth.random(20) == 1 then
 		set_terrain { "Rb^Gvs,Rb^Gvs,Rb^Gvs,Gg",
 			f.terrain("*^Eff"),
 		}
-		
+
 	end
 	-- fix mountains map amount
 	set_terrain { "Mm",
@@ -120,7 +120,7 @@ function world_conquest_tek_map_repaint_2e()
 		f.terrain("Mm"),
 		fraction = 2,
 	}
-	
+
 	wct_conect_isolated_citadel()
 end
 
@@ -136,7 +136,7 @@ function wct_map_yard(directions, counter_directions)
 			), directions, nil)
 		)
 	))
-	
+
 	if #terrain_to_change > 0 then
 		local loc = terrain_to_change[wesnoth.random(#terrain_to_change)]
 		map:set_terrain(loc, "Gg^Eff")
@@ -164,7 +164,7 @@ function wct_conect_isolated_citadel()
 		),
 		filter_extra { isolated = isolated}
 	}
-	
+
 	--{CLEAR_VARIABLE isolated}
 end
 
@@ -175,7 +175,7 @@ function wct_store_empty_citadel()
 			f.radius(4, f.terrain("Rr^Vhc"), f.terrain("Rr*^*,Ch*,Kh*,W*^Bsb*"))
 		)
 	))
-	
+
 end
 
 function wct_map_decoration_3e_keeps()
@@ -186,7 +186,7 @@ function wct_map_decoration_3e_keeps()
 			f.adjacent(f.terrain("Ch"), nil, 0)
 		),
 	}
-	
+
 end
 
 function wct_map_decoration_3e_leantos()
@@ -205,11 +205,11 @@ function wct_map_decoration_3e_leantos()
 			f.adjacent(f.terrain("Ch,Rr^*"), nil, "5-6")
 		)
 	))
-	
+
 	for i, v in ipairs(terrain_to_change) do
 		if wesnoth.random(3) == 1 then
 			map:set_terrain(v, "Rrc")
-			
+
 			table.insert(prestart_event, wml.tag.item {
 				x = v[1],
 				y = v[2],
@@ -222,6 +222,7 @@ end
 
 
 return function()
+	set_map_name(_"Paradise")
 	wct_enemy_castle_expansion()
 	world_conquest_tek_map_repaint_2e()
 	world_conquest_tek_bonus_points("paradise")

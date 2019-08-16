@@ -4,7 +4,7 @@ function world_conquest_tek_map_repaint_3e()
 		f.terrain("U*^Uf,U*"),
 		fraction = 8,
 	}
-	
+
 	wct_reduce_wall_clusters("Uu,Uu^Uf,Uh,Uu^Uf,Uu,Uh,Ur,Uu,Ur,Uu,Ur")
 	set_terrain { "Xu",
 		f.all(
@@ -53,12 +53,12 @@ function world_conquest_tek_map_repaint_3e()
 		f.terrain("G*"),
 		fraction = 5,
 	}
-	
+
 	-- fix water due to bug in generator creating rivers
 	set_terrain { "Wot",
 		f.terrain("Ww"),
 	}
-	
+
 end
 
 function wct_map_3e_post_bunus_decoration()
@@ -69,11 +69,12 @@ function wct_map_3e_post_bunus_decoration()
 			f.terrain("Wot")
 		),
 	}
-	
+
 end
 
 
 return function()
+	set_map_name(_"made of^Coral")
 	wct_enemy_castle_expansion()
 	world_conquest_tek_map_repaint_3e()
 	world_conquest_tek_bonus_points()

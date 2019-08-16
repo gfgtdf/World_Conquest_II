@@ -19,17 +19,17 @@ function world_conquest_tek_map_constructor_delta()
 			f.adjacent(f.terrain("Dd^Do,Ds^Vdt"))
 		),
 	}
-	
+
 	-- "fill" water inside island border
 	-- terrain is replaced for ford, wich works as "mark" to be randomized in map repaint
 	-- to create an island shape zone, we define a cross with 2 "axis", and then generate a elipse by keeping constant addition of both distances from axis
-	
+
 	local top = map.height // 10
 	local bot = map.height - top + 1
 	local temp_size = map.width * 3 // 7
 	temp_size = map.height- temp_size * 2
 	local radius = (bot - top - temp_size - 1 ) // 2
-	
+
 	function is_in_octaegon(x, y)
 		-- the octaegon is defined as he convex hull of a 'cross'
 		-- the horizonal 'axis' of the cross goes from y_start to y_end (and infinitely horizontally)
@@ -46,11 +46,11 @@ function world_conquest_tek_map_constructor_delta()
 	for x = 0, map.width - 1 do
 		for y = 0, map.height - 1 do
 			if is_in_octaegon(x, y) then
-				
+
 			end
 		end
 	end
-	
+
 	set_terrain { "Wwf",
 		f.all(
 			f.terrain("W*"),
@@ -355,7 +355,7 @@ function world_conquest_tek_map_decoration_3c()
 		),
 		fraction = 2,
 	}
-	
+
 	wct_map_reduce_castle_expanding_recruit("Ce", "Gs")
 	-- random sandbank
 	set_terrain { "Ww",
@@ -372,8 +372,8 @@ function world_conquest_tek_map_decoration_3c()
 		),
 		fraction = 45,
 	}
-	
-	
+
+
 	if wesnoth.random(2) == 1 then
 		wct_change_map_water("t")
 	end
@@ -388,6 +388,7 @@ end
 
 
 return function()
+	set_map_name(_"river^Delta")
 	world_conquest_tek_map_constructor_delta()
 	wct_enemy_castle_expansion()
 	world_conquest_tek_map_repaint_3c()

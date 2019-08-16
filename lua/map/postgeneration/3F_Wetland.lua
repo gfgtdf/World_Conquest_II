@@ -4,9 +4,9 @@ function world_conquest_tek_map_repaint_3f()
 		f.terrain("U*^Uf,U*"),
 		fraction = 10,
 	}
-	
+
 	wct_reduce_wall_clusters("Uu,Uu^Uf,Uh,Uu^Uf,Uu,Uh,Uu,Uu,Qxu,Uu,Wwf")
-	
+
 	-- soft rough terrain generated
 	local terrain_to_change = wct_store_cave_passages_candidates()
 	while #terrain_to_change > 0 do
@@ -46,7 +46,7 @@ function world_conquest_tek_map_repaint_3f()
 			f.adjacent(f.terrain("*^F*,Ss"), nil, 0)
 		),
 	}
-	
+
 	-- fix river water
 	set_terrain { "Wwg",
 		f.terrain("Ww^*"),
@@ -63,7 +63,7 @@ function world_conquest_tek_map_repaint_3f()
 		f.terrain("Hh^Fds"),
 		fraction = 2,
 	}
-	
+
 	-- fix bridge generation
 	set_terrain { "Ww^Bw\\",
 		f.all(
@@ -98,7 +98,7 @@ function world_conquest_tek_map_repaint_3f()
 			)
 		),
 	}
-	
+
 	-- extra obstacles far from impassible and water
 	set_terrain { "Ms",
 		f.all(
@@ -128,7 +128,7 @@ function world_conquest_tek_map_repaint_3f()
 	set_terrain { "Mm^Xm",
 		f.terrain("Ms"),
 	}
-	
+
 end
 
 function wct_map_3f_post_bunus_decoration()
@@ -143,7 +143,7 @@ function wct_map_3f_post_bunus_decoration()
 		filter_extra = { bonus_point = {} },
 		fraction = 4,
 	}
-	
+
 	if wesnoth.random(7) == 1 then
 		set_terrain { "Wwf",
 			f.all(
@@ -157,7 +157,7 @@ function wct_map_3f_post_bunus_decoration()
 			exact = false,
 			percentage = 80,
 		}
-		
+
 	end
 	if wesnoth.random(7) == 1 then
 		set_terrain { "Wwf",
@@ -172,7 +172,7 @@ function wct_map_3f_post_bunus_decoration()
 			exact = false,
 			percentage = 70,
 		}
-		
+
 	end
 	-- fix water
 	set_terrain { "Wwt",
@@ -188,7 +188,7 @@ function wct_map_3f_post_bunus_decoration()
 		),
 		layer = "base",
 	}
-	
+
 	-- reefs
 	set_terrain { "Wwrt",
 		f.all(
@@ -201,7 +201,7 @@ function wct_map_3f_post_bunus_decoration()
 		filter_extra = { bonus_point = {} },
 		fraction_rand = "40..100",
 	}
-	
+
 	-- chance of old tropical forest in high flat
 	if wesnoth.get_variable("wct.custom_terrain") and wesnoth.random(4) == 1 then
 		set_terrain { "Gd^Fyt",
@@ -221,7 +221,7 @@ function wct_map_3f_post_bunus_decoration()
 		f.terrain("Gd^*"),
 		layer = "base",
 	}
-	
+
 	-- small mushrooms next to forest and swamp
 	set_terrain { "^Em",
 		f.all(
@@ -231,18 +231,18 @@ function wct_map_3f_post_bunus_decoration()
 		),
 		layer = "overlay",
 	}
-	
+
 	-- flowers on swamps
 	set_terrain { "Ss^Efm",
 		f.terrain("Ss"),
 	}
-	
+
 	-- dry grass on some roads
 	set_terrain { "Gd",
 		f.terrain("Rb"),
 		fraction_rand = "3..21",
 	}
-	
+
 	wct_map_cave_path_to("Rb")
 end
 
@@ -252,11 +252,12 @@ function wct_store_cave_passages_candidates()
 		f.adjacent(f.terrain("Mm^Xm,Xu"), nil, "2-6"),
 		f.adjacent(f.terrain("U*^*"))
 	))
-	
+
 end
 
 
 return function()
+	set_map_name(_"Wetland")
 	wct_enemy_castle_expansion()
 	world_conquest_tek_map_repaint_3f()
 	world_conquest_tek_bonus_points()

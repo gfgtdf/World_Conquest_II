@@ -17,7 +17,7 @@ function world_conquest_tek_map_decoration_2a()
 	set_terrain { "Hh^Fms",
 		f.terrain("Hh^Ft"),
 	}
-	
+
 	-- chances of tropical palm forest near caves
 	if wesnoth.random(2) == 1 then
 		local terrain_to_change = map:get_locations(f.all(
@@ -64,7 +64,7 @@ function world_conquest_tek_map_decoration_2a()
 			))
 		),
 	}
-	
+
 	-- tropical forest near lava and water
 	set_terrain { "Gs^Ft",
 		f.all(
@@ -126,7 +126,7 @@ function world_conquest_tek_map_decoration_2a()
 			f.adjacent(f.terrain("Gs^Fp"))
 		),
 	}
-	
+
 	-- randomize a few forest
 	set_terrain { "Gg^Fet,Gg^Fds,Gg^Fms,Gg^Fp,Gg^Fds,Gg^Fms,Gs^Fds,Gs^Ftp",
 		f.terrain("G*^F*"),
@@ -136,9 +136,9 @@ function world_conquest_tek_map_decoration_2a()
 		f.terrain("Hh*^F*"),
 		fraction = 11,
 	}
-	
+
 	-- fords
-	
+
 	local r = wesnoth.random(0, 4)
 	for i = 1, r do
 		set_terrain { "Wwf",
@@ -148,7 +148,7 @@ function world_conquest_tek_map_decoration_2a()
 				f.adjacent(f.terrain("U*^*,M*^*,Xu"))
 			),
 		}
-		
+
 	end
 	-- chances flowers
 	local terrain_to_change = wct_store_possible_flowers("G*^Fet")
@@ -165,7 +165,7 @@ function world_conquest_tek_map_decoration_2a()
 		),
 		fraction_rand = "10..12",
 	}
-	
+
 	wct_map_reduce_castle_expanding_recruit("Ce", "Re")
 	if wesnoth.random(5) ~= 1 then
 		wct_map_decorative_docks()
@@ -179,6 +179,7 @@ end
 
 
 return function()
+	set_map_name(_"water^Springs")
 	world_conquest_tek_map_noise_classic("Gs^Fp")
 	wct_enemy_castle_expansion()
 	world_conquest_tek_map_repaint_2a()

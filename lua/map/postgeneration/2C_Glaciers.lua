@@ -41,7 +41,7 @@ function world_conquest_tek_map_decoration_2c()
 		f.terrain("Ai"),
 		fraction = 4,
 	}
-	
+
 	wct_expand_snow()
 	set_terrain { "Mm",
 		f.all(
@@ -136,43 +136,43 @@ function world_conquest_tek_map_decoration_2c()
 		),
 		fraction = 15,
 	}
-	
+
 	local terrain_to_change = map:get_locations(f.all(
 		f.terrain("Wo"),
 		f.adjacent(f.terrain("!,Wo"), nil, 0)
-	))	
+	))
 	helper.shuffle(terrain_to_change)
 	-- base amount in map surface
 	local r = helper.rand(tostring(total_tiles // 285) .. ".." .. tostring(total_tiles // 150))
 	for i = 1, math.min(r, #terrain_to_change) do
 		map:set_terrain(terrain_to_change[i], "Ai")
 	end
-	
+
 	local terrain_to_change = map:get_locations(f.all(
 		f.terrain("Wo"),
 		f.adjacent(f.terrain("!,Wo,Ai"), nil, 0)
 	))
 	helper.shuffle(terrain_to_change)
 	local r = helper.rand(tostring(total_tiles // 250) .. ".." .. tostring(total_tiles // 150))
-	
+
 	for i = 1, math.min(r, #terrain_to_change) do
 		--[item]
 		--	x,y=terrain_to_change[i]
 		--	image=scenery/icepack-1.png
 		--[/item]
 	end
-	
+
 	set_terrain { "Wwf",
 		f.terrain("Ur"),
 		fraction = 15,
 	}
-	
+
 	if wesnoth.random(2) == 1 then
 		set_terrain { "Wwf",
 			f.terrain("Gd"),
 			fraction_rand = "2..6",
 		}
-		
+
 	end
 	if wesnoth.random(2) == 1 then
 		set_terrain { "Gs",
@@ -186,7 +186,7 @@ function world_conquest_tek_map_decoration_2c()
 			fraction_rand = "1..4",
 		}
 	end
-	
+
 	set_terrain { "Ds^Esd",
 		f.terrain("Ds"),
 		fraction_rand = "3..6",
@@ -195,11 +195,12 @@ function world_conquest_tek_map_decoration_2c()
 		f.terrain("Ds"),
 		fraction_rand = "5..8",
 	}
-	
+
 	wct_change_map_water("g")
 end
 
 return function()
+	set_map_name(_"Glaciers")
 	world_conquest_tek_map_noise_classic("Gs^Fp")
 	wct_enemy_castle_expansion()
 	world_conquest_tek_map_repaint_2c()
