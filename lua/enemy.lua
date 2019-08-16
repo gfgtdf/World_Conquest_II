@@ -71,7 +71,7 @@ function enemy.do_commander(cfg, group_id, loc)
 		return
 	end
 	local scenario = wml.variables["scenario"]
-	wesnoth.message("do_commander", wml.variables[("enemy_army.group[%d].allies_available"):format(group_id)])
+	--wesnoth.message("do_commander", wml.variables[("enemy_army.group[%d].allies_available"):format(group_id)])
 	local ally_i = wc2_utils.pick_random(("enemy_army.group[%d].allies_available"):format(group_id)) - 1
 	local leader_index = wesnoth.random(wml.variables[("enemy_army.group[%d].leader.length"):format(ally_i)]) - 1
 	local new_recruits = wml.variables[("enemy_army.group[%d].leader[%d].recruit"):format(ally_i, leader_index)]

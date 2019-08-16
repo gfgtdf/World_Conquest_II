@@ -28,7 +28,7 @@ end
 
 function training.inc_level(side, trainer, level)
 	local new_level = training.get_level(side, trainer) + (level or 1)
-	if new_level < 0 or new_level >= #training.trainers[trainer].grades then
+	if new_level < 0 or new_level >= #training.trainers[trainer].grade then
 		error("training level out of range")
 	end
 	training.set_level(side, trainer, new_level)
@@ -44,7 +44,7 @@ function training.get_level_sum(side)
 end
 
 function training.trainings_left(side_num, trainer)
-	return (#training.trainers[trainer].grades - 1) - training.get_level(side_num, trainer)
+	return (#training.trainers[trainer].grade - 1) - training.get_level(side_num, trainer)
 end
 
 function training.available(side_num, trainer, amount)
@@ -101,13 +101,13 @@ end
 
 function training.generate_message(n_trainer, n_grade)
 	local c_trainer = training.trainers[n_trainer]
-	local c_grade = c_trainer.grades[n_grade + 1]
+	local c_grade = c_trainer.grade[n_grade + 1]
 	if c_grade == nil then
 		return { message = "" }
 	end
-	local caption = training.describe_training_level(c_trainer.name, n_grade, #c_trainer.grades - 1)
+	local caption = training.describe_training_level(c_trainer.name, n_grade, #c_trainer.grade - 1)
 	local messages = {}
-	for unused, chance in ipairs(c_grade.chances) do
+	for unused, chance in ipairs(c_grade.chance) do
 		local vchance = chance.variable_substitution ~= false and wesnoth.tovconfig(chance) or chance
 		if (chance.value or 0) < 100 then
 			local str = wesnoth.format(_ "$chance| chance to $arrow $desc", {

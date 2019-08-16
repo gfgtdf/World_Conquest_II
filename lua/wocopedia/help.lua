@@ -104,7 +104,7 @@ function wesnoth.wml_actions.wc2_show_wocopedia(cfg)
 				wesnoth.add_dialog_tree_node("training_category", i, "left_tree", ti[1])
 				wesnoth.set_dialog_value(trainer.name, "left_tree", ti[1], ti[2], "training_name")
 				set_description(1, 1)
-				for j = 2, #trainer.grades, 1 do
+				for j = 2, #trainer.grade - 1, 1 do
 					wesnoth.add_dialog_tree_node("seperator", 2*j - 2, "details", desc_index, "tree_details")
 					set_description(j, 2*j - 1)
 				end
