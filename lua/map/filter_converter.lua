@@ -1,3 +1,5 @@
+-- helper tool that is used to convert the scenariogeneration wml to lua.
+
 local and_to_all = {
 	["and"] = "all",
 	["or"] = "any",
@@ -15,7 +17,7 @@ function compose_filter_1(tag, f1, f2)
 	if tag == f1[1] then
 		if tag == f2[1] then
 			for i = 2, #f2 do
-				table.insert(f1, f2[i])			
+				table.insert(f1, f2[i])
 			end
 		else
 			table.insert(f1, f2)
@@ -74,13 +76,13 @@ function parse_wml_filter(cfg)
 			res = compose_filter(tag, res, subfilter)
 		end
 	end
-	
+
 	if cfg.radius then
 		local filter_radius = wml.get_child(cfg, "filter_radius")
 		filter_radius = filter_radius and parse_wml_filter(filter_radius)
 		res = { "radius", cfg.radius, res, filter_radius = filter_radius }
 	end
-	
+
 	return res
 end
 
@@ -101,15 +103,15 @@ end
 function print_filter(f, indent)
 	local res = {}
 	indent = indent or 0
-	
+
 	local function write(str)
 		res[#res + 1] = str
 	end
-	
+
 	local function write_newline()
 		res[#res + 1] = "\n" .. string.rep("\t", indent)
 	end
-	
+
 	local function write_filter(filter)
 		if filter[1] == "adjacent" then
 			write("f.adjacent(")
@@ -140,7 +142,7 @@ function print_filter(f, indent)
 		if comp_tags[filter[1]] then
 			write("f." .. filter[1] .. "(")
 			indent = indent + 1
-			
+
 			for i = 2, #filter do
 				local is_last = (i == #filter)
 				write_newline()
@@ -151,7 +153,7 @@ function print_filter(f, indent)
 			end
 			indent = indent - 1
 			write_newline()
-			write(")")		
+			write(")")
 		end
 	end
 	write_filter(f)
@@ -190,14 +192,14 @@ function convert_filter()
 						extras[k] = v
 					end
 				end
-				
+
 				print_set_terrain(f, terrain, extras)
 			end
 		end
 		if tag == "store_locations" then
 			local variable = content.variable
 			local f = parse_wml_filter(content)
-			
+
 			std_print("local " .. variable .. " = map:get_locations(" .. print_filter(f, 1) .. ")")
 		end
 	end
