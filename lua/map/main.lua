@@ -137,6 +137,3 @@ function wc_ii_generate_scenario(nplayers, gen_args)
 	end
 	return res
 end
-
-
-		
