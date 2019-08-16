@@ -19,9 +19,9 @@ end
 
 on_event("preload", function()
 	if not wml.variables["wc2.original_version"] then
-		wml.variables["wc2.original_version"] = "0.7.10.2"
+		wml.variables["wc2.original_version"] = "0.8.0"
 	end
-	wml.variables["wc2.version"] = "0.7.10.2"
+	wml.variables["wc2.version"] = "0.8.0"
 end)
 
 -- happens before training events.
