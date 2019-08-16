@@ -11,7 +11,7 @@ function wc2_show_invest_dialog_impl(args)
 	local available_deserters = args.deserters_available
 	local available_commanders = args.commanders_available
 	local available_training = args.trainings_available
-	
+
 	local show_artifacts = args.items_available ~= nil
 	local show_heroes = args.heroes_available ~= nil
 	local show_training = args.trainings_available ~= nil
@@ -65,7 +65,7 @@ function wc2_show_invest_dialog_impl(args)
 				for j,v in ipairs(available_commanders) do
 					desc = desc .. "\n" .. wesnoth.unit_types[v].name
 				end
-				
+
 				wesnoth.add_dialog_tree_node("item", i, "left_tree", cati_current)
 				wesnoth.set_dialog_value(wc2_color.tc_image("units/unknown-unit.png"), "left_tree", cati_current, i, "image")
 				wesnoth.set_dialog_value(_ "Commander" .. "\n" .. wc2_color.tc_text(_ "promote to leader"), "left_tree", cati_current, i, "name")
@@ -77,7 +77,7 @@ function wc2_show_invest_dialog_impl(args)
 			end
 			for j,v in ipairs(available_heroes) do
 				unit_type = wesnoth.unit_types[v]
-				
+
 				wesnoth.add_dialog_tree_node("item", i, "left_tree", cati_current)
 				wesnoth.set_dialog_value(wc2_color.tc_image(unit_type.image), "left_tree", cati_current, i, "image")
 				wesnoth.set_dialog_value(unit_type.name, "left_tree", cati_current, i, "name")
@@ -114,19 +114,19 @@ function wc2_show_invest_dialog_impl(args)
 				local train_message_before = wc2_training.generate_message(v, current_grade)
 
 				local title = wesnoth.format(_ "$name Training", { name = training_info.name })
-				local desc = wc2_training.describe_training_level2(current_grade, #training_info.grades) .. wc2_color.tc_text(" → ") .. wc2_training.describe_training_level2(current_grade + 1, #training_info.grades)
-	
+				local desc = wc2_training.describe_training_level2(current_grade, #training_info.grade) .. wc2_color.tc_text(" → ") .. wc2_training.describe_training_level2(current_grade + 1, #training_info.grade)
+
 				wesnoth.add_dialog_tree_node("item_desc", i, "left_tree", cati_current)
 				wesnoth.set_dialog_value(training_info.image, "left_tree", cati_current, i, "image")
 				wesnoth.set_dialog_value(title, "left_tree", cati_current, i, "name")
 				wesnoth.set_dialog_value(desc, "left_tree", cati_current, i, "desc")
-				
+
 				wesnoth.add_dialog_tree_node("", -1, "details")
 				local label  = wc2_color.tc_text("<big>" .. _ "Before:" .. "</big>\n") .. train_message_before.message .. wc2_color.tc_text("\n<big>" .. _ "After:" .. "</big>\n") .. train_message.message
 				wesnoth.set_dialog_value(label , "details", details_index_counter, "label")
 				--wesnoth.set_dialog_value(train_message.message, "details", details_index_counter, "training_after")
 				add_index(cati_current .. "_" .. i, { pick = "training", type=v })
-				
+
 			end
 		end
 
@@ -135,14 +135,14 @@ function wc2_show_invest_dialog_impl(args)
 			wesnoth.add_dialog_tree_node("category", cati_current, "left_tree")
 			wesnoth.set_dialog_value(true, "left_tree", cati_current)
 			wesnoth.set_dialog_value(_ "Other", "left_tree", cati_current, "category_name")
-			
-			
-		
+
+
+
 			local colored_galleon = wc2_color.tc_image("units/transport/transport-galleon.png")
 			local supplies_image = "misc/blank-hex.png~SCALE(90,80)~BLIT(" .. colored_galleon .. ",9,4)"
 			local supplies_text = wc2_color.tc_text(_ "+70 gold and +1 village")
 			--"+{STR_COLOR_PLAYER ("+70 "+{STR_GOLD}+{STR_AND}+"+1 "+{STR_VILLAGE})}
-			
+
 			wesnoth.add_dialog_tree_node("item_desc", 1, "left_tree", cati_current)
 			wesnoth.set_dialog_value(supplies_image, "left_tree", cati_current, 1, "image")
 			wesnoth.set_dialog_value(_"Stock up supplies", "left_tree", cati_current, 1, "name")
@@ -152,7 +152,7 @@ function wc2_show_invest_dialog_impl(args)
 			wesnoth.set_dialog_value(_"Gives 70 gold and places a village on your keep.", "details", details_index_counter, "label")
 			add_index(cati_current .. "_" .. 1, { pick = "gold" })
 		end
-		
+
 		wesnoth.set_dialog_callback(function()
 			local selected = wesnoth.get_dialog_value("left_tree")
 			local selected_data = index_map[table.concat(selected, '_')]

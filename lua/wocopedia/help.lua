@@ -4,11 +4,11 @@ local dialog = wc2_wiki_dialog
 
 function wesnoth.set_dialog_text(text, ...)
 	wesnoth.set_dialog_markup(true, ...)
-	wesnoth.set_dialog_value(text, ...)		
+	wesnoth.set_dialog_value(text, ...)
 end
 
 function wesnoth.wml_actions.wc2_show_wocopedia(cfg)
-		
+
 	local show_help_mechanics = cfg.show_mechanics ~= false
 	local show_help_training = cfg.show_training ~= false
 	local show_help_factions = cfg.show_factions ~= false
@@ -35,7 +35,7 @@ function wesnoth.wml_actions.wc2_show_wocopedia(cfg)
 	local current_side = wesnoth.get_viewing_side()
 	local preshow = function()
 		local str_cat_mechnics = _ "Game Mechanics"
-		local str_des_mechnics = cfg.mechanics_text or 
+		local str_des_mechnics = cfg.mechanics_text or
 			_ "<b>Gold</b>:\n" ..
 			_ "Carryover is 15%, comunitary and avoid negative amounts. Early finish bonus is superior to village control, but it is not directly related to their amount.\n\n" ..
 			_ "<b>Autorecall</b>:\n" ..
@@ -52,12 +52,12 @@ function wesnoth.wml_actions.wc2_show_wocopedia(cfg)
 			_ "At scenarios 1 to 3, for each training level player already own, trainers found have 2% to 4% chance to become advanced trainers (provide 2 levels). Becomes irrelevant from scenario 4 because all trainers always will be advanced.\n\n" ..
 			""
 		local str_cat_feedback = _ "Feedback"
-		local str_des_feedback = 
+		local str_des_feedback =
 			_ "<b>Feedback</b>:\n" ..
 			_ "For feedback plase either post in the Word conquest II thread in the official wesnoth forum https://r.wesnoth.org/t39651 or file an issue at github https://github.com/gfgtdf/World_Conquest_II/issues .\n\n" ..
 			""
 		local str_cat_abilities = _ "Abilities"
-		local str_des_abilities = 
+		local str_des_abilities =
 			_ "Ability <b>Autorecall</b>:\n" ..
 			_ "Units with trait HEROIC are recalled at start of each scenario with no cost (up to castle size).\n\n" ..
 			""
@@ -68,7 +68,7 @@ function wesnoth.wml_actions.wc2_show_wocopedia(cfg)
 		local str_cat_era = _ "Factions"
 		local str_des_era = _ "<b>Factions</b>\n The Word Conquest 2 era consists of faction that are build of pairs of mainline faction of which at one has a healer available (Drakes, Rebels and Loyalists), and one does not (Orcs, Dwarves and Undead) the recruilist is also organized in pairs so that you sometimes have to recruit a different units before you can recruit the units that you want. The available heroes, desertes and random leaders also depend on your factions, the items you can get do not depend on the faction you choose."
 		local str_cat_settings = _ "Settings"
-		
+
 		---- add general topic ----
 		if show_help_mechanics then
 			wesnoth.add_dialog_tree_node("category", ti[1], "left_tree")
@@ -141,7 +141,7 @@ function wesnoth.wml_actions.wc2_show_wocopedia(cfg)
 					local p = wc2_utils.split_to_array(p_wml.types)
 					local ut1 = wesnoth.unit_types[p[1]] or error("invald unit type" .. tostring(p[1]))
 					local ut2 = wesnoth.unit_types[p[2]] or error("invald unit type" .. tostring(p[2]))
-				
+
 					wesnoth.add_dialog_tree_node("recruit_pair", j, "details", desc_index, "recruit_pairs")
 					wesnoth.set_dialog_text(ut1.name, "details", desc_index, "recruit_pairs", j, "label1")
 					print(tostring(ut1.icon or ut1.image))
@@ -155,7 +155,7 @@ function wesnoth.wml_actions.wc2_show_wocopedia(cfg)
 				wesnoth.set_dialog_text(deserters_names, "details", desc_index, "commanders")
 				local deserters_names = wesnoth.format_conjunct_list("", wc2_era.expand_hero_names(faction_info.heroes, true))
 				wesnoth.set_dialog_text(deserters_names, "details", desc_index, "heroes")
-				
+
 				if faction_wml then
 					local random_leaders = {}
 					for i,v in ipairs(wc2_utils.split_to_array(faction_wml.random_leader)) do
@@ -166,7 +166,7 @@ function wesnoth.wml_actions.wc2_show_wocopedia(cfg)
 				else
 					wesnoth.set_dialog_visible(false, "details", desc_index, "tit_random_leaders")
 				end
-				
+
 				add_index()
 			end
 			leave_enter_mode()
@@ -177,7 +177,7 @@ function wesnoth.wml_actions.wc2_show_wocopedia(cfg)
 		--wesnoth.add_dialog_tree_node("simpletext", -1, "details")
 		--wesnoth.set_dialog_text(str_des_bonus, "details", desc_index, "label")
 		--add_index()
-		
+
 		if show_help_artifacts then
 			local str_not_for_enemies = _ " (not available for enemies)"
 			local str_not_for_players = _ " (not available for players)"
@@ -186,7 +186,7 @@ function wesnoth.wml_actions.wc2_show_wocopedia(cfg)
 			wesnoth.set_dialog_value(str_cat_items, "left_tree", ti[1], "training_name")
 			wesnoth.add_dialog_tree_node("artifact_list", -1, "details")
 			wesnoth.set_dialog_text(str_des_items, "details", desc_index, "desc")
-		
+
 			for i, artifact in ipairs(wc2_artifacts.list) do
 				local artifact_icon = artifact.icon or ""
 				local artifact_name = artifact.name or ""
@@ -205,7 +205,7 @@ function wesnoth.wml_actions.wc2_show_wocopedia(cfg)
 			end
 			add_index()
 		end
-		
+
 		if show_help_settings then
 			wesnoth.add_dialog_tree_node("category", ti[1], "left_tree")
 			wesnoth.set_dialog_value(str_cat_settings, "left_tree", ti[1], "training_name")
@@ -226,7 +226,7 @@ function wesnoth.wml_actions.wc2_show_wocopedia(cfg)
 			wesnoth.set_dialog_callback(function()
 				wc2_utils.global_vars.skip_pickup_dialog = not wesnoth.get_dialog_value("details", desc_index_copy, "checkbox_show_pickup_confirmation")
 			end, "details", desc_index_copy, "checkbox_show_pickup_confirmation")
-		
+
 			local mp_settings = wesnoth.game_config.mp_settings
 			if mp_settings then
 				wesnoth.set_dialog_text(mp_settings.active_mods, "details", desc_index, "label_activemods")
@@ -251,7 +251,7 @@ function wesnoth.wml_actions.wc2_show_wocopedia(cfg)
 			end
 		end, "left_tree")
 	end
-	
+
 	wesnoth.show_dialog(dialog, preshow)
 end
 

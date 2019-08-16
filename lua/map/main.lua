@@ -126,7 +126,7 @@ function wc_ii_generate_scenario(nplayers, gen_args)
 		})
 	end
 
-	local generator = scenario_data.generators[wesnoth.random(#scenario_data.generators)]	
+	local generator = scenario_data.generators[wesnoth.random(#scenario_data.generators)]
 	generator(scenario, nplayers)
 	--std_print(debug_wml(scenario))
 	local res = wc2_convert.lon_to_wml(scenario, "scenario")

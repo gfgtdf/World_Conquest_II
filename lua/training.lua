@@ -5,14 +5,14 @@ local on_event = wesnoth.require("on_event")
 local training = {}
 
 function training.get_chanches(trainer, grade)
-	return training.trainers[trainer].grades[grade + 1].chances
+	return training.trainers[trainer].grade[grade + 1].chance
 end
 
 function training.apply_trait(unit, trait, check)
 	if u:matches(check) and u:matches( T.filter_wml { T.modifications { T.trait { id = trait.id } } } ) then
 		u:add_modification("trait", trait)
 	else
-		u:add_modification("object", { T.effect { apply_to  = "hitpints", increase_total = 1, heal_full = true}})	
+		u:add_modification("object", { T.effect { apply_to  = "hitpints", increase_total = 1, heal_full = true}})
 	end
 end
 
@@ -125,7 +125,7 @@ function training.generate_message(n_trainer, n_grade)
 		message = table.concat(messages, "\n"),
 		speaker = "narrator",
 		image = c_trainer.image,
-	}	
+	}
 end
 
 function training.give_bonus(side_num, cx, amount, traintype_index)
@@ -135,7 +135,7 @@ function training.give_bonus(side_num, cx, amount, traintype_index)
 	local teacher = wc2_heroes.place(amount > 1 and traintype.advanced_type or traintype.type, side_num, cx.x1,cx.y1)
 	local u = wesnoth.get_unit(cx.x1, cx.y1)
 	wc2_utils.facing_each_other(u, teacher)
-	
+
 	wesnoth.wml_actions.sound {
 		name = "flail-miss.ogg"
 	}
@@ -240,14 +240,14 @@ end
 function training.describe_bonus(side, traintype)
 	local traintype_data = training.trainers[traintype]
 	local cur_level = training.get_level(side, traintype)
-	local max_level = #traintype_data.grades - 1
+	local max_level = #traintype_data.grade - 1
 	local image = wesnoth.unit_types[traintype_data.type].__cfg.image
 	local message = nil
 	if cur_level == max_level then
 		message = _"Nothing to learn here"
 	else
 		message = wesnoth.format(_"From $level_before to $level_after", {
-			level_before = training.describe_training_level(traintype_data.name, cur_level, max_level), 
+			level_before = training.describe_training_level(traintype_data.name, cur_level, max_level),
 			level_after = training.describe_training_level(traintype_data.name, cur_level + 1, max_level)
 		})
 	end

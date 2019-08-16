@@ -207,7 +207,7 @@ function enemy.init_data()
 	end
 end
 --[[
-	called like 
+	called like
 	[wc2_enemy]
 		side={SIDE}
 		##the level of the commander.
@@ -240,7 +240,7 @@ function wesnoth.wml_actions.wc2_enemy(cfg)
 		end
 	end
 	local leader_cfg = wc2_utils.pick_random_t(("enemy_army.group[%d].leader"):format(enemy_type_id))
-	local unit = wesnoth.create_unit {	
+	local unit = wesnoth.create_unit {
 		x = loc[1],
 		y = loc[2],
 		type = scenario == 1 and leader_cfg.level2 or leader_cfg.level3,
@@ -255,7 +255,7 @@ function wesnoth.wml_actions.wc2_enemy(cfg)
 		unit.name = wc2_random_names.generate()
 	end
 	unit:to_map()
-	wesnoth.wml_actions.set_recruit { 
+	wesnoth.wml_actions.set_recruit {
 		side = side_num,
 		recruit = wml.variables[("enemy_army.group[%d].recruit"):format(enemy_type_id)]
 	}
