@@ -59,7 +59,7 @@ function wc_ii_generate_scenario(nplayers, gen_args)
 			players = nplayers,
 			carryover = 0,
 			wml.tag.wct {
-				version = "1.9"
+				version = "0.8"
 			}
 		},
 		side = {},
