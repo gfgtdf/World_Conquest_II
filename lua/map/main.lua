@@ -9,13 +9,14 @@ wesnoth.dofile("./wct_map_generator.lua")
 wc2_convert = wesnoth.dofile("./../wml_converter.lua")
 wesnoth.dofile("./plot.lua")
 wesnoth.dofile("./side_definitions.lua")
-
+settings = globals.settings or {}
 
 local n_villages = {27, 40, 53, 63}
 
 function wc_ii_generate_scenario(nplayers, gen_args)
+	nplayers = settings.nplayers or nplayers
 	local scenario_extra = wml.get_child(gen_args, "scenario")
-	local scenario_num = wesnoth.get_variable("scenario") or 1
+	local scenario_num = settings.scenario_num or wesnoth.get_variable("scenario") or 1
 	local enemy_stength = wesnoth.get_variable("difficulty.enemy_power") or 6
 	local scenario_data = wesnoth.dofile(string.format("./scenarios/WC_II_%dp_scenario%d.lua", nplayers, scenario_num))
 
@@ -124,6 +125,19 @@ function wc_ii_generate_scenario(nplayers, gen_args)
 	end
 
 	local generator = scenario_data.generators[wesnoth.random(#scenario_data.generators)]
+	if globals.settings.default_id then
+		generator = wct_map_generator(
+			globals.settings.default_id,
+			globals.settings.postgen_id,
+			globals.settings.length,
+			globals.settings.villages,
+			globals.settings.castle,
+			globals.settings.iterations,
+			globals.settings.hill_size,
+			globals.settings.ncastles,
+			globals.settings.island
+		)
+	end
 	generator(scenario, nplayers)
 
 
@@ -135,13 +149,13 @@ function wc_ii_generate_scenario(nplayers, gen_args)
 		if scenario_num == 6 then
 			scenario_desc = _"Final Battle"
 		end
-		scenario.name = "WC_II_" .. nplayers .. " " .. scenario_desc .. " - ".. scenario.map_name
+		scenario.name = "WC_II_" .. nplayers .. " " .. scenario_desc .. " - "--.. scenario.map_name
 	end
 
 
 	--std_print(debug_wml(scenario))
 	local res = wc2_convert.lon_to_wml(scenario, "scenario")
-	std_print(debug_wml(res))
+	--std_print(debug_wml(res))
 	for i, v in ipairs(scenario_extra) do
 		--insert music and scedule tags.
 		table.insert(res, v)

@@ -31,6 +31,16 @@ f = {
 	end,
 }
 
+globals = {}
+setmetatable(globals, {
+	["__index"] = function(t, k)
+		return rawget(_G, k)
+	end,
+	["__newindex"] = function(t, k, v)
+		_G[k] = v
+	end,
+})
+
 function f.is_loc(loc)
 	return f.all(f.x(loc[1]), f.y(loc[2]))
 end
