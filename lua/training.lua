@@ -12,7 +12,7 @@ function training.apply_trait(unit, trait, check)
 	if u:matches(check) and u:matches( T.filter_wml { T.modifications { T.trait { id = trait.id } } } ) then
 		u:add_modification("trait", trait)
 	else
-		u:add_modification("object", { T.effect { apply_to  = "hitpints", increase_total = 1, heal_full = true}})
+		u:add_modification("object", { T.effect { apply_to  = "hitpoints", increase_total = 1, heal_full = true}})
 	end
 end
 
