@@ -136,7 +136,7 @@ function wct_expand_snow()
 				f.adjacent(f.terrain("Aa^*,Ai,Ms*^*,Ha^*,Kha,Cha"), nil, r .. "-6")
 			),
 		}
-		
+
 	end
 	if wesnoth.random(20) == 1 then
 		local r = wesnoth.random(4, 5)
@@ -151,6 +151,10 @@ function wct_expand_snow()
 end
 
 function wct_storm(terrain_to_change, snow)
+	if #terrain_to_change == 0 then
+		std_print("wct_storm: #terrain_to_change == 0")
+		return
+	end
 	for show_i = 1, snow do
 		local loc = terrain_to_change[wesnoth.random(#terrain_to_change)]
 		set_terrain { "Ai",

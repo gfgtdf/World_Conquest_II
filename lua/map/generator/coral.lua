@@ -21,8 +21,8 @@ local function generate(length, villages, castle, iterations, size, players, isl
 	res.river_frequency=1
 	res.roads=18
 	res.road_windiness=4
-	res.link_castles=true,
-	
+	res.link_castles=true
+
 	res.height = {
 		dr_height(955, "Uh"),
 		dr_height(945, "Uu^Uf"),
@@ -68,7 +68,7 @@ local function generate(length, villages, castle, iterations, size, players, isl
 		dr_height(1, "Wwt"),
 		dr_height(0, "Wot"),
 	}
-	
+
 	res.road_cost = {
 		dr_road("Gs", "Re", 10),
 		dr_road("Gg", "Re", 9),
@@ -145,11 +145,11 @@ local function generate(length, villages, castle, iterations, size, players, isl
 			rating=1
 		},
 	}
-	res.castle = { 
+	res.castle = {
 		valid_terrain="Gs,Gg",
 		min_distance=14,
 	}
-	
+
 	return default_generate_map(res)
 end
 return generate

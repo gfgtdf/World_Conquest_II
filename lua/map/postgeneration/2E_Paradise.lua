@@ -158,11 +158,11 @@ function wct_conect_isolated_citadel()
 			f.adjacent(f.all(
 				f.terrain("R*^*,Ch,Kh,W*^Bsb*"),
 				f.none(
-					f.find_in_wml("isolated")
+					f.find_in("isolated")
 				)
 			))
 		),
-		filter_extra { isolated = isolated}
+		filter_extra = { isolated = isolated}
 	}
 
 	--{CLEAR_VARIABLE isolated}
@@ -193,7 +193,7 @@ function wct_map_decoration_3e_leantos()
 	local terrain_to_change = map:get_locations(f.all(
 		f.terrain("Rr"),
 		f.none(
-			f.find_in_wml("bounus.point")
+			f.find_in("bonus_point")
 		),
 		f.any(
 			f.adjacent(f.all(
@@ -205,7 +205,6 @@ function wct_map_decoration_3e_leantos()
 			f.adjacent(f.terrain("Ch,Rr^*"), nil, "5-6")
 		)
 	))
-
 	for i, v in ipairs(terrain_to_change) do
 		if wesnoth.random(3) == 1 then
 			map:set_terrain(v, "Rrc")

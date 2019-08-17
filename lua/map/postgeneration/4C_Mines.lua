@@ -20,19 +20,19 @@ function wct_map_4c_conect_rails()
 		)
 	))
 	set_terrain { "*^Br|",
-		--and findin terrain_to_change
 		f.adjacent(f.terrain("*^Br*"), "n,s", nil),
 		layer = "overlay",
+		locs = terrain_to_change
 	}
 	set_terrain { "*^Br\\",
-		--and findin terrain_to_change
 		f.adjacent(f.terrain("*^Br*"), "nw,se", nil),
 		layer = "overlay",
+		locs = terrain_to_change
 	}
 	set_terrain { "*^Br/",
-		--and findin terrain_to_change
 		f.adjacent(f.terrain("*^Br*"), "ne,sw", nil),
 		layer = "overlay",
+		locs = terrain_to_change
 	}
 
 end

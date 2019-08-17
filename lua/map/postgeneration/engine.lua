@@ -1,5 +1,6 @@
 -- helper functions for lua map generation.
 function get_locations(t)
+	-- TODO: this looks wrong
 	local filter = wesnoth.create_filter(t.filter, t.filter_extra)
 	return map:get_locations(t, t.locs)
 end
