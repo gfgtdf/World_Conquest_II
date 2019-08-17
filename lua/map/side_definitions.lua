@@ -58,8 +58,7 @@ local function add_player_side(scenario, scenario_num, gold)
 		controller = "human",
 		team_name = "wct_player",
 		user_team_name = _ "Allies",
-		--fixme: fordebuggin
-		fog = false,
+		fog = true,
 		village_gold = 2,
 		share_view = true,
 		terrain_liked = "",
@@ -109,8 +108,5 @@ function wc_ii_generate_sides(scenario, prestart_event, nplayers, scenario_num, 
 			},
 		})
 		add_enemy_side(scenario, enemy_data.gold + enemy_bonus_gold, i + nplayers)
-	end	
+	end
 end
-
-
-		
