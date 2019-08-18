@@ -100,11 +100,12 @@ function wct_reduce_wall_clusters(cave_terrain)
 			f.adjacent(f.terrain("Xu,M*^Xm"), nil, "3-6")
 		),
 	}
-	
+
 end
 
 function wct_castle_expansion_side(side_num)
 	if true then
+		--FIXME
 		--map.special_locations is borken
 		return
 	end
