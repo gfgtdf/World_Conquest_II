@@ -106,8 +106,7 @@ on_event("die", function(cx)
 		item(ice[wesnoth.random(#ice)])
 	elseif matches_terrain("Gg^Effy,Gs^Effy,Gd^Effy,Gll^Effy") then
 		wesnoth.set_terrain(loc, "*^Effz", "overlay")
-	elseif matches_terrain("Ww^Bsb|,Ww^Bsb/,Ww^Bsb\\,Wwt^Bsb|,Wwt^Bsb/,Wwt^Bsb\\,Wwg^Bsb|,Wwg^Bsb/,Wwg^Bsb") then
-		-- todo: does the last line miss a '\\' at the end of the string ?
+	elseif matches_terrain("Ww^Bsb|,Ww^Bsb/,Ww^Bsb\\,Wwt^Bsb|,Wwt^Bsb/,Wwt^Bsb\\,Wwg^Bsb|,Wwg^Bsb/,Wwg^Bsb\\") then
 		wesnoth.set_terrain(loc, "Wwf^Edt")
 		wesnoth.play_sound("water-blast.wav")
 		item("scenery/castle-ruins.png")
