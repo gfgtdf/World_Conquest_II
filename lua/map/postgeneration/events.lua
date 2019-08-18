@@ -35,7 +35,7 @@ function wct_fix_impassible_item_spawn()
 			f.adjacent(f.find_in("player_keep"), "n", nil)
 		),
 		filter_extra = { player_keep = player_keeps }
-	}	
+	}
 end
 
 
@@ -135,7 +135,7 @@ function wct_castle_expansion_side(side_num)
 			candidates = candidates_fav
 		end
 	end
-	
+
 	filter_candidates {
 		filter = f.none(f.radius(1, f.terrain("Mv")))
 	}
@@ -143,7 +143,7 @@ function wct_castle_expansion_side(side_num)
 	filter_candidates {
 		filter = f.none(f.terrain("C*,K*,X*,*^Xm,Ww,Wwt,Wwg,Wo*,Wwr*,*^V*"))
 	}
-	
+
 	helper.shuffle(candidates)
 	for i = 1, n_tiles_wanted do
 		map:set_terrain(candidates[i], "Ch")
@@ -197,4 +197,3 @@ function get_oceanic()
 	))
 	return map:get_tiles_radius(water_border_tiles, filter_radius, 999)
 end
-

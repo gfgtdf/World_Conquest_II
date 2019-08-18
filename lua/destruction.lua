@@ -74,32 +74,32 @@ on_event("die", function(cx)
 	end
 	if matches_terrain("Kh,Kha,Kh^Vov,Kha^Vov") then
 		wesnoth.set_terrain(loc, "Khr", "base")
-		
+
 	elseif matches_terrain("Ch,Cha") then
 		wesnoth.set_terrain(loc, "Chr^Es")
-		
+
 		-- only without custom activated
 	elseif matches_terrain("Ch^Vh,Ch^Vhc") then
 		wesnoth.set_terrain(loc, "Chr", "base")
-		
+
 	elseif matches_terrain("Cd") then
 		wesnoth.set_terrain(loc, "Cdr^Es")
-		
+
 	elseif matches_terrain("Cd^Vd") then
 		wesnoth.set_terrain(loc, "Cdr", "base")
-		
+
 	elseif matches_terrain("Kd") then
 		wesnoth.set_terrain(loc, "Kdr^Es")
-		
+
 	elseif matches_terrain("Gg^Fmf,Gg^Fdf,Gg^Fp,Gg^Uf,Gs^Fmf,Gs^Fdf,Gs^Fp,Gs^Uf") then
 		wesnoth.set_terrain(loc, "Gll", "base")
-		
+
 	elseif matches_terrain("Cv^Fds") then
 		wesnoth.set_terrain(loc, "Cv^Fdw")
-		
+
 	elseif matches_terrain("Rr^Fet,Cv^Fet") then
 		wesnoth.set_terrain(loc, "Rr^Fetd", "overlay")
-		
+
 	elseif matches_terrain("Aa") then
 		item(snow[wesnoth.random(#snow)])
 	elseif matches_terrain("Ai") then
@@ -136,13 +136,13 @@ on_event("die", function(cx)
 		end
 		if matches_terrain("*^Fzg,*^Fzh,*^Fzi,*^Fzj,*^Fzk") then
 			wesnoth.set_terrain(loc, wesnoth.get_terrain(loc) .. "u", "overlay")
-		end	
+		end
 	else
 		if matches_terrain("*^Vhh,*^Vhha") then
 			wesnoth.set_terrain(loc, "*^Vhhr", "overlay")
 		end
 		if matches_terrain("*^Bw|,*^Bw/,*^Bw\\") then
 			wesnoth.set_terrain(loc, wesnoth.get_terrain(loc) .. "r")
-		end	
+		end
 	end
 end)
