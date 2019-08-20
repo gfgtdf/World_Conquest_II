@@ -1,6 +1,6 @@
-----------------------------------------
+
 local function generate(length, villages, castle, iterations, size, players, island)
-	----------------------------------------
+
 	local res = wct_generator_settings_arguments( length, villages, castle, iterations, size, players, island)
 	res.max_lakes=115
 	res.min_lake_height=320
@@ -9,7 +9,7 @@ local function generate(length, villages, castle, iterations, size, players, isl
 	res.temperature_size=7
 	res.roads=11
 	res.road_windiness=8
-	
+
 	res.height = {
 		-- list of common terrain types which come in at different heights, from highest to lowest
 		dr_height(950, "Uh"),
@@ -52,7 +52,7 @@ local function generate(length, villages, castle, iterations, size, players, isl
 	}
 	res.convert = {
 		wct_fix_river_into_ocean("t", 46),
-		
+
 		-- DR_CONVERT MIN_HT MAX_HT MIN_TMP MAX_TMP FROM TO
 		-- low temperatures
 		dr_convert(80, 999, 0, 375, "Gg, Gs^Uf", "Aa"),
@@ -216,11 +216,11 @@ local function generate(length, villages, castle, iterations, size, players, isl
 			rating=1
 		},
 	}
-	res.castle = { 
+	res.castle = {
 		valid_terrain="Gs, Gg, Hh, Ha, Hh^Uf, Gs^Uf, Ss, Dd, Aa",
 		min_distance=16,
 	}
-	
+
 	return default_generate_map(res)
 end
 return generate

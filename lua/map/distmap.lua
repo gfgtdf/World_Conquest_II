@@ -1,6 +1,13 @@
-local Map = {}
 
-function Map:create(w, h)
+----------------------------------------------------------
+---- A utility class, to calculate distances of each  ----
+---- tile to one given tile                           ----
+----------------------------------------------------------
+
+
+local Distmap = {}
+
+function Distmap:create(w, h)
 	local o = {}
 	setmetatable(o, self)
 	self.__index = self
@@ -13,16 +20,16 @@ function Map:create(w, h)
 	return o
 end
 
-function Map:loc_to_index(loc)
+function Distmap:loc_to_index(loc)
 	return loc[1] + 1 + loc[2] * self.w
 end
 
-function Map:is_on_map(loc)
+function Distmap:is_on_map(loc)
 	local x, y= loc[1], loc[2]
 	return x >= 0 and y >= 0 and y < self.h and x < self.w
 end
 
-function Map:get(loc)
+function Distmap:get(loc)
 	return self.data[self:loc_to_index(loc)]
 end
 
@@ -34,7 +41,7 @@ local adjacent_offset = {
 	{ {0,-1}, {1,0}, {1,1}, {0,1}, {-1,1}, {-1,0} }
 }
 
-function Map:adjacent_tiles(loc, filter)
+function Distmap:adjacent_tiles(loc, filter)
 	local x, y = loc[1], loc[2]
 	local offsets = adjacent_offset[2 - (x % 2)]
 	local res = {}
@@ -47,7 +54,7 @@ function Map:adjacent_tiles(loc, filter)
 	return res
 end
 
-function Map:calculate_distances(locs, upto, filter)
+function Distmap:calculate_distances(locs, upto, filter)
 	std_print("calculate_distances", upto, #locs)
 	local todo = locs
 	local data = self.data
@@ -69,7 +76,7 @@ function Map:calculate_distances(locs, upto, filter)
 	end
 end
 
-function Map:std_print(loc)
+function Distmap:std_print(loc)
 	local data = functional.map(self.data, function(v)
 		return tostring(v or "nil")
 	end)
@@ -78,4 +85,4 @@ function Map:std_print(loc)
 	end
 end
 
-return Map
+return Distmap

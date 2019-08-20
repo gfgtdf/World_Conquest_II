@@ -1,4 +1,11 @@
 
+----------------------------------------------------------
+---- defines debug_wml, a helper function to print a  ----
+---- lua table that might or might not describe a wml ----
+---- table, the function tries to print wml.tag       ----
+---- whenever possible                                ----
+----------------------------------------------------------
+
 function is_wml_tag(t)
 	for i, v in pairs(t) do
 		if i ~= 1 and i ~= 2 then
@@ -24,11 +31,11 @@ function debug_wml(cfg, use_newlines)
 	use_newlines = use_newlines ~= false
 	local indend = 0
 	local res = {}
-	
+
 	local function write(str)
 		res[#res + 1] = str
 	end
-	
+
 	local function write_newline()
 		if use_newlines then
 			res[#res + 1] = "\n" .. string.rep("\t", indend)
@@ -36,10 +43,10 @@ function debug_wml(cfg, use_newlines)
 			res[#res + 1] = " "
 		end
 	end
-	
+
 	local print_table = nil
 	local print_value = nil
-	
+
 	print_table = function(t)
 		if is_wml_tag(t) then
 			write("wml.tag." .. t[1])
@@ -75,7 +82,7 @@ function debug_wml(cfg, use_newlines)
 			write("}")
 		end
 	end
-	
+
 	print_value = function(val)
 		if val == nil then
 			write("nil")

@@ -1,4 +1,12 @@
--- helper tool that is used to convert the scenariogeneration wml to lua.
+
+----------------------------------------------------------
+---- A helper tool, that works (mostly) indpendently  ----
+---- of the rest to convert location filter wml to    ----
+---- the filter syntax used in this addon             ----
+---- (map:get_locations)                              ----
+----------------------------------------------------------
+
+
 
 local and_to_all = {
 	["and"] = "all",

@@ -1,6 +1,6 @@
-----------------------------------------
+
 local function generate(length, villages, castle, iterations, size, players, island)
-	----------------------------------------
+
 	local res = wct_generator_settings_arguments( length, villages, castle, iterations, size, players, island)
 	res.max_lakes=30
 	res.min_lake_height=170
@@ -9,7 +9,7 @@ local function generate(length, villages, castle, iterations, size, players, isl
 	res.temperature_size=9
 	res.roads=11
 	res.road_windiness=8
-	
+
 	res.height = {
 		dr_height(990, "Qxu"),
 		dr_height(960, "Uu"),
@@ -45,7 +45,7 @@ local function generate(length, villages, castle, iterations, size, players, isl
 	}
 	res.convert = {
 		wct_fix_river_into_ocean("t", 65),
-		
+
 		-- DR_CONVERT MIN_HT MAX_HT MIN_TMP MAX_TMP FROM TO
 		dr_convert(360, 999, 10, 400, "Ww", "Ai"),
 		dr_convert(475, 750, 10, 415, "Gll^Fp", "Aa^Fpa"),
@@ -62,7 +62,7 @@ local function generate(length, villages, castle, iterations, size, players, isl
 		dr_convert(585, 595, 10, 440, "Aa,Gll^Uf", "Ms"),
 		dr_convert(575, 585, 10, 440, "Aa", "Ha"),
 		dr_convert(475, 600, 870, 900, "Gll,Gll^Uf", "Ql"),
-		
+
 		-- DR_TEMPERATURE FROM MIN MAX TO),
 		dr_temperature("Mm", 10, 570, "Ms"),
 		dr_temperature("Mm^Xm", 10, 585, "Ms^Xm"),
@@ -200,11 +200,11 @@ local function generate(length, villages, castle, iterations, size, players, isl
 			rating=1
 		},
 	}
-	res.castle = { 
+	res.castle = {
 		valid_terrain="Gll, Gd, Hh, Gll^Ft, Gll^Efm, Gll^Fet, Gll^Ftr, Ss, Ai, Gll^Uf, Hh^Uf, Hh^Fp, Aa, Ha, Ha^Fpa, Mm, Ms",
 		min_distance=13,
 	}
-	
+
 	return default_generate_map(res)
 end
 return generate

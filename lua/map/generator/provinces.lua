@@ -1,6 +1,6 @@
-----------------------------------------
+
 local function generate(length, villages, castle, iterations, size, players, island)
-	----------------------------------------
+
 	local res = wct_generator_settings_arguments( length, villages, castle, iterations, size, players, island)
 	res.max_lakes=5
 	res.min_lake_height=225
@@ -9,7 +9,7 @@ local function generate(length, villages, castle, iterations, size, players, isl
 	res.temperature_size=size
 	res.roads=90
 	res.road_windiness=6
-	
+
 	res.height = {
 		-- list of common terrain types which come in at different heights, from highest to lowest
 		dr_height(990, "Uh^Uf"),
@@ -53,7 +53,7 @@ local function generate(length, villages, castle, iterations, size, players, isl
 		-- jungle appears at mod high temperatures
 		dr_convert(0, 999, 450, 520, "Gg,Gs", "Gs^Ft"),
 		dr_convert(0, 999, 450, 520, "Hh", "Hh^Ft"),
-		
+
 		-- lava appears at extreme temperature
 		dr_temperature("Qxu", 850, 999, "Ql"),
 	}
@@ -173,11 +173,11 @@ local function generate(length, villages, castle, iterations, size, players, isl
 			rating=2
 		},
 	}
-	res.castle = { 
+	res.castle = {
 		valid_terrain="Gs, Gg, Gs^Fp, Gs^Ft, Hh, Hh^Fp, Hh^Ft, Ss, Mm, Dd, Aa, Ai, Ha",
 		min_distance=14,
 	}
-	
+
 	return default_generate_map(res)
 end
 return generate

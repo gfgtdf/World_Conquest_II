@@ -1,3 +1,9 @@
+
+---------------------------------------------------------
+---- Code to add the [side]s to the [scenario]       ----
+---- And the wml events to initilize the enemy sides ----
+---------------------------------------------------------
+
 _ = wesnoth.textdomain "wesnoth"
 helper = wesnoth.require("helper")
 

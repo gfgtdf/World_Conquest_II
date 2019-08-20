@@ -1,6 +1,6 @@
-----------------------------------------
+
 local function generate(length, villages, castle, iterations, size, players, island)
-	----------------------------------------
+
 	local res = wct_generator_settings_arguments(length, villages, castle, iterations, size, players, island)
 	res.max_lakes=50
 	res.min_lake_height=150
@@ -9,7 +9,7 @@ local function generate(length, villages, castle, iterations, size, players, isl
 	res.temperature_size=9
 	res.roads=12
 	res.road_windiness=10
-	
+
 	res.height = {
 		dr_height(900, "Uh"),
 		dr_height(800, "Uu"),
@@ -44,7 +44,7 @@ local function generate(length, villages, castle, iterations, size, players, isl
 		-- dunes appear at extreme temperatures and moderate elevation
 		dr_convert(475, 550, 800, nil, "Ds, Hh", "Hd"),
 	}
-	
+
 	res.road_cost = {
 		wct_generator_road_cost_classic(),
 		dr_road("Gs^Ft", "Re", 20),
@@ -55,7 +55,7 @@ local function generate(length, villages, castle, iterations, size, players, isl
 	res.village = {
 		wct_generator_village(5, 8, 4, 4, 3, 5, 4, 3, 3, 3, 8, 1)
 	}
-	res.castle = { 
+	res.castle = {
 		valid_terrain="Gs, Gg, Gs^Fp, Hh, Gs^Ft, Ss",
 		min_distance=12,
 	}

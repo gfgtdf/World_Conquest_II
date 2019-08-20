@@ -1,4 +1,10 @@
 
+----------------------------------------------------------
+---- Chooses the location for the bonus points,       ----
+---- the correct sceneries and creates events to      ----
+---- place them                                       ----
+----------------------------------------------------------
+
 function random_placement(locs, num_items, min_distance, command)
 	local distance = min_distance or 0
 	local num_items = num_items or 1
@@ -16,7 +22,7 @@ function random_placement(locs, num_items, min_distance, command)
 		end
 		local index = wesnoth.random(size)
 		local point = locs[index]
-		
+
 		command(point, i)
 		if distance < 0 then
 			-- optimisation: nothing to do for distance < 0
@@ -55,7 +61,7 @@ function random_placement(locs, num_items, min_distance, command)
 			end
 		end
 	end
-	
+
 end
 
 function get_f_wct_bonus_location_filter(map)
@@ -104,7 +110,7 @@ function wct_bonus_chose_scenery(loc, theme)
 	local terrain = map:get_terrain(loc)
 	-- determine possible scenery values based on terrain
 	local scenery = "well_g,temple,tent2_g,tent1,village,monolith3,burial"
-	local terrain_to_scenery = 
+	local terrain_to_scenery =
 	{
 		{
 			terrain = "Re,Rd,Rb,Rr,Rrc",
@@ -156,7 +162,7 @@ function wct_bonus_chose_scenery(loc, theme)
 		end
 	end
 	::intial_list_screated::
-	if true then 
+	if true then
 		goto final_pick
 	end
 	-- chance of rock cairn on isolated hills
@@ -166,11 +172,11 @@ function wct_bonus_chose_scenery(loc, theme)
 			f.find_in_wml("point.location"),
 			f.adjacent(f.terrain("H*^*"), nil, 0)
 		)) then
-		
+
 		scenery = scenery .. "," .. "rock_cairn"
 	end
 	-- chance of dolmen on grass not next to forest
-	
+
 	if matches_location(
 		f.all(
 			f.terrain("G*"),
@@ -180,7 +186,7 @@ function wct_bonus_chose_scenery(loc, theme)
 		scenery = scenery .. "," .. "dolmen_g"
 	end
 	-- chances of green temple on gras next to swamp, hills and forest
-	
+
 	if matches_location(
 		f.all(
 			f.terrain("G*"),
@@ -189,45 +195,45 @@ function wct_bonus_chose_scenery(loc, theme)
 			f.adjacent(f.terrain("Hh^*,Ha^*")),
 			f.adjacent(f.terrain("G*^F*,A*^F*,G*^Uf"))
 		)) then
-		
+
 		scenery = scenery .. "," .. "temple_green_g,temple_green_g,temple_green_g,temple_green_g2,temple_green_g2"
 	end
 	-- chances of green temple in hills next to swamp or cold
-	
+
 	if matches_location(
 		f.all(
 			f.terrain("Hh"),
 			f.find_in_wml("point.location"),
 			f.adjacent(f.terrain("Ss,Ai,A*^*,Ha^*,Ms^*"))
 		)) then
-		
+
 		scenery = scenery .. "," .. "temple_green_h,temple_green_h,temple_green_h,temple_green_h2,temple_green_h2"
 	end
 	-- chance of temple in hills next to mountain
-	
+
 	if matches_location(
 		f.all(
 			f.terrain("Hh,Hhd"),
 			f.find_in_wml("point.location"),
 			f.adjacent(f.terrain("M*^*"))
 		)) then
-		
+
 		scenery = scenery .. "," .. "temple4,temple4"
 	end
 	-- chances of detritus and lilies on some swamps
-	
+
 	if matches_location(
 		f.all(
 			f.terrain("Ss"),
 			f.find_in_wml("point.location"),
 			f.adjacent(f.terrain("*^F*,C*^*,K*^*"), nil, 0)
 		)) then
-		
+
 		scenery = scenery .. "," .. "detritus,detritus2,lilies_s"
 	end
 	-- chances of buildings next to road
 	if theme ~= "volcanic" and theme ~= "clayey" and theme ~= "wild" then
-		
+
 		if matches_location(
 			f.all(
 				f.terrain("G*,Hh*"),
@@ -236,36 +242,36 @@ function wct_bonus_chose_scenery(loc, theme)
 				f.adjacent(f.terrain("*^F*"), nil, 0),
 				f.radius(7, f.terrain("*^Vh,*^Vhh,*^Ve,*^Vl,*^Vhc,*^Vd,*^Vy*,*^Vz*"))
 			)) then
-			
+
 			scenery = scenery .. "," .. "rock_cairn,temple2_g,shop_g"
 		end
 	end
 	-- chance of fancy shop on road
 	if theme ~= "volcanic" and theme ~= "clayey" and theme ~= "wild" then
-		
+
 		if matches_location(
 			f.all(
 				f.terrain("R*^*"),
 				f.find_in_wml("point.location"),
 				f.radius(5, f.terrain("*^Vh,*^Vhh,*^Ve,*^Vl,*^Vhc,*^Vd,*^Vy*,*^Vz*"))
 			)) then
-			
+
 			scenery = scenery .. "," .. "tent2_r"
 		end
 	end
 	-- high chances of windmill and oak surronded by flat
-	
+
 	if matches_location(
 		f.all(
 			f.terrain("Gg,Gs,Gll"),
 			f.find_in_wml("point.location"),
 			f.adjacent(f.terrain("G*,R*,R*^Em,G*^Efm,Wwf,G*^Em,G*^Eff,*^Gvs,W*^B*,Ce,Ch"), nil, 6)
 		)) then
-		
+
 		scenery = scenery .. "," .. "windmill,windmill,windmill,windmill,windmill,windmill,windmill,oak1,oak2,oak3,oak4,oak5,oak6,oak7"
 	end
 	-- remove chances of ships on river/lake coast for lilies
-	
+
 	if matches_location(
 		f.all(
 			f.terrain("Ww,Wwt,Wwg"),
@@ -275,12 +281,12 @@ function wct_bonus_chose_scenery(loc, theme)
 				f.find_in_wml("oceanic")
 			)
 		)) then
-		
+
 		scenery = "lilies"
 	end
 	-- different meaning for roads in some maps
 	if theme == "clayey" or theme == "wild" then
-		
+
 		if matches_location(
 			f.all(
 				f.terrain("R*"),
@@ -295,7 +301,7 @@ function wct_bonus_chose_scenery(loc, theme)
 				f.find_in_wml("point.location"),
 				f.find_in_wml("map_data.road_in_cave")
 			)) then
-			
+
 			scenery = "altar,bones,rock_cairn,well,monolith2,monolith3,tent1"
 		end
 	end
@@ -305,7 +311,7 @@ function wct_bonus_chose_scenery(loc, theme)
 				f.terrain("Rd,Rb"),
 				f.find_in_wml("point.location")
 			)) then
-			
+
 			scenery = "bones,rock_cairn,well_g,monolith2,tent1,tent1,tent2,tent2_g,monolith3,well_g,rock_cairn,dolmen,monolith2,temple,dolmen_g,monolith1_r,monolith4_r"
 		end
 		if matches_location(
@@ -313,7 +319,7 @@ function wct_bonus_chose_scenery(loc, theme)
 				f.terrain("Ur"),
 				f.find_in_wml("point.location")
 			)) then
-			
+
 			scenery = "bones,rock_cairn,well_g,monolith2,tent1,monolith3,well_g,dolmen,monolith2,temple,monolith1_r,monolith4_r"
 		end
 	end
@@ -327,26 +333,26 @@ function wct_bonus_chose_scenery(loc, theme)
 				f.find_in_wml("oceanic")
 			))
 		)) then
-		
+
 		scenery = scenery .. "," .. "lighthouse,lighthouse,lighthouse,lighthouse,lighthouse"
 		if matches_location(
 			f.all(
 				f.terrain("G*^*,R*^*"),
 				f.find_in_wml("point.location")
 			)) then
-			
+
 			scenery = scenery .. "," .. "lighthouse,lighthouse"
 		end
 		-- high chances of light signal on cliff next to ocean
-		
+
 		if matches_location(
 			f.all(
 				f.terrain("Hh,Hhd,Mm,Md"),
 				f.find_in_wml("point.location")
 			)) then
-			
+
 			scenery = scenery .. "," .. "campfire,campfire,campfire,campfire,lighthouse,lighthouse,lighthouse,lighthouse"
-			
+
 			if matches_location(
 				f.all(
 					f.terrain("Mm,Md"),
@@ -365,7 +371,7 @@ function wct_bonus_chose_scenery(loc, theme)
 				f.radius(5, f.terrain("*^V*"))
 			)
 		)) then
-		
+
 		scenery = scenery .. "," .. "tower_r1,tower_r4"
 	end
 	-- chance of outpost in sands
@@ -377,7 +383,7 @@ function wct_bonus_chose_scenery(loc, theme)
 			f.adjacent(f.terrain("D*^*,H*^*,G*^*,R*,Ur,M*^*"), "nw,sw,n,s,ne", 5),
 			f.adjacent(f.terrain("D*^*,Hd*^*"), nil, "1-6")
 		)) then
-		
+
 		scenery = scenery .. "," .. "outpost,outpost"
 	end
 	-- chances of dead oak in desolated
@@ -398,7 +404,7 @@ function wct_bonus_chose_scenery(loc, theme)
 				)
 			)
 		)) then
-		
+
 		scenery = scenery .. "," .. "oak_dead,oak_dead,oak_dead,oak_dead,oak_dead2,oak_dead2,oak_dead2,oak_dead2"
 	end
 	::final_pick::

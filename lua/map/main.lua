@@ -26,6 +26,7 @@ function wc_ii_generate_scenario(nplayers, gen_args)
 			prestart_event
 		},
 		lua = {
+			-- TODO: what does this do?
 			{
 				code = "",
 			},
@@ -66,7 +67,6 @@ function wc_ii_generate_scenario(nplayers, gen_args)
 		side = {},
 		id = "WC_II_" .. nplayers .. "p",
 		next_scenario = "WC_II_" .. nplayers .. "p",
-		name = "WC_II_" .. nplayers .. "p_name",
 		description = "WC_II_" .. nplayers .. "p_desc",
 		modify_placing = false,
 		-- does this work
@@ -140,8 +140,7 @@ function wc_ii_generate_scenario(nplayers, gen_args)
 	end
 	generator(scenario, nplayers)
 
-
-
+	-- set the correct name.
 	if scenario_num == 1 then --first map
 		scenario.name = "WC_II_" .. nplayers .. " - " .. _"Start"
 	else

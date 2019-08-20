@@ -1,3 +1,11 @@
+
+----------------------------------------------------------
+---- The code that generates the maps, basicially     ----
+---- each map is generated in two steps, first        ----
+---- the default mapgenerator is used then, one of    ----
+---- the codes in ,/postgeneration is run             ----
+----------------------------------------------------------
+
 Map = wesnoth.dofile("./distmap.lua")
 wesnoth.dofile("./postgeneration/engine.lua")
 
@@ -63,7 +71,7 @@ function wct_map_generator(default_id, postgen_id, length, villages, castle, ite
 		local generate1 = wesnoth.dofile(generatorfile)
 		std_print("run_generation")
 		local map_data =generate1(length, villages, castle, iterations, hill_size, players, island)
-		
+
 		--std_print(map_data)
 		map_data = run_postgeneration(map_data, postgen_id, scenario, players, nhumanplayer)
 		scenario.map_data = map_data
