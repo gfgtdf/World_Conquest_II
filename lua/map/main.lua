@@ -2,13 +2,13 @@ _ = wesnoth.textdomain "wesnoth"
 helper = wesnoth.require("helper")
 utils = wesnoth.require("wml-utils")
 functional = wesnoth.require("functional")
+wc2_convert = wesnoth.dofile("./../shared_utils/wml_converter.lua")
 wesnoth.dofile("./utility.lua")
-wesnoth.dofile("./pretty_print.lua")
-wesnoth.dofile("./bonus_points.lua")
+wesnoth.dofile("./../shared_utils/pretty_print.lua")
+wesnoth.dofile("./scenario_utils/bonus_points.lua")
 wesnoth.dofile("./wct_map_generator.lua")
-wc2_convert = wesnoth.dofile("./../wml_converter.lua")
-wesnoth.dofile("./plot.lua")
-wesnoth.dofile("./side_definitions.lua")
+wesnoth.dofile("./scenario_utils/plot.lua")
+wesnoth.dofile("./scenario_utils/side_definitions.lua")
 settings = globals.settings or {}
 
 local n_villages = {27, 40, 53, 63}

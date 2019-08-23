@@ -7,7 +7,7 @@
 ----------------------------------------------------------
 
 Map = wesnoth.dofile("./distmap.lua")
-wesnoth.dofile("./postgeneration/engine.lua")
+wesnoth.dofile("./postgeneration_utils/engine.lua")
 
 local postgenerators = {}
 for i, v in ipairs(wesnoth.read_file("./postgeneration")) do
@@ -33,10 +33,10 @@ local function run_postgeneration(map_data, id, scenario_content, nplayers, nhum
 		player_list[i] = i
 	end
 	local postgen_starttime = wesnoth.get_time_stamp()
-	wesnoth.dofile("./postgeneration/utilities.lua")
-	wesnoth.dofile("./postgeneration/events.lua")
-	wesnoth.dofile("./postgeneration/snow.lua")
-	wesnoth.dofile("./postgeneration/noise.lua")
+	wesnoth.dofile("./postgeneration_utils/utilities.lua")
+	wesnoth.dofile("./postgeneration_utils/events.lua")
+	wesnoth.dofile("./postgeneration_utils/snow.lua")
+	wesnoth.dofile("./postgeneration_utils/noise.lua")
 	local postgenfile = postgenerators[id] or id .. "./lua"
 	--local postgenfile = postgenerators["2f"] or id .. "./lua"
 	_G.scenario_data = {
