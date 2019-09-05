@@ -147,9 +147,11 @@ function wc2_era.expand_hero_types(types_str)
 		for i,v in ipairs(types) do
 			if wesnoth.unit_types[v] then
 				table.insert(types_res, v)
-			else
-				local group = wc2_era.hero_types[v] or helper.wml_error("invalid group id '" .. v .. "'")
+			elseif wc2_era.hero_types[v] then
+				local group =  wc2_era.hero_types[v]
 				wc2_utils.split_to_array(group.types, types_new)
+			else
+				wesnoth.message("WCII ERROR", "unknown deserter group: '" .. v .. "'")
 			end
 		end
 		types = types_new
