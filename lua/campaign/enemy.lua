@@ -87,9 +87,11 @@ function enemy.do_commander(cfg, group_id, loc)
 		side = cfg.side,
 		generate_name = true,
 		role = "commander",
-		overlays = wc2_heroes.commander_overlay,
 		experience = scenario * ((wml.variables["difficulty.enemy_power"] or 6) - 7 + cfg.commander),
-		wml.tag.modifications (wc2_heroes.trait_heroic),
+		wml.tag.modifications {
+				wc2_heroes.commander_overlay_object(),
+				T.trait(wc2_heroes.trait_heroic),
+		},
 	}
 end
 

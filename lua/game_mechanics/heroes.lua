@@ -40,6 +40,24 @@ function wc2_heroes.experience_penalty()
 	}
 end
 
+function wc2_heroes.commander_overlay_object()
+	return T.object {
+		id = "wc2_commander_overlay",
+		T.effect {
+			apply_to="overlay",
+			add = wc2_heroes.commander_overlay
+		}
+	}
+end
+function wc2_heroes.hero_overlay_object()
+	return T.object {
+		id = "wc2_hero_overlay",
+		T.effect {
+			apply_to="overlay",
+			add = wc2_heroes.hero_overlay
+		}
+	}
+end
 -- @a t the unit type id
 -- @returns the contant of [modifications] for a unit.
 function wc2_heroes.generate_traits(t)
@@ -63,15 +81,12 @@ function wc2_heroes.place(t, side, x, y, is_commander)
 	local modifications = wc2_heroes.generate_traits(t)
 	table.insert(modifications, 1, T.advancement { wc2_scenario.experience_penalty() })
 
-	table.insert(modifications, T.object {
-		id = is_commander and "wc2_commander_overlay" or "wc2_hero_overlay",
-		T.effect {
-			apply_to="overlay",
-			add = is_commander and wc2_heroes.commander_overlay or wc2_heroes.hero_overlay
-		} 
-	})
-	local u = wesnoth.create_unit { 
-		type = t, 
+	table.insert(
+		modifications,
+		is_commander and wc2_heroes.commander_overlay_object() or wc2_heroes.hero_overlay_object()
+	)
+	local u = wesnoth.create_unit {
+		type = t,
 		side = side,
 		random_traits = false,
 		role = is_commander and "commander" or nil,
