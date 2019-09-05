@@ -48,15 +48,14 @@ local function wct_map_custom_ruin_village(loc)
 end
 
 on_event("die", function(cx)
+	local loc = { cx.x1, cx.y1 }
 	local function matches(filter)
 		filter.x = cx.x1
 		filter.y = cx.y1
-		return wesnoth.get_locations(filter) > 0
+		return #wesnoth.get_locations(filter) > 0
 	end
 	local function matches_terrain(filter)
-		filter.x = cx.x1
-		filter.y = cx.y1
-		return wesnoth.get_locations({ x = cx.x1, y = cx.y1, terrain = filter}) > 0
+		return #wesnoth.get_locations({ x = cx.x1, y = cx.y1, terrain = filter}) > 0
 	end
 	if wml.variables.wc2_config_enable_terrain_destruction == false then
 		return
