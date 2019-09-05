@@ -19,11 +19,11 @@ local images = {
 -- the wc2 recruit pair logic.
 on_event("recruit", function(ctx)
 	local unit = wesnoth.get_unit(ctx.x1, ctx.y1)
-	
+
 	local side_num = unit.side
 	local side = wesnoth.sides[side_num]
 	local unittype = unit.type
-	
+
 	for i,v in ipairs(wml.array_access.get("wc2.pair", side)) do
 		local p = wc2_utils.split_to_array(v.types)
 		if p[1] == unittype and p[2] ~= nil then
@@ -55,7 +55,7 @@ function wc2_era.get_faction(id)
 end
 
 local function init_side(side_num)
-		
+
 	if wesnoth.get_side_variable(side_num, "wc2.faction_id") ~= nil then
 		-- don't do this twice.
 		return
@@ -80,7 +80,7 @@ local function init_side(side_num)
 			wesnoth.set_side_variable(side_num, "wc2.pair[" .. (i - 1) .. "].types", table.concat(p, ","))
 		end
 	end
-	
+
 	if not faction and #wc2_era.factions_wml > 0 then
 		faction = wc2_era.factions_wml[wesnoth.random(#wc2_era.factions_wml)]
 	end
@@ -104,13 +104,13 @@ end
 
 function wesnoth.wml_actions.wc2_init_era(cfg)
 	cfg = wml.literal(cfg)
-	
+
 	if cfg.clear then
 		wc2_era.factions_wml = {}
 		wc2_era.hero_types = {}
 		wc2_era.hero_traits = {}
 	end
-	
+
 	wc2_era.wc2_era_id = cfg.wc2_era_id -- TODO removed for testing or error("missing wc2_era_id")
 	for faction in wml.child_range(cfg, "faction") do
 		table.insert(wc2_era.factions_wml, faction)
@@ -119,7 +119,7 @@ function wesnoth.wml_actions.wc2_init_era(cfg)
 		wc2_era.hero_types[v[1]] = v[2]
 	end
 	for trait_extra in wml.child_range(cfg, "trait_extra") do
-		
+
 		local types = wc2_utils.split_to_set(trait_extra.types)
 		local trait = wml.get_child(trait_extra, "trait") or helper.wml_error("missing [trait] in [trait_extra]")
 		table.insert(wc2_era.hero_traits, { types = types, trait = trait} )
@@ -199,7 +199,7 @@ end
 
 -- shows the recruit info dialog for the faction of the currently viewing side.
 function wesnoth.wml_actions.wc2_recruit_info(cfg)
-		
+
 	local side_num = wesnoth.get_viewing_side()
 	local faction = wc2_era.get_faction(side_num)
 	if not faction then
@@ -218,12 +218,12 @@ function wesnoth.wml_actions.wc2_recruit_info(cfg)
 		caption = faction.name,
 		message = cfg.message,
 	}
-	
+
 	for i,v in ipairs(wml.array_access.get("wc2.pair", side_num)) do
 		local p = wc2_utils.split_to_array(v.types)
 		local ut1 = wesnoth.unit_types[p[1]]
 		local ut2 = wesnoth.unit_types[p[2]]
-		local img = "misc/blank.png~SCALE(144,72)" .. 
+		local img = "misc/blank.png~SCALE(144,72)" ..
 			"~BLIT(" .. ut1.image .. "~TC(" .. side_num .. ",magenta))" ..
 			"~BLIT(" .. ut2.image .. "~TC(" .. side_num .. ",magenta),72,0)"
 		table.insert(message, {"option", {

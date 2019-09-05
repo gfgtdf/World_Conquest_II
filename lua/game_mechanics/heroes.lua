@@ -62,14 +62,14 @@ end
 -- @returns the contant of [modifications] for a unit.
 function wc2_heroes.generate_traits(t)
 	local res = {}
-	
+
 	if wc2_heroes.trait_heroic then
 		table.insert(res, T.trait (wc2_heroes.trait_heroic))
 	end
 	for k,v in ipairs(wc2_era.hero_traits) do
 		if v.types[t] then
 			table.insert(res, T.trait (v.trait))
-		end 
+		end
 	end
 	return res
 end
@@ -117,7 +117,7 @@ function wc2_heroes.founddialouge(finder, found)
 	}
 	local reply = type_dialogue.reply or wc2_heroes.dialogues.default.reply
 
-	for i, alt_replay in ipairs(type_dialogue.alt_reply or {}) do 
+	for i, alt_replay in ipairs(type_dialogue.alt_reply or {}) do
 		local function matches(attr)
 			return string.match(alt_replay[attr] or "", finder[attr])
 		end
