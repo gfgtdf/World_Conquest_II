@@ -104,7 +104,8 @@ function wct_reduce_wall_clusters(cave_terrain)
 end
 
 function wct_castle_expansion_side(side_num)
-	if true then
+	std_print("expanding castle", side_num)
+	if false then
 		--FIXME
 		--map.special_locations is borken
 		return
@@ -114,12 +115,12 @@ function wct_castle_expansion_side(side_num)
 	if keep_loc == nil then
 		return
 	end
-	local castle = map:get_tiles_radius({keep_loc}, f.terrain("C*,K*"), 1)
-	local keep_area = map:get_tiles_radius({keep_loc}, f.all(), 2)
+	local castle = map:get_tiles_radius({keep_loc}, wesnoth.create_filter(f.terrain("C*,K*")), 1)
+	local keep_area = map:get_tiles_radius({keep_loc}, wesnoth.create_filter(f.all()), 2)
 
 	local candidates = get_locations {
 		filter = f.all(
-			f.none("C*,K*"),
+			f.none(f.terrain("C*,K*")),
 			f.adjacent(f.find_in("castle"))
 		),
 		locs = keep_area,
