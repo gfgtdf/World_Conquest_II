@@ -37,7 +37,7 @@ f = {
 }
 
 function get_locations(t)
-	local filter = wesnoth.create_filter(t.filter, t.filter_extra)
+	local filter = wesnoth.create_filter(t.filter, t.filter_extra or {})
 	return map:get_locations(filter, t.locs)
 end
 
