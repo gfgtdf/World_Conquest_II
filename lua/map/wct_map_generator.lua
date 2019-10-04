@@ -41,6 +41,7 @@ local function run_postgeneration(map_data, id, scenario_content, nplayers, nhum
 	--local postgenfile = postgenerators["2f"] or id .. "./lua"
 	_G.scenario_data = {
 		nplayers = nplayers,
+		nhumanplayers = nhumanplayer,
 		scenario = scenario_content,
 	}
 	_G.map = wesnoth.create_map(map_data)

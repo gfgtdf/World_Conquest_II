@@ -153,8 +153,9 @@ function wct_castle_expansion_side(side_num)
 end
 
 function wct_enemy_castle_expansion()
-	local n_enemy_sides = 1
-	for side_num = 3, 3 + n_enemy_sides do
+	local n_player_sides = _G.scenario_data.nhumanplayers
+	local n_total_sides = _G.scenario_data.nplayers
+	for side_num = n_player_sides + 1, n_total_sides do
 		wct_castle_expansion_side(side_num)
 	end
 end
