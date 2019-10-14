@@ -1,0 +1,186 @@
+Hello there. this seemed the best way to reach you as you said you check git more often then anything.
+
+sorry for not letting you know but I am usually off while summer break. That however is over now so I am back.
+Basically when I first suggested to work on this I had a list with changes that many approved. 
+I reached out to all active players and asked for their consent to some changes I had in mind and 
+also let them suggest what else they woudl want to see.
+
+Not that is matters but these are all the players I talked to:
+paso, kira, caritas, hay207, ZEN-CAT, wilsonso, noella, amikrop, gnida/sunrise/sunset, hemingway, poipoi, sathyre, 
+NanRoig, clmates, khim, monte, noobs, time-2-die/t2d, Igh/Aquamarin, flynnk, Mee,  AMMOeinser, iScrub, nelaima, 
+AustinTheTerrible, xach810, SkinkSlipper, Ado64, Karofaar, Mako, MrPuhh, Zeratul, Elvandin, McCallister, Tanzo, 
+Groguet, aksche, Roylink6 , KeyofDestiny17, Evernoob, mudfoot, JoeSGriffith, Wrykolakas
+
+Now that some time passed, I had a chance to review that list of changes I and the others came up with and 
+decided that most of them were either unrealistic or unnecessary. 
+Hence I am gonna only suggest who are actually doable and realistic.
+
+
+
+
+(1.1) Dunefolk Rework
+The reason I got in touch you in the first place. I saw that other players in forum already expressed their thoughts on this.
+I do not know if you already started working on this something I could do myself code-wise.
+Will change MULTIPLAYER_SIDE_THE_EMPIRE , FACTION_VARIABLE_THE_EMPIRE , RANDOM_LEADERS_EMPIRE , IMG_EMPIRE accordingly in The_Emprie.cfg 
+
+(1.2) Empire as Enemy
+Do not know how to do that, but should be easy for you.
+
+(1.3) Dunefolk and other factions 
+Just as other factions are featured at least two times in faction pairs, it is considerable to not have just a single Dunefolk WC Pair,
+but at least two. This way Dunefolk would feel more integrated as a whole in the mod. 
+Which faction are to be paired up with Dunefolk can be open for discussion on the thread until the other steps were done.
+Defining new faction pairs should be something I should be able to do on my own.
+
+
+
+
+(2.1) Fixing The Cult
+Dunefolk is currently in a recruitment pair/pattern of the Loy/Undead alliance which is very questionable and immersion breaking.
+An alterative should be found. Suggestion would be posted in thread for discussion before execution.
+
+(2.2) Revise other Alliances
+Other factions too have odd but not balance breaking  recrutment patterns. 
+I'd have to go through all of them I could comment on this further. 
+It is possible that all remains unchanged but there was something off putting somewhere.
+If there turns out to be something like that, Suggestion would be posted in thread for discussion before execution.
+
+(2.3) Creating new Alliances
+If we do a larger scale of update, it is considareable to create new alliances as well such as Orc/Dwarf and Drake/Loy.
+I would have to come up with balanced recruitmen pattern for them which would have to be discussed in forums thoroughly.
+Steps (2.1) to (2.3) is somethign I would prodide the code for myself.
+
+
+
+(3) New Items
+There are still unexplored possibilities for new items with unique bonuses. It is important to maintain balance though.
+There are still some training bonuses that could be turned into items as well. 
+Other items could be inspired by ageless abilitie such as "ranged backstab" or "precision". 
+Item concept that could be considered to ahve too strong of buffs could now feature debuffs as well.
+Stronger (new) items could be dropped only by AI and will not appear in the item list.
+There are many possibilities, I still would need to brainstorm a bit and 
+this would too require time to be discussed on the threads as well.
+Since I am spriting, I should be able to do new icons for new items if requiered.
+Here is an example of a new simple, balanced item:
+
+Name: Provisions
+Icon: images/items/leather-bag
++ 4 heal
++ 4 regen   (with the new dunefolk, +4 regen is featured in mainline as well)
+
+I too should be able to code the items themselves, not sure if I am able to implement them though. 
+If not I will request help.
+
+
+
+
+(4) 
+There are ways to expand the basic trainings in a balanced matter without adding a 4th Level (which I do not intend to do).
+This step is not necessary, but it could be interesting to have at least one or two new abilities to each. 
+If I come up with something, I will post them on the thread. If not, we just leave it.
+Coding-wise this one should be easy.
+
+
+
+
+(5) New Heros/Commanders/Enemies
+There are many mainline unit campaign units that could be introduce as WC II already feature campaign units as heros.
+To give an example, Elvish Civilian could be legendary/skilled lv0 Hero only dropable from map bonueses.
+Others could be:
+
+Dwarfs:
+Lv1 Outcast
+Lv1 Rogue Mage
+Lv1 Annalist
+
+Undead:
+Lv1 Apprentice Mage
+
+Orcs:
+Lv1 Orcish Shaman
+
+Same goes for AI, it could get more units then we as players but not as recruits, 
+just as heroes (units with items to drop) or Commanders.
+
+Dwarfs:
+Lv2 Wesfolk Lady, Lv3 Wesfolk Leader
+Lv2 Shadow Mage, Lv3 Shadow Lord
+Lv2 Witness, Lv3 Loremaster
+
+Orcs:
+Lv2 Novice Orcish Shaman, Lv3 Elder Orcish Shaman
+Lv2 Nightblade
+
+Loayalists:
+Lv2 Infantry Lieutenant, Lv3 Infantry Commander
+Lv2 Human Princess, Lv3 Human Battleprincess
+
+Undead:
+Lv2 Apprentice Necromancer, Lv3 Dark Mage
+Lv2 Vampire Lady 
+Lv2 Familiar
+Lv2 Spider Lich
+Lv2 Flesh Golem
+
+This is some of the more complete list and I only considered fully animated unit lines. 
+Creating/Copieng existing untis for me is not a problem but I wouldn't know how to properly implement them in the right place.
+Seeing new units thought would really refreshing I suppose.
+
+
+
+(6.1)Chocoboner 
+That unit was properly one of the most recently added to Wc II. But personally I think it was added in the wrong place.
+Instead of letting it lv up fromt the walking corpse, we could use it as an extra unit as suggested in (5) and either introduce
+existing sprites for the walking corpse lv up (which are animate and of good quality) or limit its lv up to lv1 as normal.
+
+(6.2) Gobiln Rider
+Jumping from Goblin Spear to Pillager seems also a bit off, though not as much as the Chocoboner. 
+There are alternatives of fixing this as well.
+
+Both (6.1) and (6.2) are easy fixes but do not seem 100% necessary. It's just if we do all this then we can do it right.
+
+
+(7)Fishes
+One big and re-occuring complain is the droping of mermaids and nagas as heros in bad places. 
+Removing them from the hero list would be too of an agressive solution. 
+Instead of that, we could make it a condition that it drops only in water/swamp villages. 
+This way player has a chance to at least get away with it if is not in a good posistion.
+I however would not know how to code this though.
+
+(8)
+This one is more of a personal request, but if it is possible, removing the dialog when obserwing
+would increase the game flow so much more ... Ovservers have to click dozen of times just to watch a game.
+And WC II is very popular, so there are many observers. I don't know how difficult this would be if it wouldn't be too much
+of a hustle, then it would be welcome change
+
+(9)
+Considering that you are considering to add another difficulty level, 
+increasin the castle size from map 5+ is kind of neccessary.
+Good players will even reach 500g + on nightmare and the castle size is just no big enough to get all your recruits.
+At the same time you could say that it limits your recruitment and hence raises the difficutly, but it rather limits your
+strategies then actively raising difficulty, since you have to decide on which recruits/recalls you have to give up on.
+I think I could code this as well, but I wouldn't want to mess with map gen.
+
+
+
+
+This all seems a lot but actually most of them could be done fast and considering that (I think) I can do most of them on my own,
+your work load is not that high. Before start working on this, I will go formal post on the forums for all the changes I made 
+with exact changes for everything. This way everything can be discussed properly.
+
+
+Let me know what you approve of and what you don't approve.
+
+
+I hope this way of contacting you is not too inconvenient. I never really worked with git much. 
+So this seemed the easiest way to reach out to you.
+
+
+Cheers. PS: sent you the same message on forum as well.
+
+
+
+
+
+
+
