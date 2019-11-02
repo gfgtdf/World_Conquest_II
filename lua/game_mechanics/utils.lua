@@ -46,6 +46,41 @@ function wc2_utils.pick_random(str, generator)
 	end
 end
 
+local function filtered_from_array(array, filter)
+	local possible_indicies = {}
+	for i, v in ipairs(array) do
+		if filter(v) then
+			table.insert(possible_indicies, i)
+		end
+	end
+	if #possible_indicies == 0 then
+		return nil
+	end
+	local index  = possible_indicies[wesnoth.random(#possible_indicies)]
+	return index
+end
+
+function wc2_utils.pick_random_filtered(str, generator, filter)
+	local s2 = wml.variables[str]
+	if s2 == nil and generator == nil then
+		return
+	end
+
+	local array = s2 and wc2_utils.split_to_array(s2) or {}
+	if #array == 0 and generator then
+		array = generator()
+	end
+	local index  = filtered_from_array(array, filter)
+	if index == nil then
+		array = generator()
+		index = filtered_from_array(array, filter)
+	end
+	local res = array[index]
+	table.remove(array, index)
+	wml.variables[str] = table.concat(array, ",")
+	return res
+end
+
 --wml array
 function wc2_utils.pick_random_t(str)
 	local size = wml.variables[str .. ".length"]
@@ -114,7 +149,7 @@ local global_vars = setmetatable({}, {
 			end,
 			__newindex = function(self, name, val)
 				wml.variables.lua_global_variable = val
-				wesnoth.unsynced(function() 
+				wesnoth.unsynced(function()
 					wesnoth.wml_actions.set_global_variable {
 						namespace = namespace,
 						from_local = "lua_global_variable",
@@ -138,7 +173,7 @@ function wc2_utils.menu_item(t)
 	local id_nospace = string.gsub(t.id, " ", "_")
 	local cfg = {}
 	on_event("start", function()
-		wesnoth.wml_actions.set_menu_item {	
+		wesnoth.wml_actions.set_menu_item {
 			id = t.id,
 			description = t.description,
 			image = t.image,

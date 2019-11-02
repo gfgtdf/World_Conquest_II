@@ -6,6 +6,7 @@ local wc2_era = {}
 wc2_era.factions_wml = {}
 wc2_era.hero_types = {}
 wc2_era.hero_traits = {}
+wc2_era.spawn_filters = {}
 
 local strings = {
 	info_menu = _"Tell me how my recruit works",
@@ -109,6 +110,7 @@ function wesnoth.wml_actions.wc2_init_era(cfg)
 		wc2_era.factions_wml = {}
 		wc2_era.hero_types = {}
 		wc2_era.hero_traits = {}
+		wc2_era.spawn_filters = {}
 	end
 
 	wc2_era.wc2_era_id = cfg.wc2_era_id -- TODO removed for testing or error("missing wc2_era_id")
@@ -124,6 +126,14 @@ function wesnoth.wml_actions.wc2_init_era(cfg)
 		local trait = wml.get_child(trait_extra, "trait") or helper.wml_error("missing [trait] in [trait_extra]")
 		table.insert(wc2_era.hero_traits, { types = types, trait = trait} )
 	end
+
+	for spawn_filter in wml.child_range(cfg, "hero_spawn_filter") do
+
+		local types = wc2_utils.split_to_set(spawn_filter.types)
+		local filter_location = wml.get_child(spawn_filter, "filter_location") or helper.wml_error("missing [filter_location] in [hero_spawn_filter]")
+		table.insert(wc2_era.spawn_filters, { types = types, filter_location = filter_location} )
+	end
+
 end
 
 -- picks a deserter for the side @a side_num using the list of posibel deserters for that sides faction.

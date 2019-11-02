@@ -15,17 +15,18 @@ function wesnoth.wml_actions.wc2_place_bonus(cfg)
 		end
 	local image = c_scenery.image or scenery
 	bonus.place_item(x, y, image)
-	
+
 	-- Note: although the numbrs of options passed to helper.rand might depend on the langauge
 	--       the number of thimes random is called does not (random is called even if there is
 	--       only one option), so this doesn't cause OOS.
 	local name1 = wc2_random_names.generate()
 	local name_options = c_scenery.names or { _"place" }
 	local name2 = tostring(name_options[wesnoth.random(#name_options)])
-	
+
 	local function span_font_family(str, fam)
 		return string.format("<span font-family='%s'>%s</span>", fam, str)
 	end
+	print("placed label", x, y)
 	wesnoth.wml_actions.label {
 		x = x,
 		y = y,
@@ -86,7 +87,7 @@ on_event("wc2_drop_pickup", function(ec)
 	local item = wc2_dropping.current_item
 	local side_num = wesnoth.current.side
 
-	if not item.wc2_is_bonus then 
+	if not item.wc2_is_bonus then
 		return
 	end
 
@@ -105,7 +106,7 @@ on_event("wc2_drop_pickup", function(ec)
 		elseif r <= training_chance + item_chance then
 			bonus_type = 2
 		else
-			bonus_type = 3			
+			bonus_type = 3
 		end
 	end
 	local bonus_subtype = item.wc2_subtype
@@ -119,7 +120,7 @@ on_event("wc2_drop_pickup", function(ec)
 		bonus_subtype = bonus_subtype or bonus.get_random_item()
 		bonus.found_artifact(ec, tonumber(bonus_subtype))
 	elseif bonus_type == 3 then
-		bonus_subtype = bonus_subtype or bonus.get_random_hero()
+		bonus_subtype = bonus_subtype or bonus.get_random_hero(ec.x1, ec.y1)
 		bonus.found_hero(ec, bonus_subtype)
 	end
 	bonus.post_pickup(side_num, ec.x1, ec.y1)
@@ -130,10 +131,17 @@ function bonus.get_random_item()
 	return tonumber(wc2_utils.pick_random("wc2.random_items", wc2_artifacts.fresh_artifacts_list))
 end
 
-function bonus.get_random_hero()
-	return wc2_utils.pick_random("wc2.random_heroes", wc2_era.generate_bonus_heroes)
+function bonus.get_random_hero(x, y)
+	return wc2_utils.pick_random_filtered("wc2.random_heroes", wc2_era.generate_bonus_heroes, function(unittypeid)
+		for _, sf in ipairs(wc2_era.spawn_filters) do
+			if sf.types[unittypeid] and not wesnoth.match_location(x, y, sf.filter_location) then
+				return false
+			end
+		end
+		return true
+	end)
 end
-	
+
 function bonus.found_artifact(ec, index)
 	wesnoth.wml_actions.message {
 		x = ec.x1,
@@ -159,7 +167,7 @@ function bonus.found_hero(ec, herotype)
 	bonus.remove_current_item(ec)
 
 	local newunit = wc2_heroes.place(herotype, finder.side, ec.x1, ec.y1)
-	
+
 	-- hero found and unit in bonus point face each other
 	wc2_utils.facing_each_other(finder, newunit)
 	wc2_heroes.founddialouge(finder, newunit)
