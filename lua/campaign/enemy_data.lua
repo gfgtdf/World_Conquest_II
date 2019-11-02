@@ -5,8 +5,8 @@
 -- unit {recruit= that are already contained in {recruit= is not redundant.
 local enemy_army = {}
 enemy_army.group = {
-	-- northerners
 	{
+		id = "northerners",
 		recruit = {"Orcish Grunt","Orcish Archer","Wolf Rider","Orcish Assassin","Troll Whelp"},
 		recall = {
 			level2 = {"Orcish Ruler","Orcish Slayer","Orcish Crossbowman","Troll Rocklobber","Troll","Orcish Warrior","Goblin Pillager","Goblin Knight","Orcish Crossbowman","Troll","Orcish Warrior","Troll Hero"},
@@ -55,8 +55,8 @@ enemy_army.group = {
 			},
 		}
 	},
-	-- loyalists
 	{
+		id = "loyalists",
 		recruit = {"Spearman","Bowman","Cavalryman","Fencer","Mage"},
 		recall = {
 			level2 = {"White Mage","Red Mage","Duelist","Longbowman","Shock Trooper","Pikeman","Swordsman","Lieutenant","Dragoon","Knight","Javelineer","Pikeman","Swordsman","Longbowman"},
@@ -115,8 +115,8 @@ enemy_army.group = {
 			},
 		}
 	},
-	-- elves
 	{
+		id = "elves",
 		recruit = {"Elvish Fighter","Elvish Archer","Elvish Shaman","Elvish Scout","Wose"},
 		recall = {
 			level2 = {"Elder Wose","Elvish Sorceress","Elvish Druid","Elvish Marksman","Elvish Ranger","Elvish Hero","Elvish Captain","Elvish Rider","Elder Wose","Elvish Hero","Elder Wose","Elvish Sorceress","Red Mage","Elvish Marksman","Elvish Ranger","Elvish Hero","Elvish Captain","Elvish Rider","Elvish Ranger","Elvish Hero"},
@@ -165,8 +165,8 @@ enemy_army.group = {
 			},
 		}
 	},
-	-- knalgans
 	{
+		id = "knalgans",
 		recruit = {"Dwarvish Fighter","Dwarvish Thunderer","Thief","Footpad","Poacher"},
 		recall = {
 			level2 = {"Dwarvish Stalwart","Dwarvish Thunderguard","Dwarvish Steelclad","Rogue","Trapper","Gryphon Master","Bandit","Outlaw","Dwarvish Stalwart","Dwarvish Thunderguard","Dwarvish Steelclad","Dwarvish Berserker"},
@@ -210,8 +210,8 @@ enemy_army.group = {
 			},
 		}
 	},
-	-- drakes
 	{
+		id = "drakes",
 		recruit = {"Drake Fighter","Drake Clasher","Drake Glider","Drake Burner","Saurian Augur"},
 		recall = {
 			level2 = {"Drake Arbiter","Drake Thrasher","Drake Warrior","Fire Drake","Drake Flare","Saurian Oracle","Saurian Soothsayer","Saurian Ambusher","Drake Warrior","Drake Thrasher","Sky Drake"},
@@ -260,8 +260,8 @@ enemy_army.group = {
 			},
 		}
 	},
-	-- undead
 	{
+		id = "undead",
 		recruit = {"Skeleton","Skeleton Archer","Ghost","Ghoul","Dark Adept"},
 		recall = {
 			level2 = {"Revenant","Deathblade","Bone Shooter","Dark Sorcerer","Necrophage","Wraith","Shadow","Revenant","Bone Shooter","Dark Sorcerer","Necrophage","Chocobone"},
