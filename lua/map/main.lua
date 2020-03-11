@@ -112,23 +112,10 @@ function wc_ii_generate_scenario(nplayers, gen_args)
 			}
 		})
 	end
-	if scenario_num ~= 1 then
-		--todo: maybe move this into here
-		table.insert(scenario.event, {
-			name = "start",
-			wml.tag.gold {
-				amount = "$($carryover+$difficulty.extra_gold)",
-				side="1,2,3",
-				wml.tag.has_unit {
-				}
-			},
-			wml.tag.clear_variable {
-				name = "carryover"
-			}
-		})
-	end
+
+	-- add some wc2 specific wml [event]s
 	for side_num = 1, nplayers do
-		--todo: maybe move this into here
+		--todo: maybe move thisto scenario.lua ?
 		table.insert(scenario.event, {
 			name = "recruit,recall",
 			wml.tag.filter {
