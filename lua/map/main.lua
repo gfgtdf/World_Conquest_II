@@ -21,16 +21,12 @@ function wc_ii_generate_scenario(nplayers, gen_args)
 	local scenario_data = wesnoth.dofile(string.format("./scenarios/WC_II_%dp_scenario%d.lua", nplayers, scenario_num))
 
 	local prestart_event = { name = "prestart" }
+	-- our [scenario] skeleton
 	local scenario = {
 		event = {
 			prestart_event
 		},
-		lua = {
-			-- TODO: what does this do?
-			{
-				code = "",
-			},
-		},
+		lua = {},
 		load_resource = {
 			{
 				id = "wc2_era_res"

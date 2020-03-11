@@ -6,7 +6,7 @@
 ---- whenever possible                                ----
 ----------------------------------------------------------
 
-function is_wml_tag(t)
+local function is_wml_tag(t)
 	for i, v in pairs(t) do
 		if i ~= 1 and i ~= 2 then
 			return false
@@ -15,7 +15,7 @@ function is_wml_tag(t)
 	return type(t[1]) == "string" and type(t[2]) == "table"
 end
 
-function valid_lua_id(str)
+local function valid_lua_id(str)
 	if type(str) ~= "string" then
 		return false
 	end
