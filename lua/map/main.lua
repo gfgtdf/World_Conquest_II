@@ -13,6 +13,26 @@ settings = globals.settings or {}
 
 local n_villages = {27, 40, 53, 63}
 
+local function get_map_generator(scenario_data)
+	if globals.settings.default_id then
+		-- overwrite the random result, with a preset one (used by the editor)
+		return wct_map_generator(
+			globals.settings.default_id,
+			globals.settings.postgen_id,
+			globals.settings.length,
+			globals.settings.villages,
+			globals.settings.castle,
+			globals.settings.iterations,
+			globals.settings.hill_size,
+			globals.settings.ncastles,
+			globals.settings.island
+		)
+	else
+		return scenario_data.generators[wesnoth.random(#scenario_data.generators)]
+	end
+end
+
+
 function wc_ii_generate_scenario(nplayers, gen_args)
 	nplayers = settings.nplayers or nplayers
 	local scenario_extra = wml.get_child(gen_args, "scenario")
@@ -119,23 +139,10 @@ function wc_ii_generate_scenario(nplayers, gen_args)
 		})
 	end
 
-	local generator = scenario_data.generators[wesnoth.random(#scenario_data.generators)]
-	if globals.settings.default_id then
-		generator = wct_map_generator(
-			globals.settings.default_id,
-			globals.settings.postgen_id,
-			globals.settings.length,
-			globals.settings.villages,
-			globals.settings.castle,
-			globals.settings.iterations,
-			globals.settings.hill_size,
-			globals.settings.ncastles,
-			globals.settings.island
-		)
-	end
-	generator(scenario, nplayers)
+	-- generate the map.
+	get_map_generator(scenario_data)(scenario, nplayers)
 
-	-- set the correct name.
+	-- set the correct scenario name.
 	if scenario_num == 1 then --first map
 		scenario.name = "WC_II_" .. nplayers .. " - " .. _"Start"
 	else
