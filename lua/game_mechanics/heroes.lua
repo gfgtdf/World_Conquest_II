@@ -1,7 +1,7 @@
 --<<
 local _ = wesnoth.textdomain 'wesnoth-World_Conquest_II'
 local wc2_heroes = {}
--- an array of wml tables, usually containing type, 
+-- an array of wml tables, usually containing type,
 wc2_heroes.commander_overlay = "misc/leader-expendable.png~MASK(misc/wct-blank2.png)~BLIT(misc/wct-commander.png)"
 wc2_heroes.hero_overlay = "misc/hero-icon.png"
 wc2_heroes.hero_types = {}
@@ -49,6 +49,7 @@ function wc2_heroes.commander_overlay_object()
 		}
 	}
 end
+
 function wc2_heroes.hero_overlay_object()
 	return T.object {
 		id = "wc2_hero_overlay",
@@ -59,7 +60,7 @@ function wc2_heroes.hero_overlay_object()
 	}
 end
 -- @a t the unit type id
--- @returns the contant of [modifications] for a unit.
+-- @returns the content of [modifications] for a unit.
 function wc2_heroes.generate_traits(t)
 	local res = {}
 
@@ -109,6 +110,7 @@ function wesnoth.wml_actions.wc2_random_hero(cfg)
 	wc2_heroes.place(t, side_num, x, y)
 end
 
+-- prints the dialoge when @finder finds @found from a unit type, both parameters are lua unit objects.
 function wc2_heroes.founddialouge(finder, found)
 	local type_dialogue = wc2_heroes.find_dialogue(found.type)
 	wesnoth.wml_actions.wc2_message {

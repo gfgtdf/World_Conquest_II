@@ -21,8 +21,9 @@ local function get_speaker(cfg)
 	return speaker
 end
 
+-- custom [message] implementation that scales the unit icons up for units that have no profile.
 function wesnoth.wml_actions.wc2_message(cfg)
-		
+
 	local cfg_image = cfg.image or ""
 	local cfg_second_image = cfg.second_image or ""
 
@@ -44,9 +45,9 @@ function wesnoth.wml_actions.wc2_message(cfg)
 	end
 
 	local cfg_parsed = wml.shallow_parsed(cfg)
-	
+
 	cfg_parsed.image = speaker.portrait .. "~XBRZ(3)"
-	
+
 	return wesnoth.wml_actions.message(cfg_parsed)
 end
 

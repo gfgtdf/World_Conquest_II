@@ -6,6 +6,7 @@ local strings = {
 	promotion = _ "Don't lose heart comrades, we can still win this battle."
 }
 
+-- when a leader dies, take a commonder and make him the leader.
 on_event("die", function(cx)
 	local u = wesnoth.get_unit(cx.x1, cx.y1)
 	if (not u) or (not u:matches({ canrecruit = true })) then

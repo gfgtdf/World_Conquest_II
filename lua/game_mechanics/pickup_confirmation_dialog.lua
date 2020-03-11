@@ -3,17 +3,18 @@ local _ = wesnoth.textdomain 'wesnoth-World_Conquest_II'
 
 local pickup_confirmation_dialog = {}
 
+-- returns true when the item should be picked up.
 local function show_dialog(unit, item_image)
 	if wc2_utils.global_vars.skip_pickup_dialog then
 		return 1
 	end
-		
+
 	local dialog_wml = {
 		maximum_width = 1200,
 		maximum_height = 700,
 		T.helptip { id = "tooltip_large" }, -- mandatory field
 		T.tooltip { id = "tooltip_large" }, -- mandatory field
-		
+
 		T.grid {
 			T.row {
 				T.column {
@@ -74,7 +75,7 @@ local function show_dialog(unit, item_image)
 				},
 			},
 		},
-		
+
 	}
 	local function preshow()
 		wesnoth.set_dialog_value(wc2_color.tc_image(wesnoth.unit_types[unit.type].image), "unit_icon")

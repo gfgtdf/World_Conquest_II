@@ -78,12 +78,11 @@ function wc_ii_generate_scenario(nplayers, gen_args)
 		carryover_add = false,
 		force_lock_settings = true,
 	}
-	-- sides
+	-- add [side]s to the [scenario]
 	local enemy_data = scenario_data.get_enemy_data(enemy_stength)
 	wc_ii_generate_sides(scenario, prestart_event, nplayers, scenario_num, enemy_stength, enemy_data, scenario_data)
-	-- plot
+	-- add plot (that is [event] with [message]s)
 	add_plot(scenario, scenario_num, nplayers)
-	-- todo check in campaign,aon,lua so that we dont do this fase.
 	if scenario_num < #n_villages then
 		table.insert(scenario.event, {
 			name = "victory",
@@ -152,11 +151,11 @@ function wc_ii_generate_scenario(nplayers, gen_args)
 	end
 
 
-	--std_print(debug_wml(scenario))
+	-- std_print(debug_wml(scenario))
 	local res = wc2_convert.lon_to_wml(scenario, "scenario")
-	--std_print(debug_wml(res))
+	-- std_print(debug_wml(res))
 	for i, v in ipairs(scenario_extra) do
-		--insert music and scedule tags.
+		-- insert music and scedule tags. (these use code wml macros so they are defined in the .cfg file)
 		table.insert(res, v)
 	end
 	return res

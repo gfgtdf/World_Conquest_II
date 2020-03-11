@@ -67,7 +67,8 @@ on_event("scenario_end", function()
 	--wml.variables["wc2.version"] = nil
 end)
 
---	WORLD_CONQUEST_TEK_BONUS_SCENARIO_GOLD
+-- carryover handling: we use a custom carryover machnics that 
+-- splits the carryover gold evenly to all players
 on_event("prestart", function(cx)
 	local gold = (wml.variables.carryover or 0) + (wml.variables["difficulty.extra_gold"] or 0)
 	for i = 1, wml.variables.players do
@@ -75,7 +76,7 @@ on_event("prestart", function(cx)
 	end
 end)
 
---	WORLD_CONQUEST_TEK_NEXT_SCENARIO_EVENTS
+-- our victory condition
 on_event("enemies defeated", function(cx)
 	if wml.variables.scenario > 5 then
 		return
@@ -88,6 +89,7 @@ on_event("enemies defeated", function(cx)
 		carryover_report = false,
 	}
 end)
+
 on_event("victory", function(cx)
 	if wml.variables.scenario > 5 then
 		return
