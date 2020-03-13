@@ -73,7 +73,7 @@ function artifacts.give_item(unit, index, visualize)
 	end
 		
 		
-	-- TODO: i _could_ replace the follwing with a 'apply_to=wc2_artifact' effect that
+	-- IDEA: i _could_ replace the follwing with a 'apply_to=wc2_artifact' effect that
 	--       basicially applies all effects in the [artifact]s definition. The obvious
 	--       advantage would be a smaller savefile size. Also this woudl change how savefiles
 	--       would behve if an artifacts effect has changed, i am currently not sure

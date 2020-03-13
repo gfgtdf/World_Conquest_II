@@ -140,7 +140,6 @@ noise {
 				terrain = "Uu,Uh,Uu^Uf",
 			},
 			tag.filter_adjacent {
-				--todo maybe yout count=1-6 instead of tag.not here.
 				tag["not"] {
 					terrain = "Uu,Uh,Uu^Uh,Xu",
 				}
