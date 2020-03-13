@@ -4,16 +4,18 @@ local on_event = wesnoth.require("on_event")
 
 local function get_advanced_units(level, list, res)
 	res = res or {}
-	-- TODO: guard against units that can advance in circles or to themselves
+	-- guards against units that can advance in circles or to themselves
+	res_set = {}
 	local add_units = function(units)
 		for unused, typename in ipairs(units) do
 			local unittype = wesnoth.unit_types[typename]
 			if unittype.level == level then
 				table.insert(res, typename)
-			else
+			elseif not res_set[typename] then
+				res_set[typename] = true;
 				add_units(unittype.advances_to)
 			end
-			end
+		end
 	end
 	add_units(list)
 	return res
