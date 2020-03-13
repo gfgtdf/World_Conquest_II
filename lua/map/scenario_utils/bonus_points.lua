@@ -103,10 +103,7 @@ function get_f_wct_bonus_location_filter(map)
 		)
 	)
 end
-function wct_bonus_chose_scenery(loc, theme)
-	local function loc_matches(f)
-		return #map:get_locations(f, {loc}) > 0
-	end
+function wct_bonus_chose_scenery(loc, theme, filter_extra)
 	local terrain = map:get_terrain(loc)
 	-- determine possible scenery values based on terrain
 	local scenery = "well_g,temple,tent2_g,tent1,village,monolith3,burial"
@@ -162,14 +159,16 @@ function wct_bonus_chose_scenery(loc, theme)
 		end
 	end
 	::intial_list_screated::
-	if true then
-		goto final_pick
+
+	local function matches_location(f)
+		local filter_object = wesnoth.create_filter(f, filter_extra)
+		return #map:get_locations(filter_object, {loc}) > 0
 	end
+
 	-- chance of rock cairn on isolated hills
 	if matches_location(
 		f.all(
 			f.terrain("Hh,Hhd"),
-			f.find_in_wml("point.location"),
 			f.adjacent(f.terrain("H*^*"), nil, 0)
 		)) then
 
@@ -180,7 +179,6 @@ function wct_bonus_chose_scenery(loc, theme)
 	if matches_location(
 		f.all(
 			f.terrain("G*"),
-			f.find_in_wml("point.location"),
 			f.adjacent(f.terrain("*^F*"), nil, 0)
 		)) then
 		scenery = scenery .. "," .. "dolmen_g"
@@ -190,7 +188,6 @@ function wct_bonus_chose_scenery(loc, theme)
 	if matches_location(
 		f.all(
 			f.terrain("G*"),
-			f.find_in_wml("point.location"),
 			f.adjacent(f.terrain("Ss")),
 			f.adjacent(f.terrain("Hh^*,Ha^*")),
 			f.adjacent(f.terrain("G*^F*,A*^F*,G*^Uf"))
@@ -203,7 +200,6 @@ function wct_bonus_chose_scenery(loc, theme)
 	if matches_location(
 		f.all(
 			f.terrain("Hh"),
-			f.find_in_wml("point.location"),
 			f.adjacent(f.terrain("Ss,Ai,A*^*,Ha^*,Ms^*"))
 		)) then
 
@@ -214,7 +210,6 @@ function wct_bonus_chose_scenery(loc, theme)
 	if matches_location(
 		f.all(
 			f.terrain("Hh,Hhd"),
-			f.find_in_wml("point.location"),
 			f.adjacent(f.terrain("M*^*"))
 		)) then
 
@@ -225,7 +220,6 @@ function wct_bonus_chose_scenery(loc, theme)
 	if matches_location(
 		f.all(
 			f.terrain("Ss"),
-			f.find_in_wml("point.location"),
 			f.adjacent(f.terrain("*^F*,C*^*,K*^*"), nil, 0)
 		)) then
 
@@ -237,7 +231,6 @@ function wct_bonus_chose_scenery(loc, theme)
 		if matches_location(
 			f.all(
 				f.terrain("G*,Hh*"),
-				f.find_in_wml("point.location"),
 				f.adjacent(f.terrain("R*^*,W*^Bsb*"), nil, "2-6"),
 				f.adjacent(f.terrain("*^F*"), nil, 0),
 				f.radius(7, f.terrain("*^Vh,*^Vhh,*^Ve,*^Vl,*^Vhc,*^Vd,*^Vy*,*^Vz*"))
@@ -252,7 +245,6 @@ function wct_bonus_chose_scenery(loc, theme)
 		if matches_location(
 			f.all(
 				f.terrain("R*^*"),
-				f.find_in_wml("point.location"),
 				f.radius(5, f.terrain("*^Vh,*^Vhh,*^Ve,*^Vl,*^Vhc,*^Vd,*^Vy*,*^Vz*"))
 			)) then
 
@@ -264,7 +256,6 @@ function wct_bonus_chose_scenery(loc, theme)
 	if matches_location(
 		f.all(
 			f.terrain("Gg,Gs,Gll"),
-			f.find_in_wml("point.location"),
 			f.adjacent(f.terrain("G*,R*,R*^Em,G*^Efm,Wwf,G*^Em,G*^Eff,*^Gvs,W*^B*,Ce,Ch"), nil, 6)
 		)) then
 
@@ -275,10 +266,9 @@ function wct_bonus_chose_scenery(loc, theme)
 	if matches_location(
 		f.all(
 			f.terrain("Ww,Wwt,Wwg"),
-			f.find_in_wml("point.location"),
 			f.adjacent(f.terrain("W*^*"), nil, "0-3"),
 			f.none(
-				f.find_in_wml("oceanic")
+				f.find_in("oceanic")
 			)
 		)) then
 
@@ -289,35 +279,34 @@ function wct_bonus_chose_scenery(loc, theme)
 
 		if matches_location(
 			f.all(
-				f.terrain("R*"),
-				f.find_in_wml("point.location")
+				f.terrain("R*")
 			)) then
 			scenery = "well_g,temple,tent2_g,tent1,village,monolith3,burial"
 		end
 	end
-	if theme == "wild" then
-		if matches_location(
-			f.all(
-				f.find_in_wml("point.location"),
-				f.find_in_wml("map_data.road_in_cave")
-			)) then
+	-- TODO: bring back?
+	if false then
+		if theme == "wild" then
+			if matches_location(
+				f.all(
+					f.find_in_wml("map_data.road_in_cave")
+				)) then
 
-			scenery = "altar,bones,rock_cairn,well,monolith2,monolith3,tent1"
+				scenery = "altar,bones,rock_cairn,well,monolith2,monolith3,tent1"
+			end
 		end
 	end
 	if theme == "volcanic" then
 		if matches_location(
 			f.all(
-				f.terrain("Rd,Rb"),
-				f.find_in_wml("point.location")
+				f.terrain("Rd,Rb")
 			)) then
 
 			scenery = "bones,rock_cairn,well_g,monolith2,tent1,tent1,tent2,tent2_g,monolith3,well_g,rock_cairn,dolmen,monolith2,temple,dolmen_g,monolith1_r,monolith4_r"
 		end
 		if matches_location(
 			f.all(
-				f.terrain("Ur"),
-				f.find_in_wml("point.location")
+				f.terrain("Ur")
 			)) then
 
 			scenery = "bones,rock_cairn,well_g,monolith2,tent1,monolith3,well_g,dolmen,monolith2,temple,monolith1_r,monolith4_r"
@@ -327,18 +316,16 @@ function wct_bonus_chose_scenery(loc, theme)
 	if matches_location(
 		f.all(
 			f.terrain("!,Ww*,U*,Ss"),
-			f.find_in_wml("point.location"),
 			f.adjacent(f.all(
 				f.terrain("Ww*"),
-				f.find_in_wml("oceanic")
+				f.find_in("oceanic")
 			))
 		)) then
 
 		scenery = scenery .. "," .. "lighthouse,lighthouse,lighthouse,lighthouse,lighthouse"
 		if matches_location(
 			f.all(
-				f.terrain("G*^*,R*^*"),
-				f.find_in_wml("point.location")
+				f.terrain("G*^*,R*^*")
 			)) then
 
 			scenery = scenery .. "," .. "lighthouse,lighthouse"
@@ -347,16 +334,14 @@ function wct_bonus_chose_scenery(loc, theme)
 
 		if matches_location(
 			f.all(
-				f.terrain("Hh,Hhd,Mm,Md"),
-				f.find_in_wml("point.location")
+				f.terrain("Hh,Hhd,Mm,Md")
 			)) then
 
 			scenery = scenery .. "," .. "campfire,campfire,campfire,campfire,lighthouse,lighthouse,lighthouse,lighthouse"
 
 			if matches_location(
 				f.all(
-					f.terrain("Mm,Md"),
-					f.find_in_wml("point.location")
+					f.terrain("Mm,Md")
 				)) then
 				scenery = scenery .. "," .. "campfire,campfire,campfire,campfire,lighthouse,lighthouse,lighthouse,lighthouse"
 			end
@@ -366,7 +351,6 @@ function wct_bonus_chose_scenery(loc, theme)
 	if matches_location(
 		f.all(
 			f.terrain("Dd,Hd"),
-			f.find_in_wml("point.location"),
 			f.none(
 				f.radius(5, f.terrain("*^V*"))
 			)
@@ -378,7 +362,6 @@ function wct_bonus_chose_scenery(loc, theme)
 	if matches_location(
 		f.all(
 			f.terrain("Ds,Hd,Dd"),
-			f.find_in_wml("point.location"),
 			f.adjacent(f.terrain("D*^*,Hd,G*,R*,Ur"), "se", 1),
 			f.adjacent(f.terrain("D*^*,H*^*,G*^*,R*,Ur,M*^*"), "nw,sw,n,s,ne", 5),
 			f.adjacent(f.terrain("D*^*,Hd*^*"), nil, "1-6")
@@ -391,13 +374,11 @@ function wct_bonus_chose_scenery(loc, theme)
 		f.any(
 			f.all(
 				f.terrain("Dd"),
-				f.find_in_wml("point.location"),
 				f.adjacent(f.terrain("Dd,Ds*^*,Hd,S*"), nil, "4-6"),
 				f.adjacent(f.terrain("*^F*,C*^*,K*^*"), nil, 0)
 			),
 			f.all(
 				f.terrain("Ds,Rd"),
-				f.find_in_wml("point.location"),
 				f.adjacent(f.terrain("Dd,Ds*^*,Hd,S*,Rd"), nil, 6),
 				f.none(
 					f.radius(2, f.terrain("W*^*"))
@@ -417,10 +398,11 @@ end
 
 function world_conquest_tek_bonus_points(theme)
 	local scenario_num = wesnoth.get_variable("scenario") or 1
-	f_wct_bonus_location_filter = wesnoth.create_filter(get_f_wct_bonus_location_filter(map), { oceanic = get_oceanic() })
+	oceanic = get_oceanic()
+	f_wct_bonus_location_filter = wesnoth.create_filter(get_f_wct_bonus_location_filter(map), { oceanic = oceanic })
 	local possible_locs = map:get_locations(f_wct_bonus_location_filter)
 	function place_item(loc)
-		scenery = wct_bonus_chose_scenery(loc, theme)
+		scenery = wct_bonus_chose_scenery(loc, theme, { oceanic = oceanic })
 		table.insert(prestart_event, wml.tag.wc2_place_bonus {
 			x= loc[1],
 			y= loc[2],

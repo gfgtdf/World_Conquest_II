@@ -1,13 +1,13 @@
--- to reduce scenarios consuming resources, some very used utilities are defined as core events
 
--- for items spawned by invest
+-- The invest dialog spawns items below the keeps, so we have to 
+-- make sure the tiles below keeps are passable for all units
 function wct_fix_impassible_item_spawn()
-	if true then
-		return
+
+	local player_keeps = { }
+	for i = 1, _G.scenario_data.nhumanplayers do
+		table.insert( player_keeps, map.special_locations[tostring(i)])
 	end
-	--local sl = map.special_locations
-	-- seem slike map.special_locations is borken.
-	--local player_keeps = { sl["1"], sl["2"], sl["3"] }
+
 	set_terrain { "Mm",
 		f.all(
 			f.terrain("*^X*,X*^*"),
@@ -105,13 +105,9 @@ end
 
 function wct_castle_expansion_side(side_num)
 	std_print("expanding castle", side_num)
-	if false then
-		--FIXME
-		--map.special_locations is borken
-		return
-	end
 	local n_tiles_wanted = scenario_data.nplayers + 1
 	local keep_loc = map.special_locations[tostring(side_num)]
+
 	if keep_loc == nil then
 		return
 	end
