@@ -29,7 +29,26 @@ email=#####
 
 
 # Changelog:
-
+0.8.2:
+- misc bugfixes, mostly related to the new lua map generator
+- Disable dune piercer and The empire faction, since units were 
+  removed from mainline
+0.8:
+- A lot of code refactors.
+- port the whole postgenerator mapgen code to a scenario_generation=lua .
+  - huge performance boost in the mapgen code.
+  - the mapgenerators can now be used in the editor.
+  - the start-of-scenario savefiles no don't determine anymore which
+    typegenerator is chosen.
+- remove a lot of other code to lua. The only [event] remaining is from 
+  the custom_terrain_mod.
+- Pickuppable items no always show on top of decorative items.
+- Add a libary wc2_convert which is a schema bases wml <-> lua converter.
+- fix wc2_optional_attack effect in case that no attack machted the filter.
+- Adapt to mainline dunefolk name changes.
+0.7.10.3
+- Fix village colors.
+- Fix error in mapgen code.
 0.7.10
 - Improve mapgeneration speed.
 - Fix error when using alienera.
