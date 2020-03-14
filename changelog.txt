@@ -155,7 +155,7 @@ email=#####
 - Tweaked faction images
 - Fixed bug: heals +8 training not working over heals +4 units
 - Fixed some translation notes shown and lacking commander overlay for observers
-- Disabled ruiened wood birdge destrucción for lacking good image and transition
+- Disabled ruiened wood birdge destruction for lacking good image and transition
 - Shorted scenario name to ease savefiles management
 
 0.6.6
@@ -439,7 +439,7 @@ email=#####
 - Added a new alternative map3: Delta
 - Fixed minor bug replacing a custom image in bonus
 - More acurated use of new 1.12 terrain forest. Minor decoration tweaks.
-- Redefined The Militia to slighty buff it. Target is (taking fighter/scout pàir apart), give the best possible pairs. New image.
+- Redefined The Militia to slighty buff it. Target is (taking fighter/scout pair apart), give the best possible pairs. New image.
 - Removed Young Ogre from Heroes and Deserters of The Hand and added to its commanders.
 - Fixed low unintended finish gold bonus for 2p and 1p. (carry_over formula was not working well for less players)
 - Harcoded "village map amount" for finish gold bonus calculation. Fixes map generation as undesired source of stupid umbalance in players gold.
