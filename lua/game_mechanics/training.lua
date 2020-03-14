@@ -112,12 +112,12 @@ function training.generate_message(n_trainer, n_grade)
 		if (chance.value or 0) < 100 then
 			local str = wesnoth.format(_ "$chance| chance to $arrow $desc", {
 				chance = ("%d%%"):format(vchance.value),
-				desc = vchance.info or "",
+				desc = wc2_utils.get_fstring(chance, "info"),
 				arrow = wc2_color.tc_text(" → ")
 			})
 			table.insert(messages, tostring(str))
 		else
-			table.insert(messages, tostring(vchance.info or ""))
+			table.insert(messages, tostring(wc2_utils.get_fstring(chance, "info")))
 		end
 	end
 	return {
@@ -204,7 +204,7 @@ function training.apply(u)
 			local matches_filter = (not filter) or u:matches(filter)
 			if wesnoth.random(100) <= vchance.value and matches_filter then
 				--wesnoth.wml_actions.message { message = "Got it" }
-				table.insert(descriptions, vchance.info)
+				table.insert(descriptions, wc2_utils.get_fstring(chance, "info"))
 				for effect in helper.child_range(vchance, "effect") do
 					table.insert(trait, {"effect", effect })
 				end

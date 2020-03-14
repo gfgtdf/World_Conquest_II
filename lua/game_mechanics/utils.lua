@@ -189,5 +189,25 @@ function wc2_utils.menu_item(t)
 	wc2_menu_filters[id_nospace] = t.filter
 end
 
+
+function wc2_utils.get_fstring(t, key)
+	local args = wml.get_child(t, key .. "_data")
+	if args then
+		args = wc2_utils.get_fstring_all(args)
+	else
+		args = {}
+	end
+	return wesnoth.format(t[key], args)
+end
+
+function wc2_utils.get_fstring_all(t)
+	local res = {}
+	for k,v in pairs(t) do
+		res[k] = wc2_utils.get_fstring(t, k)
+	end
+	return res
+end
+
+
 return wc2_utils
 -->>
