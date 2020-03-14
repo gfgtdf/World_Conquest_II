@@ -29,10 +29,12 @@ email=#####
 
 
 # Changelog:
+
 0.8.2:
 - misc bugfixes, mostly related to the new lua map generator
 - Disable dune piercer and The empire faction, since units were 
   removed from mainline
+
 0.8:
 - A lot of code refactors.
 - port the whole postgenerator mapgen code to a scenario_generation=lua .
@@ -46,43 +48,57 @@ email=#####
 - Add a libary wc2_convert which is a schema bases wml <-> lua converter.
 - fix wc2_optional_attack effect in case that no attack machted the filter.
 - Adapt to mainline dunefolk name changes.
+
 0.7.10.3
 - Fix village colors.
 - Fix error in mapgen code.
+
 0.7.10
 - Improve mapgeneration speed.
 - Fix error when using alienera.
+
 0.7.9.1
 - Fix enemy training.
+
 0.7.9
 - The pickup promt can now be disabled in the wocopedia->settings page.
 - Fix unit not advancing after picking up an item that decrease max xp.
 - Improved gold carryover code to be compatiable with more mod addons.
 - Fixed unit images in messages not scaled in plot sequences.
 - Clear shroud after finding a hero in a bonus point.
+
 0.7.8.2
 - Improve compatabiltiy with other add-ons and code cleanups.
+
 0.7.8
 - Added confirmation promt when picking up items.
 - Fix ai side color when player changes colors.
 - Fix item drop message.
 - Fix bug in preset advancement
+
 0.7.7
 - Fixed invest itemlist not increasing.
+
 0.7.6
 - Fixed rare lua error when picking up training from bonus point if the
   player cannot pick up more training.
+
 0.7.5
 - Fixed Gold pick in invest giving no gold.
+
 0.7.4
 - Fixed 'Terror disguise' and 'Herald armor' not settings alignment.
+
 0.7.3
 - Fixed wrong experience of recruited units and of units with epic trait.
+
 0.7.2
 - Fixed show item info.
 - Added 'settings' section to wocopedia
+
 0.7.1
 - Fixed shuffle starting locations 
+
 0.7
 - Alienera modification is no longer needed to play with other eras than wc2.
 - Most code moved to lua
@@ -96,9 +112,11 @@ email=#####
 - reduced savefile size
 - use new scaling algorithm for missing portaits
 - compatabiltiy issue: when loading  saves from older wc2 versions the invest artifact list will be regenerated.
+
 0.6.13
 - Fixed crash when loading games caused by 'adamant armour '
 - Fixed Winter's bloom not giving cold resistance
+
 0.6.12
 - added lua implementation of the default mapgens
 - fixed skeleton archer image not showing
