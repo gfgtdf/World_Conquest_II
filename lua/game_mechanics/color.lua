@@ -1,31 +1,36 @@
 --<<
 local color = {}
+-- TODO: remove after 1.15.4
 local color_info = {
-	red = { text="df3030", rgb="178,38,38" ,},
-	blue = { text = "6e81db", rgb="88,103,175" },
-	green = { text = "62b664", rgb = "78,146,80" },
-	purple = { text = "93009d", rgb = "118,00,126" },
-	black = { text = "5a5a5a", rgb = "72,72,72" },
-	brown = { text = "945027", rgb = "118,64,31" },
-	orange = { text = "ff7e00", rgb = "204,101,00" },
-	white = { text = "cccc33", rgb = "205,205,205" },
-	teal = { text = "30cbc0", rgb = "38,162,154"},
-	["1"] = { text="df3030", rgb="178,38,38" ,},
-	["2"] = { text = "6e81db", rgb="88,103,175" },
-	["3"] = { text = "62b664", rgb = "78,146,80" },
-	["4"] = { text = "93009d", rgb = "118,00,126" },
-	["5"] = { text = "5a5a5a", rgb = "72,72,72" },
-	["6"] = { text = "945027", rgb = "118,64,31" },
-	["7"] = { text = "ff7e00", rgb = "204,101,00" },
-	["8"] = { text = "cccc33", rgb = "205,205,205" },
-	["9"] = { text = "30cbc0", rgb = "38,162,154"},
+	red    = { r = 178, g =  38 , b =  38 },
+	blue   = { r =  88, g = 103 , b = 175 },
+	green  = { r =  78, g = 146 , b =  80 },
+	purple = { r = 118, g =  00 , b = 126 },
+	black  = { r =  72, g =  72 , b =  72 },
+	brown  = { r = 118, g =  64 , b =  31 },
+	orange = { r = 204, g = 101 , b =  00 },
+	white =  { r = 205, g = 205 , b = 205 },
+	teal  =  { r =  38, g = 162 , b = 154 },
+	["1"] =  { r = 178, g =  38 , b =  38 },
+	["2"] =  { r =  88, g = 103 , b = 175 },
+	["3"] =  { r =  78, g = 146 , b =  80 },
+	["4"] =  { r = 118, g =  00 , b = 126 },
+	["5"] =  { r =  72, g =  72 , b =  72 },
+	["6"] =  { r = 118, g =  64 , b =  31 },
+	["7"] =  { r = 204, g = 101 , b =  00 },
+	["8"] =  { r = 205, g = 205 , b = 205 },
+	["9"] =  { r =  38, g = 162 , b = 154 },
 }
+
+function color.to_pango_string(c)
+	return ("#%02x%02x%02x"):format(c.r, c.g, c.b)
+end
 
 function color.get_color_info(id)
 	local res = color_info[id]
 	if not res then
 		print ("unknonw color id:" .. color)
-		res = { text = "cccc33", rgb = "205,205,205" }
+		res = { r = 205, g = 205 , b = 205 }
 	end
 	return res
 end
@@ -39,19 +44,26 @@ function wesnoth.wml_actions.wc2_convert_color(cfg)
 end
 
 function color.color_text(color_str, text)
-	return "<span color='#" .. color_str .. "'>" .. text .. "</span>"
+	return "<span color='" .. color_str .. "'>" .. text .. "</span>"
 end
 
--- todo go through all callers and make sure that the have te correct secodn parmater
--- (that the don't leave it empy when they actually want the viewing side instead 
--- of the currently playing side)
+-- note: the default argument for the first parameter is the 
+--       currently active side, not the currently viewing side
 function color.tc_text(team_num, text)
 	if text == nil then
 		text = team_num
 		team_num = wesnoth.current.side
 	end
-	local color_info = color.get_color_info(wesnoth.sides[team_num].color)
-	return color.color_text(color_info.text, text)
+	local c = nil
+
+	if wesnoth.colors then
+		c = wesnoth.colors[wesnoth.sides[team_num].color].mid
+	else
+		c = color.get_color_info(wesnoth.sides[team_num].color)
+	end
+	
+	local color_str = color.to_pango_string(c)
+	return color.color_text(color_str, text)
 end
 
 function color.tc_image(team_num, img)
@@ -70,25 +82,22 @@ function wesnoth.wml_actions.wc2_fix_colors(cfg)
 	local other_sides = wesnoth.get_sides { { "not", wml.get_child(cfg, "player_sides") } }
 	local available_colors = { "red", "blue", "green", "purple", "black", "brown", "orange", "white", "teal" }
 	local taken_colors = {}
+
 	for i, side in ipairs(player_sides) do
-		local side_num = side.side
-		-- important: this creates the 'player' array.
-		-- todo: maybe use a side variable instead ?
-		local vname = "player[" .. side_num .. "].team_color"
-		if wml.variables[vname] then
-			wesnoth.set_side_id(side_num, nil, wml.variables[vname])
+		if side.variables.wc2_color then
+			side.color = side.variables.wc2_color
 		else
-			wml.variables[vname] = side.color
+			side.variables.wc2_color = side.color
 		end
 		taken_colors[side.color] = true
 	end
+
 	local color_num = 1
 	for i, side in ipairs(other_sides) do
-		local side_num = side.side
 		while taken_colors[available_colors[color_num]] == true do
 			color_num = color_num + 1
 		end
-		wesnoth.set_side_id(side_num, nil, available_colors[color_num])
+		side.color = available_colors[color_num]
 		taken_colors[side.color] = true
 	end
 end
