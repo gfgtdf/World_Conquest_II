@@ -142,6 +142,10 @@ function wct_castle_expansion_side(side_num)
 		filter = f.none(f.terrain("C*,K*,X*,*^Xm,Ww,Wwt,Wwg,Wo*,Wwr*,*^V*"))
 	}
 
+	if #candidates < n_tiles_wanted then
+		std_print("Too few tiles in castle expansion for side " .. side_num .. ", wanted: " .. n_tiles_wanted .. " but we got only " .. #candidates)
+		n_tiles_wanted = #candidates
+	end
 	helper.shuffle(candidates)
 	for i = 1, n_tiles_wanted do
 		map:set_terrain(candidates[i], "Ch")
