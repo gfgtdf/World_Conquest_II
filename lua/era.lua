@@ -236,8 +236,8 @@ function wesnoth.wml_actions.wc2_recruit_info(cfg)
 		local ut1 = wesnoth.unit_types[p[1]]
 		local ut2 = wesnoth.unit_types[p[2]]
 		local img = "misc/blank.png~SCALE(144,72)" ..
-			"~BLIT(" .. ut1.image .. "~TC(" .. side_num .. ",magenta))" ..
-			"~BLIT(" .. ut2.image .. "~TC(" .. side_num .. ",magenta),72,0)"
+			"~BLIT(" .. wc2_color.tc_image(side_num, ut1.image) .. ")" ..
+			"~BLIT(" .. wc2_color.tc_image(side_num, ut2.image) .. ",72,0)"
 		table.insert(message, {"option", {
 			image = img,
 			label= ut1.name,
