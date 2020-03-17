@@ -27,6 +27,7 @@ function artifacts.drop_message(index)
 	}
 end
 
+-- place an artifact with id @a index on the map at position @a x, y.
 -- can be used from the bug console as `lua wc2_artifacts.place_item(30,20,1)`
 function artifacts.place_item(x, y, index)
 	wc2_dropping.add_item(x, y, {
@@ -36,6 +37,7 @@ function artifacts.place_item(x, y, index)
 	})
 end
 
+-- give te item with id @a index to unit @a unit, set @a visualize=true, to show the item pickup animation.
 function artifacts.give_item(unit, index, visualize)
 	if visualize then
 		-- play visual/sound effects if item have any
@@ -92,6 +94,7 @@ function artifacts.give_item(unit, index, visualize)
 	unit:advance(true, true)
 end
 
+-- unit picking up artifacts
 on_event("wc2_drop_pickup", function(ec)
 	local item = wc2_dropping.current_item
 	local unit = wesnoth.get_unit(ec.x1, ec.y1)
@@ -134,6 +137,7 @@ on_event("wc2_drop_pickup", function(ec)
 	wesnoth.allow_undo(false)
 end)
 
+-- returns a list of artifact ids, suitable for  the give type ('enemy' for example).
 function artifacts.fresh_artifacts_list(for_type)
 	local res = {} 
 	for i,v in ipairs(wc2_artifacts.list) do
@@ -145,28 +149,7 @@ function artifacts.fresh_artifacts_list(for_type)
 end
 
 
---[[
-	todo: the original code showed the item message in a last breath event.
-	
-	## drop item on death
-	[event]
-		name=last breath
-		first_time_only=no
-		[filter]
-			id=$enemy[$unit.side].item.unit_id
-		[/filter]
-		{WCT_ARTIFACT_DROP_MESSAGE $enemy[$unit.side].item.type}
-	[/event]
-	[event]
-		name=die
-		first_time_only=no
-		[filter]
-			id=$enemy[$unit.side].item.unit_id
-		[/filter]
-		{WCT_ARTIFACT_ITEM $x1 $y1 $enemy[$unit.side].item.type}
-		{CLEAR_VARIABLE enemy[$unit.side].item}
-	[/event]
-]]
+-- drop all items a dying unit carries.
 on_event("die", function(event_context)
 	local unit = wesnoth.get_unit(event_context.x1, event_context.y1)
 	if not unit then
@@ -187,6 +170,8 @@ on_event("die", function(event_context)
 	unit:remove_modifications { wc2_is_artifact = true }
 end)
 
+-- returns true if there is an item in the map at the given position,
+-- used to determine whether to show the artifact info menu at that position. 
 function artifacts.is_item_at(x,y)
 	for i,item in ipairs(wc2_dropping.get_entries_at_readonly(x,y)) do
 		if item.wc2_atrifact_id then
@@ -196,6 +181,8 @@ function artifacts.is_item_at(x,y)
 	return false
 end
 
+-- shows an information [message] about the item laying at position 
+-- @a cfg.x, cfg.y
 function wesnoth.wml_actions.wc2_show_item_info(cfg)
 	local x = cfg.x
 	local y = cfg.y
