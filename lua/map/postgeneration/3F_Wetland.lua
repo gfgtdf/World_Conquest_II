@@ -131,7 +131,7 @@ function world_conquest_tek_map_repaint_3f()
 
 end
 
-function wct_map_3f_post_bunus_decoration()
+function wct_map_3f_post_bunus_decoration(bonus_points)
 	-- add fords
 	set_terrain { "Wwf",
 		f.all(
@@ -140,7 +140,7 @@ function wct_map_3f_post_bunus_decoration()
 				f.find_in("bonus_point")
 			)
 		),
-		filter_extra = { bonus_point = {} },
+		filter_extra = { bonus_point = bonus_points },
 		fraction = 4,
 	}
 
@@ -153,7 +153,7 @@ function wct_map_3f_post_bunus_decoration()
 					f.find_in("bonus_point")
 				)
 			),
-			filter_extra = { bonus_point = {} },
+			filter_extra = { bonus_point = bonus_points },
 			exact = false,
 			percentage = 80,
 		}
@@ -168,7 +168,7 @@ function wct_map_3f_post_bunus_decoration()
 					f.find_in("bonus_point")
 				)
 			),
-			filter_extra = { bonus_point = {} },
+			filter_extra = { bonus_point = bonus_points },
 			exact = false,
 			percentage = 70,
 		}
@@ -260,7 +260,7 @@ return function()
 	set_map_name(_"Wetland")
 	wct_enemy_castle_expansion()
 	world_conquest_tek_map_repaint_3f()
-	world_conquest_tek_bonus_points()
-	wct_map_3f_post_bunus_decoration()
+	bonus_points = world_conquest_tek_bonus_points()
+	wct_map_3f_post_bunus_decoration(bonus_points)
 	wct_map_enemy_themed("human", "Young Ogre", "e", "Gg^Vl", 8)
 end

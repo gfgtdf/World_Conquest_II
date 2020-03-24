@@ -179,7 +179,6 @@ local function world_conquest_tek_map_decoration_6a()
 	wct_storm(terrain_to_change, r + 2)
 
 	wct_expand_snow()
-	--fixme: in the orignal code WCT_EXPAND_SNOW might have changes $random was that intentional?
 	wct_storm(terrain_to_change, r)
 	-- snow can change adyacent forests
 	set_terrain { "Hh^Fmw",

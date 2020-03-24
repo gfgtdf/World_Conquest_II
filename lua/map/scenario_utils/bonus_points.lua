@@ -397,6 +397,7 @@ end
 
 
 function world_conquest_tek_bonus_points(theme)
+	local res = {}
 	local scenario_num = wesnoth.get_variable("scenario") or 1
 	oceanic = get_oceanic()
 	f_wct_bonus_location_filter = wesnoth.create_filter(get_f_wct_bonus_location_filter(map), { oceanic = oceanic })
@@ -408,6 +409,8 @@ function world_conquest_tek_bonus_points(theme)
 			y= loc[2],
 			scenery = scenery,
 		})
+		table.insert(res, loc)
 	end
 	random_placement(possible_locs, 3, 9 + scenario_num, place_item)
+	return res
 end
