@@ -103,6 +103,69 @@ local function init_side(side_num)
 	wesnoth.set_side_variable(side_num, "wc2.commanders", table.concat(commanders, ","))
 end
 
+local function add_known_faction(cfg)
+	table.insert(wc2_era.factions_wml, cfg)
+end
+
+local function add_known_hero_group(id, cfg)
+	wc2_era.hero_types[id] = cfg
+end
+
+local function add_known_spawn_filter(spawn_filter)
+	local types = wc2_utils.split_to_set(spawn_filter.types)
+	local filter_location = wml.get_child(spawn_filter, "filter_location") or helper.wml_error("missing [filter_location] in [hero_spawn_filter]")
+	table.insert(wc2_era.spawn_filters, { types = types, filter_location = filter_location} )
+end
+
+local function add_known_trait_extra(trait_extra)
+	local types = wc2_utils.split_to_set(trait_extra.types)
+	local trait = wml.get_child(trait_extra, "trait") or helper.wml_error("missing [trait] in [trait_extra]")
+	table.insert(wc2_era.hero_traits, { types = types, trait = trait} )
+end
+
+function wc2_era.read_era_tag(era_wml)
+	era_wml = wml.literal(era_wml)
+
+	for  multiplayer_side in wml.child_range(era_wml, "multiplayer_side") do
+		local faction = wml.get_child(multiplayer_side, "wc2_extra")
+		if faction then
+			faction.id = multiplayer_side.id
+			faction.name = multiplayer_side.name
+			faction.image = multiplayer_side.image
+		end
+		add_known_faction(faction)
+	end
+
+	wc2_data = wml.get_child(era_wml, "wc2_extra") or {}
+	for i,v in ipairs(wml.get_child(wc2_data, "hero_types")) do
+		add_known_hero_group(v[1], v[2])
+	end
+
+	for trait_extra in wml.child_range(wc2_data, "trait_extra") do
+		add_known_trait_extra(trait_extra)
+	end
+
+	for spawn_filter in wml.child_range(wc2_data, "hero_spawn_filter") do
+		add_known_spawn_filter(spawn_filter)
+	end
+
+end
+
+function wc2_era.init_era_default()
+	local wc2_era_id = "WC_II"
+	local era_wml = wesnoth.game_config.era
+	wc2_era.read_era_tag(era_wml)
+
+	if era_wml.id == wc2_era_id then
+		return
+	end
+
+	if (wml.get_child(era_wml, "wc2_extra") or {}).disable_default then
+		return
+	end
+	wc2_era.read_era_tag(wesnoth.get_era(wc2_era_id))
+end
+
 function wesnoth.wml_actions.wc2_init_era(cfg)
 	cfg = wml.literal(cfg)
 
@@ -115,23 +178,19 @@ function wesnoth.wml_actions.wc2_init_era(cfg)
 
 	wc2_era.wc2_era_id = cfg.wc2_era_id -- TODO removed for testing or error("missing wc2_era_id")
 	for faction in wml.child_range(cfg, "faction") do
-		table.insert(wc2_era.factions_wml, faction)
+		add_known_faction(faction)
 	end
-	for i,v in ipairs(wml.get_child(cfg, "hero_types")) do
-		wc2_era.hero_types[v[1]] = v[2]
-	end
-	for trait_extra in wml.child_range(cfg, "trait_extra") do
 
-		local types = wc2_utils.split_to_set(trait_extra.types)
-		local trait = wml.get_child(trait_extra, "trait") or helper.wml_error("missing [trait] in [trait_extra]")
-		table.insert(wc2_era.hero_traits, { types = types, trait = trait} )
+	for i,v in ipairs(wml.get_child(cfg, "hero_types")) do
+		add_known_hero_group(v[1], v[2])
+	end
+
+	for trait_extra in wml.child_range(cfg, "trait_extra") do
+		add_known_trait_extra(trait_extra)
 	end
 
 	for spawn_filter in wml.child_range(cfg, "hero_spawn_filter") do
-
-		local types = wc2_utils.split_to_set(spawn_filter.types)
-		local filter_location = wml.get_child(spawn_filter, "filter_location") or helper.wml_error("missing [filter_location] in [hero_spawn_filter]")
-		table.insert(wc2_era.spawn_filters, { types = types, filter_location = filter_location} )
+		add_known_spawn_filter(spawn_filter)
 	end
 
 end
@@ -271,6 +330,8 @@ wc2_utils.menu_item {
 		}
 	end
 }
+
+wc2_era.init_era_default()
 
 return wc2_era
 -->>
