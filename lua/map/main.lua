@@ -94,11 +94,15 @@ function wc_ii_generate_scenario(nplayers, gen_args)
 		carryover_add = false,
 		force_lock_settings = true,
 	}
+
 	-- add [side]s to the [scenario]
 	local enemy_data = scenario_data.get_enemy_data(enemy_stength)
 	wc_ii_generate_sides(scenario, prestart_event, nplayers, scenario_num, enemy_stength, enemy_data, scenario_data)
+
 	-- add plot (that is [event] with [message]s)
 	add_plot(scenario, scenario_num, nplayers)
+
+	-- add the gold carryover event
 	if scenario_num < #n_villages then
 		table.insert(scenario.event, {
 			name = "victory",
@@ -115,7 +119,6 @@ function wc_ii_generate_scenario(nplayers, gen_args)
 
 	-- add some wc2 specific wml [event]s
 	for side_num = 1, nplayers do
-		--todo: maybe move thisto scenario.lua ?
 		table.insert(scenario.event, {
 			name = "recruit,recall",
 			wml.tag.filter {
@@ -126,8 +129,9 @@ function wc_ii_generate_scenario(nplayers, gen_args)
 		})
 	end
 
-	-- generate the map.
-	get_map_generator(scenario_data)(scenario, nplayers)
+	-- generate the map. (this also adds certain events for example to create [item]s or [sound_source]s)
+	local mapgen_func = get_map_generator(scenario_data)
+	mapgen_func(scenario, nplayers)
 
 	-- set the correct scenario name.
 	if scenario_num == 1 then --first map
