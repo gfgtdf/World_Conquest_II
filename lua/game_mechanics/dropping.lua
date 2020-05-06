@@ -1,5 +1,8 @@
 --<<
 -- general code related to dropping items, code taken from 'scenario with robots' add-on.
+-- todo: maybe we coudl mainline this and merge it with the iterms.lua code ( this means
+-- adding a mainline "pickup item" event that fires when a unit steops on an [item] and
+-- would have the same features as this here)
 local on_event = wesnoth.require("on_event")
 
 local dropping = {}

@@ -1,0 +1,47 @@
+A describtion of this addons code:
+
+This addon mkae a lot use of lua whever possible, even, [side] definions
+were moved to lua by using scenario_generation=lua, that by the [mulitplayer]
+tags are nearly empty. One of the main advantage of this is that this addon
+doesn't increase the wesnoth parsing time,  also i just fiond lua easier to
+read and much easier to debug.
+
+The directoy is organizes as follows:
+
+./lua/map :
+the files in ./lua/map contain the code that generate the content of the
+[multiplayer] tag, in particular [side] definions, [event]s, map_data and
+[load_ressource]. The biggest part of the scenario is the map generation,
+Worl conquestII map genertion works as follows, first we run the wesnoth 
+default mpa generator (here: the files in lua/map/generator), then we run
+a custom lua scrips to fix it up (lua/map/postgeneration). For each
+scenario there ia a fixed set of generator+postgenerator pairs defeined in
+lua/map/scenarios for each scenario.
+
+./lua/shared_utils :
+libraries and helper functions that are used by both the map editor and
+during the actual game.
+
+./lua/optional_mechanics :
+A few lua machnics that works independends on the rest of the world conquest
+ii code.
+
+./lua/era :
+the code for the wxii era, this is in particular the recuitment in pair
+function. And delivering wc2 data that depends on the current era (for
+example which heros should be available for which faction)
+
+./lua/game_mechanics :
+THe lau code that implementes the custom game meachnics of wcii, that is
+the dropping system, the invest system, the training system, wcii
+specific abilities, the ponus points system
+
+./lua/campaign :
+The code specfic to the wc2 campaign: the difficulcies, viectory conditions,
+enemy spawns etc.
+
+./utils/gameplay :
+the traing and artifact definitions
+
+./utils/era :
+The factions of the wcii era.

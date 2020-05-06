@@ -92,7 +92,7 @@ function enemy.do_commander(cfg, group_id, loc)
 		experience = scenario * ((wml.variables["difficulty.enemy_power"] or 6) - 7 + cfg.commander),
 		wml.tag.modifications {
 				wc2_heroes.commander_overlay_object(),
-				T.trait(wc2_heroes.trait_heroic),
+				wml.tag.trait(wc2_heroes.trait_heroic),
 		},
 	}
 end
@@ -107,7 +107,7 @@ function enemy.do_supply(cfg, group_id, loc)
 
 	wesnoth.wml_actions.event {
 		name = "side " .. cfg.side .. " turn 2",
-		T.wc2_map_supply_village {
+		wml.tag.wc2_map_supply_village {
 			x = u.x,
 			y = u.y,
 		}
@@ -125,20 +125,20 @@ on_event("recruit", function(ec)
 	local candidates = wesnoth.get_locations {
 		terrain = "K*,C*,*^C*,*^K*",
 		T["and"] {
-			T.filter {
+			wml.tag.filter {
 				canrecruit = true,
 				side = side_num,
-				T.filter_location {
+				wml.tag.filter_location {
 					terrain = "K*^*,*^K*",
 				},
 			},
 			radius = 999,
-			T.filter_radius {
+			wml.tag.filter_radius {
 				terrain = "K*^*,C*^*,*^K*,*^C*",
 			},
 		},
 		T["not"] {
-			T.filter {}
+			wml.tag.filter {}
 		}
 	}
 	helper.shuffle(candidates)
@@ -252,7 +252,7 @@ function wesnoth.wml_actions.wc2_enemy(cfg)
 		canrecruit = true,
 		generate_name = true,
 		max_moves = 0,
-		wml.tag.modifications { T.trait(wc2_heroes.trait_heroic) },
+		wml.tag.modifications { wml.tag.trait(wc2_heroes.trait_heroic) },
 	}
 	if unit.name == "" then
 		-- give names to undead

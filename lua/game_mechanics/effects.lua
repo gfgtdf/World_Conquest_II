@@ -163,7 +163,6 @@ end
 
 -- Can move in same turn as when recruited/recalled
 function wesnoth.effects.wc2_move_on_recruit(u, cfg)
-	-- maybe better use a status than a variable ?
 	u.variables["mods.wc2_move_on_recruit"] = true
 end
 

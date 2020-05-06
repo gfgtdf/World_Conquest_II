@@ -11,7 +11,7 @@ function wc2_scenario.scenario_num()
 end
 
 function wc2_scenario.experience_penalty()
-	return  T.effect {
+	return  wml.tag.effect {
 		apply_to = "max_experience",
 		increase = wml.variables["difficulty.experience_penalty"] .. "%",
 	}

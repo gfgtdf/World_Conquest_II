@@ -1,4 +1,7 @@
+-- the Dialog we show in the generate map tool in wesnoths own map editor.
+-- in case that someoen wants to create a map baded on a random wcii map ion his campaign. 
 T = wml.tag
+
 
 function get_defaults(nplayer, nscenario)
 	if wesnoth.have_file(string.format("./../scenarios/WC_II_%dp_scenario%d.lua", nplayer, nscenario)) then
