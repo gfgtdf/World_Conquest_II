@@ -138,7 +138,7 @@ function wc_ii_generate_scenario(nplayers, gen_args)
 		scenario.name = "WC_II_" .. nplayers .. " - " .. _"Start"
 	else
 		local scenario_desc = _ "Scenario" .. scenario_num
-		if scenario_num == 6 then
+		if scenario_num == 5 then
 			scenario_desc = _"Final Battle"
 		end
 		scenario.name = "WC_II_" .. nplayers .. " " .. scenario_desc .. " - "--.. scenario.map_name

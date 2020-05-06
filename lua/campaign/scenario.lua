@@ -99,10 +99,6 @@ on_event("victory", function(cx)
 	wesnoth.wml_actions.wc2_set_recall_cost { }
 	--{CLEAR_VARIABLE bonus.theme,bonus.point,items}
 	wml.variables.scenario = (wml.variables.scenario or 1) + 1
-	-- classic map 5 was removed, but we still "call" last map as scenario 6 for convenience
-	if wml.variables.scenario == 5 then
-		wml.variables.scenario = 6
-	end
 end)
 
 on_event("start", function(cx)
