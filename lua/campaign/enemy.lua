@@ -61,7 +61,7 @@ on_event("recruit", function(ec)
 	local item_id = enemy.pick_suitable_enemy_item(unit)
 	wc2_artifacts.give_item(unit, item_id, false)
 	if true then
-		unit.experience = unit.experience + scenario_num  * (16 + wml.variables["difficulty.enemy_power"])
+		unit.experience = unit.experience + scenario_num  * (16 + wml.variables["wc2_difficulty.enemy_power"])
 		unit:advance(true, true)
 	end
 	wesnoth.allow_undo(false)
@@ -89,7 +89,7 @@ function enemy.do_commander(cfg, group_id, loc)
 		side = cfg.side,
 		generate_name = true,
 		role = "commander",
-		experience = scenario * ((wml.variables["difficulty.enemy_power"] or 6) - 7 + cfg.commander),
+		experience = scenario * ((wml.variables["wc2_difficulty.enemy_power"] or 6) - 7 + cfg.commander),
 		wml.tag.modifications {
 				wc2_heroes.commander_overlay_object(),
 				wml.tag.trait(wc2_heroes.trait_heroic),
@@ -189,7 +189,7 @@ end
 -- WORLD_CONQUEST_TEK_ENEMY_TRAINING
 function enemy.do_training(cfg, group_id, loc)
 	local tr = cfg.trained or 0
-	local dif = wml.variables["difficulty.enemy_trained"] or 0
+	local dif = wml.variables["wc2_difficulty.enemy_trained"] or 0
 	if tr ~= 0 and dif >= tr then
 		--enemy can only get Melee, Ranger, Health or Movement
 		wesnoth.wml_actions.wc2_give_random_training {
@@ -274,7 +274,7 @@ function wesnoth.wml_actions.wc2_enemy(cfg)
 	enemy.do_recall(cfg, enemy_type_id, loc)
 	-- todo: remove or uncomment (i think this was moved to scenario generation)
 	-- side.gold = side.gold + wml.variables["enemy_army.bonus_gold"]
-	if cfg.have_item > 0 and cfg.have_item <= (wml.variables["difficulty.enemy_power"] or 6) then
+	if cfg.have_item > 0 and cfg.have_item <= (wml.variables["wc2_difficulty.enemy_power"] or 6) then
 		wesnoth.set_side_variable(side_num, "wc2.random_items", 1)
 	end
 end

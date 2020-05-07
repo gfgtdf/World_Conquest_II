@@ -37,7 +37,7 @@ function wc_ii_generate_scenario(nplayers, gen_args)
 	nplayers = settings.nplayers or nplayers
 	local scenario_extra = wml.get_child(gen_args, "scenario")
 	local scenario_num = settings.scenario_num or wesnoth.get_variable("scenario") or 1
-	local enemy_stength = wesnoth.get_variable("difficulty.enemy_power") or 6
+	local enemy_stength = wesnoth.get_variable("wc2_difficulty.enemy_power") or 6
 	local scenario_data = wesnoth.dofile(string.format("./scenarios/WC_II_%dp_scenario%d.lua", nplayers, scenario_num))
 
 	local prestart_event = { name = "prestart" }

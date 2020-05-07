@@ -27,13 +27,20 @@ local function wct_difficulty(name, power, enemy_t, heroes, gold, train, exp)
 	end
 	-- adjust bonus gold for number of players
 	gold = gold * math.pow(2, 3 - nplayers)
-	vars["difficulty.name"] = name
-	vars["difficulty.enemy_power"] = power
-	vars["difficulty.enemy_trained"] = enemy_t
-	vars["difficulty.heroes"] = heroes
-	vars["difficulty.extra_gold"] = gold
-	vars["difficulty.extra_trainig"] = train
-	vars["difficulty.experience_penalty"] = exp
+	return wml.tag.command {
+		wml.tag.set_variables {
+			name = "wc2_difficulty",
+			wml.tag.literal {
+				name = name,
+				enemy_power = power,
+				enemy_trained = enemy_t,
+				heroes = heroes,
+				extra_gold = gold,
+				extra_trainig = train,
+				experience_penalty = exp,
+			}
+		}
+	}
 end
 
 
@@ -83,7 +90,7 @@ function wct_scenario_start_bonus()
 		}
 	end
 
-	if vars.difficulty.extra_trainig then
+	if vars.wc2_difficulty.extra_trainig then
 		for side_num = 1, wml.variables.players do
 			wesnoth.wml_actions.wc2_give_random_training {
 				among="2,3,4,5,6",

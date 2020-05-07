@@ -30,7 +30,7 @@ function wc2_heroes.experience_penalty()
 	return {
 		T.effect {
 			apply_to = "max_experience",
-			increase = wml.variables["difficulty.experience_penalty"] .. "%",
+			increase = wml.variables["wc2_difficulty.experience_penalty"] .. "%",
 		}
 	}
 end

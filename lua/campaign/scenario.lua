@@ -13,7 +13,7 @@ end
 function wc2_scenario.experience_penalty()
 	return  wml.tag.effect {
 		apply_to = "max_experience",
-		increase = wml.variables["difficulty.experience_penalty"] .. "%",
+		increase = wml.variables["wc2_difficulty.experience_penalty"] .. "%",
 	}
 end
 
@@ -40,7 +40,7 @@ function wesnoth.wml_actions.wc2_start_units(cfg)
 	u:add_modification("trait", wc2_heroes.trait_heroic )
 	u.hitpoints = u.max_hitpoints
 	u.moves = u.max_moves
-	for i = 1, wml.variables["difficulty.heroes"] do
+	for i = 1, wml.variables["wc2_difficulty.heroes"] do
 		wesnoth.wml_actions.wc2_random_hero {
 			x = u.x,
 			y = u.y,
@@ -71,7 +71,7 @@ end)
 -- splits the carryover gold evenly to all players
 on_event("prestart", function(cx)
 	-- this adds 0 gold in the first scenario because difficulty is not yet set.
-	local gold = (wml.variables.wc2_carryover or 0) + (wml.variables["difficulty.extra_gold"] or 0)
+	local gold = (wml.variables.wc2_carryover or 0) + (wml.variables["wc2_difficulty.extra_gold"] or 0)
 	for i = 1, wml.variables.players do
 		wesnoth.sides[i].gold = wesnoth.sides[i].gold + gold
 	end
@@ -102,7 +102,7 @@ on_event("victory", function(cx)
 end)
 
 on_event("start", function(cx)
-	local is_first_scenario = wml.variables["difficulty.length"] == 0
+	local is_first_scenario = wml.variables["wc2_difficulty.length"] == 0
 	if is_first_scenario then
 		wesnoth.dofile("./difficulty.lua")
 	end

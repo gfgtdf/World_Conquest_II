@@ -25,7 +25,7 @@ function wesnoth.wml_actions.wc2_objectives(cfg)
 			condition = "lose",
 		},
 		wml.tag.note {
-			description = strings.difficulty .. wml.variables["difficulty.name"],
+			description = strings.difficulty .. wml.variables["wc2_difficulty.name"],
 		},
 		wml.tag.note {
 			description = strings.version .. wml.variables["wct.version"],
