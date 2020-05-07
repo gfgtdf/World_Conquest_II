@@ -21,7 +21,7 @@ on_event("prestart", function(cx)
 			side="1,2,3",
 			wml.tag.has_unit {
 				canrecruit = true,
-				}
+			}
 		}
 	}
 end)
