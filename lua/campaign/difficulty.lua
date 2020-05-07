@@ -21,7 +21,7 @@ local icon_nightmare_difficulty = "units/monsters/fire-dragon.png~CROP(0,0,160,1
 local t_option = wml.tag.option
 
 local function wct_difficulty(name, power, enemy_t, heroes, gold, train, exp)
-	local nplayers = vars.players
+	local nplayers = vars.wc2_player_count
 	if nplayers == 1 then
 		heroes = heroes + 1
 	end
@@ -84,14 +84,14 @@ function wct_scenario_chose_difficulty()
 end
 
 function wct_scenario_start_bonus()
-	for side_num = 1, wml.variables.players do
+	for side_num = 1, wml.variables.wc2_player_count do
 		wesnoth.wml_actions.wc2_start_units {
 			side = side_num
 		}
 	end
 
 	if vars.wc2_difficulty.extra_trainig then
-		for side_num = 1, wml.variables.players do
+		for side_num = 1, wml.variables.wc2_player_count do
 			wesnoth.wml_actions.wc2_give_random_training {
 				among="2,3,4,5,6",
 				side = side_num,

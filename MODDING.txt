@@ -18,12 +18,12 @@ variable that should contains the pool of 'armies' that the enemies are chosen f
 	name = "wc2_init_enemy"
 	[filter_conditional]
 		[variable]
-			name="enemy_army.length"
+			name="wc2_enemy_army.length"
 			equals=0
 		[/variable]
 	[/filter_conditional]
 	[set_vartiables]
-		name = "enemy_army"
+		name = "wc2_enemy_army"
 		[literal]
 			[group]
 				id = "enemyfaction_id"

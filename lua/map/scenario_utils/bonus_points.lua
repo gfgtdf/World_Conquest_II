@@ -65,6 +65,7 @@ function random_placement(locs, num_items, min_distance, command)
 end
 
 function get_f_wct_bonus_location_filter(map)
+	local scenario_num = wesnoth.get_variable("wc2_scenario") or 1
 	return f.all(
 		f.terrain("G*,Hh,Uu,Uh,Dd,Ds,R*,Mm,Md,Ss,Hd,Hhd,Ww,Wwt,Wwg,Ds^Esd,Ur"),
 		--no adjacent to village, deep water, chasm or walls
@@ -74,7 +75,7 @@ function get_f_wct_bonus_location_filter(map)
 		f.y("2-" .. map.height-3),
 		f.none(
 			--not too close to a keep
-			f.radius((wesnoth.get_variable("scenario") or 1) + 4, f.terrain("K*^*")),
+			f.radius(scenario_num + 4, f.terrain("K*^*")),
 			--just isolated mountains
 			f.all(
 				f.terrain("M*"),
@@ -398,7 +399,7 @@ end
 
 function world_conquest_tek_bonus_points(theme)
 	local res = {}
-	local scenario_num = wesnoth.get_variable("scenario") or 1
+	local scenario_num = wesnoth.get_variable("wc2_scenario") or 1
 	oceanic = get_oceanic()
 	f_wct_bonus_location_filter = wesnoth.create_filter(get_f_wct_bonus_location_filter(map), { oceanic = oceanic })
 	local possible_locs = map:get_locations(f_wct_bonus_location_filter)

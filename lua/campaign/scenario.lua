@@ -7,7 +7,7 @@ function wc2_scenario.is_human_side(side_num)
 end
 
 function wc2_scenario.scenario_num()
-	return wml.variables["scenario"] or 1
+	return wml.variables["wc2_scenario"] or 1
 end
 
 function wc2_scenario.experience_penalty()
@@ -61,7 +61,7 @@ end
 on_event("prestart", function(cx)
 	-- this adds 0 gold in the first scenario because difficulty is not yet set.
 	local gold = (wml.variables.wc2_carryover or 0) + (wml.variables["wc2_difficulty.extra_gold"] or 0)
-	for i = 1, wml.variables.players do
+	for i = 1, wml.variables.wc2_player_count do
 		wesnoth.sides[i].gold = wesnoth.sides[i].gold + gold
 	end
 	wml.variables.wc2_carryover = nil
@@ -69,7 +69,7 @@ end)
 
 -- our victory condition
 on_event("enemies defeated", function(cx)
-	if wml.variables.scenario > 5 then
+	if wml.variables.wc2_scenario > 5 then
 		return
 	end
 	wesnoth.play_sound("ambient/ship.ogg")
@@ -82,12 +82,12 @@ on_event("enemies defeated", function(cx)
 end)
 
 on_event("victory", function(cx)
-	if wml.variables.scenario > 5 then
+	if wml.variables.wc2_scenario > 5 then
 		return
 	end
 	wesnoth.wml_actions.wc2_set_recall_cost { }
 	--{CLEAR_VARIABLE bonus.theme,bonus.point,items}
-	wml.variables.scenario = (wml.variables.scenario or 1) + 1
+	wml.variables.wc2_scenario = (wml.variables.wc2_scenario or 1) + 1
 end)
 
 on_event("start", function(cx)

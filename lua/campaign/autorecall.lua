@@ -1,6 +1,6 @@
 -- players get recalled by free all heroes up to castle size
 local function wc2_autorecall()
-	for side_num = 1, wml.variables.players do
+	for side_num = 1, wml.variables.wc2_player_count do
 		local castle_tiles = wesnoth.get_locations {
 			terrain = "C*",
 			wml.tag["and"] {
@@ -33,7 +33,8 @@ local function wc2_autorecall()
 end
 
 on_event("start", function(cx)
-	if (wml.variables.scenario or 1) > 1 then
+	local scenario_num = wc2_scenario.scenario_num()
+	if (scenario_num or 1) > 1 then
 		wc2_autorecall()
 	end
 end)
