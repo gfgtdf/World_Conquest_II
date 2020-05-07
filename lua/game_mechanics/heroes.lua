@@ -10,7 +10,7 @@ wc2_heroes.trait_heroic = nil
 wc2_heroes.trait_expert = nil
 
 if wesnoth.have_file("./unittypedata.lua") then
-	local data = wesnoth.dofile("./unittypedata.lua")
+	local data = wesnoth.require("./unittypedata.lua")
 	for v,k in pairs(data) do
 		wc2_heroes.dialogues[v] = k
 	end
