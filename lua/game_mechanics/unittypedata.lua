@@ -1,6 +1,10 @@
 local _ = wesnoth.textdomain 'wesnoth-World_Conquest_II'
 
 type_infos = {
+	["default"] = {
+		founddialogue = _"You guys look like you could use some help. Mind if I join in? It's been a while since I had a good fight!",
+		reply = _ "Excellent. We could always use more help.",
+	},
 	["Orcish Grunt"] = { 
 		founddialogue=_"'bout time. Been forever since I had a good fight, eh?",
 		image="units/orcs/grunt.png",

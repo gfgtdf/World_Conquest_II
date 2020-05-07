@@ -5,12 +5,7 @@ local wc2_heroes = {}
 wc2_heroes.commander_overlay = "misc/leader-expendable.png~MASK(misc/wct-blank2.png)~BLIT(misc/wct-commander.png)"
 wc2_heroes.hero_overlay = "misc/hero-icon.png"
 wc2_heroes.hero_types = {}
-wc2_heroes.dialogues = {
-	default = {
-		founddialogue = _"You guys look like you could use some help. Mind if I join in? It's been a while since I had a good fight!",
-		reply = _ "Excellent. We could always use more help.",
-	}
-}
+wc2_heroes.dialogues = {}
 wc2_heroes.trait_heroic = nil
 wc2_heroes.trait_expert = nil
 
