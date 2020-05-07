@@ -185,19 +185,19 @@ local IMG_OAK_1 = "terrain/embellishments/flowers-mixed4.png~MASK(scenery/whirlp
 
 local IMG_OAK_2 = "terrain/embellishments/flowers-mixed3.png~MASK(scenery/whirlpool.png)~BLIT(scenery/oak-leaning.png)"
 
--- hidden image to replace custom
-local IMG_OAK_3 = "terrain/embellishments/flowers-mixed2.png~MASK(scenery/whirlpool.png)~BLIT(scenery/oak-leaning.png)~MASK(misc/wct-blank.png)~BLIT(scenery/treehouse.png)"
+-- custom image
+local IMG_OAK_3 = "scenery/treehouse.png"
 
--- hidden image to replace custom
-local IMG_OAK_4 = "terrain/embellishments/flowers-mixed.png~MASK(scenery/whirlpool.png)~BLIT(scenery/oak-leaning.png)~MASK(misc/wct-blank.png)~BLIT(scenery/treehouse.png)"
+-- custom image
+local IMG_OAK_4 = "scenery/treehouse.png"
 
 local IMG_OAK_5 = "terrain/embellishments/flower-purple.png~MASK(scenery/whirlpool.png)~BLIT(scenery/oak-leaning.png)"
 
--- hidden image to replace custom
-local IMG_OAK_6 = "terrain/embellishments/flowers-mixed4.png~MASK(scenery/whirlpool.png)~BLIT(scenery/oak-leaning.png)~MASK(misc/wct-blank.png)~BLIT(scenery/treehouse.png)"
+-- custom image
+local IMG_OAK_6 = "scenery/treehouse.png"
 
--- hidden image to replace custom
-local IMG_OAK_7 = "terrain/embellishments/flowers-mixed3.png~MASK(scenery/whirlpool.png)~BLIT(scenery/oak-leaning.png)~MASK(misc/wct-blank.png)~BLIT(scenery/treehouse.png)"
+-- custom image
+local IMG_OAK_7 = "scenery/treehouse.png"
 
 local IMG_ROCK_1 = "misc/blank-hex.png~BLIT(scenery/rock1.png~CROP(1,11,71,61),0,0)"
 
@@ -205,53 +205,53 @@ local IMG_ROCK_3 = "misc/blank-hex.png~BLIT(scenery/rock3.png~CROP(0,11,66,61),6
 
 local IMG_ROCK_4 = "misc/blank-hex.png~BLIT(scenery/rock4.png~CROP(0,8,66,64),6,0)"
 
--- hidden image to replace custom
-local IMG_ROCK_1_TOWER = "scenery/rock1.png~MASK(misc/wct-blank.png)~BLIT(scenery/wct-tower.png)"
+-- custom image
+local IMG_ROCK_1_TOWER = "misc/blank-hex.png~BLIT(scenery/wct-tower.png)"
 
--- hidden image to replace custom
-local IMG_ROCK_4_TOWER = "scenery/rock4.png~MASK(misc/wct-blank.png)~BLIT(scenery/wct-tower.png)"
+-- custom image
+local IMG_ROCK_4_TOWER = "misc/blank-hex.png~BLIT(scenery/wct-tower.png)"
 
--- hidden image to replace custom
-local IMG_OBELISK_POST = "scenery/signpost.png~MASK(misc/wct-blank.png)~BLIT(scenery/wct-obelisk.png)"
+-- custom image
+local IMG_OBELISK_POST = "misc/blank-hex.png~BLIT(scenery/wct-obelisk.png)"
 
--- hidden image to replace custom
-local IMG_ROCK_CAIRN_DOLMEN = "scenery/rock-cairn.png~MASK(misc/wct-blank.png)~BLIT(scenery/wct-dolmen.png~SCALE(75,75)~CROP(0,0,72,62),0,10)"
+-- custom image
+local IMG_ROCK_CAIRN_DOLMEN = "misc/blank-hex.png~BLIT(scenery/wct-dolmen.png~SCALE(75,75)~CROP(0,0,72,62),0,10)"
 
--- hidden image to replace custom
-local IMG_MONOLITH_DOLMEN = "scenery/monolith3.png~MASK(misc/wct-blank.png)~BLIT(scenery/wct-dolmen2.png~SCALE(75,75)~CROP(0,0,72,62),0,10)"
+-- custom image
+local IMG_MONOLITH_DOLMEN = "misc/blank-hex.png~BLIT(scenery/wct-dolmen2.png~SCALE(75,75)~CROP(0,0,72,62),0,10)"
 
--- hidden image to replace custom
-local IMG_TEMPLE_2 = "scenery/temple1.png~MASK(misc/wct-blank.png)~BLIT(scenery/wct-temple.png~SCALE(60,60),6,3)"
+-- custom image
+local IMG_TEMPLE_2 = "misc/blank-hex.png~BLIT(scenery/wct-temple.png~SCALE(60,60),6,3)"
 
--- hidden image to replace custom
-local IMG_TEMPLE_3 = "scenery/temple1.png~MASK(misc/wct-blank.png)~BLIT(scenery/wct-temple2.png)"
+-- custom image
+local IMG_TEMPLE_3 = "scenery/wct-temple2.png"
 
--- hidden image to replace custom
-local IMG_TEMPLE_GREEN_HILLS = "scenery/rock-cairn.png~MASK(misc/wct-blank.png)~BLIT(scenery/wct-temple4.png~SCALE(65,65),4,4)"
+-- custom image
+local IMG_TEMPLE_GREEN_HILLS = "misc/blank-hex.png~BLIT(scenery/wct-temple4.png~SCALE(65,65),4,4)"
 
--- hidden image to replace custom
-local IMG_TEMPLE_GREEN_HILLS_2 = "scenery/rock-cairn.png~MASK(misc/wct-blank.png)~BLIT(scenery/wct-temple5.png~SCALE(63,63),6,2)"
+-- custom image
+local IMG_TEMPLE_GREEN_HILLS_2 = "misc/blank-hex.png~BLIT(scenery/wct-temple5.png~SCALE(63,63),6,2)"
 
--- hidden image to replace custom
-local IMG_TEMPLE_GREEN_GRASS = "scenery/temple1.png~MASK(misc/wct-blank.png)~BLIT(scenery/wct-temple3.png)"
+-- custom image
+local IMG_TEMPLE_GREEN_GRASS = "misc/blank-hex.png~BLIT(scenery/wct-temple3.png)"
 
--- hidden image to replace custom
-local IMG_TEMPLE_GREEN_GRASS_2 = "scenery/temple1.png~MASK(misc/wct-blank.png)~BLIT(scenery/wct-temple5.png~SCALE(63,63),6,2)"
+-- custom image
+local IMG_TEMPLE_GREEN_GRASS_2 = "misc/blank-hex.png~BLIT(scenery/wct-temple5.png~SCALE(63,63),6,2)"
 
--- hidden image to replace custom
-local IMG_DETRITUS_OAK_1 = "{IMG_DETRITUS}~MASK(misc/wct-blank.png)~BLIT(scenery/wct-oak-dead.png)"
+-- custom image
+local IMG_DETRITUS_OAK_1 = "scenery/wct-oak-dead.png"
 
--- hidden image to replace custom
-local IMG_DETRITUS_OAK_2 = "{IMG_DETRITUS_2}~MASK(misc/wct-blank.png)~BLIT(scenery/wct-oak-dead2.png)"
+-- custom image
+local IMG_DETRITUS_OAK_2 = "scenery/wct-oak-dead2.png"
 
--- hidden image to replace custom
-local IMG_CRYSTAL_WELL = "scenery/well.png~MASK(misc/wct-blank.png)~BLIT(scenery/wct-crystal.png)"
+-- custom image
+local IMG_CRYSTAL_WELL = "scenery/wct-crystal.png"
 
--- hidden image to replace custom
-local IMG_CRYSTALS_ALTAR = "items/altar-evil.png~MASK(misc/wct-blank.png)~BLIT(scenery/wct-crystal3.png~SCALE(59,59),6,4)"
+-- custom image
+local IMG_CRYSTALS_ALTAR = "misc/blank-hex.png~BLIT(scenery/wct-crystal3.png~SCALE(59,59),6,4)"
 
--- hidden image to replace custom
-local IMG_TENT_OUTPOST = "scenery/tent-fancy-red.png~MASK(misc/wct-blank.png)~BLIT(scenery/wct-outpost.png)"
+-- custom image
+local IMG_TENT_OUTPOST = "scenery/wct-outpost.png"
 
 
 local images = {

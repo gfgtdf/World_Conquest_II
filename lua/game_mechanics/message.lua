@@ -1,6 +1,6 @@
 --<<
 ---- defines a wml tag [wc2_message] that is the same as core [message] but adds scalex3 to uniticons for untis without profiles.
-
+--- TODO: can this fil be removed after https://github.com/wesnoth/wesnoth/commit/b7fe28c03ef368cc77e82bbb3c6f715e9d2b3064#diff-1fd29fcb20efac244b06119b0d96e2eb ?
 
 local function get_speaker(cfg)
 	local speaker

@@ -2,7 +2,7 @@
 local _ = wesnoth.textdomain 'wesnoth-World_Conquest_II'
 local wc2_heroes = {}
 -- an array of wml tables, usually containing type,
-wc2_heroes.commander_overlay = "misc/leader-expendable.png~MASK(misc/wct-blank2.png)~BLIT(misc/wct-commander.png)"
+wc2_heroes.commander_overlay = "misc/wct-commander.png"
 wc2_heroes.hero_overlay = "misc/hero-icon.png"
 wc2_heroes.hero_types = {}
 wc2_heroes.dialogues = {}
