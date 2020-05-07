@@ -76,9 +76,7 @@ function wc_ii_generate_scenario(nplayers, gen_args)
 			scenario = scenario_num,
 			players = nplayers,
 			carryover = 0,
-			wml.tag.wct {
-				version = "0.8.2"
-			}
+			wc2_host_version = "0.8.2"
 		},
 		side = {},
 		id = "WC_II_" .. nplayers .. "p",

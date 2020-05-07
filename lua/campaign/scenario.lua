@@ -17,13 +17,6 @@ function wc2_scenario.experience_penalty()
 	}
 end
 
-on_event("preload", function()
-	if not wml.variables["wc2.original_version"] then
-		wml.variables["wc2.original_version"] = "0.8.2"
-	end
-	wml.variables["wc2.version"] = "0.8.2"
-end)
-
 -- happens before training events.
 on_event("recruit", 1, function(ec)
 	local u = wesnoth.get_unit(ec.x1, ec.y1)
@@ -62,10 +55,6 @@ function wesnoth.wml_actions.wc2_store_carryover(cfg)
 	local player_gold = math.max(player_gold / #human_sides, 0)
 	wml.variables.wc2_carryover = math.ceil( (nvillages*turns_left + player_gold) * 0.15)
 end
-
-on_event("scenario_end", function()
-	--wml.variables["wc2.version"] = nil
-end)
 
 -- carryover handling: we use a custom carryover machnics that 
 -- splits the carryover gold evenly to all players

@@ -217,7 +217,7 @@ function wesnoth.wml_actions.wc2_show_wocopedia(cfg)
 			wesnoth.set_dialog_active(false, "details", desc_index, "checkbox_use_markers")
 			wesnoth.set_dialog_value(not not wml.variables["wc2_config_experimental_pickup"], "details", desc_index, "checkbox_use_pickup")
 			wesnoth.set_dialog_active(false, "details", desc_index, "checkbox_use_pickup")
-			wesnoth.set_dialog_text(wml.variables["wc2.version"] or "unknown", "details", desc_index, "label_version")
+			wesnoth.set_dialog_text(wml.variables["wc2_host_version"] or "unknown", "details", desc_index, "label_version")
 			wesnoth.set_dialog_text(wml.variables["wc2_difficulty.name"] or "unknown", "details", desc_index, "label_difficulty")
 
 			wesnoth.set_dialog_value(not wc2_utils.global_vars.skip_pickup_dialog, "details", desc_index, "checkbox_show_pickup_confirmation")

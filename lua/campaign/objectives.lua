@@ -28,7 +28,7 @@ function wesnoth.wml_actions.wc2_objectives(cfg)
 			description = strings.difficulty .. wml.variables["wc2_difficulty.name"],
 		},
 		wml.tag.note {
-			description = strings.version .. wml.variables["wct.version"],
+			description = strings.version .. wml.variables["wc2_host_version"],
 		},
 		note = wc2_artifacts.color_help(strings.help_available)
 	}
