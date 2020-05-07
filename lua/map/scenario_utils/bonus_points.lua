@@ -251,7 +251,7 @@ function wct_bonus_chose_scenery(loc, theme, filter_extra)
 			scenery = scenery .. "," .. "tent2_r"
 		end
 	end
-	-- high chances of windmill and oak surronded by flat
+	-- high chances of oak surronded by flat
 
 	if matches_location(
 		f.all(
@@ -259,7 +259,7 @@ function wct_bonus_chose_scenery(loc, theme, filter_extra)
 			f.adjacent(f.terrain("G*,R*,R*^Em,G*^Efm,Wwf,G*^Em,G*^Eff,*^Gvs,W*^B*,Ce,Ch"), nil, 6)
 		)) then
 
-		scenery = scenery .. "," .. "windmill,windmill,windmill,windmill,windmill,windmill,windmill,oak1,oak2,oak3,oak4,oak5,oak6,oak7"
+		scenery = scenery .. "," .. "oak1,oak2,oak3,oak4,oak5,oak6,oak7"
 	end
 	-- remove chances of ships on river/lake coast for lilies
 

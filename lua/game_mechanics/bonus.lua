@@ -35,11 +35,7 @@ function wesnoth.wml_actions.wc2_place_bonus(cfg)
 end
 
 function bonus.place_item(x, y, image)
-	if image == "windmill" then
-		--todo: the old code implemented this differently
-		wesnoth.set_terrain(x, y, "*^Wm", "overlay")
-		image = nil
-	elseif image == "campfire" then
+	if image == "campfire" then
 		wesnoth.set_terrain(x, y, "*^Ecf", "overlay")
 		image = nil
 	else
@@ -59,7 +55,7 @@ function bonus.remove_current_item(ec)
         x = ec.x1,
 		y = ec.y1,
         T["and"] {
-            terrain = "*^Wm,*^Ecf",
+            terrain = "*^Ecf",
         },
         terrain = "Gs",
         layer = "overlay",
