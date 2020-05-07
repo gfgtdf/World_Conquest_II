@@ -210,6 +210,7 @@ function enemy.init_data()
 		wml.variables.wc2_enemy_army = wc2_convert.lon_to_wml(enemy_army, "wct_enemy")
 	end
 end
+
 --[[
 	called like
 	[wc2_enemy]
