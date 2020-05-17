@@ -52,33 +52,33 @@ function wct_scenario_chose_difficulty()
 			image = icon_human_difficult("human-peasants/peasant", "purple"),
 			label = str_dif_lvl("Peasant"),
 			description="(" .. _"Easy" .. ")",
-			wct_difficulty("Peasant",6, 2, 2, 10, true, 25),
+			wct_difficulty("Peasant", 6, 2, 2, 10, true, 0),
 		},
 		t_option {
 			image=icon_human_difficult("human-loyalists/sergeant", "black"),
 			label=str_dif_lvl("Sergeant"),
-			wct_difficulty("Sergeant",7, 3, 2, 7, true, 32),
+			wct_difficulty("Sergeant", 7, 3, 2, 7, true, 5),
 		},
 		t_option {
 			image=icon_human_difficult("human-loyalists/lieutenant", "brown"),
 			label=str_dif_lvl("Lieutenant"),
-			wct_difficulty("Lieutenant",8, 4, 2, 5, true, 38),
+			wct_difficulty("Lieutenant", 8, 4, 2, 5, true, 10),
 		},
 		t_option {
 			image=icon_human_difficult("human-loyalists/general", "orange"),
 			label=str_dif_lvl("General"),
-			wct_difficulty("General",8, 5, 2, 2, false, 42),
+			wct_difficulty("General", 8, 5, 2, 2, false, 13),
 		},
 		t_option {
 			image=icon_human_difficult("human-loyalists/marshal", "white"),
 			label=str_dif_lvl("Grand_marshal"),
-			wct_difficulty("Grand_marshal",9, 6, 2, 1, false, 46),
+			wct_difficulty("Grand_marshal", 9, 6, 2, 1, false, 17),
 		},
 		t_option {
 			image=icon_nightmare_difficulty,
 			label=str_dif_lvl("Nightmare"),
 			description="(" .. _"Expert" .. ")",
-			wct_difficulty("Nightmare",9, 7, 1, 0, false, 50),
+			wct_difficulty("Nightmare", 9, 7, 1, 0, false, 20),
 		},
 	}
 end

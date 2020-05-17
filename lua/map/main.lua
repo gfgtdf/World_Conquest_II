@@ -84,7 +84,7 @@ function wc_ii_generate_scenario(nplayers, gen_args)
 		modify_placing = false,
 		-- does this work
 		turns = scenario_data.turns,
-		experience_modifier = 80,
+		experience_modifier = 100,
 		victory_when_enemies_defeated = true,
 		carryover_percentage = 0,
 		carryover_report = false,
