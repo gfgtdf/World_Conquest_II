@@ -3,10 +3,9 @@ local _ = wesnoth.textdomain 'wesnoth-World_Conquest_II'
 local t = wml.tag
 
 local img_is_special_overlays = {
-	"misc/blank-hex.png~BLIT(cursors/attack.png~MASK(misc/wct-blank.png)~CROP(0,0,23,23)~SCALE(16,16)~R(10),42,5)~BLIT(misc/is_special.png)",
-	"misc/blank-hex.png~BLIT(help/closed_section.png~MASK(misc/dfghdfghfdh.png)~CROP(0,0,23,23)~SCALE(16,16)~R(10),42,5)~BLIT(misc/dfhfdghf.png)"
+	"misc/is_special.png"
 }
-local img_is_special_menu = "misc/blank-hex.png~BLIT(cursors/attack.png~MASK(misc/wct-blank.png)~CROP(0,0,23,23)~SCALE(16,16)~R(10),23,20)~BLIT(misc/is_special.png~CROP(35,3,21,14),20,20)~CROP(20,20,22,16)"
+local img_is_special_menu = "misc/is_special.png~CROP(35,3,22,16)"
 
 local strings = {
 	special_overlay = _ "Special Overlay",
