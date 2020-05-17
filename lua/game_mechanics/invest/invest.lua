@@ -1,7 +1,7 @@
---<<
-local wc2_invest = {}
 local on_event = wesnoth.require("on_event")
 local _ = wesnoth.textdomain 'wesnoth-World_Conquest_II'
+
+local wc2_invest = {}
 
 function wc2_invest.add_items(side_num, num_items)
 	local items_left = wc2_utils.split_to_array(wesnoth.get_side_variable(side_num, "wc2.items_left"))
@@ -170,4 +170,3 @@ function wesnoth.wml_actions.wc2_invest(cfg)
 end
 
 return wc2_invest
--->>

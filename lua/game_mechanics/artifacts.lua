@@ -1,5 +1,5 @@
---<<
 local on_event = wesnoth.require("on_event")
+local helper = wesnoth.require("helper")
 
 local _ = wesnoth.textdomain 'wesnoth-World_Conquest_II'
 
@@ -7,7 +7,7 @@ local artifacts = {}
 artifacts.list = {}
 
 function artifacts.init_data(cfg)
-	artifacts.list = wc2_convert.wml_to_lon(helper.literal(cfg), "wct_artifact_list").artifact
+	artifacts.list = wc2_convert.wml_to_lon(wml.literal(cfg), "wct_artifact_list").artifact
 end
 
 function artifacts.color_bonus(str)
@@ -62,7 +62,7 @@ function artifacts.give_item(unit, index, visualize)
 	-- note that the following `unit.upkeep` does not match normal
 	-- level 0 (which have still 'full' upkeep) only units with upkeep=0 explicitly set
 	if make_holder_loyal and (not unit.canrecruit) and (unit.upkeep ~= 0) and (unit.upkeep ~= "loyal") then
-		unit:add_modification("object", { T.effect { apply_to = "wc2_overlay", add = "misc/loyal-icon.png" }})
+		unit:add_modification("object", { wml.tag.effect { apply_to = "wc2_overlay", add = "misc/loyal-icon.png" }})
 	end
 
 	local object = {
@@ -71,7 +71,7 @@ function artifacts.give_item(unit, index, visualize)
 		wc2_is_artifact = true,
 	}
 	if make_holder_loyal then
-		table.insert(object, T.effect { apply_to= "loyal" })
+		table.insert(object, wml.tag.effect { apply_to= "loyal" })
 	end
 		
 		
@@ -85,7 +85,7 @@ function artifacts.give_item(unit, index, visualize)
 	--       more flixible: the suggested approach requires that artifacts are loaded before
 	--       units are created which means artifacts must be loaded at toplevel [lua] tags
 	for i, effect in ipairs(artifacts.list[index].effect) do
-		table.insert(object, T.effect (effect) )
+		table.insert(object, wml.tag.effect (effect) )
 	end
 	unit:add_modification("object", object)
 	--rebuild unit, to reduce savefile size.
@@ -158,7 +158,7 @@ on_event("die", function(event_context)
 	if not wml.variables["wc2_config_experimental_pickup"] and wc2_scenario.is_human_side(unit.side) then
 		return
 	end
-	for object in helper.child_range(helper.get_child(unit.__cfg, "modifications") or {}, "object") do
+	for object in helper.child_range(wml.get_child(unit.__cfg, "modifications") or {}, "object") do
 		if object.wc2_atrifact_id then
 			artifacts.place_item(unit.x, unit.y, object.wc2_atrifact_id)
 			artifacts.drop_message(object.wc2_atrifact_id)
@@ -222,4 +222,3 @@ function wesnoth.wml_actions.wc2_place_item(cfg)
 end
 
 return artifacts
--->>

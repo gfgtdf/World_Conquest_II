@@ -1,6 +1,7 @@
---<<
 local _ = wesnoth.textdomain 'wesnoth-World_Conquest_II'
 local on_event = wesnoth.require("on_event")
+local helper = wesnoth.require("helper")
+
 
 local training = {}
 
@@ -9,10 +10,10 @@ function training.get_chanches(trainer, grade)
 end
 
 function training.apply_trait(unit, trait, check)
-	if u:matches(check) and u:matches( T.filter_wml { T.modifications { T.trait { id = trait.id } } } ) then
+	if u:matches(check) and u:matches( wml.tag.filter_wml { wml.tag.modifications { wml.tag.trait { id = trait.id } } } ) then
 		u:add_modification("trait", trait)
 	else
-		u:add_modification("object", { T.effect { apply_to  = "hitpoints", increase_total = 1, heal_full = true}})
+		u:add_modification("object", { wml.tag.effect { apply_to  = "hitpoints", increase_total = 1, heal_full = true}})
 	end
 end
 
@@ -177,7 +178,7 @@ end
 
 function training.init_data(cfg)
 	-- in most cases this is already a literal.
-	cfg = helper.literal(cfg)
+	cfg = wml.literal(cfg)
 	training.trainers = wc2_convert.wml_to_lon(cfg, "wct_trainer_list").trainer
 end
 
@@ -255,4 +256,3 @@ function training.describe_bonus(side, traintype)
 end
 
 return training
--->>

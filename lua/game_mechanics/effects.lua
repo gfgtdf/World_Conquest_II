@@ -1,8 +1,6 @@
---<<
-
 local _ = wesnoth.textdomain 'wesnoth-World_Conquest_II'
-helper = wesnoth.require("lua/helper.lua")
-T = wml.tag
+local helper = wesnoth.require("helper")
+local T = wml.tag
 
 local terrain_map = { fungus = "Uft", cave = "Ut", sand = "Dt", 
 	reef = "Wrt", hills = "Ht", swamp_water = "St", shallow_water = "Wst", castle = "Ct",
@@ -13,12 +11,12 @@ local terrain_map = { fungus = "Uft", cave = "Ut", sand = "Dt",
 -- for all attacks that match [filter_attack], it add a dublicate fo that attack and modifres is as describes in the [attack]  subtag which uses the apply_to=attack syntax
 function wesnoth.effects.wc2_optional_attack(u, cfg)
 	local name_suffix = cfg.name_suffix or helper.wml_error("apply_to=wc2_optional_attack missing required name_suffix= attribute.")
-	local attack_mod = helper.get_child(cfg, "attack") or helper.wml_error("apply_to=wc2_optional_attack missing required [attack] subtag")
+	local attack_mod = wml.get_child(cfg, "attack") or helper.wml_error("apply_to=wc2_optional_attack missing required [attack] subtag")
 	local attacks_to_add = {}
 	local names = {}
 	for i = 1, #u.attacks do
 		local attack = u.attacks[i]
-		if attack:matches(helper.get_child(cfg, "filter_attack")) then
+		if attack:matches(wml.get_child(cfg, "filter_attack")) then
 			local new_name = attack.name .. name_suffix
 			local new_attack = attack.__cfg
 			new_attack.name = new_name
@@ -68,12 +66,12 @@ end
 -- Like apply_to=resistance with replace=true, but never decreases resistances.
 function wesnoth.effects.wc2_min_resistance(u, cfg)
 	local resistance_new = {}
-	local resistance_old = helper.parsed(helper.get_child(cfg, "resistance"))
+	local resistance_old = wml.parsed(wml.get_child(cfg, "resistance"))
 	local unit_resistance_cfg = nil
 	for k,v in pairs(resistance_old) do
 		if type(k) == "string" and type(v) == "number" then
 			if not unit_resistance_cfg then
-				unit_resistance_cfg = helper.parsed(helper.get_child(u.__cfg, "resistance"))
+				unit_resistance_cfg = wml.parsed(wml.get_child(u.__cfg, "resistance"))
 			end
 			if unit_resistance_cfg[k] >= v then
 				resistance_new[k] = v
@@ -93,7 +91,7 @@ end
 -- Like apply_to=defense with replace=true, but never decreases defense.
 function wesnoth.effects.wc2_min_defense(u, cfg)
 	local defense_new = {}
-	local defense_old = helper.parsed(helper.get_child(cfg, "defense"))
+	local defense_old = wml.parsed(wml.get_child(cfg, "defense"))
 	for k,v in pairs(defense_old) do
 		if type(k) == "string" and type(v) == "number" and wesnoth.unit_defense(u, terrain_map[k] or "") >= v then
 			defense_new[k] = v
@@ -171,5 +169,3 @@ function wesnoth.effects.wc2_recall_cost(u, cfg)
 	local t = wesnoth.unit_types[u.type]
 	u.recall_cost = math.min(20, t.cost + 3)
 end
-
--->>

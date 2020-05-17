@@ -1,4 +1,5 @@
 
+local helper = wesnoth.require("helper")
 
 globals = {}
 setmetatable(globals, {
@@ -49,4 +50,5 @@ function shallow_copy(t)
 	end
 	return res
 end
+
 wesnoth.dofile("./generator/utilities.lua")

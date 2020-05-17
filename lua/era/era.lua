@@ -1,7 +1,7 @@
---<<
-helper = wesnoth.require("lua/helper.lua")
+local helper = wesnoth.require("helper")
 local on_event = wesnoth.require("on_event")
 local _ = wesnoth.textdomain 'wesnoth-World_Conquest_II'
+
 local wc2_era = {}
 wc2_era.factions_wml = {}
 wc2_era.hero_types = {}
@@ -334,4 +334,3 @@ wc2_utils.menu_item {
 wc2_era.init_era_default()
 
 return wc2_era
--->>

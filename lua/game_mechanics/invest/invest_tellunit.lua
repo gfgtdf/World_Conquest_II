@@ -1,5 +1,6 @@
---<<
 local _ = wesnoth.textdomain 'wesnoth-World_Conquest_II'
+local T = wml.tag
+
 local invest_tellunit = {}
 
 invest_tellunit.dialog_wml = {
@@ -69,4 +70,3 @@ function invest_tellunit.execute(unit_type)
 end
 
 return invest_tellunit
--->>

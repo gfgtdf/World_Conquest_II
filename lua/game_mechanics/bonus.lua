@@ -1,6 +1,7 @@
---<<
 local _ = wesnoth.textdomain 'wesnoth-World_Conquest_II'
 local on_event = wesnoth.require("on_event")
+local helper = wesnoth.require("helper")
+
 local bonus = {}
 bonus.sceneries = {}
 
@@ -54,7 +55,7 @@ function bonus.remove_current_item(ec)
     wesnoth.wml_actions.terrain {
         x = ec.x1,
 		y = ec.y1,
-        T["and"] {
+        wml.tag["and"] {
             terrain = "*^Ecf",
         },
         terrain = "Gs",
@@ -198,13 +199,13 @@ end
 
 function bonus.init_data(cfg)
 	local sceneries = bonus.sceneries
-	local lit = helper.literal(cfg)
-	for k,v in pairs(helper.get_child(lit, "str") or {}) do
+	local lit = wml.literal(cfg)
+	for k,v in pairs(wml.get_child(lit, "str") or {}) do
 		local scenery = sceneries[k] or {}
 		scenery.names = v
 		sceneries[k] = scenery
 	end
-	for k,v in pairs(helper.get_child(lit, "img") or {}) do
+	for k,v in pairs(wml.get_child(lit, "img") or {}) do
 		local scenery = sceneries[k] or {}
 		sceneries[k].image = v
 		sceneries[k] = scenery
@@ -225,5 +226,5 @@ if true then
 		sceneries[k] = scenery
 	end
 end
+
 return bonus
--->>

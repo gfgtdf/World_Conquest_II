@@ -1,6 +1,6 @@
---<<
-local wc2_utils = {}
 local on_event = wesnoth.require("on_event")
+
+local wc2_utils = {}
 
 function wc2_utils.split_to_array(s, res)
 	res = res or {}
@@ -208,6 +208,4 @@ function wc2_utils.get_fstring_all(t)
 	return res
 end
 
-
 return wc2_utils
--->>

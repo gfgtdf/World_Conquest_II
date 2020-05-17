@@ -1,6 +1,7 @@
---<<
-local enemy = {}
 local on_event = wesnoth.require("on_event")
+local helper = wesnoth.require("helper")
+
+local enemy = {}
 
 local function get_advanced_units(level, list, res)
 	res = res or {}
@@ -124,7 +125,7 @@ on_event("recruit", function(ec)
 	end
 	local candidates = wesnoth.get_locations {
 		terrain = "K*,C*,*^C*,*^K*",
-		T["and"] {
+		wml.tag["and"] {
 			wml.tag.filter {
 				canrecruit = true,
 				side = side_num,
@@ -137,7 +138,7 @@ on_event("recruit", function(ec)
 				terrain = "K*^*,C*^*,*^K*,*^C*",
 			},
 		},
-		T["not"] {
+		wml.tag["not"] {
 			wml.tag.filter {}
 		}
 	}
@@ -279,5 +280,5 @@ function wesnoth.wml_actions.wc2_enemy(cfg)
 		wesnoth.set_side_variable(side_num, "wc2.random_items", 1)
 	end
 end
+
 return enemy
--->>

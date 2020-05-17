@@ -1,5 +1,5 @@
---<<
 local _ = wesnoth.textdomain 'wesnoth-World_Conquest_II'
+local T = wml.tag
 
 local function GUI_FORCE_WIDGET_MINIMUM_SIZE(w,h, content)
 	return T.stacked_widget {
@@ -709,4 +709,3 @@ return {
 		}
 	}
 }
--->>

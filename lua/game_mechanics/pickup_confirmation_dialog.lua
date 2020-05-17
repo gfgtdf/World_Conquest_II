@@ -1,5 +1,5 @@
---<<
 local _ = wesnoth.textdomain 'wesnoth-World_Conquest_II'
+local T = wml.tag
 
 local pickup_confirmation_dialog = {}
 
@@ -96,4 +96,3 @@ function pickup_confirmation_dialog.promt_synced(unit, item_image)
 end
 
 return pickup_confirmation_dialog
--->>

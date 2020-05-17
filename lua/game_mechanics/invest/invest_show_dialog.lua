@@ -1,4 +1,3 @@
---<<
 local _ = wesnoth.textdomain 'wesnoth-World_Conquest_II'
 
 local dialog_wml = wc2_invest_dialog
@@ -175,5 +174,5 @@ function wc2_show_invest_dialog(args)
 		end
 	end
 end
+
 return wc2_show_invest_dialog
--->>

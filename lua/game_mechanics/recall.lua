@@ -1,5 +1,3 @@
---<<
-
 local function add_rc_object(u)
 	if not u.variables.wc2_has_recall_object then
 		u.variables.wc2_has_recall_object = true
@@ -16,5 +14,3 @@ function wesnoth.wml_actions.wc2_set_recall_cost(cfg)
 		add_rc_object(u)
 	end
 end
-
--->>

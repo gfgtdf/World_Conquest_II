@@ -1,9 +1,7 @@
---<<
 -- The addons own 'pick your advances' mod. 
 -- Works independed from the reset of the wc2 code (but needs wc2_utils.lua)
 local on_event = wesnoth.require("on_event")
 local _ = wesnoth.textdomain 'wesnoth-World_Conquest_II'
-local t = wml.tag
 local pick_advance = {}
 
 local strings = {
@@ -44,11 +42,11 @@ function wesnoth.wml_actions.wc2_pya_pick(cfg)
 		x=cfg.x,
 		y=cfg.y,
 		message= wesnoth.format(str_advancer_option, {name  = current_name}),
-		T.option {
+		wml.tag.option {
 			label = _"Random",
 			image = wc2_color.tc_image("units/unknown-unit.png"),
-			T.command {
-				T.wc2_pya_set_pick {
+			wml.tag.command {
+				wml.tag.wc2_pya_set_pick {
 					x=cfg.x,
 					y=cfg.y,
 				}
@@ -57,11 +55,11 @@ function wesnoth.wml_actions.wc2_pya_pick(cfg)
 	}
 	for i,v in ipairs(options) do
 		local ut = wesnoth.unit_types[v]
-		table.insert(message_wml, T.option {
+		table.insert(message_wml, wml.tag.option {
 			label = ut.name,
 			image = wc2_color.tc_image(ut.image),
-			T.command {
-				T.wc2_pya_set_pick {
+			wml.tag.command {
+				wml.tag.wc2_pya_set_pick {
 					x=cfg.x,
 					y=cfg.y,
 					pick=v,
@@ -92,4 +90,3 @@ wc2_utils.menu_item {
 }
 
 return pick_advance
--->>

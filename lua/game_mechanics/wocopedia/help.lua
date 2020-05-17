@@ -1,4 +1,3 @@
---<<
 local _ = wesnoth.textdomain 'wesnoth-World_Conquest_II'
 local dialog = wc2_wiki_dialog
 
@@ -273,5 +272,3 @@ wc2_utils.menu_item {
 		}
 	end
 }
-
--->>

@@ -1,4 +1,3 @@
---<<
 local color = {}
 
 function color.to_pango_string(c)
@@ -59,4 +58,3 @@ function wesnoth.wml_actions.wc2_fix_colors(cfg)
 end
 
 return color
--->>

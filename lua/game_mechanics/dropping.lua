@@ -1,4 +1,3 @@
---<<
 -- general code related to dropping items, code taken from 'scenario with robots' add-on.
 -- todo: maybe we coudl mainline this and merge it with the iterms.lua code ( this means
 -- adding a mainline "pickup item" event that fires when a unit steops on an [item] and
@@ -103,10 +102,10 @@ wesnoth.persistent_tags.wc2_dropping.write = function(add)
 	for i,v in pairs(dropping.field_data) do
 		local x,y = dropping.index_to_loc(i)
 		for i2,v2 in ipairs(v) do
-			table.insert(res, T.item {
+			table.insert(res, wml.tag.item {
 				x = x,
 				y = y,
-				T.data (v2)
+				wml.tag.data (v2)
 			})
 		end
 	end		
@@ -154,6 +153,4 @@ on_event("preload", function()
 	end
 end)
 
-
 return dropping
--->>
