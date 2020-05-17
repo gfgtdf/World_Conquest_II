@@ -6,7 +6,6 @@ local wc2_heroes = {}
 -- an array of wml tables, usually containing type,
 wc2_heroes.commander_overlay = "misc/wct-commander.png"
 wc2_heroes.hero_overlay = "misc/hero-icon.png"
-wc2_heroes.hero_types = {}
 wc2_heroes.dialogues = {}
 wc2_heroes.trait_heroic = nil
 wc2_heroes.trait_expert = nil
@@ -26,15 +25,6 @@ function wc2_heroes.init_data(cfg)
 	cfg = wml.literal(cfg)
 	wc2_heroes.trait_heroic = wml.get_child(wml.get_child(cfg, "trait_heroic"), "trait")
 	wc2_heroes.trait_expert = wml.get_child(wml.get_child(cfg, "trait_expert"), "trait")
-end
-
-function wc2_heroes.experience_penalty()
-	return {
-		wml.tag.effect {
-			apply_to = "max_experience",
-			increase = wml.variables["wc2_difficulty.experience_penalty"] .. "%",
-		}
-	}
 end
 
 function wc2_heroes.commander_overlay_object()

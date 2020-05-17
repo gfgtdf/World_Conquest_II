@@ -52,6 +52,7 @@ end
 
 function bonus.remove_current_item(ec)
 	wc2_dropping.remove_current_item()
+	--TODO: i don't think its worth to keep this code, to alos allow bonus points to use terrains instead of overlays.
     wesnoth.wml_actions.terrain {
         x = ec.x1,
 		y = ec.y1,

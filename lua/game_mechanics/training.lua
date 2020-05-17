@@ -5,7 +5,7 @@ local helper = wesnoth.require("helper")
 
 local training = {}
 
-function training.get_chanches(trainer, grade)
+function training.get_chances(trainer, grade)
 	return training.trainers[trainer].grade[grade + 1].chance
 end
 
@@ -198,7 +198,7 @@ function training.apply(u)
 	trait.generate_description = false
 	for i, trainer in ipairs(training.trainers) do
 		local level = training.get_level(side, i) or 0
-		for unused, chance in ipairs(training.get_chanches(i, level)) do
+		for unused, chance in ipairs(training.get_chances(i, level)) do
 			--some effects use expressions like $(5+{GRADE}) so we want variable_substitution there
 			local vchance = wesnoth.tovconfig(chance)
 			local filter = wml.get_child(vchance, "filter")
@@ -221,6 +221,7 @@ function training.apply(u)
 	u.variables.wc2_trained = true
 	u.hitpoints = u.max_hitpoints
 end
+
 function wesnoth.wml_actions.wc2_apply_training(cfg)
 	for i,u in ipairs(wesnoth.get_units(cfg)) do
 		training.apply(u)

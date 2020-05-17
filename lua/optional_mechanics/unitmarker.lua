@@ -1,6 +1,7 @@
 local on_event = wesnoth.require("on_event")
 local _ = wesnoth.textdomain 'wesnoth-World_Conquest_II'
-local t = wml.tag
+local wc2_utils = wesnoth.require("./../game_mechanics/utils.lua")
+
 
 local img_is_special_overlays = {
 	"misc/is_special.png"
