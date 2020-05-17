@@ -21,13 +21,13 @@ on_event("die", function(cx)
 	if commander then
 		commander.canrecruit = true
 		commander:remove_modifications({ id = "wc2_commander_overlay" })
-		wesnoth.wml_actions.wc2_message {
+		wesnoth.wml_actions.message {
 			id = commander.id,
 			message = strings.promotion
 		}
 	else
 		if u.side < 4 then
-			wesnoth.wml_actions.wc2_message {
+			wesnoth.wml_actions.message {
 				side = "1,2,3",
 				message = strings.defeat
 			}

@@ -156,7 +156,7 @@ end
 
 function bonus.found_hero(ec, herotype)
 	local finder = wesnoth.get_unit(ec.x1, ec.y1)
-	wesnoth.wml_actions.wc2_message {
+	wesnoth.wml_actions.message {
 		x = ec.x1,
 		y = ec.y1,
 		message = _"Someone is here!",
@@ -188,7 +188,7 @@ function bonus.found_training(side_num, suggested_subtype, ec)
 	if traintype == nil then
 		return false
 	end
-	wesnoth.wml_actions.wc2_message {
+	wesnoth.wml_actions.message {
 		x = ec.x1,
 		y = ec.y1,
 		message = _"Someone is here!",

@@ -100,7 +100,7 @@ end
 -- prints the dialoge when @finder finds @found from a unit type, both parameters are lua unit objects.
 function wc2_heroes.founddialouge(finder, found)
 	local type_dialogue = wc2_heroes.find_dialogue(found.type)
-	wesnoth.wml_actions.wc2_message {
+	wesnoth.wml_actions.message {
 		id = found.id,
 		message = type_dialogue.founddialogue,
 	}
@@ -114,7 +114,7 @@ function wc2_heroes.founddialouge(finder, found)
 			reply = alt_replay.reply
 		end
 	end
-	wesnoth.wml_actions.wc2_message {
+	wesnoth.wml_actions.message {
 		id = finder.id,
 		message = reply,
 	}

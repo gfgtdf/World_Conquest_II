@@ -117,7 +117,7 @@ on_event("wc2_drop_pickup", function(ec)
 	local filter = artifacts.list[index].filter
 	if filter and not unit:matches(filter) then
 		if is_human then
-			wesnoth.wml_actions.wc2_message {
+			wesnoth.wml_actions.message {
 				id = unit.id,
 				message = _"I cannot pick up that item.",
 			}
