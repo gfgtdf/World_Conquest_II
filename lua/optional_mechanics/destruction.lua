@@ -21,29 +21,14 @@ local function wct_map_custom_ruin_village(loc)
 		filter.y = cx.y1
 		return wesnoth.get_locations({ x = loc[1], y = loc[2], terrain = filter}) > 0
 	end
-	if matches_terrain("*^Vya,*^Vyaa") then
-		wesnoth.set_terrain(loc, "*^Vyar", "overlay")
-	end
-	if matches_terrain("*^Vyb,*^Vyba") then
-		wesnoth.set_terrain(loc, "*^Vybr", "overlay")
-	end
-	if matches_terrain("*^Vyc,*^Vyca") then
-		wesnoth.set_terrain(loc, "*^Vycr", "overlay")
-	end
-	if matches_terrain("*^Vyd,*^Vyda") then
-		wesnoth.set_terrain(loc, "*^Vydr", "overlay")
-	end
-	if matches_terrain("*^Vza,*^Vzaa") then
-		wesnoth.set_terrain(loc, "*^Vzar", "overlay")
-	end
-	if matches_terrain("*^Vzb,*^Vzba") then
-		wesnoth.set_terrain(loc, "*^Vzbr", "overlay")
-	end
-	if matches_terrain("*^Vzc,*^Vzca") then
-		wesnoth.set_terrain(loc, "*^Vzcr", "overlay")
+	-- TODO: enable once https://github.com/wesnoth/wesnoth/issues/4894 is fixed.
+	if false then
+		if matches_terrain("*^Vh,*^Vha") then
+			wesnoth.set_terrain(loc, "*^Vhr", "overlay")
 		end
-	if matches_terrain("*^Vzd,*^Vzda") then
-		wesnoth.set_terrain(loc, "*^Vzdr", "overlay")
+		if matches_terrain("*^Vhc,*^Vhca") then
+			wesnoth.set_terrain(loc, "*^Vhr", "overlay")
+		end
 	end
 end
 
@@ -60,7 +45,7 @@ on_event("die", function(cx)
 	if wml.variables.wc2_config_enable_terrain_destruction == false then
 		return
 	end
-	if not matches_terrain("K*^*,C*^*,*^Fet,G*^F*,G*^Uf,A*,*^Effy,*^B*,Rrc,Iwr,*^Vhh,*^Vy*,*^Vz*,*^Fz*") then
+	if not matches_terrain("K*^*,C*^*,*^Fet,G*^F*,G*^Uf,A*,*^B*,Rrc,Iwr,*^Vhh,*^Vh*,*^Fda*") then
 		return
 	end
 	local function item(image)
@@ -103,8 +88,6 @@ on_event("die", function(cx)
 		item(snow[wesnoth.random(#snow)])
 	elseif matches_terrain("Ai") then
 		item(ice[wesnoth.random(#ice)])
-	elseif matches_terrain("Gg^Effy,Gs^Effy,Gd^Effy,Gll^Effy") then
-		wesnoth.set_terrain(loc, "*^Effz", "overlay")
 	elseif matches_terrain("Ww^Bsb|,Ww^Bsb/,Ww^Bsb\\,Wwt^Bsb|,Wwt^Bsb/,Wwt^Bsb\\,Wwg^Bsb|,Wwg^Bsb/,Wwg^Bsb\\") then
 		wesnoth.set_terrain(loc, "Wwf^Edt")
 		wesnoth.play_sound("water-blast.wav")
@@ -127,13 +110,16 @@ on_event("die", function(cx)
 		}
 		item("scenery/trash.png")
 		wesnoth.set_terrain(loc, "Iwr^Edt")
-	elseif matches_terrain("*^Vy*,*^Vz*,*^Fz*") then
+	elseif matches_terrain("*^Vh,**^Vhc,*^Vha,**^Vhca,*^Fda") then
 		wct_map_custom_ruin_village(loc)
 		if matches_terrain("Ch^V*") then
 			wesnoth.set_terrain(loc, "Chr", "base")
 		end
-		if matches_terrain("*^Fzg,*^Fzh,*^Fzi,*^Fzj,*^Fzk") then
-			wesnoth.set_terrain(loc, wesnoth.get_terrain(loc) .. "u", "overlay")
+		--  TODO: enable once https://github.com/wesnoth/wesnoth/issues/4894 is fixed.
+		if false then
+			if matches_terrain("*^Fda") then
+				wesnoth.set_terrain(loc, "*^Fdw", "overlay")
+			end
 		end
 	else
 		if matches_terrain("*^Vhh,*^Vhha") then
