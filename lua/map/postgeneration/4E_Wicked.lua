@@ -364,9 +364,6 @@ function world_conquest_tek_map_repaint_4e()
 	}
 
 	local r = "Gs^Fp,Gs^Fms,Gs^Fds,Gs^Ft,Gs^Ft,Gs^Ftp,Gs^Ftr,Gs^Ftd,Gs^Fet"
-	if wesnoth.get_variable("wct.custom_terrain") then
-		r = "Gs^Fp,Gs^Fms,Gs^Fds,Gs^Fyt,Gs^Ft,Gs^Ftp,Gs^Ftr,Gs^Ftd,Gs^Fet"
-	end
 	r = helper.rand(r)
 	set_terrain { r,
 		f.all(
@@ -379,9 +376,6 @@ function world_conquest_tek_map_repaint_4e()
 	}
 
 	local r = "Gs^Fp,Gs^Fms,Gs^Fds,Gs^Ftp,Gs^Ft,Gs^Ftp,Gs^Ftr,Gs^Ftd,Gs^Fet,Gs^Fts,Gs^Fts,Gs^Ft,Gs^Ft,Gs^Ftd,Gs^Fp"
-	if wesnoth.get_variable("wct.custom_terrain") then
-		r = "Gs^Fp,Gs^Fms,Gs^Fds,Gs^Fyt,Gs^Ft,Gs^Ftp,Gs^Ftr,Gs^Ftd,Gs^Fet,Gs^Fts,Gs^Fts,Gs^Fyt,Gs^Ft,Gs^Ftd,Gs^Fp"
-	end
 	r = helper.rand(r)
 	set_terrain { r,
 		f.all(

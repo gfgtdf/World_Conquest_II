@@ -145,17 +145,6 @@ function world_conquest_tek_map_decoration_3a()
 	set_terrain { "Gs^Ft",
 		f.terrain("*^Fet"),
 	}
-
-	-- old tropical forest instead savannah near swamp
-	if wesnoth.get_variable("wct.custom_terrain") then
-		set_terrain { "*^Fyt",
-			f.all(
-				f.terrain("G*^Fts"),
-				f.adjacent(f.terrain("Ss"))
-			),
-			layer = "overlay",
-		}
-	end
 end
 
 function wct_castle_swamp_bridge(bridge, directions ,terrain)

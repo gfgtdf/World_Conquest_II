@@ -202,16 +202,6 @@ function wct_map_3f_post_bunus_decoration(bonus_points)
 		fraction_rand = "40..100",
 	}
 
-	-- chance of old tropical forest in high flat
-	if wesnoth.get_variable("wct.custom_terrain") and wesnoth.random(4) == 1 then
-		set_terrain { "Gd^Fyt",
-			f.all(
-				f.terrain("Gd^Ftr"),
-				f.adjacent(f.terrain("S*^*,W*^*"), nil, 0)
-			),
-			fraction_rand = "1..5",
-		}
-	end
 	-- fix grass generated (used to mark altitude)
 	set_terrain { "Gg",
 		f.terrain("Gs^*"),
