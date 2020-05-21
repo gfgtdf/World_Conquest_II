@@ -1,21 +1,22 @@
 A describtion of this addons code:
 
-This addon mkae a lot use of lua whever possible, even, [side] definions
-were moved to lua by using scenario_generation=lua, that by the [mulitplayer]
+This addon makes a lot use of lua wherever possible, even, [side] definitions
+were moved to lua by using scenario_generation=lua, that by the [multiplayer]
 tags are nearly empty. One of the main advantage of this is that this addon
-doesn't increase the wesnoth parsing time,  also i just fiond lua easier to
-read and much easier to debug.
+doesn't increase the wesnoth parsing time,  also i just found lua easier to
+read and much easier to debug since it gives better error messages, and doesn’t
+require reloading the cache after changes were made.
 
-The directoy is organizes as follows:
+The directory is organized as follows:
 
 ./lua/map :
 the files in ./lua/map contain the code that generate the content of the
-[multiplayer] tag, in particular [side] definions, [event]s, map_data and
-[load_ressource]. The biggest part of the scenario is the map generation,
-Worl conquestII map genertion works as follows, first we run the wesnoth 
-default mpa generator (here: the files in lua/map/generator), then we run
+[multiplayer] tag, in particular [side] definitions, [event]s, map_data and
+[load_resource]. The biggest part of the scenario is the map generation,
+World conquest II map generation works as follows, first we run the wesnoth 
+default map generator (here: the files in lua/map/generator), then we run
 a custom lua scrips to fix it up (lua/map/postgeneration). For each
-scenario there ia a fixed set of generator+postgenerator pairs defeined in
+scenario there ia a fixed set of generator+postgenerator pairs defined in
 lua/map/scenarios for each scenario.
 
 ./lua/shared_utils :
@@ -23,25 +24,25 @@ libraries and helper functions that are used by both the map editor and
 during the actual game.
 
 ./lua/optional_mechanics :
-A few lua machnics that works independends on the rest of the world conquest
-ii code.
+A few lua mechanics that works independent on the rest of the world conquest
+II code.
 
 ./lua/era :
-the code for the wxii era, this is in particular the recuitment in pair
+the code for the WCII era, this is in particular the recruitment in pair
 function. And delivering wc2 data that depends on the current era (for
-example which heros should be available for which faction)
+example which heroes should be available for which faction)
 
 ./lua/game_mechanics :
-THe lau code that implementes the custom game meachnics of wcii, that is
-the dropping system, the invest system, the training system, wcii
-specific abilities, the ponus points system
+The lua code that implements the custom game mechanics of WCII, that is:
+The dropping system, the invest system, the training system, WCII
+specific abilities, the bonus points system
 
 ./lua/campaign :
-The code specfic to the wc2 campaign: the difficulcies, viectory conditions,
+The code specific to the wc2 campaign: the difficulties, victory conditions,
 enemy spawns etc.
 
 ./utils/gameplay :
-the traing and artifact definitions
+the training and artifact definitions
 
 ./utils/era :
-The factions of the wcii era.
+The factions of the WCII era.
