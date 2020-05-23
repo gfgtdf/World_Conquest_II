@@ -186,7 +186,7 @@ function wesnoth.wml_actions.wc2_show_wocopedia(cfg)
 			wesnoth.add_dialog_tree_node("artifact_list", -1, "details")
 			wesnoth.set_dialog_text(str_des_items, "details", desc_index, "desc")
 
-			for i, artifact in ipairs(wc2_artifacts.list) do
+			for i, artifact in ipairs(wc2_artifacts.get_artifact_list()) do
 				local artifact_icon = artifact.icon or ""
 				local artifact_name = artifact.name or ""
 				local artifact_desc = artifact.description or ""

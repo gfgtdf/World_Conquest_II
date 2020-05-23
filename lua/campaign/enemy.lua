@@ -30,7 +30,7 @@ function enemy.pick_suitable_enemy_item(unit)
 	-- list of indexes to enemy_items
 	local possible_artifacts = {}
 	for i, v in ipairs(enemy_items) do
-		local filter = wml.get_child(wc2_artifacts.list[tonumber(v)], "filter")
+		local filter = wml.get_child(wc2_artifacts.get_artifact(tonumber(v)), "filter")
 		if not filter or unit:matches(filter) then
 			table.insert(possible_artifacts, i)
 		end

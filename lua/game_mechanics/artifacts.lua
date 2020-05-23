@@ -18,12 +18,21 @@ function artifacts.color_help(str)
 	return "<span color='#ff95ff'>" .. str .. "</span>"
 end
 
+function artifacts.get_artifact(id)
+	return artifacts.list[id]
+end
+
+function artifacts.get_artifact_list()
+	return artifacts.list
+end
+
 function artifacts.drop_message(index)
+	local aftifact_data = artifacts.get_artifact(index)
 	wesnoth.wml_actions.message {
 		speaker = "narrator",
-		caption = artifacts.list[index].name,
-		message = artifacts.list[index].info .. "\n" .. artifacts.color_bonus(artifacts.list[index].description),
-		image = artifacts.list[index].icon,
+		caption = aftifact_data.name,
+		message = aftifact_data.info .. "\n" .. artifacts.color_bonus(aftifact_data.description),
+		image = aftifact_data.icon,
 	}
 end
 
@@ -32,28 +41,29 @@ end
 function artifacts.place_item(x, y, index)
 	wc2_dropping.add_item(x, y, {
 		wc2_atrifact_id = index,
-		image = artifacts.list[index].icon,
+		image = artifacts.get_artifact(index).icon,
 		z_order = 20,
 	})
 end
 
 -- give te item with id @a index to unit @a unit, set @a visualize=true, to show the item pickup animation.
 function artifacts.give_item(unit, index, visualize)
+	local aftifact_data = artifacts.get_artifact(index)
 	if visualize then
 		-- play visual/sound effects if item have any
 		wesnoth.wml_actions.sound {
-			name = artifacts.list[index].sound or ""
+			name = aftifact_data.sound or ""
 		}
 		if unit.gender == "male" then
 			wesnoth.wml_actions.sound {
-				name = artifacts.list[index].sound_male or ""
+				name = aftifact_data.sound_male or ""
 			}
-			else
+		else
 			wesnoth.wml_actions.sound {
-				name = artifacts.list[index].sound_female or ""
+				name = aftifact_data.sound_female or ""
 			}
 		end
-		for i, animate_unit in ipairs(artifacts.list[index].animate_unit) do
+		for i, animate_unit in ipairs(aftifact_data.animate_unit) do
 			wesnoth.wml_actions.animate_unit(animate_unit)
 		end
 	end
@@ -84,7 +94,7 @@ function artifacts.give_item(unit, index, visualize)
 	--       One of the reasons why i currently won't do this is to make the artifacts list
 	--       more flixible: the suggested approach requires that artifacts are loaded before
 	--       units are created which means artifacts must be loaded at toplevel [lua] tags
-	for i, effect in ipairs(artifacts.list[index].effect) do
+	for i, effect in ipairs(aftifact_data.effect) do
 		table.insert(object, wml.tag.effect (effect) )
 	end
 	unit:add_modification("object", object)
@@ -114,7 +124,7 @@ on_event("wc2_drop_pickup", function(ec)
 	
 
 	local index = item.wc2_atrifact_id
-	local filter = artifacts.list[index].filter
+	local filter = artifacts.get_artifact(index).filter
 	if filter and not unit:matches(filter) then
 		if is_human then
 			wesnoth.wml_actions.message {
@@ -126,7 +136,7 @@ on_event("wc2_drop_pickup", function(ec)
 	end
 
 	if is_human and not wml.variables["wc2_config_disable_pickup_confirm"] then
-		if not wc2_pickup_confirmation_dialog.promt_synced(unit, artifacts.list[index].icon) then
+		if not wc2_pickup_confirmation_dialog.promt_synced(unit, artifacts.get_artifact(index).icon) then
 			return
 		end
 	end
@@ -140,7 +150,7 @@ end)
 -- returns a list of artifact ids, suitable for  the give type ('enemy' for example).
 function artifacts.fresh_artifacts_list(for_type)
 	local res = {} 
-	for i,v in ipairs(wc2_artifacts.list) do
+	for i,v in ipairs(artifacts.get_artifact_list()) do
 		if not for_type or not wc2_utils.split_to_set(v.not_available or "")[for_type] then
 			table.insert(res, i)
 		end
@@ -188,7 +198,7 @@ function wesnoth.wml_actions.wc2_show_item_info(cfg)
 	local y = cfg.y
 	for i,item in ipairs(wc2_dropping.get_entries_at_readonly(x,y)) do
 		if item.wc2_atrifact_id then
-			local artifact_info = artifacts.list[item.wc2_atrifact_id]
+			local artifact_info = artifacts.get_artifact(item.wc2_atrifact_id)
 			wesnoth.wml_actions.message {
 				scroll = false,
 				image = artifact_info.icon,

@@ -22,7 +22,7 @@ end
 
 function wc2_invest.initialize()
 	local all_items = {}
-	for i,v in ipairs(wc2_artifacts.list) do
+	for i,v in ipairs(wc2_artifacts.get_artifact_list()) do
 		local not_available = wc2_utils.split_to_set(v.not_available or "")
 		if not not_available["player"] then
 			table.insert(all_items, i)

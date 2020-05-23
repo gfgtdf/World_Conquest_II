@@ -38,7 +38,7 @@ function wc2_show_invest_dialog_impl(args)
 			wesnoth.set_dialog_value(true, "left_tree", cati_current)
 			wesnoth.set_dialog_value(_ "Artifacts", "left_tree", cati_current, "category_name")
 			for i,v in ipairs(available_artifacts) do
-				local artifact_info = wc2_artifacts.list[tonumber(v)]
+				local artifact_info = wc2_artifacts.get_artifact(tonumber(v))
 				if not artifact_info then
 					error("invalid item id'" .. v .. "'")
 				end
