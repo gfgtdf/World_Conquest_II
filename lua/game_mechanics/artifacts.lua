@@ -10,14 +10,6 @@ function artifacts.init_data(cfg)
 	artifacts.list = wc2_convert.wml_to_lon(wml.literal(cfg), "wct_artifact_list").artifact
 end
 
-function artifacts.color_bonus(str)
-	return "<span color='#ff75ff'>" .. str .. "</span>"
-end
-
-function artifacts.color_help(str)
-	return "<span color='#ff95ff'>" .. str .. "</span>"
-end
-
 function artifacts.get_artifact(id)
 	return artifacts.list[id]
 end
@@ -31,7 +23,7 @@ function artifacts.drop_message(index)
 	wesnoth.wml_actions.message {
 		speaker = "narrator",
 		caption = aftifact_data.name,
-		message = aftifact_data.info .. "\n" .. artifacts.color_bonus(aftifact_data.description),
+		message = aftifact_data.info .. "\n" .. wc2_color.bonus_text(aftifact_data.description),
 		image = aftifact_data.icon,
 	}
 end
@@ -203,7 +195,7 @@ function wesnoth.wml_actions.wc2_show_item_info(cfg)
 				scroll = false,
 				image = artifact_info.icon,
 				caption = artifact_info.name,
-				message= artifact_info.info .. "\n" .. artifacts.color_help(artifact_info.description),
+				message= artifact_info.info .. "\n" .. wc2_color.help_text(artifact_info.description),
 			}
 		end
 	end
