@@ -6,8 +6,14 @@ local _ = wesnoth.textdomain 'wesnoth-World_Conquest_II'
 local artifacts = {}
 artifacts.list = {}
 
-function artifacts.init_data(cfg)
-	artifacts.list = wc2_convert.wml_to_lon(wml.literal(cfg), "wct_artifact_list").artifact
+function artifacts.add_artifact_data(a)
+	table.insert(artifacts.list, a)
+end
+
+function artifacts.read_wml_data(cfg)
+	for i, artifact in ipairs(wc2_convert.wml_to_lon(wml.literal(cfg), "wct_artifact_list").artifact or {}) do
+		artifacts.add_artifact_data(artifact)
+	end
 end
 
 function artifacts.get_artifact(id)
@@ -17,6 +23,7 @@ end
 function artifacts.get_artifact_list()
 	return artifacts.list
 end
+
 
 function artifacts.drop_message(index)
 	local aftifact_data = artifacts.get_artifact(index)
