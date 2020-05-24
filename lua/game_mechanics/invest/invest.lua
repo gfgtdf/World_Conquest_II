@@ -4,20 +4,23 @@ local _ = wesnoth.textdomain 'wesnoth-World_Conquest_II'
 local wc2_invest = {}
 
 function wc2_invest.add_items(side_num, num_items)
-	local items_left = wc2_utils.split_to_array(wesnoth.get_side_variable(side_num, "wc2.items_left"))
-	local items_available = wc2_utils.split_to_array(wesnoth.get_side_variable(side_num, "wc2.items"))
+	local side = wesnoth.sides[side_num]
+	local items_left = wc2_utils.split_to_array(side.variables["wc2.items_left"])
+	local items_available = wc2_utils.split_to_array(side.variables["wc2.items"])
 	for j = 1, num_items do
 		local i = wesnoth.random(#items_left)
 		table.insert(items_available, items_left[i])
 		table.remove(items_left, i)
 	end
-	wesnoth.set_side_variable(side_num, "wc2.items_left", table.concat(items_left, ","))
-	wesnoth.set_side_variable(side_num, "wc2.items", table.concat(items_available, ","))
+
+	side.variables["wc2.items_left"] = table.concat(items_left, ",")
+	side.variables["wc2.items"] = table.concat(items_available, ",")
 end
 
 
 function wc2_invest.has_items(side_num)
-	return wesnoth.get_side_variable(side_num, "wc2.items") ~= nil
+	local side = wesnoth.sides[side_num]
+	return side.variables["wc2.items"] ~= nil
 end
 
 function wc2_invest.initialize()
@@ -32,7 +35,7 @@ function wc2_invest.initialize()
 	for side_num, side in ipairs(wesnoth.sides) do
 		if wc2_scenario.is_human_side(side_num) then
 			if not wc2_invest.has_items(side_num) then
-				wesnoth.set_side_variable(side_num, "wc2.items_left", table.concat(all_items, ","))
+				side.variables["wc2.items_left"] = table.concat(all_items, ",")
 				wc2_invest.add_items(side_num, 9)
 			else
 				wc2_invest.add_items(side_num, 1)				
@@ -64,14 +67,15 @@ end
 
 function wc2_invest.do_hero(t, is_local)
 	local side_num = wesnoth.current.side
+	local side = wesnoth.sides[side_num]
 	local leaders = wesnoth.get_units { side = side_num, canrecruit = true }
 	local x,y = leaders[1].x, leaders[1].y
 	if t == "wc2_commander" then
-		local commanders = wc2_utils.split_to_array(wesnoth.get_side_variable(side_num, "wc2.commanders"))
+		local commanders = wc2_utils.split_to_array(side.variables["wc2.commanders"])
 		local i = wesnoth.random(#commanders)
 		t = commanders[i]
 		table.remove(commanders, i)
-		wesnoth.set_side_variable(side_num, "wc2.commanders", table.concat(commanders, ","))
+		side.variables["wc2.commanders"] = table.concat(commanders, ",")
 		if is_local then
 			wc2_invest_tellunit.execute(t)
 		end
@@ -80,23 +84,23 @@ function wc2_invest.do_hero(t, is_local)
 
 		wesnoth.sides[side_num].gold = wesnoth.sides[side_num].gold + 15
 
-		local deserters = wc2_utils.split_to_array(wesnoth.get_side_variable(side_num, "wc2.deserters"))
+		local deserters = wc2_utils.split_to_array(side.variables["wc2.deserters"])
 		local i = wesnoth.random(#deserters)
 		t = deserters[i]
 		table.remove(deserters, i)
-		wesnoth.set_side_variable(side_num, "wc2.deserters", table.concat(deserters, ","))
+		side.variables["wc2.deserters"] = table.concat(deserters, ",")
 		if is_local then
 			wc2_invest_tellunit.execute(t)
 		end
 		wc2_heroes.place(t, side_num, x, y, false)
 	else
-		local heroes_available = wc2_utils.split_to_array(wesnoth.get_side_variable(side_num, "wc2.heroes"))
+		local heroes_available = wc2_utils.split_to_array(side.variables["wc2.heroes"])
 		local i = find_index(heroes_available, t)
 		if i == nil then
 			error("wc2 invest: invalid pick")
 		end
 		table.remove(heroes_available, i)
-		wesnoth.set_side_variable(side_num, "wc2.heroes",table.concat(heroes_available, ","))
+		side.variables["wc2.heroes"] = table.concat(heroes_available, ",")
 		wc2_heroes.place(t, side_num, x, y, false)
 	end
 	
@@ -109,26 +113,28 @@ end
 
 function wc2_invest.do_item(t)
 	local side_num = wesnoth.current.side
+	local side = wesnoth.sides[side_num]
 	local leaders = wesnoth.get_units { side = side_num, canrecruit = true }
 	local x,y = leaders[1].x, leaders[1].y
 	
-	local items_available = wc2_utils.split_to_array(wesnoth.get_side_variable(side_num, "wc2.items"), {}, tonumber)
+	local items_available = wc2_utils.split_to_array(side.variables["wc2.items"], {}, tonumber)
 	local i = find_index(items_available, tostring(t))
 	if i == nil then
 		error("wc2 invest: invalid item pick '" .. t .. "' (" .. type(t) ..")")
 	end
 	table.remove(items_available, i)
-	wesnoth.set_side_variable(side_num, "wc2.items",table.concat(items_available, ","))
+	side.variables["wc2.items"] = table.concat(items_available, ",")
 
 	wc2_artifacts.place_item(x, y + 1, t)
 end
 
 function wc2_invest.invest()
 	local side_num = wesnoth.current.side
-	local items_available = wc2_utils.split_to_array(wesnoth.get_side_variable(side_num, "wc2.items"))
-	local heroes_available = wc2_utils.split_to_array(wesnoth.get_side_variable(side_num, "wc2.heroes"))
-	local commanders_available = wc2_utils.split_to_array(wesnoth.get_side_variable(side_num, "wc2.commanders"))
-	local deserters_available = wc2_utils.split_to_array(wesnoth.get_side_variable(side_num, "wc2.deserters"))
+	local side = wesnoth.sides[side_num]
+	local items_available = wc2_utils.split_to_array(side.variables["wc2.items"])
+	local heroes_available = wc2_utils.split_to_array(side.variables["wc2.heroes"])
+	local commanders_available = wc2_utils.split_to_array(side.variables["wc2.commanders"])
+	local deserters_available = wc2_utils.split_to_array(side.variables["wc2.deserters"])
 	local trainings_available = wc2_training.list_available(side_num, {2,3,4,5,6})
 	local gold_available = true
 	for i =1,2 do

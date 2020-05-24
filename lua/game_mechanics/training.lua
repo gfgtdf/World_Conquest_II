@@ -19,12 +19,12 @@ end
 
 
 --the current level of a certain traing, a value of 0 means this skill wasn't trained yet.
-function training.get_level(side, trainer)
-	return wesnoth.get_side_variable(side, "wc2.training[" .. trainer - 1 .. "].level") or 0
+function training.get_level(side_num, trainer)
+	return wesnoth.sides[side_num].variables["wc2.training[" .. trainer - 1 .. "].level"] or 0
 end
 
-function training.set_level(side, trainer, level)
-	wesnoth.set_side_variable(side, "wc2.training[" .. trainer - 1 .. "].level", level)
+function training.set_level(side_num, trainer, level)
+	wesnoth.sides[side_num].variables["wc2.training[" .. trainer - 1 .. "].level"] = level
 end
 
 function training.inc_level(side, trainer, level)

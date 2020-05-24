@@ -52,12 +52,13 @@ on_event("recruit", function(ec)
 		--the old code also didn't gave items on first turn.
 		return
 	end
-	local needs_item = wesnoth.get_side_variable(wesnoth.current.side, "wc2.random_items") or 0
+	local side_variables = wesnoth.sides[wesnoth.current.side].variables
+	local needs_item = side_variables["wc2.random_items"] or 0
 	local scenario_num = wc2_scenario.scenario_num()
 	if needs_item == 0 then
 		return
 	end
-	wesnoth.set_side_variable(wesnoth.current.side, "wc2.random_items", needs_item - 1)
+	side_variables["wc2.random_items"] = needs_item - 1
 	local unit = wesnoth.get_unit(ec.x1, ec.y1)
 	local item_id = enemy.pick_suitable_enemy_item(unit)
 	wc2_artifacts.give_item(unit, item_id, false)
@@ -119,7 +120,8 @@ end
 -- WORLD_CONQUEST_TEK_ENEMY_RECALLS
 on_event("recruit", function(ec)
 	local side_num = wesnoth.current.side
-	local to_recall = wc2_utils.split_to_array(wesnoth.get_side_variable(side_num, "wc2.to_recall") or "")
+	local side_variables = wesnoth.sides[side_num].variables
+	local to_recall = wc2_utils.split_to_array(side_variables["wc2.to_recall"] or "")
 	if #to_recall == 0 then
 		return
 	end
@@ -148,15 +150,18 @@ on_event("recruit", function(ec)
 		table.remove(to_recall, 1)
 		table.remove(candidates, 1)
 	end
-	wesnoth.set_side_variable(side_num, "wc2.to_recall", table.concat(to_recall, ","))
+	side_variables["wc2.to_recall"] = table.concat(to_recall, ",")
 end)
 
 --Gives the enemy side @cfg.side units that it can recall.
 --It does not really addthem to the recall list but
 --emulates that by placing higher level units on the map in that sides
 function enemy.do_recall(cfg, group_id, loc)
+	local side_num = cfg.side
+	local side_variables = wesnoth.sides[side_num].variables
+
 	local group = wml.variables[("wc2_enemy_army.group[%d]"):format(group_id)]
-	local to_recall = wc2_utils.split_to_array(wesnoth.get_side_variable(cfg.side, "wc2.to_recall"))
+	local to_recall = wc2_utils.split_to_array(side_variables["wc2.to_recall"])
 	local function recall_level(level)
 		local amount = wml.get_child(cfg, "recall")["level" .. level] or 0
 		local types =  wc2_utils.split_to_array(wml.get_child(group, "recall")["level" .. level] or "")
@@ -169,7 +174,7 @@ function enemy.do_recall(cfg, group_id, loc)
 	end
 	recall_level(2)
 	recall_level(3)
-	wesnoth.set_side_variable(cfg.side, "wc2.to_recall", table.concat(to_recall, ","))
+	side_variables["wc2.to_recall"] = table.concat(to_recall, ",")
 end
 
 -- WCT_ENEMY_FAKE_RECALL
@@ -277,7 +282,7 @@ function wesnoth.wml_actions.wc2_enemy(cfg)
 	-- todo: remove or uncomment (i think this was moved to scenario generation)
 	-- side.gold = side.gold + wml.variables["enemy_army.bonus_gold"]
 	if cfg.have_item > 0 and cfg.have_item <= (wml.variables["wc2_difficulty.enemy_power"] or 6) then
-		wesnoth.set_side_variable(side_num, "wc2.random_items", 1)
+		side.variables["wc2.random_items"] = 1
 	end
 end
 

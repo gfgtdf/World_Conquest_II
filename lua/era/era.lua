@@ -37,7 +37,7 @@ on_event("recruit", function(ctx)
 				type = p[2],
 			}
 			p[1],p[2] = p[2],p[1]
-			wesnoth.set_side_variable(side_num, "wc2.pair[" .. (i - 1) .. "].types", table.concat(p, ","))
+			side.variables["wc2.pair[" .. (i - 1) .. "].types"] = table.concat(p, ",")
 			wesnoth.allow_undo(false)
 			return
 		end
@@ -46,7 +46,8 @@ end)
 
 function wc2_era.get_faction(id)
 	if type(id) == "number" then
-		id = wesnoth.get_side_variable(id, "wc2.faction_id") or wesnoth.sides[id].faction
+		local side = wesnoth.sides[id]
+		id = side.variables["wc2.faction_id"] or side.faction
 	end
 	for i, faction in ipairs(wc2_era.factions_wml) do
 		if faction.id == id then
@@ -64,8 +65,8 @@ local function init_side(side_num)
 	local side = wesnoth.sides[side_num]
 	local faction = wc2_era.get_faction(side_num)
 
-	if faction and wesnoth.get_side_variable(side_num, "wc2.pair.length") == 0 and wml.get_child(faction, "pair") then
-		wesnoth.set_side_variable(side_num, "wc2.faction_id", faction.id)
+	if faction and side.variables["wc2.pair.length"] == 0 and wml.get_child(faction, "pair") then
+		side.variables["wc2.faction_id"] = faction.id
 		wesnoth.wml_actions.disallow_recruit { side = side_num, recruit="" }
 		local i = 0
 		for v in wml.child_range(faction, "pair") do
@@ -78,7 +79,7 @@ local function init_side(side_num)
 				side = side_num,
 				type = p[1],
 			}
-			wesnoth.set_side_variable(side_num, "wc2.pair[" .. (i - 1) .. "].types", table.concat(p, ","))
+			side.variables["wc2.pair[" .. (i - 1) .. "].types"] = table.concat(p, ",")
 		end
 	end
 
@@ -98,9 +99,9 @@ local function init_side(side_num)
 	helper.shuffle(deserters)
 	helper.shuffle(commanders)
 
-	wesnoth.set_side_variable(side_num, "wc2.heroes", table.concat(heroes, ","))
-	wesnoth.set_side_variable(side_num, "wc2.deserters", table.concat(deserters, ","))
-	wesnoth.set_side_variable(side_num, "wc2.commanders", table.concat(commanders, ","))
+	side.variables["wc2.heroes"] = table.concat(heroes, ",")
+	side.variables["wc2.deserters"] = table.concat(deserters, ",")
+	side.variables["wc2.commanders"] = table.concat(commanders, ",")
 end
 
 local function add_known_faction(cfg)
@@ -197,11 +198,12 @@ end
 
 -- picks a deserter for the side @a side_num using the list of posibel deserters for that sides faction.
 function wc2_era.pick_deserter(side_num)
-	local deserters = wc2_utils.split_to_array(wesnoth.get_side_variable(side_num, "wc2.deserters"))
+	local side_variables = wesnoth.sides[side_num].variables
+	local deserters = wc2_utils.split_to_array(side_variables["wc2.deserters"])
 	local index = #deserters
 	local res = deserters[index]
 	table.remove(deserters, index)
-	wesnoth.set_side_variable(side_num, "wc2.deserters", table.concat(deserters, ","))
+	side_variables["wc2.deserters"] = table.concat(deserters, ",")
 	return res
 end
 
