@@ -35,6 +35,11 @@ function artifacts.drop_message(index)
 	}
 end
 
+function wc2_artifact_needs_compensation(side)
+	return not wc2_scenario.is_human_side(side.side)
+end
+
+
 -- place an artifact with id @a index on the map at position @a x, y.
 -- can be used from the bug console as `lua wc2_artifacts.place_item(30,20,1)`
 function artifacts.place_item(x, y, index)
