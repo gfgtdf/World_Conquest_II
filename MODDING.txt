@@ -3,11 +3,11 @@ world conquest 2. In particular how to write an era that can be used together wi
 
 
 Making an era that works well together with world conquest ii, is quite
-easy: just add the [wc2_extra] tag to your [multiplayer_side] tag just as
+easy: just add the [world_conquest_data] tag to your [multiplayer_side] tag just as
 the standard word conquest2 era does, important: your era may not have
 require_download=no for this to work. Furthermore if your era contains
 new unit types that are not mainline wesnoth, don't forget to put an additional
-[wc2_extra] in [era] to describe which trails these unit types should get
+[world_conquest_data] in [era] to describe which trails these unit types should get
 when they are selected as heroes (use this to compensate weaker unit types).
 
 To make an era/modification that also changes the enemy army unit types,

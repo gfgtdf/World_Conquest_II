@@ -128,7 +128,7 @@ function wc2_era.read_era_tag(era_wml)
 	era_wml = wml.literal(era_wml)
 
 	for  multiplayer_side in wml.child_range(era_wml, "multiplayer_side") do
-		local faction = wml.get_child(multiplayer_side, "wc2_extra")
+		local faction = wml.get_child(multiplayer_side, "world_conquest_data")
 		if faction then
 			faction.id = multiplayer_side.id
 			faction.name = multiplayer_side.name
@@ -137,7 +137,7 @@ function wc2_era.read_era_tag(era_wml)
 		add_known_faction(faction)
 	end
 
-	wc2_data = wml.get_child(era_wml, "wc2_extra") or {}
+	wc2_data = wml.get_child(era_wml, "world_conquest_data") or {}
 	for i,v in ipairs(wml.get_child(wc2_data, "hero_types")) do
 		add_known_hero_group(v[1], v[2])
 	end
@@ -161,7 +161,7 @@ function wc2_era.init_era_default()
 		return
 	end
 
-	if (wml.get_child(era_wml, "wc2_extra") or {}).disable_default then
+	if (wml.get_child(era_wml, "world_conquest_data") or {}).disable_default then
 		return
 	end
 	wc2_era.read_era_tag(wesnoth.get_era(wc2_era_id))
