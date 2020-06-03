@@ -1,4 +1,4 @@
-local _ = wesnoth.textdomain 'wesnoth-World_Conquest_II'
+local _ = wesnoth.textdomain 'wesnoth-World_Conquest'
 local on_event = wesnoth.require("on_event")
 
 local strings = {

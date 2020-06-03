@@ -1,6 +1,6 @@
 local helper = wesnoth.require("helper")
 local on_event = wesnoth.require("on_event")
-local _ = wesnoth.textdomain 'wesnoth-World_Conquest_II'
+local _ = wesnoth.textdomain 'wesnoth-World_Conquest'
 
 local wc2_era = {}
 wc2_era.factions_wml = {}

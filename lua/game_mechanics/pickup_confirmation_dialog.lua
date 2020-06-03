@@ -1,4 +1,4 @@
-local _ = wesnoth.textdomain 'wesnoth-World_Conquest_II'
+local _ = wesnoth.textdomain 'wesnoth-World_Conquest'
 local T = wml.tag
 
 local pickup_confirmation_dialog = {}

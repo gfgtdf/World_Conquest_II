@@ -8,7 +8,7 @@
 
 -- speechs need be rewritten
 function add_plot(scenario, scenario_num, nplayers)
-	local _ = wesnoth.textdomain "wesnoth-World_Conquest_II"
+	local _ = wesnoth.textdomain "wesnoth-World_Conquest"
 	scenario.event = scenario.event or {}
 	local start_event = { name = "start" }
 	local vicroy_event = { name = "enemies defeated" }

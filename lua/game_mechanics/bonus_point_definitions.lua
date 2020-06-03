@@ -1,4 +1,4 @@
-local _ = wesnoth.textdomain 'wesnoth-World_Conquest_II'
+local _ = wesnoth.textdomain 'wesnoth-World_Conquest'
 
 local STR_BONUS_SHIP_NAMES = { _"Point", _"Rest", _"Ruin", _"Rocks", _"Bane", _"Waters", _"Route", _"Vestige", _"Disaster", _"Massacre", _"Expedition", _"Cargo" }
 

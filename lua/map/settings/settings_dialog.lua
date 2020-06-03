@@ -1,7 +1,7 @@
 -- the Dialog we show in the generate map tool in wesnoths own map editor.
 -- in case that someoen wants to create a map baded on a random wcii map ion his campaign. 
 local T = wml.tag
-local _ = wesnoth.textdomain 'wesnoth-World_Conquest_II'
+local _ = wesnoth.textdomain 'wesnoth-World_Conquest'
 
 
 function get_defaults(nplayer, nscenario)

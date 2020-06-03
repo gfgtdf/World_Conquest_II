@@ -1,6 +1,6 @@
 -- The difficulty dialog. unlike other files this does not 'export' functions,
 -- just run this file to show the diffculty dialog.
-local _ = wesnoth.textdomain 'wesnoth-World_Conquest_II'
+local _ = wesnoth.textdomain 'wesnoth-World_Conquest'
 local vars = wml.variables
 local strings = {
 	chose_difficulty = "<span size='large'>" .. _"Choose difficulty level:" .. "</span>",
