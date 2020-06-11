@@ -55,4 +55,4 @@ variable that should contains the pool of 'armies' that the enemies are chosen f
 ```
 
 
-TODO: how to overwrite training and aritfacts.
+TODO: how to overwrite training and artifacts.
