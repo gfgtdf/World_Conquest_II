@@ -208,4 +208,47 @@ function wc2_utils.get_fstring_all(t)
 	return res
 end
 
+
+function wc2_utils.load_wc2_data()
+	if wc2_utils.world_conquest_data == nil then
+		local data_dict = {}
+		local ignore_list = {}
+		for i,res_id in ipairs(wesnoth.game_config.active_resources) do
+			local ressource = wesnoth.get_resource(res_id)
+			local world_conquest_data = wml.get_child(ressource, "world_conquest_data")
+			if world_conquest_data then
+				for ignore in wml.child_range(world_conquest_data, "ignore") do
+					ignore_list[ignore.id] = true
+				end
+				table.insert(data_dict, {id=res_id, data = world_conquest_data})
+			end
+		end
+
+		table.insert(data_dict, {id="era", data = wesnoth.game_config.era})
+		
+
+		-- make sure the result does not depend on the order in which these addons are loaded.
+		table.sort(data_dict, function(a,b) return a.id<b.id end)
+
+
+		wc2_utils.world_conquest_data = {}
+		for i, v in ipairs(data_dict) do
+			if not ignore_list[v.id] then
+				for i2, tag in ipairs(v.data) do
+					local tagname = tag[1]
+					wc2_utils.world_conquest_data[tagname] = wc2_utils.world_conquest_data[tagname] or {}
+					table.insert( wc2_utils.world_conquest_data[tagname], tag )
+				end
+			end
+		end
+	end
+end
+
+function wc2_utils.get_wc2_data(tagname)
+	wc2_utils.load_wc2_data()
+	--todo: maybe we shoudl clear wc2_utils.world_conquest_data[tagname] afterwards ?
+	return wc2_utils.world_conquest_data[tagname]
+end
+
+
 return wc2_utils

@@ -136,36 +136,28 @@ function wc2_era.read_era_tag(era_wml)
 		end
 		add_known_faction(faction)
 	end
-
-	wc2_data = wml.get_child(era_wml, "world_conquest_data") or {}
-	for i,v in ipairs(wml.get_child(wc2_data, "hero_types")) do
-		add_known_hero_group(v[1], v[2])
-	end
-
-	for trait_extra in wml.child_range(wc2_data, "trait_extra") do
-		add_known_trait_extra(trait_extra)
-	end
-
-	for spawn_filter in wml.child_range(wc2_data, "hero_spawn_filter") do
-		add_known_spawn_filter(spawn_filter)
-	end
-
 end
 
 function wc2_era.init_era_default()
-	local wc2_era_id = "WC_II"
-	local era_wml = wesnoth.game_config.era
-	wc2_era.read_era_tag(era_wml)
-
-	if era_wml.id == wc2_era_id then
-		return
-	end
-
-	if (wml.get_child(era_wml, "world_conquest_data") or {}).disable_default then
-		return
-	end
-	wc2_era.read_era_tag(wesnoth.get_era(wc2_era_id))
+	wc2_era.read_era_tag(wesnoth.game_config.era)
+	wc2_era.init_data()
 end
+
+function wc2_era.init_data()
+	
+	for i,v in ipairs(wml.get_child(wc2_utils.get_wc2_data("hero_types"), "hero_types")) do
+		add_known_hero_group(v[1], v[2])
+	end
+
+	for trait_extra in wml.child_range(wc2_utils.get_wc2_data("trait_extra"), "trait_extra") do
+		add_known_trait_extra(trait_extra)
+	end
+
+	for spawn_filter in wml.child_range(wc2_utils.get_wc2_data("hero_spawn_filter"), "hero_spawn_filter") do
+		add_known_spawn_filter(spawn_filter)
+	end
+end
+
 
 function wesnoth.wml_actions.wc2_init_era(cfg)
 	cfg = wml.literal(cfg)
