@@ -35,6 +35,7 @@ end
 
 function wc_ii_generate_scenario(nplayers, gen_args)
 	nplayers = settings.nplayers or nplayers
+	local id_suffix = gen_args.id_suffix or ""
 	local scenario_extra = wml.get_child(gen_args, "scenario")
 	local scenario_num = settings.scenario_num or wesnoth.get_variable("wc2_scenario") or 1
 	local enemy_stength = wesnoth.get_variable("wc2_difficulty.enemy_power") or 6
@@ -49,13 +50,13 @@ function wc_ii_generate_scenario(nplayers, gen_args)
 		lua = {},
 		load_resource = {
 			{
-				id = "wc2_era_res"
+				id = "wc2_era_res" .. id_suffix
 			},
 			{
-				id = "wc2_scenario_res"
+				id = "wc2_scenario_res" .. id_suffix
 			},
 			{
-				id = "wc2_scenario_res_extra"
+				id = "wc2_scenario_res_extra" .. id_suffix
 			},
 		},
 		options = {
@@ -78,8 +79,8 @@ function wc_ii_generate_scenario(nplayers, gen_args)
 			wc2_host_version = "0.8.2"
 		},
 		side = {},
-		id = "WC_II_" .. nplayers .. "p",
-		next_scenario = "WC_II_" .. nplayers .. "p",
+		id = "WC_II_" .. nplayers .. "p" .. id_suffix,
+		next_scenario = "WC_II_" .. nplayers .. "p" .. id_suffix,
 		description = "WC_II_" .. nplayers .. "p_desc",
 		modify_placing = false,
 		-- does this work
