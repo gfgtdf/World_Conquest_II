@@ -1,3 +1,4 @@
+local on_event = wesnoth.require("on_event")
 -- players get recalled by free all heroes up to castle size
 local function wc2_autorecall()
 	for side_num = 1, wml.variables.wc2_player_count do

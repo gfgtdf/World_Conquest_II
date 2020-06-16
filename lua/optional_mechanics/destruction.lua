@@ -1,5 +1,7 @@
 -- Changes terrain when unit die on that tile. works mostly independend of the rest of the addon.
 
+local on_event = wesnoth.require("on_event")
+
 local snow = {
 	"misc/blank-hex.png~BLIT(terrain/wct-snowcrater1.png~SCALE(63,63),5,5)",
 	"misc/blank-hex.png~BLIT(terrain/wct-snowcrater2.png~SCALE(63,63),5,5)",
