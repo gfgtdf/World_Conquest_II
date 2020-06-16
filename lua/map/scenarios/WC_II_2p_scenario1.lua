@@ -3,8 +3,6 @@ local generators = {
 	wct_map_generator("classic", "1a", 30, 20, 5, 7200, 3, 3, 2),
 }
 
---###### enemy army  for 2 players ######################
---WORLD_CONQUEST_TEK_ENEMY_2P_SCENARIO_1
 local function get_enemy_data(enemy_power)
 	return {
 		gold = 300,

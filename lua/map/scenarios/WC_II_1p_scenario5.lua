@@ -6,7 +6,6 @@ local generators = {
 	wct_map_generator("feudal", "6d", 66, 14, 10, 16320, 8, 7, 7),
 }
 
---WORLD_CONQUEST_TEK_ENEMY_1P_SCENARIO_6
 local function get_enemy_data(enemy_power)
 	return {
 		gold = 350,

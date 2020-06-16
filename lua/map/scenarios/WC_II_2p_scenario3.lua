@@ -8,7 +8,6 @@ local generators = {
 	wct_map_generator("wetland", "3f", 50, 19, 7, 15510, 4, 5, 7),
 }
 
---WORLD_CONQUEST_TEK_ENEMY_2P_SCENARIO_3
 local function get_enemy_data(enemy_power)
 	return {
 		gold = 300,
