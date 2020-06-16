@@ -145,7 +145,7 @@ return function()
 	set_map_name(_"Start")
 	--[event]
 	--name=prestart
-	--world_conquest_tek_map_noise_classic("Gs^Fp")
+	world_conquest_tek_map_noise_classic("Gs^Fp")
 	world_conquest_tek_map_repaint_1()
 	world_conquest_tek_bonus_points()
 	wct_map_1_post_bunus_decoration()

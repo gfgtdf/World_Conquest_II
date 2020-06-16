@@ -284,7 +284,7 @@ end
 
 return function()
 	set_map_name(_"Mines")
-	--	world_conquest_tek_map_noise_classic("Gs^Fp")
+	world_conquest_tek_map_noise_classic("Gs^Fp")
 	wct_enemy_castle_expansion()
 	world_conquest_tek_map_repaint_4c()
 	world_conquest_tek_bonus_points()
