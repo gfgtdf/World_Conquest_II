@@ -62,5 +62,7 @@ wc2_utils.menu_item {
 			x = cx.x1,
 			y = cx.y1,
 		}
+		-- i coudl also unsync this instead
+		wesnoth.allow_undo(false)
 	end
 }

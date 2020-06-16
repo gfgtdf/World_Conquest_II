@@ -88,6 +88,8 @@ wc2_utils.menu_item {
 			x=cx.x1,
 			y=cx.y1,
 		}
+		--todo: i guess i could also use on_undo here.
+		wesnoth.allow_undo(false)
 	end
 }
 

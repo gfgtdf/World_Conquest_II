@@ -258,6 +258,7 @@ wc2_utils.menu_item {
 	id = "5_WCT_Wocopedia_Option",
 	description = _ "WoCopedia",
 	image= "help/closed_section.png~SCALE(18,17)",
+	synced = false,
 	filter = function(x, y)
 		local u = wesnoth.get_unit(x, y)
 		if wc2_artifacts.is_item_at(x, y) then
