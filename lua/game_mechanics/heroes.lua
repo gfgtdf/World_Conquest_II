@@ -21,10 +21,11 @@ function wc2_heroes.find_dialogue(t)
 	return wc2_heroes.dialogues[t] or wc2_heroes.dialogues.default
 end
 
-function wc2_heroes.init_data(cfg)
-	cfg = wml.literal(cfg)
-	wc2_heroes.trait_heroic = wml.get_child(wml.get_child(cfg, "trait_heroic"), "trait")
-	wc2_heroes.trait_expert = wml.get_child(wml.get_child(cfg, "trait_expert"), "trait")
+function wc2_heroes.init_data()
+	local cfg_heroic = wc2_utils.get_wc2_data("trait_heroic")
+	local cfg_expert = wc2_utils.get_wc2_data("trait_expert")
+	wc2_heroes.trait_heroic = wml.get_child(wml.get_child(cfg_heroic, "trait_heroic"), "trait")
+	wc2_heroes.trait_expert = wml.get_child(wml.get_child(cfg_expert, "trait_expert"), "trait")
 end
 
 function wc2_heroes.commander_overlay_object()
@@ -119,5 +120,7 @@ function wc2_heroes.founddialouge(finder, found)
 		message = reply,
 	}
 end
+
+wc2_heroes.init_data()
 
 return wc2_heroes

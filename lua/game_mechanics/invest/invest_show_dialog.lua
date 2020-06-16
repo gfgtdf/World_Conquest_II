@@ -108,7 +108,7 @@ function wc2_show_invest_dialog_impl(args)
 			wesnoth.set_dialog_value(_ "Training", "left_tree", cati_current, "category_name")
 			for i,v in ipairs(available_training) do
 				local current_grade = wc2_training.get_level(side_num, v)
-				local training_info = wc2_training.trainers[v]
+				local training_info = wc2_training.get_trainer(v)
 				local train_message = wc2_training.generate_message(v, current_grade + 1)
 				local train_message_before = wc2_training.generate_message(v, current_grade)
 

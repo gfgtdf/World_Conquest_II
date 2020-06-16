@@ -16,6 +16,14 @@ function artifacts.read_wml_data(cfg)
 	end
 end
 
+function artifacts.init_data()
+	local cfg = wc2_utils.get_wc2_data("artifact")
+	for i, a in ipairs(wc2_convert.wml_to_lon(cfg, "wct_artifact_list").artifact or {}) do
+		artifacts.add_artifact_data(a)
+	end
+end
+
+
 function artifacts.get_artifact(id)
 	return artifacts.list[id]
 end
@@ -234,5 +242,7 @@ function wesnoth.wml_actions.wc2_place_item(cfg)
 		artifacts.drop_message(cfg.item_index)
 	end
 end
+
+artifacts.init_data()
 
 return artifacts

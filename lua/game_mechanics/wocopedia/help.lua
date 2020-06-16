@@ -87,7 +87,7 @@ function wesnoth.wml_actions.wc2_show_wocopedia(cfg)
 			add_index()
 			tree_enter_mode()
 			-- add specific training pages
-			for i = 1, #wc2_training.trainers do
+			for i = 1, #wc2_training.get_list() do
 				local current_level = wc2_training.get_level(current_side, i)
 				local function set_description(train_num, j)
 					local desc = wc2_training.generate_message(i, train_num)
@@ -99,7 +99,7 @@ function wesnoth.wml_actions.wc2_show_wocopedia(cfg)
 					wesnoth.set_dialog_text(desc.caption, "details", desc_index, "tree_details", j, "training_caption")
 					wesnoth.set_dialog_text(desc.message, "details", desc_index, "tree_details", j, "training_description")
 				end
-				local trainer = wc2_training.trainers[i]
+				local trainer = wc2_training.get_trainer(i)
 				wesnoth.add_dialog_tree_node("training_category", i, "left_tree", ti[1])
 				wesnoth.set_dialog_value(trainer.name, "left_tree", ti[1], ti[2], "training_name")
 				set_description(1, 1)

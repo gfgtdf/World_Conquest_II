@@ -136,6 +136,7 @@ function wc2_era.read_era_tag(era_wml)
 		end
 		add_known_faction(faction)
 	end
+	-- No need to read [hero_types] since wc2_utils.get_wc2_data also reads from [era] 
 end
 
 function wc2_era.init_era_default()

@@ -5,8 +5,39 @@ local helper = wesnoth.require("helper")
 
 local training = {}
 
+
+function training.add_training_data(a)
+	training.trainers = training.trainers or {}
+	table.insert(training.trainers, a)
+end
+
+function training.read_wml_data(cfg)
+	for i, t in ipairs(wc2_convert.wml_to_lon(cfg, "wct_trainer_list").trainer or {}) do
+		training.add_training_data(t)
+	end
+end
+
+function training.get_list()
+	if not training.trainers then
+		training.init_data()
+	end
+	return training.trainers
+end
+
+function training.init_data()
+	local cfg = wc2_utils.get_wc2_data("trainer")
+	for i, t in ipairs(wc2_convert.wml_to_lon(cfg, "wct_trainer_list").trainer or {}) do
+		training.add_training_data(t)
+	end
+end
+
+function training.get_trainer(trainer)
+	return training.get_list()[trainer]
+end
+
+
 function training.get_chances(trainer, grade)
-	return training.trainers[trainer].grade[grade + 1].chance
+	return training.get_trainer(trainer).grade[grade + 1].chance
 end
 
 function training.apply_trait(unit, trait, check)
@@ -29,7 +60,7 @@ end
 
 function training.inc_level(side, trainer, level)
 	local new_level = training.get_level(side, trainer) + (level or 1)
-	if new_level < 0 or new_level >= #training.trainers[trainer].grade then
+	if new_level < 0 or new_level >= #training.get_trainer(trainer).grade then
 		error("training level out of range")
 	end
 	training.set_level(side, trainer, new_level)
@@ -38,14 +69,14 @@ end
 -- to be used by bonus points chance to extra taining.
 function training.get_level_sum(side)
 	local res = 0
-	for i = 1, #training.trainers do
+	for i = 1, #training.get_list() do
 		res = res + training.get_level(side, i)
 	end
 	return res
 end
 
 function training.trainings_left(side_num, trainer)
-	return (#training.trainers[trainer].grade - 1) - training.get_level(side_num, trainer)
+	return (#training.get_trainer(trainer).grade - 1) - training.get_level(side_num, trainer)
 end
 
 function training.available(side_num, trainer, amount)
@@ -57,7 +88,7 @@ function training.has_max_training(side_num, trainer, amount)
 end
 
 function training.list_available(side_num, among, amount)
-	local av = among or wc2_utils.range(#training.trainers)
+	local av = among or wc2_utils.range(#training.get_list())
 	local res = {}
 	for i,v in ipairs(av) do
 		local j = tonumber(v)
@@ -101,7 +132,7 @@ function training.describe_training_level2(level, max_level)
 end
 
 function training.generate_message(n_trainer, n_grade)
-	local c_trainer = training.trainers[n_trainer]
+	local c_trainer = training.get_trainer(n_trainer)
 	local c_grade = c_trainer.grade[n_grade + 1]
 	if c_grade == nil then
 		return { message = "" }
@@ -130,7 +161,7 @@ function training.generate_message(n_trainer, n_grade)
 end
 
 function training.give_bonus(side_num, cx, amount, traintype_index)
-	local traintype = training.trainers[traintype_index]
+	local traintype = training.get_trainer(traintype_index)
 	local cur_level = training.get_level(side_num, traintype_index)
 	local new_level = cur_level + amount
 	local teacher = wc2_heroes.place(amount > 1 and traintype.advanced_type or traintype.type, side_num, cx.x1,cx.y1)
@@ -176,12 +207,6 @@ function training.pick_bonus(side_num)
 	return traintype_index, amount
 end
 
-function training.init_data(cfg)
-	-- in most cases this is already a literal.
-	cfg = wml.literal(cfg)
-	training.trainers = wc2_convert.wml_to_lon(cfg, "wct_trainer_list").trainer
-end
-
 on_event("recruit", function(event_context)
 	training.apply(wesnoth.get_unit(event_context.x1, event_context.y1))
 end)
@@ -196,7 +221,7 @@ function training.apply(u)
 	trait.male_name = _ "trained"
 	trait.female_name = _ "female^trained"
 	trait.generate_description = false
-	for i, trainer in ipairs(training.trainers) do
+	for i, trainer in ipairs(training.get_list()) do
 		local level = training.get_level(side, i) or 0
 		for unused, chance in ipairs(training.get_chances(i, level)) do
 			--some effects use expressions like $(5+{GRADE}) so we want variable_substitution there
@@ -240,7 +265,7 @@ function wesnoth.wml_actions.wc2_give_random_training(cfg)
 end
 
 function training.describe_bonus(side, traintype)
-	local traintype_data = training.trainers[traintype]
+	local traintype_data = training.get_trainer(traintype)
 	local cur_level = training.get_level(side, traintype)
 	local max_level = #traintype_data.grade - 1
 	local image = wesnoth.unit_types[traintype_data.type].__cfg.image
