@@ -1,9 +1,18 @@
 -- The difficulty dialog. unlike other files this does not 'export' functions,
 -- just run this file to show the diffculty dialog.
+
 local _ = wesnoth.textdomain 'wesnoth-World_Conquest'
-local vars = wml.variables
 local strings = {
 	chose_difficulty = "<span size='large'>" .. _"Choose difficulty level:" .. "</span>",
+}
+
+local _ = wesnoth.textdomain 'wesnoth-units'
+local strings_mainline = {
+	Sergeant = _"Sergeant",
+	Peasant = _"Peasant",
+	Lieutenant = _"Lieutenant",
+	General = _"General",
+	Grand_Marshal = _"Grand Marshal"
 }
 
 local function icon_human_difficult(unit_image, color)
@@ -21,7 +30,7 @@ local icon_nightmare_difficulty = "units/monsters/fire-dragon.png~CROP(0,0,160,1
 local t_option = wml.tag.option
 
 local function wct_difficulty(name, power, enemy_t, heroes, gold, train, exp)
-	local nplayers = vars.wc2_player_count
+	local nplayers = vwml.variables.wc2_player_count
 	if nplayers == 1 then
 		heroes = heroes + 1
 	end
@@ -45,33 +54,34 @@ end
 
 
 function wct_scenario_chose_difficulty()
+	-- fixme: should the first part argument of wct_difficulty be translatable
 	wesnoth.wml_actions.message {
 		speaker = "narrator",
 		caption = strings.chose_difficulty,
 		t_option {
 			image = icon_human_difficult("human-peasants/peasant", "purple"),
-			label = str_dif_lvl("Peasant"),
+			label = str_dif_lvl(strings_mainline.Peasant),
 			description="(" .. _"Easy" .. ")",
 			wct_difficulty("Peasant", 6, 2, 2, 10, true, 0),
 		},
 		t_option {
 			image=icon_human_difficult("human-loyalists/sergeant", "black"),
-			label=str_dif_lvl("Sergeant"),
+			label=str_dif_lvl(strings_mainline.Sergeant),
 			wct_difficulty("Sergeant", 7, 3, 2, 7, true, 5),
 		},
 		t_option {
 			image=icon_human_difficult("human-loyalists/lieutenant", "brown"),
-			label=str_dif_lvl("Lieutenant"),
+			label=str_dif_lvl(strings_mainline.Lieutenant),
 			wct_difficulty("Lieutenant", 8, 4, 2, 5, true, 10),
 		},
 		t_option {
 			image=icon_human_difficult("human-loyalists/general", "orange"),
-			label=str_dif_lvl("General"),
+			label=str_dif_lvl(strings_mainline.General),
 			wct_difficulty("General", 8, 5, 2, 2, false, 13),
 		},
 		t_option {
 			image=icon_human_difficult("human-loyalists/marshal", "white"),
-			label=str_dif_lvl("Grand_marshal"),
+			label=str_dif_lvl(strings_mainline.Grand_Marshal),
 			wct_difficulty("Grand_marshal", 9, 6, 2, 1, false, 17),
 		},
 		t_option {
@@ -90,7 +100,7 @@ function wct_scenario_start_bonus()
 		}
 	end
 
-	if vars.wc2_difficulty.extra_trainig then
+	if wml.variables.wc2_difficulty.extra_trainig then
 		for side_num = 1, wml.variables.wc2_player_count do
 			wesnoth.wml_actions.wc2_give_random_training {
 				among="2,3,4,5,6",
