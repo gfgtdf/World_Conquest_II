@@ -225,6 +225,8 @@ function wct_road_to_village(road, village)
 	end
 end
 
+-- builds roads using terrain @a terrain
+-- for each step we call @get_next 
 function wct_iterate_roads_to(get_next, radius, terrain)
 	print_time("wct_iterate_roads_to start")
 	for r = radius, 1, -1 do
@@ -238,6 +240,11 @@ function wct_iterate_roads_to(get_next, radius, terrain)
 	print_time("wct_iterate_roads_to end")
 end
 
+-- creates roads, faster than wct_iterate_roads_to
+-- creates for each tile that mactches a f_src a road
+-- to a tile that macthes @a f_dest of possible,
+-- roads have a maximum length of @a radius and can only be
+-- placed on tiles that match @a f_dest
 function wct_iterate_roads_to_2(f_validpath, f_src, f_dest, terrain_road, radius)
 	local src_tiles = map:get_locations(f_src)
 	local dest_tiles = map:get_locations(f_dest)
@@ -328,6 +335,8 @@ function wct_store_possible_muddy_swamps()
 end
 
 function wct_map_reduce_castle_expanding_recruit(castle, terrain)
+	-- terrain @a castle is a castle terrain used for map and not for keeps
+	-- so we have to maek sure it doesnt appear near keeps.
 	set_terrain { terrain,
 		f.all(
 			f.adjacent(f.terrain("Ch,Cha,Kh*^*")),

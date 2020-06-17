@@ -86,6 +86,14 @@ function roads_to_river(radius)
 	}
 end
 
+-- todo: the old code used 
+-- `wct_iterate_roads_to(wct_roads_to_river, 3, "Rp")`
+-- but the new code uses roads_to_river(4) i guess
+-- wct_iterate_roads_to_ex defeind radiosu differently thatn 
+-- wct_iterate_roads_to ?
+-- anyway leavong this function in as a sekeltong on how 
+-- wct_iterate_roads_to worked. in particular if we want to convert the remaining cases to 
+-- wct_iterate_roads_to_ex
 function wct_roads_to_river(radius)
 
 	local f_valid_path_tiles = f.terrain("!,W*^*")
@@ -95,16 +103,21 @@ function wct_roads_to_river(radius)
 
 	return map:get_locations(f.all(
 		f_valid_path_tiles,
+		-- adjacent to open ends or startign points.
 		f.adjacent(f.all(
+			-- tiles in your source or tiles that we alrady started building a road on.
 			f.any(f_src, f_path_taken),
+			-- exculde road tiles that are not open ends.
 			f.adjacent(f.all(
 				f_path_taken,
 				f.radius(radius, f_dest, f_valid_path_tiles)
 			), nil, 0),
+			-- exculde open ends tha are alreaqdy close enough to the target for this building step.
 			f.none(
 				f.radius(radius, f_dest, f_valid_path_tiles)
 			)
 		)),
+		-- tiles where we can actually get coloser to the target-
 		f.radius(radius, f_dest, f_valid_path_tiles)
 	))
 end
@@ -166,6 +179,7 @@ function world_conquest_tek_map_decoration_6b()
 		),
 	}
 
+	--todo: why is this code outcommented?
 	--wct_iterate_roads_to(wct_roads_to_dock, 3, "Rp")
 	--wct_iterate_roads_to(wct_roads_to_river, 3, "Rp")
 	roads_to_dock(4)

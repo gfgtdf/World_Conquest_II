@@ -29,21 +29,20 @@ function world_conquest_tek_map_decoration_1()
 	set_terrain { "Hh^Fmw",
 		f.terrain("Hh^Fp"),
 	}
-	if false then
-		--'Hh^Fmd', 'Gg^Fmd' doesn't seem to be valid terrain.
-		set_terrain { "Hh^Fmd",
-			f.all(
-				f.terrain("Hh^F*,!,Hh^Fmf"),
-				f.radius(2, f.terrain("Ql,Mv"))
-			),
-		}
-		set_terrain { "Gg^Fmd",
-			f.all(
-				f.terrain("G*^F*,!,Gs^Fmf"),
-				f.radius(2, f.terrain("Ql,Mv"))
-			),
-		}
-	end
+	-- the old code used 'Hh^Fmd', 'Gg^Fmd' which is invaldi terrain, i assumed hea meant "Fmw"
+	set_terrain { "Hh^Fmw",
+		f.all(
+			f.terrain("Hh^F*,!,Hh^Fmf"),
+			f.radius(2, f.terrain("Ql,Mv"))
+		),
+	}
+	set_terrain { "Gg^Fmw",
+		f.all(
+			f.terrain("G*^F*,!,Gs^Fmf"),
+			f.radius(2, f.terrain("Ql,Mv"))
+		),
+	}
+
 	set_terrain { "Gs^Vo",
 		f.terrain("Gs^Vht"),
 	}
@@ -110,6 +109,7 @@ function wct_map_1_post_bunus_decoration()
 		f.all(
 			f.terrain("Gg,Gs"),
 			f.adjacent(f.terrain("Ww*,S*^*,U*^*,Xu,Qxu"))--,
+			-- todo: maybe bring this back?
 			--f.none(
 			--	f.find_in_wml("bonus.point")
 			--)
@@ -121,7 +121,6 @@ function wct_map_1_post_bunus_decoration()
 end
 
 function wct_map_1_post_castle_expansion_fix()
-	-- due to choose difficulty, we can not call enemy castle expansion before
 	wct_map_reduce_castle_expanding_recruit("Ce", "Wwf")
 	local r = helper.rand("Ch,Ch,Ch,Chw,Chw,Chs,Ce,Wwf")
 	set_terrain { r,
@@ -143,17 +142,16 @@ end
 
 return function()
 	set_map_name(_"Start")
-	--[event]
-	--name=prestart
+
 	world_conquest_tek_map_noise_classic("Gs^Fp")
 	world_conquest_tek_map_repaint_1()
 	world_conquest_tek_bonus_points()
 	wct_map_1_post_bunus_decoration()
-	--[event]
-	--name=start
-	-- need be applied after choose difficulty
+
+	-- the original code did the choose difficulty dialog here.
+	-- claiming it would ne needed before wct_enemy_castle_expansion
+	-- but i don't know why.
 	wct_enemy_castle_expansion()
 	wct_map_1_post_castle_expansion_fix()
-	--[/event]
-	--[/event]
+
 end

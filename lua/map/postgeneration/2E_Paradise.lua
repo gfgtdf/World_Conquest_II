@@ -85,13 +85,9 @@ function world_conquest_tek_map_repaint_2e()
 		layer = "overlay",
 	}
 
-	-- decorative yards near log villages
-	--[store_map_dimensions]
-	--	variable=map_data
-	--[/store_map_dimensions]
-	--{VARIABLE_OP map_data.yard rand 1,0.."$($map_data.width*$map_data.height/300)"}
-	--{REPEAT_IT $map_data.yard yard_i (
-	for i = 1, 10 do
+	local max_yards = map.height * map_data.width // 300
+	local nyards = tonumber(helper.rand("1,0.." .. max_yards))
+	for i = 1, nyards do
 		local yard_dir = "n,nw,ne"
 		local yard_cdir = "s,sw,se"
 		if wesnoth.random(2) == 1 then
@@ -125,6 +121,8 @@ function world_conquest_tek_map_repaint_2e()
 end
 
 function wct_map_yard(directions, counter_directions)
+	-- todo: is this code 'symmetric' andin the sense that switching 
+	--       directions and counter_directions  doesn't change anythign at all?
 	local terrain_to_change = map:get_locations(f.all(
 		f.terrain("Gg"),
 		f.adjacent(f.terrain("Gg"), directions, 3),
@@ -164,8 +162,6 @@ function wct_conect_isolated_citadel()
 		),
 		filter_extra = { isolated = isolated}
 	}
-
-	--{CLEAR_VARIABLE isolated}
 end
 
 function wct_store_empty_citadel()

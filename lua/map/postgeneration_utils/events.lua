@@ -161,34 +161,6 @@ function wct_enemy_castle_expansion()
 end
 
 function get_oceanic()
-	--[[
-		[store_locations]
-		variable = return
-		terrain=Wo*
-		x=1
-		radius=999
-		[filter_radius]
-		terrain=W*^V*,Wwr*,Ww,Wwg,Wwt,Wo*
-		[filter_adjacent_location]
-		terrain=!,W*^*,S*^*,D*^*,Ai
-		count=0-3
-		[/filter_adjacent_location]
-		[/filter_radius]
-		[or]
-		terrain=Wo*
-		y=1
-		radius=999
-		[filter_radius]
-		terrain=W*^V*,Wwr*,Ww,Wwg,Wwt,Wo*
-		[filter_adjacent_location]
-		terrain=!,W*^*,S*^*,D*^*,Ai
-		count=0-3
-		[/filter_adjacent_location]
-		[/filter_radius]
-		[/or]
-		[/store_locations]
-	--]]
-	-- the odl implementation looks wrong, as radius=999 si appleis after [or]
 	local f_is_border = f.any(
 		f.x("1," .. tostring(map.width - 1)),
 		f.y("1," .. tostring(map.height - 1))
@@ -196,6 +168,7 @@ function get_oceanic()
 	local water_border_tiles = map:get_locations(f.all(f_is_border, f.terrain("Wo*")))
 	local filter_radius = wesnoth.create_filter(f.all(
 		f.terrain("W*^V*,Wwr*,Ww,Wwg,Wwt,Wo*"),
+		--ignore rivers
 		f.adjacent(f.terrain("!,W*^*,S*^*,D*^*,Ai"), nil, "0-3")
 	))
 	return map:get_tiles_radius(water_border_tiles, filter_radius, 999)

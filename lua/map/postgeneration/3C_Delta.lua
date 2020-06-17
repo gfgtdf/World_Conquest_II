@@ -53,16 +53,12 @@ function world_conquest_tek_map_constructor_delta()
 
 	local water_tiles = map:get_locations(f.terrain("W*"))
 	for i, loc in ipairs(water_tiles) do
+		-- todo: it mighjt be nice to add suppot for a lua function filter, so that we
+		--      can pass is_in_octaegon to get_location, and use set_terrain directly.
 		if is_in_octaegon(loc[1], loc[2]) then
 			map:set_terrain(loc, "Wwf")
 		end
 	end
-	--set_terrain { "Wwf",
-	--	f.all(
-	--		f.terrain("W*"),
-	--		f.lua_function("is_in_octaegon")
-	--	)
-	--}
 end
 
 function wct_noise_delta()

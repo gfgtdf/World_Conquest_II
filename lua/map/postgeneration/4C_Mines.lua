@@ -39,7 +39,7 @@ end
 
 
 function wct_map_chasm_bridges_direction()
-	set_terrain { "(Q*^Bs/,Q*^Bs/,Q*^Bh/)",
+	set_terrain { "Q*^Bs/,Q*^Bs/,Q*^Bh/",
 		f.all(
 			f.terrain("Q*^Bs|,Q*^Bh|"),
 			f.adjacent(f.terrain("Q*^*,X*"), "n,s", "1-2"),
@@ -48,7 +48,7 @@ function wct_map_chasm_bridges_direction()
 		fraction = 1,
 		layer = "overlay",
 	}
-	set_terrain { "(Q*^Bs\\,Q*^Bs\\,Q*^Bh\\)",
+	set_terrain { "Q*^Bs\\,Q*^Bs\\,Q*^Bh\\",
 		f.all(
 			f.terrain("Q*^Bs|,Q*^Bh|"),
 			f.adjacent(f.terrain("Q*^*,X*"), "n,s", "1-2"),
@@ -57,7 +57,7 @@ function wct_map_chasm_bridges_direction()
 		fraction = 1,
 		layer = "overlay",
 	}
-	set_terrain { "(Q*^Bs|,Q*^Bs|,Q*^Bh|)",
+	set_terrain { "Q*^Bs|,Q*^Bs|,Q*^Bh|",
 		f.all(
 			f.terrain("Q*^Bs/,Q*^Bh/"),
 			f.adjacent(f.terrain("Q*^*,X*"), "ne,sw", "1-2"),
@@ -66,7 +66,7 @@ function wct_map_chasm_bridges_direction()
 		fraction = 1,
 		layer = "overlay",
 	}
-	set_terrain { "(Q*^Bs\\,Q*^Bs\\,Q*^Bh\\)",
+	set_terrain { "Q*^Bs\\,Q*^Bs\\,Q*^Bh\\",
 		f.all(
 			f.terrain("Q*^Bs/,Q*^Bh/"),
 			f.adjacent(f.terrain("Q*^*,X*"), "ne,sw", "1-2"),
@@ -75,7 +75,7 @@ function wct_map_chasm_bridges_direction()
 		fraction = 1,
 		layer = "overlay",
 	}
-	set_terrain { "(Q*^Bs/,Q*^Bs/,Q*^Bh/)",
+	set_terrain { "Q*^Bs/,Q*^Bs/,Q*^Bh/",
 		f.all(
 			f.terrain("Q*^Bs\\,Q*^Bh\\"),
 			f.adjacent(f.terrain("Q*^*,X*"), "nw,se", "1-2"),
@@ -84,7 +84,7 @@ function wct_map_chasm_bridges_direction()
 		fraction = 1,
 		layer = "overlay",
 	}
-	set_terrain { "(Q*^Bs|,Q*^Bs|,Q*^Bh|)",
+	set_terrain { "Q*^Bs|,Q*^Bs|,Q*^Bh|",
 		f.all(
 			f.terrain("Q*^Bs\\,Q*^Bh\\"),
 			f.adjacent(f.terrain("Q*^*,X*"), "nw,se", "1-2"),
@@ -236,7 +236,7 @@ function world_conquest_tek_map_decoration_4c()
 end
 function world_conquest_tek_map_repaint_4c()
 	-- cave path to chasm with bridge
-	set_terrain { "(Qxu^Bs|,Qxu^Bs\\,Qxu^Bs/,Qxu^Bh|,Qxu^Bh\\,Qxu^Bh/,Qxu,Qxu^Bs|,Qxu^Bs\\,Qxu^Bs/,Qxu)",
+	set_terrain { "Qxu^Bs|,Qxu^Bs\\,Qxu^Bs/,Qxu^Bh|,Qxu^Bh\\,Qxu^Bh/,Qxu,Qxu^Bs|,Qxu^Bs\\,Qxu^Bs/,Qxu",
 		f.terrain("Ur"),
 	}
 
@@ -248,7 +248,7 @@ function world_conquest_tek_map_repaint_4c()
 		),
 	}
 
---	wct_reduce_wall_clusters("Uu^Br/,Uu^Br\\,Uu^Br|,Uu^`Dr,Qxu")
+	-- the original code had a bug and used "Uu^Br/,Uu^Br\\,Uu^Br|,Uu^`Dr,Qxu"
 	wct_reduce_wall_clusters("Uu^Br/,Uu^Br\\,Uu^Br|,Uu^Dr,Qxu")
 	world_conquest_tek_map_decoration_4c()
 	wct_fill_lava_chasms()

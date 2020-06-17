@@ -1,4 +1,9 @@
 -- Feudal
+
+-- unused function, replaces by roads_to_feudal_castle below, 
+-- the odl code used
+-- `wct_iterate_roads_to(wct_roads_to_feudal_castle, 3, "Rr")`
+-- instead of `roads_to_feudal_castle(3)`
 local function wct_roads_to_feudal_castle(radius)
 	return map:get_locations(f.all(
 		f.terrain("!,W*,*^V*,Ds,C*,K*,R*"),
@@ -19,6 +24,7 @@ local function wct_roads_to_feudal_castle(radius)
 		f.radius(radius, f.terrain("Re,Khs"), f.terrain("!,W*,*^V*,Ds,Ch,Kh^*"))
 	))
 end
+
 local function roads_to_feudal_castle(radius)
 	wct_iterate_roads_to_ex {
 		terrain_road = "Rr",
@@ -27,8 +33,6 @@ local function roads_to_feudal_castle(radius)
 		f_dest = f.terrain("Khs"),
 		radius = radius
 	}
-
-	--wct_iterate_roads_to_2(t.f_validpath, t.f_src, t.f_dest, t.terrain_road, t.radius)
 end
 
 local function world_conquest_tek_map_repaint_6d()
@@ -96,7 +100,6 @@ local function world_conquest_tek_map_repaint_6d()
 		fraction = 40,
 	}
 	roads_to_feudal_castle(3)
-	--wct_iterate_roads_to(wct_roads_to_feudal_castle, 3, "Rr")
 	set_terrain { "Khs",
 		f.terrain("Chs"),
 	}
@@ -112,7 +115,6 @@ local function world_conquest_tek_map_repaint_6d()
 		fraction = 40,
 	}
 	roads_to_feudal_castle(4)
-	--wct_iterate_roads_to(wct_roads_to_feudal_castle, 4, "Rr")
 	set_terrain { "Khs",
 		f.terrain("Chs"),
 	}
@@ -158,7 +160,6 @@ local function world_conquest_tek_map_repaint_6d()
 		}
 	end
 	roads_to_feudal_castle(5)
-	--wct_iterate_roads_to(wct_roads_to_feudal_castle, 5, "Rr")
 	-- rebuild cave
 	wct_reduce_wall_clusters("Uu")
 	set_terrain { "Uh,Uh,Uu^Uf,Uh,Uh,Uu^Uf,Uh,Uh,Uu^Uf,Uh,Uh,Uu^Uf,Uh,Uh,Uu^Uf,Uh,Uu^Uf,Uu,Qxu,Qxu,Ql",

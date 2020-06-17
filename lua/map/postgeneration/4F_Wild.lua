@@ -46,7 +46,8 @@ end
 
 
 function repaint(map_data)
-	local heights = wesnoth.dofile("./wild_zones.lua")
+	--fixme: is the the correyt directory?
+	local heights = wesnoth.dofile("./../postgeneration_utils/wild_zones.lua")
 
 	-- store and remove villages
 	local villages = map:get_locations(f.terrain("*^Vh"))

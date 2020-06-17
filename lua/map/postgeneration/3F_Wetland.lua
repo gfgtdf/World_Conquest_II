@@ -10,7 +10,8 @@ function world_conquest_tek_map_repaint_3f()
 	-- soft rough terrain generated
 	local terrain_to_change = wct_store_cave_passages_candidates()
 	while #terrain_to_change > 0 do
-		--the oriignal code also did not randomize this.
+		-- the oriignal code also did not randomize this.
+		-- todo: but maybe we should? (use wesnoth.random(#terrain_to_change[) instead of 1 here)
 		map:set_terrain(terrain_to_change[1], "Mm")
 		terrain_to_change = wct_store_cave_passages_candidates()
 	end

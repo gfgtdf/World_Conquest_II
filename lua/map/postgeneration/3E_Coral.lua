@@ -55,6 +55,7 @@ function world_conquest_tek_map_repaint_3e()
 	}
 
 	-- fix water due to bug in generator creating rivers
+	-- todo: what doesdid tekelili mean by that?
 	set_terrain { "Wot",
 		f.terrain("Ww"),
 	}

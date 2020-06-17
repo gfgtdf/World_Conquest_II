@@ -210,16 +210,18 @@ function world_conquest_tek_map_repaint_4b()
 	local terrain_to_change = map:get_locations(f.terrain("Mv"))
 
 	for i, v in ipairs(terrain_to_change) do
-		--[sound_source]
-		--	id=volcano$i
-		--	sounds=rumble.ogg
-		--	delay=450000
-		--	chance=1
-		--	x,y=v
-		--	full_range=5
-		--	fade_range=5
-		--	loop=0
-		--[/sound_source]
+		local loc = terrain_to_change[i]
+		table.insert(prestart_event, wml.tag.sound_source {
+			id = "volcano" .. tostring(i),
+			sounds = "rumble.ogg",
+			delay = 450000,
+			chance = 1,
+			x = loc[1],
+			y = loc[2],
+			full_range = 5,
+			fade_range = 5,
+			loop = 0,
+		})
 	end
 	-- some volcanic coast and reefs
 	set_terrain { "Uue",
@@ -313,29 +315,34 @@ function world_conquest_tek_map_repaint_4b()
 	}
 
 	-- whirpools
-	local terrain_to_change = map:get_locations(f.all(
+	local whirlpool_candidats  = map:get_locations(f.all(
 		f.terrain("Ww"),
 		f.adjacent(f.terrain("Wo")),
 		f.adjacent(f.terrain("Uue"))
 	))
 
-	helper.shuffle(terrain_to_change)
-	for i = 1, #terrain_to_change // wesnoth.random(4, 15) do
-		--[item]
-		--	x, y = terrain_to_change[i]
-		--	image=scenery/whirlpool.png
-		--[/item]
-		--[sound_source]
-		--	id=volcano$i
-		--	sounds=mermen-hit.wav
-		--	delay=90000
-		--	chance=1
-		--	x, y = terrain_to_change[i]
-		--	full_range=5
-		--	fade_range=5
-		--	loop=0
-		--[/sound_source]
+	helper.shuffle(whirlpool_candidats)
+	for i = 1, #whirlpool_candidats // wesnoth.random(4, 15) do
+
+		local loc = whirlpool_candidats[i]
+		table.insert(prestart_event, wml.tag.item {
+			image = "scenery/whirlpool.png",
+			x = loc[1],
+			y = loc[2],
+		})
+		table.insert(prestart_event, wml.tag.sound_source {
+			id = "whirlppol" .. tostring(i),
+			sounds = "mermen-hit.wav",
+			delay = 90000,
+			chance = 1,
+			x = loc[1],
+			y = loc[2],
+			full_range = 5,
+			fade_range = 5,
+			loop = 0,
+		})
 	end
+
 	-- dessert sand no near water or village
 	set_terrain { "Dd",
 		f.all(

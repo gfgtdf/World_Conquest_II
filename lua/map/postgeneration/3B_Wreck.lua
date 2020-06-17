@@ -78,7 +78,7 @@ return function()
 	wct_enemy_castle_expansion()
 	world_conquest_tek_map_repaint_3b()
 	world_conquest_tek_bonus_points()
-	--	wct_map_cave_path_to("Rb")
+	wct_map_cave_path_to("Rb")
 	wct_map_enemy_themed("drake", "Fire Guardian", "d", "Gs^Vd", 8)
 	wct_map_enemy_themed("lizard", "Fire Guardian", "d", "Gs^Vd", 8)
 end
