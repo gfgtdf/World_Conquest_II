@@ -57,6 +57,7 @@ function roads_to_dock(radius)
 		f_dest = f.terrain("Ch*,Kh*^*,Re"),
 		radius = radius
 	}
+	--old implementation: wct_iterate_roads_to(wct_roads_to_dock, 3, "Rp")
 end
 
 function wct_roads_to_dock(radius)
@@ -84,6 +85,7 @@ function roads_to_river(radius)
 		f_dest = f.terrain("Ch*,Kh*^*,Re"),
 		radius = radius
 	}
+	--old implementation: wct_iterate_roads_to(wct_roads_to_river, 3, "Rp")
 end
 
 -- todo: the old code used 
@@ -179,9 +181,6 @@ function world_conquest_tek_map_decoration_6b()
 		),
 	}
 
-	--todo: why is this code outcommented?
-	--wct_iterate_roads_to(wct_roads_to_dock, 3, "Rp")
-	--wct_iterate_roads_to(wct_roads_to_river, 3, "Rp")
 	roads_to_dock(4)
 	roads_to_river(4)
 
