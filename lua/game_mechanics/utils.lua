@@ -208,7 +208,7 @@ function wc2_utils.get_fstring_all(t)
 	return res
 end
 
-
+-- populates wc2_utils.world_conquest_data, reads [world_conquest_data] from all [resource]s and [era]
 function wc2_utils.load_wc2_data()
 	if wc2_utils.world_conquest_data == nil then
 		local data_dict = {}
@@ -244,6 +244,8 @@ function wc2_utils.load_wc2_data()
 	end
 end
 
+-- reads the tag @a tagnaem from [world_conquest_data] provided by any of the ressoucrs or eras used in the game.
+-- returns a wml table that contains only tagname subtags.
 function wc2_utils.get_wc2_data(tagname)
 	wc2_utils.load_wc2_data()
 	--todo: maybe we shoudl clear wc2_utils.world_conquest_data[tagname] afterwards ?
