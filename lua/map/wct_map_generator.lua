@@ -6,7 +6,7 @@
 ---- the codes in ,/postgeneration is run             ----
 ----------------------------------------------------------
 
-Map = wesnoth.dofile("./distmap.lua")
+Distmap = wesnoth.dofile("./distmap.lua")
 wesnoth.dofile("./postgeneration_utils/engine.lua")
 
 local postgenerators = {}

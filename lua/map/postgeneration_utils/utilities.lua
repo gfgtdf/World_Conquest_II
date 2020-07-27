@@ -257,7 +257,8 @@ function wct_iterate_roads_to_2(f_validpath, f_src, f_dest, terrain_road, radius
 		local res = #map:get_locations(filter_path, xy_list) > 0
 		return res
 	end
-	local distmap = Map:create(map.width, map.height)
+	-- calculate for each tile its distance to any of the tiles in dest_tiles.
+	local distmap = Distmap:create(map.width, map.height)
 	distmap:calculate_distances(dest_tiles, radius, filter_path_function)
 
 	for i_src, loc_src in ipairs(src_tiles) do
