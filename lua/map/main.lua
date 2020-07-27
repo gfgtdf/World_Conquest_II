@@ -38,6 +38,7 @@ function wc_ii_generate_scenario(nplayers, gen_args)
 	local id_suffix = gen_args.id_suffix or ""
 	local scenario_extra = wml.get_child(gen_args, "scenario")
 	local scenario_num = settings.scenario_num or wesnoth.get_variable("wc2_scenario") or 1
+	--todo: does this work properly in the first scenario?
 	local enemy_stength = wesnoth.get_variable("wc2_difficulty.enemy_power") or 6
 	local scenario_data = wesnoth.dofile(string.format("./scenarios/WC_II_%dp_scenario%d.lua", nplayers, scenario_num))
 

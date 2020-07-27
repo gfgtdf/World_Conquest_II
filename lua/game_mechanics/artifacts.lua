@@ -238,7 +238,6 @@ wc2_utils.menu_item {
 function wesnoth.wml_actions.wc2_place_item(cfg)
 	artifacts.place_item(cfg.x, cfg.y, cfg.item_index)
 	if cfg.message then
-		-- todo: was this before the actual dropping in the original code?
 		artifacts.drop_message(cfg.item_index)
 	end
 end
