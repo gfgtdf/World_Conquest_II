@@ -55,7 +55,7 @@ function Distmap:adjacent_tiles(loc, filter)
 end
 
 function Distmap:calculate_distances(locs, upto, filter)
-	std_print("calculate_distances", upto, #locs)
+	wesnoth.log("info", "calculate_distances " .. upto .. " " .. #locs)
 	local todo = locs
 	local data = self.data
 	for i,loc in ipairs(todo) do

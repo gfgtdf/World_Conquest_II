@@ -152,7 +152,7 @@ end
 
 function wct_storm(terrain_to_change, snow)
 	if #terrain_to_change == 0 then
-		std_print("wct_storm: #terrain_to_change == 0")
+		wesnoth.log("info", "wct_storm: #terrain_to_change == 0")
 		return
 	end
 	for show_i = 1, snow do

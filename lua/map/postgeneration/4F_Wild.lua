@@ -236,13 +236,11 @@ end
 function wild_zones_replace(heights)
 	for i_height, height in ipairs(heights) do
 		for i_temp, temp in ipairs(height) do
-			--std_print("a", type(temp[1].default))
 			handle_single_zone(temp.all_locs, temp[1].default)
 			for zone_i, zone in ipairs(temp.zones) do
 				local wild_dice = wesnoth.random(100)
 				for chance_i, chance in ipairs(temp[1].chances) do
 					if wild_dice <= chance.value then
-						--std_print("b", type(chance.command))
 						handle_single_zone(zone, chance.command)
 						goto end_zone
 					else

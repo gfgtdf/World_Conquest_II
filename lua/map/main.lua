@@ -142,10 +142,9 @@ function wc_ii_generate_scenario(nplayers, gen_args)
 		scenario.name = "WC_II_" .. nplayers .. " " .. scenario_desc .. " - "--.. scenario.map_name
 	end
 
-
-	-- std_print(debug_wml(scenario))
 	local res = wc2_convert.lon_to_wml(scenario, "scenario")
-	std_print(debug_wml(res))
+	wesnoth.log("info", "[scenario]:\n" .. debug_wml(res))
+
 	for i, v in ipairs(scenario_extra) do
 		-- insert music and scedule tags. (these use code wml macros so they are defined in the .cfg file)
 		table.insert(res, v)

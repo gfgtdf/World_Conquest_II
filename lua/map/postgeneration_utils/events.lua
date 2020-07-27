@@ -104,7 +104,7 @@ function wct_reduce_wall_clusters(cave_terrain)
 end
 
 function wct_castle_expansion_side(side_num)
-	std_print("expanding castle", side_num)
+	wesnoth.log("debug", "expanding castle" .. side_num)
 	local n_tiles_wanted = scenario_data.nplayers + 1
 	local keep_loc = map.special_locations[tostring(side_num)]
 
@@ -143,7 +143,7 @@ function wct_castle_expansion_side(side_num)
 	}
 
 	if #candidates < n_tiles_wanted then
-		std_print("Too few tiles in castle expansion for side " .. side_num .. ", wanted: " .. n_tiles_wanted .. " but we got only " .. #candidates)
+		wesnoth.log("warn", "Too few tiles in castle expansion for side " .. side_num .. ", wanted: " .. n_tiles_wanted .. " but we got only " .. #candidates)
 		n_tiles_wanted = #candidates
 	end
 	helper.shuffle(candidates)

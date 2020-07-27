@@ -48,7 +48,8 @@ function world_conquest_tek_map_rebuild(cave, reef)
 	-- replace hills for mushrooms
 	-- base amount in map surface
 	local r = helper.rand(tostring(total_tiles // 500) .. ".." .. tostring(total_tiles // 250))
-	--std_print(type(r))
+	-- just to be sure.
+	r = tonumber(r)
 	set_terrain { "Hh^Uf",
 		f.all(
 			f.terrain("Hh,Hh^F*"),
@@ -249,19 +250,18 @@ function wct_iterate_roads_to_2(f_validpath, f_src, f_dest, terrain_road, radius
 	local src_tiles = map:get_locations(f_src)
 	local dest_tiles = map:get_locations(f_dest)
 	local filter_path = wesnoth.create_filter(f_validpath)
-	--std_print("filter:", debug_wml(f_validpath))
 	local map = _G.map
 
 	local function filter_path_function(x, y)
 		local xy_list = { {x,y} }
 		local res = #map:get_locations(filter_path, xy_list) > 0
-		--std_print("location ", x, y, map:get_terrain({x, y}), res and " matches" or " doesn't match")
 		return res
 	end
 	local distmap = Map:create(map.width, map.height)
 	distmap:calculate_distances(dest_tiles, radius, filter_path_function)
-	--distmap:std_print()
+
 	for i_src, loc_src in ipairs(src_tiles) do
+		-- calculate how far loc_src is away from one of the tiles in dest_tiles.
 		local dist = nil
 		for i_ad, loc_ad in ipairs(distmap:adjacent_tiles(loc_src)) do
 			local dist_ad = distmap:get(loc_ad)
@@ -269,8 +269,8 @@ function wct_iterate_roads_to_2(f_validpath, f_src, f_dest, terrain_road, radius
 				dist = dist_ad
 			end
 		end
+		-- the distant of loc_src to dest_tiles is one higher than the distance of the closest neighbor
 		dist = (dist or 999) + 1
-		--std_print("dist2:", dist)
 		if dist <= radius then
 			local path = { }
 			local loc = loc_src
@@ -278,8 +278,6 @@ function wct_iterate_roads_to_2(f_validpath, f_src, f_dest, terrain_road, radius
 				local next_locs = {}
 				for i_ad, loc_ad in ipairs(distmap:adjacent_tiles(loc)) do
 					local dist_ad = distmap:get(loc_ad)
-					--std_print("checking ad loc (", loc_ad[1], loc_ad[2], ") dist:",dist_ad)
-					--(map:get(loc_ad) or 999) < dist imples filter_path_function(loc_ad[1], loc_ad[2])
 					if (dist_ad or 999) < dist then
 						next_locs[#next_locs + 1] = loc_ad
 					end
@@ -291,10 +289,9 @@ function wct_iterate_roads_to_2(f_validpath, f_src, f_dest, terrain_road, radius
 				path[#path + 1] = next_locs[wesnoth.random(#next_locs)]
 				loc = path[#path]
 				dist = distmap:get(loc)
-				--std_print("new loc (", loc[1], loc[2], ") dist:", dist)
 			end
 			::path_found::
-			--std_print("path:", debug_wml(path))
+			wesnoth.log("debug", "generated path: " .. debug_wml(path))
 			for i, ploc in ipairs(path) do
 				map:set_terrain(ploc, terrain_road)
 			end

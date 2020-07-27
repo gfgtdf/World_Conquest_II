@@ -220,11 +220,6 @@ function default_generate_map(data)
 	
 	local cfg = wc2_convert.lon_to_wml(data, "mg_main")
 	
-	--std_print("-------------------LUA-------------------")
-	--std_print(ilua.val2str(cfg))
-	--std_print("-------------------WML-------------------")
-	--std_print(wml.tostring(cfg))
-	
 	local w, h = cfg.map_width, cfg.map_height
 	local orig_island_size = cfg.island_size
 	local orig_nvillages = cfg.villages
@@ -241,7 +236,6 @@ function default_generate_map(data)
 		-- The radius of the island should be up to half the width of the map
 		local island_radius = 50 + ((max_island - orig_island_size) * 50) // (max_island - max_coastal)
 		cfg.island_size = (island_radius * (w/2)) // 100;
-		--std_print("cfg.island_size", cfg.island_size)
 	elseif orig_island_size > 0 then
 		-- The radius of the island should be up to twice the width of the map
 		local island_radius = 40 + ((max_coastal - orig_island_size) * 40) // max_coastal;

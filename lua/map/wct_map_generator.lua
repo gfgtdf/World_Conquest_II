@@ -48,7 +48,7 @@ local function run_postgeneration(map_data, id, scenario_content, nplayers, nhum
 	_G.total_tiles = _G.map.width * _G.map.height
 	_G.prestart_event = scenario_content.event[1]
 	_G.print_time = function(msg)
-		std_print(msg, "time:", wesnoth.get_time_stamp() - postgen_starttime)
+		wesnoth.log("info", msg .. " time: " .. (wesnoth.get_time_stamp() - postgen_starttime))
 	end
 	--the only reason why we do this here an not in mian.lua is that it needs a map object.
 	shuffle_special_locations(map, player_list)
@@ -66,13 +66,11 @@ end
 
 function wct_map_generator(default_id, postgen_id, length, villages, castle, iterations, hill_size, players, island)
 	return function(scenario, nhumanplayer)
-		std_print("wct_map_generator", default_id, postgen_id)
+		wesnoth.log("debug", "wct_map_generator " .. default_id .. " " .. postgen_id)
 		local generatorfile = "./generator/" .. default_id .. ".lua"
 		local generate1 = wesnoth.dofile(generatorfile)
-		std_print("run_generation")
+		wesnoth.log("debug", "running generate")
 		local map_data =generate1(length, villages, castle, iterations, hill_size, players, island)
-
-		--std_print(map_data)
 		map_data = run_postgeneration(map_data, postgen_id, scenario, players, nhumanplayer)
 		scenario.map_data = map_data
 	end

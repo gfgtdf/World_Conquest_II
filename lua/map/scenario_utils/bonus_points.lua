@@ -392,7 +392,7 @@ function wct_bonus_chose_scenery(loc, theme, filter_extra)
 	::final_pick::
 	-- pick random scenery value from our list
 	local res = helper.rand(scenery)
-	--std_print("scenery:", res, " from ", scenery)
+	wesnoth.log("debug", "scenery:" ..  res .. " from " .. scenery)
 	return res
 end
 

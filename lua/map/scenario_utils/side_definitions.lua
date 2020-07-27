@@ -25,7 +25,7 @@ local function adjust_enemy_bonus_gold(bonus_gold, nplayers, difficulty_enemy_po
 end
 
 local function add_enemy_side(scenario, gold, starting_pos)
-	std_print("starting pos:", starting_pos)
+	wesnoth.log("debug", "starting pos:" .. starting_pos)
 	local side_num = #scenario.side + 1
 	-- recruits and leader gets overwritten later by [wc2_enemy] implementation
 	local side = {
