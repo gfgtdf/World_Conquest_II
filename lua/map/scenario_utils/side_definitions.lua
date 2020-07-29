@@ -19,6 +19,8 @@ local function table_join(t1, t2)
 end
 
 local function adjust_enemy_bonus_gold(bonus_gold, nplayers, difficulty_enemy_power)
+	-- fixme: im not sure whether this works for the first scenario, since this code is called im scenario generation
+	-- and it depends on difficulty_enemy_power.
 	--difficulty_enemy_power is in [6,9]
 	local factor = (nplayers + 1) * (difficulty_enemy_power/6) - 2
 	return factor * bonus_gold
